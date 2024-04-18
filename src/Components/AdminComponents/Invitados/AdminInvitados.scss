@@ -1,0 +1,133 @@
+@import '../../../inicialized/variables.scss';
+
+.contentContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.contentContainer>.listaItems{
+    flex-direction: column;
+}
+
+/* .contentContainer *{
+    display: flex;
+} */
+
+.contentContainer>.tarjetaEvento{
+    width: 90%;
+    min-height: 13vw;
+    margin: auto;
+    margin-top: 7vw;
+    border-radius: 2vw;
+    background-color: whitesmoke;
+    flex-direction: column;
+    
+    -webkit-box-shadow: 0px 0px 12px -4px rgba(0,0,0,0.4); 
+    box-shadow: 0px 0px 12px -4px rgba(0,0,0,0.4);
+
+}
+
+.contentContainer>.tarjetaEvento>.info{
+    flex-direction: column;
+}
+
+.contentContainer>.tarjetaEvento{
+    height: auto;
+    padding-bottom: 2vw;
+}
+
+.contentContainer>.tarjetaEvento>.title{
+    margin: 2vw 0vw;
+    padding: 0 0vw;
+    width: 100%;
+    border-bottom: solid 1px $SecondaryDark;
+    height: 8vw;
+    position: relative;
+    display: flex;
+}
+
+.contentContainer>.tarjetaEvento>.title>.icons{
+    position: absolute;
+    width: fit-content;
+    height: 100%;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.contentContainer>.tarjetaEvento>.title>.icons>.icon{
+    margin: 0vw 1vw;
+}
+
+
+
+.contentContainer>.tarjetaEvento>.title>h5{
+    margin: 0vw 0vw;
+    margin-left: 2vw;
+}
+
+.contentContainer>.tarjetaEvento>.info>span{
+    margin: 1.5vw 2vw; 
+}
+
+.addMesa{
+    width: 84%;
+    height: 23vw;
+    background-color: #d6ccc2;
+    position: absolute;
+    z-index: 110;
+    top: 40vh;
+    right: 4vw;
+    flex-direction: column;
+    border-radius: 2vw;
+    padding: 4vw;
+    display: flex;
+}
+
+.addMesa>span{
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.addMesa>.botonera{
+    height: 10vw;
+    display: flex;
+    margin-top: 3vw;
+}
+
+.addMesa>.botonera>.botonTipoUno{
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.ListaInvitaciones{
+    display: flex;
+    flex-direction: column;
+}
+
+.addInvitacionIcon{
+    background-color: $SecondaryDark;
+    width: fit-content;
+    align-items: center;
+    align-self: flex-end;
+    margin-right: 5vw;
+    border-radius: 0.3rem;
+    padding: 1vw;
+    cursor: pointer;
+    -webkit-box-shadow: 0px 0px 12px -4px rgba(0,0,0,0.4); 
+    box-shadow: 0px 0px 12px -4px rgba(0,0,0,0.4);
+}
+
+.addInvitacionIcon>.icon{
+    margin-left: 2vw;
+}

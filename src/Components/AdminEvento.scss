@@ -1,0 +1,99 @@
+@import '../inicialized/variables.scss';
+
+.containerAdminEvento{
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.containerAdminEvento>.header{
+    background-color: $primary;
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    position: relative;
+    align-items: center;
+
+}
+
+.containerAdminEvento>.header>.logoAltezza{
+    width: 20%;
+    margin: 0vw 2vw;
+}
+
+.containerAdminEvento>.header>.menuEvento{
+    position: absolute;
+    color: #d6ccc2;
+     font-size: 3rem; 
+    top: 0vw;
+    right: 0vw;
+    cursor: pointer;
+    width: 15vw;
+    height: 15vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerAdminEvento>.header>.nombreEvento{
+    color: $Secondary;
+    margin-left: 2vw;
+}
+
+
+
+
+
+.contentContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.contentContainer>.tarjetaEvento{
+    width: 90%;
+    min-height: 13vw;
+    margin: auto;
+    margin-top: 7vw;
+    border-radius: 2vw;
+    background-color: whitesmoke;
+    flex-direction: column;
+    
+    -webkit-box-shadow: 0px 0px 12px -4px rgba(0,0,0,0.4); 
+    box-shadow: 0px 0px 12px -4px rgba(0,0,0,0.4);
+
+}
+
+.contentContainer>.tarjetaEvento>.info{
+    flex-direction: column;
+}
+
+.contentContainer>.tarjetaEvento{
+    height: auto;
+    padding-bottom: 2vw;
+}
+
+.contentContainer>.tarjetaEvento>.title{
+    margin: 2vw 0vw;
+    padding: 0 0vw;
+    width: 100%;
+    border-bottom: solid 1px $SecondaryDark;
+    height: 9vw;
+}
+
+.contentContainer>.tarjetaEvento>.title>h5{
+    margin: 0vw 0vw;
+    margin-left: 2vw;
+}
+
+.listaInvitados>.info>span{
+    margin: 1.5vw 2vw; 
+}
+
+
+.listaInvitados>.info span> span{
+    justify-content: flex-end;
+    margin-right: 5vw;
+flex: 1;
+
+}

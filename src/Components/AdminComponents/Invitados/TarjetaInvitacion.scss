@@ -1,0 +1,87 @@
+@import '../../../inicialized/variables.scss';
+
+.listaInvitados{
+    display: flex;
+    flex-direction: column;
+}
+
+.invitado{
+    width: 95%;
+    margin: auto;
+    align-items: center;
+    display: flex;margin-top: 2vw;
+    border-bottom: solid 1px #e9e9e9;
+}
+
+.invitado a{
+    color: initial;
+}
+
+.invitado>.principal>.icon{
+    width: 3vw;
+}
+
+.invitado>.nombre{
+    flex: 1;
+    margin-left: 2vw;
+    font-size: 1rem;
+}
+
+.listaInvitados> span{
+    flex: 1;
+    margin-left: 2vw;
+    font-size: 1.2rem;
+}
+
+.invitado>.iconConfim{
+    border-left: solid 1px #e9e9e9;
+    margin-left: 1vw;
+    padding-left: 1vw;
+}
+
+.iconDelete, .iconView{
+    margin-left: 1vw;
+}
+
+.addUsuario, .infoUsuario{
+    width: 84%;
+    height: fit-content;
+    background-color: #d6ccc2;
+    position: absolute;
+    z-index: 110;
+    top: 20vh;
+    right: 4vw;
+    flex-direction: column;
+    border-radius: 2vw;
+    padding: 4vw;
+}
+
+.addUsuario>.formulario, .infoUsuario>.formulario{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.addUsuario h3, .infoUsuario h3{
+    display: flex;
+    justify-content: center;
+}
+
+.addUsuario>.botonera *, .infoUsuario>.botonera *{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5vw;
+
+}
+
+.infoUsuario>.formulario  span> span {
+    justify-content: flex-end;
+    margin-right: 5vw;
+flex: 1;
+}
+
+.botonera{
+    display: flex;
+}
+

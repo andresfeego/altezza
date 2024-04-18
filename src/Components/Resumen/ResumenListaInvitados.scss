@@ -1,0 +1,19 @@
+@import '../../inicialized/variables.scss';
+
+.listaInvitados>.info{
+    display: flex;
+    flex-direction: column;
+}
+
+.listaInvitados>.info>span{
+    margin: 1.5vw 2vw; 
+    display: flex;
+}
+
+
+.listaInvitados>.info> span> span{
+    justify-content: flex-end;
+    margin-right: 5vw;
+    flex: 1;
+    display: flex;
+}

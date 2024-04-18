@@ -1,0 +1,28 @@
+@import '../inicialized/variables.scss';
+
+.Admin-container-Evento-General{
+    background-color: $white1;
+    display: flex;
+    width: 100vw;
+    height: 100svh;
+    overflow-x: hidden;
+}
+
+.containerImg{
+    justify-content: center;
+display: flex;
+}
+
+.logoAltezza{
+    width: 50vw;
+    align-self: center;
+    margin-top: 10vw;
+    
+}
+
+.containerLogin{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+

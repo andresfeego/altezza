@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import { BrowserRouter, Routes , Switch} from 'react-router-dom';
+import Route from 'react-router-dom/Route';
+import React, { Component, Text } from 'react';
+import Evento from './Components/Evento';
+import Invitacion from './Components/Invitacion/Invitacion';
+import InvitacionJorgeYCata from './Components/Invitacion/InvitacionJorgeYCata';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function irAweb() {
+  window.open("https://altezzaeventos.in/web", "_self")
+}
+export default class App extends Component {
+  render() {
+
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            {irAweb}
+          </Route>
+        </Switch>
+        <Route exact path="/evento" component={Evento} />
+        <Route path="/evento/:id" component={Evento} />
+        <Route path="/invitacion/:id/:idInvitado" component={Invitacion} />
+        <Route path="/invitacionjorgeycata/:id/:idInvitado" component={InvitacionJorgeYCata} />
+      </BrowserRouter>
+    );
+  }
 }
 
-export default App;

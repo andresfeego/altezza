@@ -1,0 +1,42 @@
+@import '../inicialized/variables.scss';
+
+.containerMenuHeader>.contentMenuHeader{
+    background-color: $primaryTransparent;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    right: 0vw;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.containerMenuHeader>.contentMenuHeader>.links{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}
+
+.containerMenuHeader>.contentMenuHeader>.links>.linkMenuHeader{
+    font-size: 0.5em;
+    margin-bottom: 3.5vw;
+    padding-bottom: 3.5vw;
+    text-align: center;
+    box-sizing: content-box;
+    cursor: pointer;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-image: linear-gradient(to right top, $transparent, $SecondaryDark, $transparent, #a053df, $transparent);
+    border-image-slice: 1;
+}
+
+.containerMenuHeader>.contentMenuHeader>.links>.linkMenuHeaderFin{
+    border-bottom-style: none;
+}
+
+
+
+
+.containerMenuHeader>.menuIcon{
+    z-index: 10000;
+}

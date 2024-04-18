@@ -1,0 +1,280 @@
+@import '../../inicialized/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Dancing+Script&family=Marck+Script&display=swap');
+@import "~react-image-gallery/styles/scss/image-gallery.scss";
+
+#contentInvitacion{
+background-color: #fff;
+}
+
+.contentContainer{
+    width: 100svw;
+    height: fit-content;
+    font-family: 'Bad Script', cursive !important;
+    font-size: 1.3rem;
+    overflow-x: hidden;
+}
+
+.contentContainer>.header{
+    background-color: rgb(241, 241, 241);
+    width: 100%;
+    height: 90vw;
+    margin: 0;
+}
+.contentContainer>.header img{
+    height: 90vw;
+    object-fit: cover;
+}
+
+.dresscodecontainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5vw;
+    height: 5vh;
+    width: fit-content;
+}
+
+.dresscodecontainer *{
+    width: 8vw;
+    border: solid 1px #404040;
+    border-radius: 5px;
+}
+
+.dresscodeUno{
+    background-color: #fff;
+}
+
+.dresscodeDos{
+    background-color: #40101b;
+}
+
+
+.sectionInv{
+    width: 82%;
+    height: fit-content;
+    margin: 4vw 9vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   /*  border: solid 1px $gray1; */
+    text-align: center;
+}
+
+.bienvenida{
+    margin-top: 11vw;
+}
+
+
+.rose-logo path{
+    //fill: red;
+}
+
+.frase{
+    text-align: center;
+}
+
+.historia{
+    position: relative;
+}
+
+.historia>.header>span{
+    position: absolute;
+    top: 14vw;
+    font-size: 2.5rem;
+    width: 42%;
+    text-align: center;
+    left: 24vw;
+}
+
+.datosEvento>.tarjeta> img{
+    width: 82%;
+}
+
+
+.datosEvento>.tarjeta>.info{
+    flex-direction: column;
+    display: flex;
+    margin-top: 5vw;
+}
+
+.datosEvento>.tarjeta>.info>.ubicacion{
+    background-color: $SecondaryDark;
+    width: 50%;
+    margin: 4vw auto;
+    border-radius: 1.5vw;
+}
+
+.datosEvento>.tarjeta>.info>.ubicacion> a{
+    text-decoration: none;
+    color: initial;
+}
+
+.dressCode>.colores>.colorRes{
+    width: 9vw;
+    height: 9vw;
+    border-radius: 1.5vw;
+    border: solid 1px $gray2;
+}
+
+.dressCode>.colores{
+    display: flex;
+    justify-content: center;
+}
+
+.datosEvento>.hashtag{
+
+    margin-top: 5vw;
+}
+
+.historia>.content{
+    flex-direction: column;
+    width: 100%;
+}
+
+.historia>.content h4{
+    text-align: center;
+}
+
+.historia>.content>.separador{
+    height: 8vw;
+    width: 50%;
+    border-right: solid 1px $gray1;
+    margin-top: 1.3rem;
+
+}
+
+.rose-logo{
+    text-align: center;
+    margin: auto;
+}
+
+.countDown{
+    background-color: $SecondaryDark;
+    border-radius: 5vw;
+    padding: 3vw 3vw;
+    left: -4vw;
+    position: relative;
+}
+
+.countDown>.content{
+    display: flex;
+    flex-direction: column;
+}
+
+    .galeria{
+        display: initial !important;
+        width: 100vw !important;
+        margin: 0vw !important;
+    }
+
+    .image-gallery>*{
+        display: initial !important;
+        margin-top: 5vw;
+    }
+
+    .teEsperamos{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .teEsperamos>.imgTeEs{
+        width: 39vw;
+        height: 39vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border-radius: 50%;
+        position: absolute;
+        top: 18vw;
+    }
+
+    
+    .teEsperamos>.imgTeEs> img{
+        height: 100%;
+        transform: scale(1.2);
+        right: -10vw;
+        top: -4vw;
+        position: absolute;
+        
+    }
+
+    .teEsperamos> span{
+        font-size: 2rem;
+        line-height: 9vw;
+        text-align: center;
+    }
+
+    .lluviaSobres> img {
+        width: 15vw;
+    }
+
+    .confirmacion{
+        width: 100%;
+        height: fit-content;
+        margin-left: 0;
+    }
+
+    .formAsis{
+        border: solid 1px $SecondaryDark;
+        width: 82%;
+        border-radius: 3vw;
+        background-color: #fff;
+    }
+
+    .confirmacion{
+        background-image: url(https://alis.vamtam.com/wp-content/uploads/2017/12/trees-center3-1.jpg);
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-attachment: scroll;
+        background-size: auto;
+        border-top-width: 1px;
+        border-right-width: 0;
+        border-bottom-width: 1px;
+        border-left-width: 0;
+    }
+
+    .nombreInvitado{
+        color: #C3A17D !important;
+        font-size: 1.8rem !important;
+        font-family: 'Bad Script', cursive !important;
+    }
+
+    .FormControlLabel span{
+        font-family: 'Bad Script', cursive !important;
+        font-size: 1rem !important;
+    }
+
+    .radioGroupAsis{
+        justify-content: center;
+    }
+
+    .confAsis{
+        margin-top: 8vw !important;
+    }
+
+    .confirmar{
+        background-color: $SecondaryDark;
+        width: 50%;
+        margin: 4vw auto;
+        border-radius: 1.5vw;
+    }
+
+    .cargando{
+        z-index: 120;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .cargando img{
+        width: 20%;
+    }
+
+    .cargando span{
+        text-align: center;
+    }

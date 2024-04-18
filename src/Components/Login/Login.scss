@@ -1,0 +1,24 @@
+@import '../../inicialized/variables.scss';
+
+
+.containerLogin{
+    background-color: $primary;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login{
+    background-color: $Secondary;
+    width: 80vw;
+    height: 80vw;
+    border-radius: 3vw;
+    display: flex;
+    align-self: center;
+    justify-self: flex-start;
+    -webkit-box-shadow: 0px 0px 17px 2px rgba(0,0,0,0.4); 
+    box-shadow: 0px 0px 17px 2px rgba(0,0,0,0.4);
+    align-items: center;
+    justify-content: center;
+}

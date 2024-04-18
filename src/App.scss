@@ -1,5 +1,19 @@
+
+@import './inicialized/variables.scss';
+
 .App {
   text-align: center;
+  position: relative;
+}
+
+.fondoActions{
+  background-color: $primaryTransparent;
+  position: absolute;
+  right: 5;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: 130svh;
 }
 
 .App-logo {
