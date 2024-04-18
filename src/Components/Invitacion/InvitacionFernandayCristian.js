@@ -51,10 +51,9 @@ export default class Invitacion extends Component {
 
 getInvitado(){
     const lista = this.state.listaInvitados
-    console.log(this.props.match.params)
     if (lista.length > 0) {
       lista.map((inv) =>{
-        if (inv.id == this.props.match.params.idInvitado) {
+        if (inv.id == this.props.idInvitado) {
           this.setState({
             invitadoInvitacion: inv
           }) 
@@ -67,7 +66,7 @@ getInvitado(){
   getInvitacion() {
     request
       .post('/responseAltezza/eventoXinvitacion')
-      .send({ idInvitacion: this.props.match.params.id }) // sends a JSON post body
+      .send({ idInvitacion: this.props.idInvitacion }) // sends a JSON post body
       .set('accept', 'json')
       .end((err, res) => {
 
@@ -214,14 +213,14 @@ getInvitado(){
 
           </div>
 
-          <div className="sectionInv galeria">
+          {/* <div className="sectionInv galeria">
             <h2>Nuestros momentos</h2>
             <ReactSVG className='rose-logo' src={svgFlorDos} ></ReactSVG>
             <span>galeria de fotos</span>
             <br></br>
             <br></br>
             <ImageGallery items={photos} loading={'lazy'} />
-          </div>
+          </div> */}
 
           <div className="sectionInv datosEvento">
             <h2>Datos del evento</h2>
