@@ -49,7 +49,7 @@ export default class Invitacion extends Component {
 
   getInvitacion() {
     request
-      .post('/responseAltezza/ideventoXinvitacion')
+      .post(process.env.REACT_APP_API_URL + 'responseAltezza/ideventoXinvitacion')
       .send({ idInvitacion: this.props.match.params.id }) // sends a JSON post body
       .set('accept', 'json')
       .end((err, res) => {

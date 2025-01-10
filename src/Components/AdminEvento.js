@@ -24,7 +24,7 @@ class AdminEvento extends Component {
     getEvento() {
 
         request
-            .get('/responseAltezza/eventoXid/' + this.props.idEvento)
+            .get(process.env.REACT_APP_API_URL + 'responseAltezza/eventoXid/' + this.props.idEvento)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {

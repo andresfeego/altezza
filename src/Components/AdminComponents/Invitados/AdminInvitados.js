@@ -22,7 +22,7 @@ class AdminInvitados extends Component {
     getInvitados() {
 
         request
-            .get('/responseAltezza/invitadosXevento/1')
+            .get(process.env.REACT_APP_API_URL + 'responseAltezza/invitadosXevento/1')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -50,7 +50,7 @@ class AdminInvitados extends Component {
     addInvitacion() {
         nuevoMensaje(tiposAlertas.cargando, "Agregando invitación")
         request
-            .post('/responseAltezza/addInvitacion')
+            .post(process.env.REACT_APP_API_URL + 'responseAltezza/addInvitacion')
             .send({ idEvento: this.props.idEvento }) // sends a JSON post body
             .set('accept', 'json')
             .end((err, res) => {

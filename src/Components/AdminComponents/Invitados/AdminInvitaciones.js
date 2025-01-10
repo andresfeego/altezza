@@ -27,7 +27,7 @@ class AdminInvitaciones extends Component {
     getInvitaciones() {
 
         request
-            .get('/responseAltezza/invitacionesXevento/'+this.props.idEvento)
+            .get(process.env.REACT_APP_API_URL + 'responseAltezza/invitacionesXevento/'+this.props.idEvento)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -48,7 +48,7 @@ class AdminInvitaciones extends Component {
     getListaParentescos() {
 
         request
-            .get('/responseAltezza/parentescos')
+            .get(process.env.REACT_APP_API_URL + 'responseAltezza/parentescos')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -69,7 +69,7 @@ class AdminInvitaciones extends Component {
     getListaGruposEdad() {
 
         request
-            .get('/responseAltezza/gruposEdad')
+            .get(process.env.REACT_APP_API_URL + 'responseAltezza/gruposEdad')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -97,7 +97,7 @@ class AdminInvitaciones extends Component {
     addInvitacion() {
         nuevoMensaje(tiposAlertas.cargando, "Agregando invitación")
         request
-            .post('/responseAltezza/addInvitacion')
+            .post(process.env.REACT_APP_API_URL + 'responseAltezza/addInvitacion')
             .send({ idEvento: this.props.idEvento }) // sends a JSON post body
             .set('accept', 'json')
             .end((err, res) => {

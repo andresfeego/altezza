@@ -65,7 +65,7 @@ getInvitado(){
 
   getInvitacion() {
     request
-      .post('/responseAltezza/eventoXinvitacion')
+      .post(process.env.REACT_APP_API_URL + 'responseAltezza/eventoXinvitacion')
       .send({ idInvitacion: this.props.idInvitacion }) // sends a JSON post body
       .set('accept', 'json')
       .end((err, res) => {
@@ -92,7 +92,7 @@ getInvitado(){
     const result = await Promise.all(this.state.listaInvitados.map(async (invitado) => {
       return new Promise((resolve, reject) => {
         request
-          .post('/responseAltezza/updConfirmado')
+          .post(process.env.REACT_APP_API_URL + 'responseAltezza/updConfirmado')
           .send({ idInvitado: invitado.id, confirmado: invitado.confirmado }) // sends a JSON post body
           .set('accept', 'json')
           .end((err, res) => {

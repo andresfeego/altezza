@@ -31,7 +31,7 @@ class ResumenListaInvitados extends Component {
     getMesas() {
 
         request
-            .get('/responseAltezza/mesasXevento/' + this.props.idEvento)
+            .get(process.env.REACT_APP_API_URL + 'responseAltezza/mesasXevento/' + this.props.idEvento)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -53,7 +53,7 @@ class ResumenListaInvitados extends Component {
 
         return new Promise((resolve, reject) => {
             request
-                .get('/responseAltezza/invitadosXinvitacion/' + idInvitacion)
+                .get(process.env.REACT_APP_API_URL + 'responseAltezza/invitadosXinvitacion/' + idInvitacion)
                 .set('accept', 'json')
                 .end((err, res) => {
                     if (err) {
@@ -72,7 +72,7 @@ class ResumenListaInvitados extends Component {
     getInvitaciones() {
 
         request
-            .get('/responseAltezza/invitacionesXevento/' + this.props.idEvento)
+            .get(process.env.REACT_APP_API_URL + 'responseAltezza/invitacionesXevento/' + this.props.idEvento)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {

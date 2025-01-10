@@ -60,7 +60,7 @@ class TarjetaInvitacion extends Component {
 
     getEvento() {
         request
-            .post('/responseAltezza/eventoXinvitacion')
+            .post(process.env.REACT_APP_API_URL + 'responseAltezza/eventoXinvitacion')
             .send({ idInvitacion: this.props.invitacion.id }) // sends a JSON post body
             .set('accept', 'json')
             .end((err, res) => {
@@ -90,7 +90,7 @@ class TarjetaInvitacion extends Component {
     getListaInvitados() {
 
         request
-            .get('/responseAltezza/invitadosXinvitacion/' + this.props.invitacion.id)
+            .get(process.env.REACT_APP_API_URL + 'responseAltezza/invitadosXinvitacion/' + this.props.invitacion.id)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -112,7 +112,7 @@ class TarjetaInvitacion extends Component {
     addInvitado() {
         nuevoMensaje(tiposAlertas.cargando, "Agregando invitado ")
         request
-            .post('/responseAltezza/addInvitado')
+            .post(process.env.REACT_APP_API_URL + 'responseAltezza/addInvitado')
             .send({ idInvitacion: this.props.invitacion.id, nombre: this.state.nombre, principal: this.state.principal, telefono: this.state.telefono, wp: this.state.wp, parentesco: this.state.parentesco, grupoEdad: this.state.grupoEdad })
             .set('accept', 'json')
             .end((err, res) => {
@@ -144,7 +144,7 @@ class TarjetaInvitacion extends Component {
     delInvitacion() {
         nuevoMensaje(tiposAlertas.cargando, "Eliminando invitación")
         request
-            .post('/responseAltezza/delInvitacion')
+            .post(process.env.REACT_APP_API_URL + 'responseAltezza/delInvitacion')
             .send({ idInvitacion: this.state.data }) // sends a JSON post body
             .set('accept', 'json')
             .end((err, res) => {
@@ -166,7 +166,7 @@ class TarjetaInvitacion extends Component {
 
     updateConfirmado(idInvitado, estado) {
         request
-            .post('/responseAltezza/updConfirmado')
+            .post(process.env.REACT_APP_API_URL + 'responseAltezza/updConfirmado')
             .send({ idInvitado: idInvitado, confirmado: estado }) // sends a JSON post body
             .set('accept', 'json')
             .end((err, res) => {
@@ -183,7 +183,7 @@ class TarjetaInvitacion extends Component {
     updateMensaje() {
         nuevoMensaje(tiposAlertas.cargando, "Actualizando mensaje")
         request
-            .post('/responseAltezza/updMensajeInvitacion')
+            .post(process.env.REACT_APP_API_URL + 'responseAltezza/updMensajeInvitacion')
             .send({ idInvitacion: this.props.invitacion.id, mensaje: this.state.mensaje }) // sends a JSON post body
             .set('accept', 'json')
             .end((err, res) => {
@@ -205,7 +205,7 @@ class TarjetaInvitacion extends Component {
     delInvitado(idInvitado) {
         nuevoMensaje(tiposAlertas.cargando, "Eliminando invitado")
         request
-            .post('/responseAltezza/delInvitado')
+            .post(process.env.REACT_APP_API_URL + 'responseAltezza/delInvitado')
             .send({ idInvitacion: this.props.invitacion.id, idInvitado: idInvitado }) // sends a JSON post body
             .set('accept', 'json')
             .end((err, res) => {

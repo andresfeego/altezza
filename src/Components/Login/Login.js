@@ -28,7 +28,7 @@ class Login extends Component {
 
   onSubmit = () => {
     request
-      .post('/responseAltezza/login')
+      .post(process.env.REACT_APP_API_URL + 'responseAltezza/login')
       .send({ pass: this.state.pass, user: this.state.usuario})
       .set('accept', 'json')
       .end((err, res) => {

@@ -22,7 +22,7 @@ class AdminMesas extends Component {
     getMesas() {
 
         request
-            .get('/responseAltezza/mesasXevento/'+this.props.idEvento)
+            .get(process.env.REACT_APP_API_URL + 'responseAltezza/mesasXevento/'+this.props.idEvento)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -50,7 +50,7 @@ class AdminMesas extends Component {
     addMesa() {
         nuevoMensaje(tiposAlertas.cargando, "Agregando mesa")
         request
-            .post('/responseAltezza/addMesa')
+            .post(process.env.REACT_APP_API_URL + 'responseAltezza/addMesa')
             .send({ idEvento: this.props.idEvento, numMesa: this.state.listaMesas.length + 1 }) // sends a JSON post body
             .set('accept', 'json')
             .end((err, res) => {
