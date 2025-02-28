@@ -11,7 +11,6 @@
     "static/development/_ssgManifest.js"
   ],
   "rootMainFiles": [],
-  "rootMainFilesTree": {},
   "pages": {
     "/_app": [
       "static/chunks/webpack.js",
@@ -23,10 +22,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/plataforma/home": [
+    "/home": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/plataforma/home.js"
+      "static/chunks/pages/home.js"
     ]
   },
   "ampFirstPages": []
