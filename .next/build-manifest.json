@@ -11,12 +11,11 @@
     "static/development/_ssgManifest.js"
   ],
   "rootMainFiles": [],
-  "rootMainFilesTree": {},
   "pages": {
-    "/": [
+    "/_api/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/index.js"
+      "static/chunks/pages/_api/login.js"
     ],
     "/_app": [
       "static/chunks/webpack.js",
@@ -27,11 +26,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
-    ],
-    "/fotos_compartidas/fotos-compartidas": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/fotos_compartidas/fotos-compartidas.js"
     ]
   },
   "ampFirstPages": []
