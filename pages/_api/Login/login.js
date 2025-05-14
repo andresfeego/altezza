@@ -1,6 +1,6 @@
 import { crearToken } from '@/utils/auth';
 import { setCookie } from '@/utils/cookies';
-import { loginUsuario } from '@/components/Inicialized/data/helpersGetDB';
+import { loginUsuario } from '@/components/inicialized/data/helpersGetDB';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();

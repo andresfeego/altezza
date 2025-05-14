@@ -5,8 +5,8 @@ const withImages = require('next-images');
 const isProd = process.env.NODE_ENV === 'production';
 
 const HOST_NAME = isProd
-  ? 'https://feegosystem.com/proxyPassthrough.php?path=/api/routesAltezza'
-  : 'http://127.0.0.1:3020/api/routesAltezza';
+  ? 'https://feegosystem.com/proxyPassthrough.php?path=/api/responseAltezza'
+  : 'http://127.0.0.1:3020/api/responseAltezza';
 
 console.log("NODE_ENV:", process.env.NODE_ENV);
 console.log("HOST_NAME:", HOST_NAME);

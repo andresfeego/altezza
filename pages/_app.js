@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useDataStore } from '@/components/initialized/stored/useDataStore';
-import { validarSesion } from '@/components/initialized/data/helpersGetDB';
-import './app.scss'
+import useUsuarioStore from '@/components/initialized/stored/useUsuarioStore';
+import './app.scss';
+
 // 🟡 Toastify
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }) {
-  const setUser = useDataStore((state) => state.setUser);
-  const logout = useDataStore((state) => state.logout);
   const router = useRouter();
+  const usuario = useUsuarioStore((state) => state.usuario);
+  const clearUsuario = useUsuarioStore((state) => state.clearUsuario);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,20 +21,13 @@ function MyApp({ Component, pageProps }) {
       return;
     }
 
-    async function checkSession() {
-      try {
-        const { usuario } = await validarSesion();
-        setUser(usuario);
-      } catch (err) {
-        logout?.();
-        router.push('/_api/login');
-      } finally {
-        setLoading(false);
-      }
+    if (!usuario?.id) {
+      clearUsuario?.();
+      router.push('/_api/login');
+    } else {
+      setLoading(false);
     }
-
-    checkSession();
-  }, [router.pathname]);
+  }, [router.pathname, usuario]);
 
   if (loading) return <div>Cargando...</div>;
 
