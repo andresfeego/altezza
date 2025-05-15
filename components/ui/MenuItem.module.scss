@@ -1,0 +1,48 @@
+.menuItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 32px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    background-color: #f2f2f2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.menuIconLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge {
+  color: #d97706;
+  font-size: 0.75rem;
+}
+
+.menuItem.collapsed {
+  justify-content: center;
+  margin-inline: 0;
+  padding: 0.75rem;
+
+  .menuIconLabel {
+    justify-content: center;
+    gap: 0;
+  }
+
+  .label {
+    display: none;
+  }
+
+  .badge {
+    display: none;
+  }
+}
+
+.menuItem.active {
+  background-color: #fef3c7; // puedes reemplazar por $primaryLigth si tienes variable
+  font-weight: 600;
+}

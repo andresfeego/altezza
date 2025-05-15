@@ -1,53 +1,43 @@
+import "./stylesGlobal.scss"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useUsuarioStore from '@/components/initialized/stored/useUsuarioStore';
 import './app.scss';
-
-// 🟡 Toastify
-import { ToastContainer, Slide } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const usuario = useUsuarioStore((state) => state.usuario);
   const clearUsuario = useUsuarioStore((state) => state.clearUsuario);
   const [loading, setLoading] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
+
+  // ✅ Esperar que Zustand hidrate desde localStorage
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
 
   useEffect(() => {
-    const rutasPublicas = ['/_api/login', '/_api/registro'];
+    if (!hydrated) return;
+
+    const rutasPublicas = ['/_api/Login/login', '/_api/registro/registro'];
 
     if (rutasPublicas.includes(router.pathname)) {
       setLoading(false);
       return;
     }
 
-    if (!usuario?.id) {
+    if (!usuario) {
       clearUsuario?.();
-      router.push('/_api/login');
+      router.push('/_api/Login/login');
     } else {
       setLoading(false);
     }
-  }, [router.pathname, usuario]);
+  }, [router.pathname, usuario, hydrated]);
 
-  if (loading) return <div>Cargando...</div>;
+  if (!hydrated || loading) return <LoadingScreen />;
 
-  return (
-    <>
-      <Component {...pageProps} />
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        transition={Slide}
-        rtl={false}
-        pauseOnVisibilityChange
-        draggable
-        pauseOnHover
-      />
-    </>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;

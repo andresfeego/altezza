@@ -13,3 +13,15 @@ export async function loginSocial(correo) {
     body: { correo }
   });
 }
+
+export async function getEventosActivos() {
+  return await getDB('/eventos/activos', { method: 'GET' });
+}
+
+export async function getEventosInactivos() {
+  return await getDB('/eventos/inactivos', { method: 'GET' });
+}
+
+export async function getResumenEventoById(id) {
+  return await getDB('/resumenEvento/' + id, { method: 'GET' });
+}
