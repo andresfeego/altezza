@@ -4,7 +4,6 @@ export async function getDB(endpoint, options = {}) {
   
     const config = {
       method,
-      credentials: 'include', // 🔥 necesario para que el navegador envíe/reciba cookies
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
