@@ -1,8 +1,9 @@
+// components/ui/LoadingScreen.js
 import styles from './LoadingScreen.module.scss';
 import Image from 'next/image';
-import { BarLoader  } from 'react-spinners';
+import { BarLoader } from 'react-spinners';
 
-export default function LoadingScreen() {
+export default function LoadingScreen({ mensaje = "Cargando..." }) {
   return (
     <div className={styles.loadingContainer}>
       <div className={styles.logoWrapper}>
@@ -12,8 +13,8 @@ export default function LoadingScreen() {
           height={90}
           alt="Altezza Logo"
         />
-        <span className={styles.cargando}>Cargando..</span>
-        <BarLoader  color="#000" size={40} />
+        <span className={styles.cargando}>{mensaje}</span>
+        <BarLoader color="#000" size={40} />
       </div>
     </div>
   );

@@ -1,14 +1,16 @@
-import { setDB } from './helpersSetDB';
+import { setDB } from '@/components/initialized/data/SetDB';
 
-export async function uploadImagenEvento({ codigoEvento, modulo, archivos }) {
-  const formData = new FormData();
+export const uploadImagenEvento = async (file, idEvento, modulo = 'datos_evento') => {
+  try {
+    const formData = new FormData();
+    formData.append('imagen', file);
+    formData.append('codigoEvento', idEvento);
+    formData.append('modulo', modulo);
 
-  formData.append('codigoEvento', codigoEvento);
-  formData.append('modulo', modulo);
-
-  archivos.forEach((archivo) => {
-    formData.append('imagenes', archivo);
-  });
-
-  return await setDB('/uploadImagenEvento', formData);
-}
+    const res = await setDB('/uploadImagenEvento', formData);
+    return res?.url || null; // debe ser la URL del archivo en el servidor
+  } catch (err) {
+    console.error('Error al subir imagen del evento:', err);
+    return null;
+  }
+};

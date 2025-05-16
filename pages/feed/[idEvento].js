@@ -11,7 +11,6 @@ export default function PaginaFeedEvento() {
   useEffect(() => {
     if (idEvento) {
       getResumenEventoById(idEvento).then((data) => {
-        console.log(data)
         setEvento(data);
       });
     }

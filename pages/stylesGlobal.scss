@@ -56,6 +56,27 @@ body .MuiBox-root:first-child {
     font-size: 1em !important;
   }
 
+  button {
+  padding: 0.6rem 1.2rem;
+  background-color: #ec9fb5; // uno de los tonos rosa de Altezza
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #d78ca2; // un tono más oscuro para hover
+  }
+
+  &:disabled {
+    background-color: #e3cdd4;
+    cursor: not-allowed;
+  }
+}
+
+
   .MuiFormLabel-root, #ciudades {
     font-family: caviar !important;
   }

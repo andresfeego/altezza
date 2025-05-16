@@ -1,34 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BarraEvento from './BarraEvento';
+import ResumenDatosEvento from '@/components/eventos/modulos/datos_evento/ResumenDatosEvento';
+import LoadingScreen from '@/components/ui/LoadingScreen';
+import styles from './feedEvento.module.scss';
 
 export default function FeedEvento({ evento }) {
   const [mostrarMenu, setMostrarMenu] = useState(false);
-console.log(evento)
+console.log(evento);
+  if (!evento || !evento.idEvento) {
+    return <LoadingScreen mensaje="Cargando evento..." />;
+  }
+
   return (
-    <>
+    <div className={styles.contenedorFeed}>
       <BarraEvento
         tipo={evento.nombreTipoEvento}
         nombre={evento.nombreEvento}
       />
 
-      <div style={{ padding: '1rem' }}>
-        <section>
-          <h3 style={{ marginBottom: '0.5rem' }}>Resumen: Datos del evento</h3>
-          <p><strong>Nombre:</strong> {evento.nombreEvento}</p>
-          <p><strong>Lugar:</strong> {evento.nombreLugarRecepcion}</p>
-          <p>
-            <strong>Fecha:</strong>{' '}
-            {(() => {
-              const fecha = new Date(evento.fechaHoraCeremonia);
-              const dia = String(fecha.getDate()).padStart(2, '0');
-              const mes = fecha.toLocaleString('es-CO', { month: 'short' }).replace('.', '');
-              const anio = fecha.getFullYear();
-              return `${dia}-${mes.charAt(0).toUpperCase() + mes.slice(1)}-${anio}`;
-            })()}
-          </p>
-        </section>
+      <div className={styles.gridModulos}>
+        <ResumenDatosEvento evento={evento} />
       </div>
-
-    </>
+    </div>
   );
 }

@@ -1,0 +1,22 @@
+// components/eventos/modulos/datos_evento/resumenDatosEvento.module.scss
+
+.contenedorResumen {
+  flex: 1 1 320px; 
+  background: #fff;
+  padding: 1.5rem;
+  max-width: fit-content;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.contenedorResumen:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.contenedorResumen h3 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}

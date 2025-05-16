@@ -1,0 +1,60 @@
+.datosEvento {
+  max-width: $max-content-width;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.datosEvento h2{
+  margin-bottom: 32px;
+  font-size: 2rem;
+}
+
+.contentDatosEvento{
+  display: flex;
+  gap: 32px;
+}
+
+.imagenWrapper {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1 / 1; // ✅ cuadrado real en CSS moderno
+  background-color: #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.imagenEvento {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.iconoPlaceholder {
+  color: #ccc;
+}
+
+.botonEditar {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  padding: 0.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.botonEditar:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
