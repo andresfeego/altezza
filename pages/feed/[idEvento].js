@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getResumenEventoById } from '@/components/initialized/data/helpersGetDB';
 import FeedEvento from '@/components/eventos/feed/FeedEvento';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 export default function PaginaFeedEvento() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function PaginaFeedEvento() {
     }
   }, [idEvento]);
 
-  if (!evento) return <div>Cargando evento...</div>;
+  if (!evento) return <LoadingScreen mensaje="Cargando evento..." />;
 
   return <FeedEvento evento={evento} />;
 }
