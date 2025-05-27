@@ -21,7 +21,6 @@ export default function Home() {
   return (
     <div className={`${styles.containerHome}`}>
       <ListaEventos eventos={activos} titulo="Eventos activos" />
-      
       <button onClick={() => setMostrarInactivos(prev => !prev)} style={{ margin: '20px' }}>
         {mostrarInactivos ? 'Ocultar inactivos' : 'Mostrar inactivos'}
       </button>

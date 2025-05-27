@@ -1,0 +1,27 @@
+.btnCircular {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: $white0;
+  border: 1px solid $primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c25887;
+  cursor: pointer;
+  transition: background 0.3s;
+  padding: 0;
+
+  &:hover {
+    background-color: #c25887;
+  svg {
+    color: $white0;
+  }
+  }
+
+  svg {
+    color: #c25887;
+    width: 24px;
+    height: 24px;
+  }
+}

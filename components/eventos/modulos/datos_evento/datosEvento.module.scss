@@ -6,7 +6,22 @@
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
 
+.menuSuperior {
+  position: absolute;
+  top: 0;
+  right: 0;
+   button {
+    min-width: 36px;
+    min-height: 36px;
+  }
+}
 .datosEvento h2{
   margin-bottom: 32px;
   font-size: 2rem;

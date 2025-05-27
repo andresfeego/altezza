@@ -4,11 +4,16 @@
   padding: 6rem 1rem;
 }
 
+.titleWrapper{
+  display: flex;
+}
+
 .titulo {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
   text-align: left;
+  margin-right: 24px;
 }
 
 .grid {

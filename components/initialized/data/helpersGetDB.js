@@ -7,12 +7,6 @@ export async function loginUsuario(correo, pass) {
   });
 }
 
-export async function loginSocial(correo) {
-  return await getDB('/usuario/loginSocial', {
-    method: 'POST',
-    body: { correo }
-  });
-}
 
 export async function getEventosActivos() {
   return await getDB('/eventos/activos', { method: 'GET' });
@@ -34,3 +28,11 @@ export const getDetalleEvento = async (idEvento) => {
     return null;
   }
 };
+
+export async function getTiposEvento() {
+  return await getDB('/tiposEvento', { method: 'GET' });
+}
+
+export async function getLugares() {
+  return await getDB('/lugares', { method: 'GET' });
+}

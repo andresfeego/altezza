@@ -14,3 +14,18 @@ export const uploadImagenEvento = async (file, idEvento, modulo = 'datos_evento'
     return null;
   }
 };
+
+export const crearEventoBasico = async ({ id, nombre, idTipoEvento, fechaHoraRecepcion, idLugarRecepcion }) => {
+  try {
+    return await setDB('/crearEvento', {
+      id,
+      nombre,
+      idTipoEvento,
+      fechaHoraRecepcion,
+      idLugarRecepcion
+    }, 'POST');
+  } catch (err) {
+    console.error('Error al crear evento:', err);
+    return null;
+  }
+};

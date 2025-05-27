@@ -5,8 +5,6 @@ export const basico = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     height: 'fit-content',
-    width: 'fit-content',
-    minWidth: '350px',
     backgroundColor: 'white', 
     color: '#414042',
     borderRadius: "20px",
