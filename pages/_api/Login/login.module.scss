@@ -2,9 +2,8 @@
 
 
 .loginContainer {
-  background: url('/images/bg-login.jpg') no-repeat center center fixed;
+  background: url('/images/bg-login.jpg') -8.5rem center / cover no-repeat;
   background-size: 111%;
-  background-position-x: -8.5rem;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -120,15 +119,15 @@
   }
 }
 
-@media only screen and (max-width: 414px) {
+@media only screen and (max-width: 450px) {
 
   .loginContainer {
+    background-position: 53% center;
     background-size: cover;
-    background-position-x: -21rem;
   }
 
   .curva{
-    width: 62vw;
+    width: 68vw;
   }
   
 }

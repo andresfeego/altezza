@@ -5,11 +5,15 @@ import useUsuarioStore from '@/components/initialized/stored/useUsuarioStore';
 import './app.scss';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import NextTopLoader from 'nextjs-toploader';
+import UserMenuButton from '@/components/ui/UserMenuButton';
+import { getHomePathByRole } from '@/components/constants/roles';
+import SideMenu from '@/components/navigation/SideMenu';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const usuario = useUsuarioStore((state) => state.usuario);
   const clearUsuario = useUsuarioStore((state) => state.clearUsuario);
+  const dataUsuario = useUsuarioStore((state) => state.dataUsuario);
   const [loading, setLoading] = useState(true);
   const [hydrated, setHydrated] = useState(false);
 
@@ -36,7 +40,28 @@ function MyApp({ Component, pageProps }) {
     }
   }, [router.pathname, usuario, hydrated]);
 
+  useEffect(() => {
+    if (!hydrated || !usuario) return;
+    const roleHome = getHomePathByRole(dataUsuario?.rol);
+    const isRoleHomeRoute =
+      router.pathname.startsWith('/home/admin') ||
+      router.pathname.startsWith('/home/cliente') ||
+      router.pathname.startsWith('/home/organizador') ||
+      router.pathname.startsWith('/home/colaborador');
+
+    if (router.pathname === '/' && roleHome && router.pathname !== roleHome) {
+      router.replace(roleHome);
+      return;
+    }
+
+    if (isRoleHomeRoute && roleHome && !router.pathname.startsWith(roleHome)) {
+      router.replace(roleHome);
+    }
+  }, [router.pathname, hydrated, usuario, dataUsuario?.rol]);
+
   if (!hydrated || loading) return <LoadingScreen />;
+
+  const hiddenMenuPaths = ['/_api/Login/login', '/_api/registro/registro'];
 
   return (
   <>
@@ -53,7 +78,9 @@ function MyApp({ Component, pageProps }) {
             zIndex={1600}
             showAtBottom={false}
           />
+  {usuario && <SideMenu hiddenPaths={hiddenMenuPaths} />}
   <Component {...pageProps} />
+  {usuario && <UserMenuButton />}
   </>
   );
 }

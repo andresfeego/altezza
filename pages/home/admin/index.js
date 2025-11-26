@@ -1,5 +1,5 @@
 import AdminHome from '@/components/home/AdminHome';
 
-export default function Home() {
+export default function AdminHomePage() {
   return <AdminHome />;
 }

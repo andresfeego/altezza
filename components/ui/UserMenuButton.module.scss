@@ -1,0 +1,94 @@
+@import '../initialized/variables.scss';
+
+.container {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 1700;
+}
+
+.fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $primary 0%, $primaryDark 100%);
+  color: $white0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+}
+
+.menu {
+  min-width: 280px;
+  background: $white0;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  border: 1px solid $primaryTransparent;
+}
+
+.userInfo {
+  padding: 12px 14px 4px 14px;
+  color: $secondary;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.2;
+}
+
+.role {
+  font-size: 0.65rem;
+  color: $secondaryDark;
+  margin-top: 2px;
+}
+
+.divider {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.menuButton {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: $secondary;
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menuButtonIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: $secondaryDark;
+}
+
+.menuButton:hover {
+  background: rgba($primary, 0.12);
+  color: $secondaryDark;
+}

@@ -1,0 +1,11 @@
+@import '../initialized/variables.scss';
+
+.containerHome {
+  max-width: $max-content-width;
+  display: block;
+  margin: 0 auto;
+}
+
+.toggleButton {
+  margin: 20px 0;
+}

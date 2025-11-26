@@ -21,6 +21,7 @@ const useUsuarioStore = create(
       name: 'altezza-usuario', // 👈 clave diferente a 'mako-usuario'
       partialize: (state) => ({
         usuario: state.usuario,
+        dataUsuario: state.dataUsuario,
         uiPermisos: state.uiPermisos,
       }),
     }

@@ -1,0 +1,138 @@
+@import '../initialized/variables.scss';
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 62px;
+  z-index: 1400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: transform 0.25s ease;
+}
+
+.shell {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.path {
+  fill: $secondary;
+}
+
+.items {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+.item {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  color: $white0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  transform: translateX(0);
+  position: relative;
+}
+
+.item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.active {
+  background: $white0;
+  color: $secondary;
+  border-color: $gray8;
+  transform: translateX(20px);
+}
+
+.icon {
+  font-size: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 105%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: $white0;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.item:hover::after {
+  opacity: 1;
+  transform: translate(6px, -50%);
+}
+
+@media (max-width: 450px) {
+  .menu {
+    transform: translateX(-110%);
+    pointer-events: none;
+  }
+
+  .mobile {
+    display: flex;
+  }
+
+  .open {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .mobileToggle {
+    position: fixed;
+    top: 16px;
+  left: 16px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  background: $secondary;
+  color: $white0;
+  border: none;
+  display: grid;
+  place-items: center;
+    z-index: 1500;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 1399;
+  }
+}

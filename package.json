@@ -41,7 +41,7 @@
     "zustand": "^5.0.3"
   },
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev -p 3002",
     "build": "next build",
     "start": "nextr start"
   },
