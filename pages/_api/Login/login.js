@@ -96,7 +96,7 @@ export default function Login() {
                 onChange={(e) => setPass(e.target.value)}
               />
               <button type="submit" disabled={cargando}>
-                {cargando ? 'Cargando...' : 'Iniciar sesión'}
+                {cargando ? 'Cargando...' : <u>Iniciar sesión</u>}
               </button>
               {error && <p className={styles.error}>{error}</p>}
           </form>

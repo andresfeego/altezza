@@ -25,7 +25,7 @@ export default function LoginForm() {
     <div>
       <input value={correo} onChange={(e) => setCorreo(e.target.value)} placeholder="Correo" />
       <input type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Contraseña" />
-      <button onClick={handleLogin}>Iniciar sesión</button>
+      <button onClick={handleLogin}><u>Iniciar sesión</u></button>
     </div>
   );
 }
