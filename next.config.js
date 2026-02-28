@@ -4,9 +4,13 @@ const withImages = require('next-images');
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const HOST_NAME = isProd
-  ? 'https://feegosystem.com/proxyPassthrough.php?path=/api/responseAltezza'
-  : 'http://127.0.0.1:3020/api/responseAltezza';
+// Backend base URL for Altezza endpoints.
+// In VPS deployments we proxy same-origin:
+//   /api/responseAltezza/*  -> backend-altezza (3022)
+// so no external feegosystem proxy is needed.
+const HOST_NAME = process.env.HOST_NAME || (isProd
+  ? '/api/responseAltezza'
+  : 'http://127.0.0.1:3022/api/responseAltezza');
 
 console.log("NODE_ENV:", process.env.NODE_ENV);
 console.log("HOST_NAME:", HOST_NAME);
