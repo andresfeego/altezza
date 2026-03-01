@@ -13,7 +13,7 @@
 - TODO: describir objetivo del módulo.
 
 ## UI / Pantallas
-- TODO: listar pantallas/componentes relevantes.
+- Page: `pages/evento/pendientes/pendientes.js`
 
 ## Datos / Campos
 - TODO: listar campos que muestra/edita.
@@ -28,4 +28,4 @@
 - TODO
 
 ## Notas
-- TODO
+- Pantalla placeholder (no hay lógica de datos visible en el código actual).

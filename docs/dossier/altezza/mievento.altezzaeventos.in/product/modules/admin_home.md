@@ -13,7 +13,7 @@
 - TODO: describir objetivo del módulo.
 
 ## UI / Pantallas
-- TODO: listar pantallas/componentes relevantes.
+- UI entry: `pages/home/admin/index.js + components/home/AdminHome.js`
 
 ## Datos / Campos
 - TODO: listar campos que muestra/edita.
@@ -28,4 +28,4 @@
 - TODO
 
 ## Notas
-- TODO
+- Pantalla placeholder (estructura base creada, falta lógica/datos).

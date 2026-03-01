@@ -13,7 +13,7 @@
 - TODO: describir objetivo del módulo.
 
 ## UI / Pantallas
-- TODO: listar pantallas/componentes relevantes.
+- Page: `pages/evento/invitados/invitados.js` (placeholder: "Hola mundo")
 
 ## Datos / Campos
 - TODO: listar campos que muestra/edita.
@@ -28,4 +28,4 @@
 - TODO
 
 ## Notas
-- TODO
+- El backend sí tiene endpoints de invitados/invitaciones; falta implementar UI. Ver `modules/invitados.md`.

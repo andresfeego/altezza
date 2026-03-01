@@ -13,16 +13,18 @@
 - TODO: describir objetivo del módulo.
 
 ## UI / Pantallas
-- TODO: listar pantallas/componentes relevantes.
+- Page: `pages/evento/feed/[idEvento].js`
+- Component: `components/eventos/feed/FeedEvento.js`
 
 ## Datos / Campos
-- TODO: listar campos que muestra/edita.
+- Usa `idEvento` desde la URL.
+- Consume resumen del evento (nombreEvento, fechaEvento, etc. según backend).
 
 ## Reglas de negocio
 - TODO
 
 ## API / Endpoints
-- TODO
+- GET `/resumenEvento/:idEvento` (helpersGetDB.getResumenEventoById)
 
 ## Estados / Permisos
 - TODO

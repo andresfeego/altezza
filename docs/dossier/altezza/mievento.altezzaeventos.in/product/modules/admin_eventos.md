@@ -13,7 +13,9 @@
 - TODO: describir objetivo del módulo.
 
 ## UI / Pantallas
-- TODO: listar pantallas/componentes relevantes.
+- Page: `pages/admin/eventos/index.js`
+- Component: `components/home/AdminEventos.js`
+- List: `components/eventos/ListaEventos.js` (incluye `ModalCrearEvento`)
 
 ## Datos / Campos
 - TODO: listar campos que muestra/edita.
@@ -22,10 +24,11 @@
 - TODO
 
 ## API / Endpoints
-- TODO
+- GET `/eventos/activos` (helpersGetDB.getEventosActivos)
+- GET `/eventos/inactivos` (helpersGetDB.getEventosInactivos)`
 
 ## Estados / Permisos
 - TODO
 
 ## Notas
-- TODO
+- Muestra eventos activos y permite alternar vista de inactivos.

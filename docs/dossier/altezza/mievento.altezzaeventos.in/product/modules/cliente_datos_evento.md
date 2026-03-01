@@ -28,4 +28,4 @@
 - TODO
 
 ## Notas
-- TODO
+- Implementación principal documentada en `modules/datos_evento.md`.
