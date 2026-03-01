@@ -15,6 +15,7 @@ Esta carpeta describe **lo que ya existe hoy en el código** (frontend + backend
 ## Índice
 
 - [Glosario](./glossary.md)
+- [Resumen de módulos (menús/roles)](./modules/_resumen-modulos.md)
 - Módulos
   - [Usuarios](./modules/usuarios.md)
   - [Eventos](./modules/eventos.md)
