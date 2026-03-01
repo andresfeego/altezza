@@ -15,13 +15,13 @@ Esta carpeta describe **lo que ya existe hoy en el código** (frontend + backend
 ## Índice
 
 - [Glosario](./glossary.md)
-- [Resumen de módulos (menús/roles)](./modules/_resumen-modulos.md)
+- [Resumen de módulos (menús/roles)](./modules/shared/_resumen-modulos.md)
 - Módulos
-  - [Usuarios](./modules/usuarios.md)
-  - [Eventos](./modules/eventos.md)
-  - [Datos del evento](./modules/datos_evento.md)
-  - [Invitados](./modules/invitados.md)
-  - [Mesas](./modules/mesas.md)
+  - [Usuarios](./modules/shared/usuarios.md)
+  - [Eventos](./modules/shared/eventos.md)
+  - [Datos del evento](./modules/shared/datos_evento.md)
+  - [Invitados](./modules/shared/invitados.md)
+  - [Mesas](./modules/shared/mesas.md)
 
 - Flujos
   - [Login](./flows/auth-login.md)
@@ -37,40 +37,49 @@ Esta carpeta describe **lo que ya existe hoy en el código** (frontend + backend
 
 ## Especificación por módulos (archivos)
 
+### Shared (base)
+- `modules/shared/usuarios.md`
+- `modules/shared/eventos.md`
+- `modules/shared/datos_evento.md`
+- `modules/shared/invitados.md`
+- `modules/shared/mesas.md`
+- `modules/shared/_resumen-modulos.md`
+
 ### Admin
-- `modules/admin_home.md`
-- `modules/admin_eventos.md`
-- `modules/admin_mobiliario.md`
-- `modules/admin_alquiler.md`
-- `modules/admin_cotizador.md`
-- `modules/admin_frases.md`
-- `modules/admin_usuarios.md`
+- `modules/admin/admin_home.md`
+- `modules/admin/admin_eventos.md`
+- `modules/admin/admin_mobiliario.md`
+- `modules/admin/admin_alquiler.md`
+- `modules/admin/admin_cotizador.md`
+- `modules/admin/admin_frases.md`
+- `modules/admin/admin_usuarios.md`
 
 ### Cliente
-- `modules/cliente_feed_evento.md`
-- `modules/cliente_datos_evento.md`
-- `modules/cliente_calculador_trago.md`
-- `modules/cliente_decoracion.md`
-- `modules/cliente_fotos_compartidas.md`
-- `modules/cliente_inspiracion.md`
-- `modules/cliente_invitados.md`
-- `modules/cliente_paletas_colores.md`
-- `modules/cliente_pastel.md`
-- `modules/cliente_pendientes.md`
-- `modules/cliente_timming.md`
-- `modules/cliente_tips_boda.md`
-- `modules/cliente_wedding_day.md`
+- `modules/cliente/cliente_feed_evento.md`
+- `modules/cliente/cliente_datos_evento.md`
+- `modules/cliente/cliente_calculador_trago.md`
+- `modules/cliente/cliente_decoracion.md`
+- `modules/cliente/cliente_fotos_compartidas.md`
+- `modules/cliente/cliente_inspiracion.md`
+- `modules/cliente/cliente_invitados.md`
+- `modules/cliente/cliente_paletas_colores.md`
+- `modules/cliente/cliente_pastel.md`
+- `modules/cliente/cliente_pendientes.md`
+- `modules/cliente/cliente_timming.md`
+- `modules/cliente/cliente_tips_boda.md`
+- `modules/cliente/cliente_wedding_day.md`
 
 ### Organizador (propuesto)
-- `modules/organizador_dashboard.md`
-- `modules/organizador_alquiler_mobiliario.md`
-- `modules/organizador_agenda.md`
-- `modules/organizador_pendientes.md`
-- `modules/organizador_ajustes.md`
+- `modules/organizador/organizador_dashboard.md`
+- `modules/organizador/organizador_alquiler_mobiliario.md`
+- `modules/organizador/organizador_agenda.md`
+- `modules/organizador/organizador_pendientes.md`
+- `modules/organizador/organizador_ajustes.md`
 
 ### Colaborador (propuesto)
-- `modules/colaborador_dashboard.md`
-- `modules/colaborador_checklist_montaje.md`
-- `modules/colaborador_checklist_recogida.md`
-- `modules/colaborador_agenda.md`
-- `modules/colaborador_ajustes.md`
+- `modules/colaborador/colaborador_dashboard.md`
+- `modules/colaborador/colaborador_checklist_montaje.md`
+- `modules/colaborador/colaborador_checklist_recogida.md`
+- `modules/colaborador/colaborador_agenda.md`
+- `modules/colaborador/colaborador_ajustes.md`
+
