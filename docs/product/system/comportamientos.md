@@ -1,3 +1,5 @@
+← Volver al índice: [docs/product/README.md](../README.md)
+
 # Comportamientos del sistema — Altezza (MiEvento)
 
 > Fuente: `uploads/andres/inbox/2026-03-07T00-05-16-051Z__altezza_modulos_panel.md`

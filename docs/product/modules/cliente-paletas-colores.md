@@ -1,3 +1,5 @@
+← Volver al índice: [docs/product/README.md](../README.md)
+
 # 🎨 Paletas Colores
 
 ## Rol
