@@ -6,6 +6,10 @@ import remarkGfm from 'remark-gfm'
 
 import ManualLayout from './_layout'
 
+function stripBackLinks(md) {
+  return String(md || '').split(/\n/).filter((l) => !l.startsWith('← Volver al índice:')).join('\n')
+}
+
 function buildNav() {
   return [
     {
@@ -61,7 +65,7 @@ export default function ManualIndex({ md }) {
   const nav = buildNav()
   return (
     <ManualLayout title="Índice" nav={nav}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{md}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{stripBackLinks(md)}</ReactMarkdown>
     </ManualLayout>
   )
 }
