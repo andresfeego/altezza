@@ -7,7 +7,7 @@ export default function ManualLayout({ title, nav, children }) {
     <div className="manualRoot">
       <aside className={"manualAside" + (navOpen ? " isOpen" : "")}>
         <div className="manualBrand">
-          <div className="manualTitle">Manual de producto</div>
+          <div className="manualTitle">Manual de producto v1</div>
           <div className="manualSub">Altezza (LAB)</div>
         </div>
 
