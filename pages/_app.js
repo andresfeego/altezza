@@ -61,7 +61,10 @@ function MyApp({ Component, pageProps }) {
 
   if (!hydrated || loading) return <LoadingScreen />;
 
-  const hiddenMenuPaths = ['/_api/Login/login', '/_api/registro/registro'];
+  const hiddenMenuPaths = ['/_api/Login/login', '/_api/registro/registro',
+    '/manual',
+    '/manual/','
+];
 
   return (
   <>
