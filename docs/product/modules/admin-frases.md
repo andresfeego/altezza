@@ -2,10 +2,11 @@
 
 # 💬 Admin Frases
 
-Descripción:
+## Descripción
+
 Módulo donde el administrador crea y gestiona **frases cortas de estilo inspiracional o tipo consejo**, pensadas para mostrarse en diferentes partes de la plataforma.
 
-Funciones:
+## Funciones
 
 - Crear nuevas frases
 - Editar frases
@@ -14,7 +15,8 @@ Funciones:
 - Clasificar frases por categoría o uso
 - Asociar frases a tipos de evento
 
-Estructura de clasificación:
+## Estructura de clasificación
+
 Las frases podrán organizarse mediante dos niveles de clasificación:
 
 1. **Tipo de evento** (definido en base de datos)
@@ -36,7 +38,8 @@ Las frases podrán organizarse mediante dos niveles de clasificación:
    - Para quinceañera
    - Consejos generales
 
-Notas:
+## Notas
+
 Las frases tienen un estilo similar a publicaciones de **Instagram o consejos editoriales**, con redacción cercana y motivacional.
 
 Ejemplo de frase:

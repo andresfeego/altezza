@@ -2,10 +2,11 @@
 
 # ✅ Pendientes
 
-Descripción:
+## Descripción
+
 Módulo que funciona como una **lista de tareas compartida** entre los clientes del evento y el equipo de Altezza. Permite registrar pendientes, hacer seguimiento y coordinar las actividades necesarias para la organización del evento.
 
-Funciones:
+## Funciones
 
 - Crear nuevos pendientes
 - Editar pendientes
@@ -13,7 +14,8 @@ Funciones:
 - Visualizar lista de pendientes del evento
 - Identificar quién creó cada pendiente
 
-Notas:
+## Notas
+
 Este módulo permite una comunicación operativa entre ambas partes:
 
 - **Altezza → Cliente:** el equipo de Altezza puede crear tareas o solicitudes que los clientes deben completar (por ejemplo enviar información, confirmar proveedores, seleccionar opciones, etc.).

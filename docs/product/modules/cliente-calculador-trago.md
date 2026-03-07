@@ -2,17 +2,19 @@
 
 # 🍹 Calculador Trago
 
-Descripción:
+## Descripción
+
 Herramienta que ayuda a estimar la cantidad de bebidas necesarias para el evento según el número de invitados y la duración estimada de la celebración.
 
-Funciones:
+## Funciones
 
 - Ingresar número de invitados
 - Definir duración estimada del evento
 - Calcular cantidad aproximada de bebidas necesarias
 - Mostrar estimaciones por tipo de bebida
 
-Notas:
+## Notas
+
 El módulo permite calcular y guardar una estimación de bebidas para facilitar la planificación del evento.
 
 Preview - Feed Evento:

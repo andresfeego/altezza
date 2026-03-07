@@ -2,10 +2,11 @@
 
 # ⏱️ Timming
 
-Descripción:
+## Descripción
+
 Módulo que permite definir el **cronograma del evento**, especificando las actividades que ocurrirán durante el día del evento con su hora y descripción.
 
-Funciones:
+## Funciones
 
 - Crear pasos o actividades del evento
 - Definir hora de cada actividad
@@ -14,7 +15,8 @@ Funciones:
 - Editar o eliminar actividades
 - Generar una URL pública del timming del evento
 
-Notas:
+## Notas
+
 El timming puede compartirse mediante una **URL pública** con personas clave del evento como:
 
 - maestros de ceremonia

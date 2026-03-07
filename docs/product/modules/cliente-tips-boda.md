@@ -2,16 +2,18 @@
 
 # 💍 Tips Boda
 
-Descripción:
+## Descripción
+
 Módulo que muestra un **feed de consejos y frases inspiracionales** relacionados con la organización del evento.
 
-Funciones:
+## Funciones
 
 - Mostrar frases en formato de feed
 - Filtrar frases según el tipo de evento
 - Mostrar consejos relevantes para los protagonistas del evento
 
-Notas:
+## Notas
+
 El contenido de este módulo proviene del repositorio de frases administrado en **💬 Admin Frases**.
 
 Las frases pueden estar clasificadas por:

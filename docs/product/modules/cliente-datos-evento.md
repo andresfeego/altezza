@@ -2,17 +2,19 @@
 
 # 📋 Datos Evento
 
-Descripción:
+## Descripción
+
 Módulo que muestra la información básica del evento como nombre, lugar y fecha. Esta información es visible tanto para el cliente como para otros roles que participen en la organización del evento.
 
-Funciones:
+## Funciones
 
 - Mostrar nombre del evento
 - Mostrar lugar del evento
 - Mostrar fecha del evento
 - Permitir editar los datos del evento (según permisos)
 
-Notas:
+## Notas
+
 Este módulo contiene datos comunes del evento como:
 
 nombre del evento, lugar, fecha de ceremonia, fecha de recepción, fecha límite de confirmación, hashtag, número estimado de invitados, tipo de evento.

@@ -2,10 +2,11 @@
 
 # 📦 Admin Alquiler
 
-Descripción:
+## Descripción
+
 Módulo donde se gestionan las **solicitudes de alquiler de mobiliario realizadas por organizadores**. Permite construir un alquiler seleccionando ítems del catálogo, enviar la solicitud para cotización y gestionar todo el ciclo del alquiler hasta su aprobación.
 
-Funciones:
+## Funciones
 
 - Explorar catálogo de mobiliario
 - Buscar mobiliario por nombre o categoría
@@ -16,7 +17,7 @@ Funciones:
 - Registrar abonos y saldo pendiente
 - Cambiar estado del alquiler
 
-Flujo principal:
+## Flujo principal
 
 1. El organizador entra a **📊 Organizador Dashboard**.
 2. Selecciona la opción **Nuevo alquiler**.
@@ -31,13 +32,14 @@ Flujo principal:
 11. Puede existir iteración entre organizador y administrador hasta ajustar la cotización.
 12. Cuando el organizador presiona **Aprobar**, el alquiler cambia a estado **Aprobado**.
 
-Reglas:
+## Reglas
 
 - Cuando un alquiler queda **Aprobado**, los ítems quedan **bloqueados para la fecha del evento**.
 - Estos ítems aparecerán como **no disponibles o con advertencia** para otros organizadores.
 - El mismo bloqueo aplica para el módulo **🎨 Decoración** al planificar eventos.
 
-Notas:
+## Notas
+
 Dentro del alquiler siempre se mostrará:
 
 - total del alquiler

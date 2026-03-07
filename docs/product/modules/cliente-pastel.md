@@ -2,16 +2,18 @@
 
 # 🎂 Pastel
 
-Descripción:
+## Descripción
+
 Módulo donde el cliente puede guardar **referencias visuales de pasteles** para el evento. Funciona como una galería de inspiración específica para el pastel.
 
-Funciones:
+## Funciones
 
 - Subir fotos de referencia de pasteles
 - Visualizar galería de referencias
 - Eliminar imágenes de referencia
 
-Notas:
+## Notas
+
 En la parte superior del módulo se mostrará un **header con el proveedor de pasteles seleccionado para el evento**.
 
 El cliente solo podrá **ver el proveedor seleccionado**.

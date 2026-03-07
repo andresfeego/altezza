@@ -2,10 +2,11 @@
 
 # 💌 Invitaciones
 
-Descripción:
+## Descripción
+
 Módulo que permite crear y gestionar **invitaciones digitales del evento**.
 
-Funciones:
+## Funciones
 
 - Crear invitaciones digitales
 - Llenar la información de cada invitación
@@ -13,7 +14,8 @@ Funciones:
 - Generar un link único para cada invitación
 - Visualizar el estado de respuesta de cada invitado
 
-Notas:
+## Notas
+
 Cada invitación genera un **link individual** que puede compartirse con el invitado correspondiente.
 
 Desde ese link el invitado podrá responder su asistencia seleccionando una de estas opciones:

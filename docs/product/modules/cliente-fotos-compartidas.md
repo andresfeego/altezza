@@ -2,10 +2,11 @@
 
 # 📸 Fotos Compartidas
 
-Descripción:
+## Descripción
+
 Módulo que permite centralizar las fotos tomadas por los invitados durante el evento. El sistema utiliza un **hashtag del evento y un QR público** para que los asistentes puedan subir sus fotos fácilmente y compartir los recuerdos del evento.
 
-Funciones:
+## Funciones
 
 - Definir hashtag oficial del evento
 - Generar QR del álbum del evento

@@ -2,10 +2,11 @@
 
 # 🪑 Organizador Alquiler Mobiliario
 
-Descripción:
+## Descripción
+
 Módulo donde el organizador externo explora el **catálogo de mobiliario disponible para alquiler** y construye sus solicitudes de alquiler para eventos gestionados por él.
 
-Funciones:
+## Funciones
 
 - Visualizar catálogo de mobiliario disponible
 - Buscar mobiliario por nombre
@@ -14,7 +15,8 @@ Funciones:
 - Visualizar estado de cada alquiler
 - Consultar total, abonos y saldo pendiente de cada alquiler
 
-Notas:
+## Notas
+
 Este módulo se alimenta del inventario definido en **🪑 Admin Mobiliario**, pero para organizadores solo se mostrará el **mobiliario propio de Altezza**.
 
 El flujo esperado es similar a una experiencia de catálogo con selección tipo carrito:

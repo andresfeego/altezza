@@ -2,10 +2,11 @@
 
 # 🪑 Acomodación
 
-Descripción:
+## Descripción
+
 Módulo que permite visualizar la distribución de mesas del evento y organizar a los invitados en cada una de ellas.
 
-Funciones:
+## Funciones
 
 - Mostrar número de mesas
 - Visualizar la distribución de mesas
@@ -14,7 +15,8 @@ Funciones:
 - Generar una URL pública de consulta de mesas
 - Buscar invitados para ubicar su mesa
 
-Notas:
+## Notas
+
 El módulo presentará una vista general de las mesas del evento. Al hacer clic sobre una mesa se abrirá un **modal** donde se podrá gestionar la asignación o edición de invitados correspondientes a esa mesa.
 
 Adicionalmente, el sistema generará una **URL pública** donde los invitados podrán consultar la distribución de mesas del evento.

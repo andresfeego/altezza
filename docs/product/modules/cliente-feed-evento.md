@@ -2,17 +2,19 @@
 
 # 📰 Feed Evento
 
-Descripción:
+## Descripción
+
 Pantalla principal a la que accede el cliente después de iniciar sesión cuando tiene un evento asignado. Funciona como el punto de entrada a todos los módulos del evento y presenta un resumen visual de la información más importante mediante cards cliqueables.
 
-Funciones:
+## Funciones
 
 - Mostrar resumen del evento
 - Mostrar cards resumen de módulos habilitados
 - Permitir navegar a los diferentes módulos del evento
 - Mostrar contenido reciente o destacado de cada módulo
 
-Notas:
+## Notas
+
 Los módulos visibles en el menú del cliente se **filtran automáticamente** según los módulos que el administrador habilitó al crear el evento.
 
 El Feed del evento mostrará **cards tipo resumen**, y cada card será **cliqueable** para llevar al usuario al módulo correspondiente.

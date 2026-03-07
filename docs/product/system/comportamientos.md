@@ -8,7 +8,8 @@
 
 # 1) Acceso del administrador a eventos
 
-Descripción:
+## Descripción
+
 Comportamiento del sistema cuando el administrador entra a un evento desde el panel administrativo.
 
 Flujo:
@@ -20,7 +21,7 @@ Flujo:
 5. Dentro del evento, el administrador ve una interfaz muy similar a la del cliente, basada en módulos.
 6. El menú del evento para el administrador mostrará primero los **módulos administrativos por defecto** y después los módulos activos del evento.
 
-Reglas:
+## Reglas
 
 - El administrador puede entrar a cualquier evento desde su panel administrativo.
 - La vista interna del evento para administrador conserva una lógica similar a la experiencia del cliente, para mantener consistencia de navegación.
@@ -34,7 +35,8 @@ Reglas:
 
 # 2) Asignación de usuarios a eventos
 
-Descripción:
+## Descripción
+
 Proceso mediante el cual el administrador crea un evento, crea usuarios y posteriormente los vincula para que esos usuarios puedan trabajar dentro del evento como clientes.
 
 Flujo:
@@ -48,7 +50,7 @@ Flujo:
 7. El administrador asigna el usuario al evento.
 8. El usuario puede iniciar sesión usando las credenciales recibidas.
 
-Reglas:
+## Reglas
 
 - La contraseña inicial es generada automáticamente por el sistema.
 - El administrador puede copiarla o enviarla mediante WhatsApp.
@@ -59,7 +61,8 @@ Reglas:
 
 # 3) Acceso del usuario después del login
 
-Descripción:
+## Descripción
+
 Comportamiento del sistema cuando un **usuario con rol Cliente** inicia sesión.
 
 Flujo:
@@ -71,7 +74,7 @@ Flujo:
 5. En el Feed del evento el cliente verá el **menú con los módulos habilitados para su evento**.
 6. El Feed mostrará además **cards resumen cliqueables** de los módulos, con información reciente o destacada de cada uno.
 
-Reglas:
+## Reglas
 
 - Este comportamiento aplica **solo para usuarios con rol Cliente**.
 - Un usuario cliente sin evento asignado no puede acceder a los módulos del sistema.
@@ -84,13 +87,16 @@ Reglas:
 
 # 4) Sincronización en tiempo real de módulos operativos
 
-Descripción:
+## Descripción
+
 Los módulos operativos del evento deben sincronizar cambios en tiempo real entre colaboradores y administración para garantizar que todos los usuarios vean el mismo estado actualizado sin necesidad de recargar la página.
 
-Objetivo:
+## Objetivo
+
 Durante la operación de un evento muchos cambios ocurren rápidamente (por ejemplo carga de mobiliario, verificación de elementos o recogida al finalizar el evento). Por esta razón el sistema debe asegurar que todos los participantes estén viendo exactamente la misma información en todo momento.
 
-Casos de uso:
+## Casos de uso
+
 - Un colaborador marca un ítem como cargado en el camión.
 - Otro colaborador ve el cambio inmediatamente en su dispositivo.
 - El administrador también ve el cambio en su panel en tiempo real.
@@ -105,7 +111,8 @@ Reglas del sistema:
   - fecha y hora
   - estado actualizado del elemento
 
-Módulos afectados:
+## Módulos afectados
+
 La sincronización en tiempo real aplica especialmente a:
 
 - 🧰 Colaborador Checklist Montaje
@@ -113,7 +120,8 @@ La sincronización en tiempo real aplica especialmente a:
 - 📊 Colaborador Dashboard
 - vistas administrativas del evento
 
-Requerimiento técnico:
+## Requerimiento técnico
+
 La plataforma debe utilizar una tecnología de comunicación en tiempo real (por ejemplo WebSockets) para emitir eventos de actualización cuando se modifique el estado de los elementos del evento.
 
 Esto garantiza que el sistema funcione correctamente durante la operación real de los eventos, donde múltiples usuarios interactúan simultáneamente con la misma información.

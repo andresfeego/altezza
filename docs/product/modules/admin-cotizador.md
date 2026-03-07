@@ -2,10 +2,11 @@
 
 # 💰 Admin Cotizador
 
-Descripción:
+## Descripción
+
 Módulo donde el equipo de Altezza crea y administra **cotizaciones completas de eventos**. Las cotizaciones se construyen mediante un formulario por pasos que permite estructurar una propuesta visual y económica para el cliente.
 
-Funciones:
+## Funciones
 
 - Crear nueva cotización
 - Editar cotización
@@ -13,7 +14,8 @@ Funciones:
 - Gestionar versiones de cotización
 - Exportar o compartir cotización con el cliente
 
-Flujo de creación de cotización:
+## Flujo de creación de cotización
+
 El administrador entra a **Nueva cotización** y completa un formulario estructurado por pasos:
 
 1. **Portada**
@@ -63,5 +65,6 @@ El administrador entra a **Nueva cotización** y completa un formulario estructu
    - Información de contacto de Altezza
    - Página o sección final estándar de la cotización
 
-Notas:
+## Notas
+
 El objetivo del módulo es permitir generar **documentos de cotización estructurados y visualmente claros** que presenten al cliente tanto el concepto creativo del evento como el presupuesto asociado.

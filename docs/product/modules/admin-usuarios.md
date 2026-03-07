@@ -2,10 +2,11 @@
 
 # 👤 Admin Usuarios
 
-Descripción:
+## Descripción
+
 Módulo donde el administrador crea y gestiona las cuentas de usuarios del sistema. Al crear un usuario, el sistema genera automáticamente una contraseña temporal que luego puede ser compartida con el usuario final.
 
-Funciones:
+## Funciones
 
 - Crear usuario
 - Editar usuario
@@ -15,7 +16,8 @@ Funciones:
 - Ver contraseña temporal generada por el sistema
 - Enviar contraseña al usuario por WhatsApp
 
-Notas:
+## Notas
+
 Cuando el administrador crea un usuario, el sistema genera automáticamente una contraseña aleatoria de **8 caracteres alfanuméricos**. Esta contraseña es visible para el administrador dentro del panel.
 
 El sistema genera también un **link de compartir por WhatsApp** que abre un mensaje prellenado con la contraseña. El número de destino se toma del **teléfono registrado en los datos del usuario**.

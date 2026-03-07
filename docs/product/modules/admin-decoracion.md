@@ -2,17 +2,19 @@
 
 # 🎨 Decoración
 
-Descripción:
+## Descripción
+
 Módulo de uso exclusivo del **administrador** donde se planifica el mobiliario y los elementos de decoración que deben llevarse a un evento.
 
-Funciones:
+## Funciones
 
 - Seleccionar ítems del inventario de mobiliario
 - Asociar mobiliario a un evento específico
 - Definir cantidades necesarias por ítem
 - Preparar listado de elementos que deben transportarse al evento
 
-Notas:
+## Notas
+
 Este módulo **no es visible para los clientes**.
 
 El administrador siempre tendrá acceso a este módulo dentro de cada evento, independientemente de los módulos habilitados para el cliente.
