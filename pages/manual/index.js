@@ -55,6 +55,29 @@ function buildNav() {
   ]
 }
 
+
+function SafeLink(props) {
+  const href = String(props?.href || '')
+  const isMd = href.endsWith('.md')
+  const isRelativeDoc = href && !href.startsWith('/') && !href.startsWith('http')
+  const shouldDisable = isMd || isRelativeDoc
+
+  if (shouldDisable) {
+    // Render as plain text to avoid 404s from README.md relative links.
+    return <span>{props.children}</span>
+  }
+
+  return (
+    <a
+      href={href}
+      target={href.startsWith('http') ? '_blank' : undefined}
+      rel={href.startsWith('http') ? 'noreferrer' : undefined}
+    >
+      {props.children}
+    </a>
+  )
+}
+
 export async function getStaticProps() {
   const p = path.join(process.cwd(), 'docs/product/README.md')
   const md = fs.readFileSync(p, 'utf8')
@@ -65,7 +88,7 @@ export default function ManualIndex({ md }) {
   const nav = buildNav()
   return (
     <ManualLayout title="Índice" nav={nav}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{stripBackLinks(md)}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ a: SafeLink }}>{stripBackLinks(md)}</ReactMarkdown>
     </ManualLayout>
   )
 }

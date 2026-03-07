@@ -27,7 +27,16 @@ export default function ManualLayout({ title, nav, children }) {
         </nav>
       </aside>
 
+      {navOpen && <div className="manualBackdrop" onClick={() => setNavOpen(false)} />}
+
       <main className="manualMain">
+        <div className="manualTopbar">
+          <button className="manualBurger" type="button" onClick={() => setNavOpen(true)} aria-label="Abrir navegación">
+            Menú
+          </button>
+          <div className="manualTopbarTitle">Manual</div>
+        </div>
+
         <div className="manualHeader">
           <h1 className="manualH1">{title}</h1>
         </div>
@@ -77,10 +86,10 @@ export default function ManualLayout({ title, nav, children }) {
         .manualGroup{ padding: 10px; border:1px solid var(--m-border); border-radius:14px; background:#fff; }
         .manualGroupTitle{ font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--m-muted); margin-bottom: 8px; }
         .manualLinks{ display:flex; flex-direction:column; gap: 6px; }
-        .manualLink{ font-size: 13px; color: var(--m-text); text-decoration:none; padding: 8px 10px; border-radius: 10px; border: 1px solid transparent; }
+        .manualLink{ font-size: 14px; color: var(--m-text); text-decoration:none; padding: 10px 12px; border-radius: 12px; border: 1px solid transparent; min-height: 44px; display:flex; align-items:center; }
         .manualLink:hover{ background: var(--m-hover); border-color: var(--m-border); }
 
-        .manualMain{ padding: 16px; }
+        .manualMain{ padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
         .manualHeader{ padding: 14px 16px; border:1px solid var(--m-border); border-radius:14px; background:#fff; }
         .manualH1{ margin:0; font-size: 18px; font-weight: 950; }
         .manualContent{ margin-top: 12px; padding: 16px; border:1px solid var(--m-border); border-radius:14px; background:#fff; }
@@ -97,14 +106,25 @@ export default function ManualLayout({ title, nav, children }) {
 
         /* Mobile: top bar + drawer */
         @media (max-width: 980px){
+          .manualTopbar{ position: sticky; top: 0; z-index: 20; display:flex; align-items:center; gap: 10px; padding: 10px 2px; }
+          .manualTopbarTitle{ font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--m-muted); font-weight: 800; }
+          .manualBurger{ -webkit-tap-highlight-color: transparent; min-height: 44px; min-width: 92px; }
+          .manualHeader{ margin-top: 6px; }
+
           .manualRoot{ grid-template-columns: 1fr; }
-          .manualAside{ position: fixed; left: 0; top: 0; bottom: 0; width: 86vw; max-width: 360px; transform: translateX(-105%); transition: transform .22s ease; z-index: 50; }
+          .manualAside{ position: fixed; left: 0; top: 0; bottom: 0; width: 86vw; max-width: 380px; transform: translateX(-105%); transition: transform .22s ease; z-index: 50; padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
           .manualAside.isOpen{ transform: translateX(0); }
           .manualMain{ padding: 12px; }
           .manualHeader{ position: sticky; top: 0; z-index: 10; }
           .manualTopbar{ display:flex; align-items:center; gap:10px; }
-          .manualBurger{ border:1px solid var(--m-border); background:#fff; border-radius: 12px; padding: 10px 12px; font-size: 12px; }
-          .manualBackdrop{ position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 40; }
+          .manualBurger{ border:1px solid var(--m-border); background:#fff; border-radius: 14px; padding: 12px 14px; font-size: 12px; font-weight: 900; box-shadow: 0 10px 24px rgba(15,23,42,.08); }
+          .manualBackdrop{ position: fixed; inset: 0; background: rgba(2,6,23,.42); backdrop-filter: blur(2px); z-index: 40; }
+        }
+
+        @media (max-width: 430px){
+          .manualHeader{ padding: 12px 14px; }
+          .manualH1{ font-size: 17px; }
+          .manualContent{ padding: 14px; }
         }
 
       `}</style>
