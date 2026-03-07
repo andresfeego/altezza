@@ -27,7 +27,9 @@ function MyApp({ Component, pageProps }) {
 
     const rutasPublicas = ['/_api/Login/login', '/_api/registro/registro'];
 
-    if (rutasPublicas.includes(router.pathname)) {
+    const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
+
+    if (rutasPublicas.includes(router.pathname) || isManual) {
       setLoading(false);
       return;
     }
@@ -60,9 +62,7 @@ function MyApp({ Component, pageProps }) {
   }, [router.pathname, hydrated, usuario, dataUsuario?.rol]);
 
   if (!hydrated || loading) return <LoadingScreen />;
-
-  const hiddenMenuPaths = ["/_api/Login/login", "/_api/registro/registro", "/manual", "/manual/"];
-
+  const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
 
   return (
   <>
@@ -79,9 +79,9 @@ function MyApp({ Component, pageProps }) {
             zIndex={1600}
             showAtBottom={false}
           />
-  {usuario && <SideMenu hiddenPaths={hiddenMenuPaths} />}
+  {usuario && !isManual && <SideMenu />}
   <Component {...pageProps} />
-  {usuario && <UserMenuButton />}
+  {usuario && !isManual && <UserMenuButton />}
   </>
   );
 }
