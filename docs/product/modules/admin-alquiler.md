@@ -2,44 +2,46 @@
 
 # 📦 Admin Alquiler
 
-## Rol
-ADMIN
+Descripción:
+Módulo donde se gestionan las **solicitudes de alquiler de mobiliario realizadas por organizadores**. Permite construir un alquiler seleccionando ítems del catálogo, enviar la solicitud para cotización y gestionar todo el ciclo del alquiler hasta su aprobación.
 
-## Descripción
-Gestión de solicitudes de alquiler realizadas por organizadores. Permite construir alquiler, cotizar, iterar ajustes y aprobar.
+Funciones:
 
-## Funciones
-- Explorar catálogo de mobiliario.
-- Buscar por nombre o categoría.
-- Agregar ítems a un alquiler (tipo carrito).
-- Crear solicitud de cotización.
-- Definir precios por unidad o paquete.
-- Calcular total.
-- Registrar abonos y saldo pendiente.
-- Cambiar estado del alquiler.
+- Explorar catálogo de mobiliario
+- Buscar mobiliario por nombre o categoría
+- Agregar ítems a un alquiler (tipo carrito de selección)
+- Crear solicitud de cotización
+- Definir precios por unidad o por paquete
+- Calcular total del alquiler
+- Registrar abonos y saldo pendiente
+- Cambiar estado del alquiler
 
-## Flujo principal
+Flujo principal:
 
 1. El organizador entra a **📊 Organizador Dashboard**.
-2. Selecciona **Nuevo alquiler**.
-3. El sistema muestra catálogo con buscador y categorías.
-4. El organizador agrega ítems como carrito.
-5. Presiona **Cotizar alquiler**.
-6. Estado: **Creado → Cotizando**.
-7. En admin aparece notificación de alquiler pendiente por cotizar.
-8. Admin define precios por unidad/paquete.
-9. Sistema calcula total.
-10. Estado: **Cotizando → Cotizado**.
-11. Puede existir iteración organizador↔admin.
-12. Organizador presiona **Aprobar** → estado **Aprobado**.
+2. Selecciona la opción **Nuevo alquiler**.
+3. El sistema muestra un **catálogo con buscador y menú de categorías** en la parte superior.
+4. El organizador puede **agregar ítems al alquiler** de forma similar a un carrito.
+5. Cuando termina la selección presiona el botón **Cotizar alquiler**.
+6. El alquiler cambia de estado **Creado → Cotizando**.
+7. En el dashboard administrativo de Altezza aparece una **notificación de alquiler pendiente por cotizar**.
+8. El administrador define precios por unidad o por paquete para cada ítem.
+9. El sistema calcula el **total del alquiler**.
+10. El alquiler cambia de estado **Cotizando → Cotizado**.
+11. Puede existir iteración entre organizador y administrador hasta ajustar la cotización.
+12. Cuando el organizador presiona **Aprobar**, el alquiler cambia a estado **Aprobado**.
 
-## Reglas
-- Al estar **Aprobado**, los ítems quedan **bloqueados para la fecha del evento**.
-- Ítems se muestran como no disponibles o con advertencia a otros organizadores.
-- El bloqueo aplica también a **🎨 Decoración** al planificar eventos.
+Reglas:
 
-## Notas
-Dentro del alquiler se muestra siempre:
-- total
-- abonos
+- Cuando un alquiler queda **Aprobado**, los ítems quedan **bloqueados para la fecha del evento**.
+- Estos ítems aparecerán como **no disponibles o con advertencia** para otros organizadores.
+- El mismo bloqueo aplica para el módulo **🎨 Decoración** al planificar eventos.
+
+Notas:
+Dentro del alquiler siempre se mostrará:
+
+- total del alquiler
+- abonos registrados
 - saldo pendiente
+
+Esto permite controlar financieramente cada alquiler dentro de la plataforma.

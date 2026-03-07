@@ -1,18 +1,14 @@
 ← Volver al índice: [docs/product/README.md](../README.md)
 
-# 📦 Colaborador — Checklist Recogida (propuesto)
+# 📦 Colaborador Checklist Recogida
 
-## Rol
-COLABORADOR
+Descripción:
+Módulo utilizado después del evento para verificar que todo el mobiliario utilizado sea recogido y cargado nuevamente al camión.
 
-## Descripción
-Checklist operativo para la recogida al finalizar el evento.
+Funciones:
+- Mostrar listado de mobiliario utilizado en el evento
+- Marcar ítems como recogidos
+- Ver progreso del checklist de recogida
 
-## Funciones
-- Lista de ítems a recoger.
-- Marcar ítems como cargados al camión.
-- Progreso general.
-
-## Reglas
-- Debe sincronizar en tiempo real.
-- Cada acción se guarda con usuario y timestamp.
+Notas:
+El listado se basa en los elementos definidos previamente en **🎨 Decoración** y sirve como control para asegurar que todo el mobiliario que salió al evento regrese correctamente.

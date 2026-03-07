@@ -2,14 +2,21 @@
 
 # 🎂 Pastel
 
-## Rol
-CLIENTE
+Descripción:
+Módulo donde el cliente puede guardar **referencias visuales de pasteles** para el evento. Funciona como una galería de inspiración específica para el pastel.
 
-## Descripción
-M�dulo para gestionar el pastel del evento.
+Funciones:
 
-## Relación con proveedores
-Puede vincular proveedor del tipo "Pasteles" desde **🧑‍🍳 Admin Proveedores**.
+- Subir fotos de referencia de pasteles
+- Visualizar galería de referencias
+- Eliminar imágenes de referencia
 
-## Nota
-Campos exactos **[POR DEFINIR]**.
+Notas:
+En la parte superior del módulo se mostrará un **header con el proveedor de pasteles seleccionado para el evento**.
+
+El cliente solo podrá **ver el proveedor seleccionado**.
+
+Cuando el **administrador** esté dentro del evento y acceda a este módulo, tendrá la opción de **editar el proveedor de pasteles** mostrado en el header.
+
+Preview - Feed Evento:
+En el **📰 Feed Evento** puede mostrarse una vista previa con algunas imágenes recientes de referencia del pastel. La card será cliqueable y abrirá el módulo completo.

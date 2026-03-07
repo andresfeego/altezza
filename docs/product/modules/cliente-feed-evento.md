@@ -2,20 +2,24 @@
 
 # 📰 Feed Evento
 
-## Rol
-CLIENTE
+Descripción:
+Pantalla principal a la que accede el cliente después de iniciar sesión cuando tiene un evento asignado. Funciona como el punto de entrada a todos los módulos del evento y presenta un resumen visual de la información más importante mediante cards cliqueables.
 
-## Descripción
-Pantalla principal del evento para el cliente. Es el punto central de navegación y muestra contenido reciente del evento.
+Funciones:
 
-## Flujo de acceso
-- Después del login, si el cliente tiene evento asignado, el sistema lo redirige a este módulo.
+- Mostrar resumen del evento
+- Mostrar cards resumen de módulos habilitados
+- Permitir navegar a los diferentes módulos del evento
+- Mostrar contenido reciente o destacado de cada módulo
 
-## Funciones
-- Mostrar el menú con módulos habilitados para el evento.
-- Mostrar cards resumen de módulos (información reciente o destacada).
-- Acceso directo a cada módulo mediante clic o acción "Ver más".
+Notas:
+Los módulos visibles en el menú del cliente se **filtran automáticamente** según los módulos que el administrador habilitó al crear el evento.
 
-## Reglas
-- Si el cliente no tiene evento asignado, no debe llegar al Feed; se muestra un mensaje de no-asignación.
-- Los módulos visibles dependen de la configuración del admin al crear el evento.
+El Feed del evento mostrará **cards tipo resumen**, y cada card será **cliqueable** para llevar al usuario al módulo correspondiente.
+
+Ejemplos de comportamiento dentro del Feed:
+
+- **💡 Inspiración**: muestra las últimas **5 fotos** en formato de scroll horizontal y al final una card del mismo tamaño que dice **Ver más**, la cual lleva al módulo de Inspiración.
+- **✅ Pendientes**: muestra los últimos **3 pendientes** y un botón o acceso de **Ver más** que lleva al módulo de Pendientes.
+
+La idea general del Feed es que cada módulo tenga una **vista previa resumida** que permita consultar información rápidamente sin entrar todavía al módulo completo.

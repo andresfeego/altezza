@@ -2,27 +2,27 @@
 
 # 🧑‍🍳 Admin Proveedores
 
-## Rol
-ADMIN
+Descripción:
+Módulo administrativo para gestionar los proveedores disponibles que pueden asociarse a los eventos.
 
-## Descripción
-Gestión de proveedores disponibles que pueden asociarse a eventos.
+Funciones:
 
-## Funciones
-- Crear proveedor.
-- Editar proveedor.
-- Eliminar proveedor.
-- Asociar proveedor a módulos del evento (pastel, catering, música, mobiliario, etc.).
+- Crear proveedor
+- Editar proveedor
+- Eliminar proveedor
+- Asociar proveedor a módulos del evento (por ejemplo: pastel, catering, música, mobiliario, etc.)
 
-## Datos del proveedor
+Datos del proveedor:
+
 - foto o logo
-- nombre
-- teléfonos
+- nombre del proveedor
+- teléfonos de contacto
 - descripción del servicio
 - tipo de proveedor
 
-## Tipos de proveedor
-Administrables desde dashboard. Ejemplos:
+Tipos de proveedor:
+Los proveedores pueden clasificarse por tipo para facilitar su uso dentro del sistema. Ejemplos de tipos:
+
 - Pasteles
 - Sonido
 - Audiovisual
@@ -30,6 +30,7 @@ Administrables desde dashboard. Ejemplos:
 - Mobiliario
 - Servicios externos
 
-## Notas
-- Proveedores pueden seleccionarse luego dentro de módulos del evento (ej: **🎂 Pastel**).
-- Mobiliario de proveedor puede vincularse desde **🪑 Admin Mobiliario**.
+Notas:
+Los **tipos de proveedor** serán administrables desde el dashboard del administrador.
+
+Los proveedores registrados aquí podrán ser seleccionados posteriormente dentro de los módulos de cada evento (por ejemplo en el módulo **🎂 Pastel** o en el inventario de **🪑 Admin Mobiliario** cuando se trate de mobiliario de proveedor).

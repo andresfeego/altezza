@@ -1,21 +1,17 @@
 ← Volver al índice: [docs/product/README.md](../README.md)
 
-# 🧰 Colaborador — Checklist Montaje (propuesto)
+# 🧰 Colaborador Checklist Montaje
 
-## Rol
-COLABORADOR
+Descripción:
+Módulo utilizado durante el **alistamiento del evento**, específicamente en el momento en que el equipo prepara y carga el mobiliario en el camión antes de salir hacia el evento.
 
-## Descripción
-Checklist operativo de montaje para el día del evento.
+Funciones:
+- Mostrar listado de mobiliario necesario para el evento
+- Mostrar cantidades requeridas por ítem
+- Marcar ítems como cargados en el camión
+- Ver progreso del checklist de alistamiento
 
-## Funciones
-- Lista de ítems a montar.
-- Marcar ítems como completados.
-- Ver progreso (porcentaje).
+Notas:
+Los ítems que aparecen en este checklist provienen del módulo **🎨 Decoración**, donde el administrador define qué mobiliario debe llevarse al evento.
 
-## Reglas
-- Debe sincronizar en tiempo real con otros colaboradores y admin.
-- Cada cambio se guarda con usuario y timestamp.
-
-## Fuente
-- Se alimenta de la planificación en **🎨 Decoración**.
+El objetivo es evitar olvidar elementos al momento de preparar el transporte del mobiliario hacia el lugar del evento.

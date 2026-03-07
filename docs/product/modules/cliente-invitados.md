@@ -2,11 +2,15 @@
 
 # 👥 Invitados
 
-## Rol
-CLIENTE
+Descripción:
+Módulo encargado de gestionar la **lista de invitados del evento**.
 
-## Descripción
-Gestión de lista de invitados.
+Funciones:
 
-## Nota
-Detalle de atributos (mesa, confirmación, etc.) **[POR DEFINIR]**.
+- Agregar invitados
+- Editar invitados
+- Eliminar invitados
+- Visualizar listado de invitados
+
+Notas:
+Este módulo funciona como la base para la administración de asistentes del evento y alimenta otros módulos relacionados como **💌 Invitaciones** y **🪑 Acomodación**.
