@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useUsuarioStore from '@/components/initialized/stored/useUsuarioStore';
 import './app.scss';
+import '@/components/ui/governance/tokens.scss';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import NextTopLoader from 'nextjs-toploader';
 import { Toaster } from 'react-hot-toast';
@@ -26,11 +27,12 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (!hydrated) return;
 
-    const rutasPublicas = ['/_api/Login/login', '/_api/Login/cambiar-password', '/_api/registro/registro'];
+    const rutasPublicas = ['/_api/Login/login', '/_api/Login/cambiar-password', '/_api/registro/registro', '/ui-governance-lab'];
 
     const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
+    const isGovernanceLab = router.pathname === '/ui-governance-lab';
 
-    if (rutasPublicas.includes(router.pathname) || isManual) {
+    if (rutasPublicas.includes(router.pathname) || isManual || isGovernanceLab) {
       setLoading(false);
       return;
     }
@@ -85,6 +87,7 @@ function MyApp({ Component, pageProps }) {
 
   if (!hydrated || loading) return <LoadingScreen />;
   const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
+  const isGovernanceLab = router.pathname === '/ui-governance-lab';
 
   return (
   <>
@@ -126,9 +129,9 @@ function MyApp({ Component, pageProps }) {
       },
     }}
   />
-  {usuario && !isManual && <SideMenu />}
+  {usuario && !isManual && !isGovernanceLab && <SideMenu />}
   <Component {...pageProps} />
-  {usuario && !isManual && <UserMenuButton />}
+  {usuario && !isManual && !isGovernanceLab && <UserMenuButton />}
   </>
   );
 }

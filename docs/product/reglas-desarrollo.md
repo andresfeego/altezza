@@ -29,6 +29,24 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 - En `base-desarrollo.md` cada punto debe reflejar dos estados:
   - estado funcional
   - estado UX/UI
+- En formularios, el patron base es:
+  - `toast` para resultado general de la accion
+  - error `inline` para problemas especificos de campos
+- La autovalidacion de campos no hace parte del baseline actual hasta que se implemente formalmente.
+- La navegacion movil base entre modulos usa drawer lateral.
+- Si una pantalla necesita acciones contextuales en la esquina superior derecha, llamaremos ese patron `Boton de acciones de pantalla`.
+
+## Refinamientos UI Governance
+
+- La interfaz debe priorizar fondos planos claros. Evitar gradientes decorativos como base de pantalla.
+- La jerarquia visual debe salir de composicion, espaciado, cards y sombras suaves, no de fondos recargados.
+- Las cards deben mantenerse blancas o casi blancas, con bordes suaves y sombras muy sutiles.
+- Evitar tonos amarillos o calidos excesivos en superficies generales. El color de marca debe usarse con medida.
+- La direccion visual aprobada por ahora es sobria, moderna, simple y limpia.
+- En movil, las tablas pueden usar scroll horizontal si eso conserva claridad.
+- En tablas con scroll horizontal, la columna de acciones no debe romperse en pilas verticales si eso empeora la lectura.
+- La validacion visual final de formularios, focos y errores no debe cerrarse mientras existan estilos globales agresivos que contaminen inputs y botones.
+- Antes de convertir una decision visual en regla definitiva, revisar si el resultado esta afectado por herencia global desde `stylesGlobal.scss`.
 
 ## Front y back al mismo tiempo
 

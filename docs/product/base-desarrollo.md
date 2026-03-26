@@ -150,6 +150,7 @@ Riesgo técnico:
 Pendientes acordados:
 
 - `🧪` pantalla más completa para cliente sin evento asignado: pendiente hasta construir creación/asignación de usuarios desde admin
+- `🧪` patrón formal de autovalidación de campos: pendiente para el siguiente desarrollo de Fase 1
 
 #### 2. 👤 Roles y destino inicial por rol
 

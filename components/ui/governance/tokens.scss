@@ -1,0 +1,50 @@
+:root {
+  --ag-font-body: "caviar", "Segoe UI", sans-serif;
+  --ag-font-display: "caviar", "Segoe UI", sans-serif;
+
+  --ag-brand-rose: #ec9fb5;
+  --ag-brand-rose-strong: #c76a84;
+  --ag-brand-wine: #6c3c3c;
+  --ag-brand-wine-strong: #4d2626;
+
+  --ag-surface-page: #fbf7f4;
+  --ag-surface-card: #ffffff;
+  --ag-surface-card-alt: #fff8f3;
+  --ag-surface-soft: #f4ece7;
+
+  --ag-text-strong: #2f2624;
+  --ag-text-base: #4b413d;
+  --ag-text-muted: #6d625d;
+  --ag-text-soft: #93847c;
+
+  --ag-border-soft: #eadfd7;
+  --ag-border-strong: #d7c7bd;
+
+  --ag-success: #5d9364;
+  --ag-success-soft: #edf6ee;
+  --ag-warning: #b98734;
+  --ag-warning-soft: #f9f0de;
+  --ag-danger: #bf5d5d;
+  --ag-danger-soft: #f9e9e7;
+  --ag-info: #5a84a8;
+  --ag-info-soft: #eaf2f8;
+
+  --ag-radius-sm: 8px;
+  --ag-radius-md: 12px;
+  --ag-radius-lg: 18px;
+  --ag-radius-pill: 999px;
+
+  --ag-shadow-soft: 0 10px 24px rgba(34, 25, 22, 0.05);
+  --ag-shadow-card: 0 18px 40px rgba(34, 25, 22, 0.08);
+  --ag-shadow-lifted: 0 22px 50px rgba(34, 25, 22, 0.12);
+
+  --ag-space-1: 8px;
+  --ag-space-2: 16px;
+  --ag-space-3: 24px;
+  --ag-space-4: 32px;
+  --ag-space-5: 40px;
+  --ag-space-6: 48px;
+
+  --ag-max-content: 1280px;
+  --ag-max-form: 760px;
+}
