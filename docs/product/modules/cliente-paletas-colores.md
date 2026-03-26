@@ -28,5 +28,5 @@ Flujo de extracción de colores:
 4. El sistema analiza la imagen y calcula los **colores predominantes**.
 5. Los colores generados se agregan automáticamente a la paleta.
 
-Preview - Feed Evento:
-En el **📰 Feed Evento** puede mostrarse una card con una vista previa de la paleta principal del evento, mostrando pequeños **swatches de color** representando los colores seleccionados. Al hacer clic se abre el módulo completo de Paletas de Colores.
+Preview - Cliente Home:
+En el **🏠 Cliente Home** puede mostrarse una card con una vista previa de la paleta principal del evento, mostrando pequeños **swatches de color** representando los colores seleccionados. Al hacer clic se abre el módulo completo de Paletas de Colores.

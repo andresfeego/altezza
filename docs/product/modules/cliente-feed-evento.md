@@ -1,6 +1,6 @@
 ← Volver al índice: [docs/product/README.md](../README.md)
 
-# 📰 Feed Evento
+# 🏠 Cliente Home
 
 ## Descripción
 
@@ -17,11 +17,11 @@ Pantalla principal a la que accede el cliente después de iniciar sesión cuando
 
 Los módulos visibles en el menú del cliente se **filtran automáticamente** según los módulos que el administrador habilitó al crear el evento.
 
-El Feed del evento mostrará **cards tipo resumen**, y cada card será **cliqueable** para llevar al usuario al módulo correspondiente.
+El Home del cliente mostrará **cards tipo resumen**, y cada card será **cliqueable** para llevar al usuario al módulo correspondiente.
 
-Ejemplos de comportamiento dentro del Feed:
+Ejemplos de comportamiento dentro del Home:
 
 - **💡 Inspiración**: muestra las últimas **5 fotos** en formato de scroll horizontal y al final una card del mismo tamaño que dice **Ver más**, la cual lleva al módulo de Inspiración.
 - **✅ Pendientes**: muestra los últimos **3 pendientes** y un botón o acceso de **Ver más** que lleva al módulo de Pendientes.
 
-La idea general del Feed es que cada módulo tenga una **vista previa resumida** que permita consultar información rápidamente sin entrar todavía al módulo completo.
+La idea general del Home es que cada módulo tenga una **vista previa resumida** que permita consultar información rápidamente sin entrar todavía al módulo completo.

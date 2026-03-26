@@ -20,5 +20,5 @@ El cliente solo podrá **ver el proveedor seleccionado**.
 
 Cuando el **administrador** esté dentro del evento y acceda a este módulo, tendrá la opción de **editar el proveedor de pasteles** mostrado en el header.
 
-Preview - Feed Evento:
-En el **📰 Feed Evento** puede mostrarse una vista previa con algunas imágenes recientes de referencia del pastel. La card será cliqueable y abrirá el módulo completo.
+Preview - Cliente Home:
+En el **🏠 Cliente Home** puede mostrarse una vista previa con algunas imágenes recientes de referencia del pastel. La card será cliqueable y abrirá el módulo completo.

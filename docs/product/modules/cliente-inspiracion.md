@@ -22,5 +22,5 @@ Cada imagen registrada en la galería mantiene la **referencia del usuario que l
 
 Esto facilita la colaboración entre cliente y organizadores para construir el estilo visual del evento.
 
-Preview - Feed Evento:
-En el **📰 Feed Evento** este módulo mostrará una **vista previa con las últimas imágenes de inspiración** en formato de scroll horizontal. Al final aparecerá una tarjeta **"Ver más"** que lleva al módulo completo de Inspiración.
+Preview - Cliente Home:
+En el **🏠 Cliente Home** este módulo mostrará una **vista previa con las últimas imágenes de inspiración** en formato de scroll horizontal. Al final aparecerá una tarjeta **"Ver más"** que lleva al módulo completo de Inspiración.

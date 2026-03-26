@@ -1,139 +1,87 @@
-import { toast } from 'react-toastify';
-import React from 'react';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
-import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
-import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
-import BounceLoader from "react-spinners/BounceLoader";
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import toast from 'react-hot-toast';
 
+let loadingToastId = null;
 
+export const tiposAlertas = {
+  info: 1,
+  success: 2,
+  warn: 3,
+  error: 4,
+  autoCloseCustom: 5,
+  cargando: 6,
+  cargadoSuccess: 7,
+  cargadoWarn: 8,
+  cargadoError: 9,
+  cerrarTodas: 10,
+};
 
-
-
-let cargando = null;
-export const tiposAlertas = {info: 1, success: 2, warn: 3, error: 4, autoCloseCustom: 5, cargando: 6, cargadoSuccess: 7, cargadoWarn: 8, cargadoError: 9, cerrarTodas: 10};
-
-export const nuevoMensaje = (icono,mensaje,auto) =>{
-
-    const override = `
-  display: flex;
-  margin-right: 5px;
-  border-color: red;
-  flex-direction: row;
-`;
-
-
-    switch (icono) {
-        case 1:
-            toast.info(
-                <div>
-                {mensaje}
-                </div>,{
-                    autoClose: auto
-                }
-            );
-            break;
-
-        case 2:
-            toast.success(
-                <div>
-                {mensaje}
-                </div>,{
-                    autoClose: auto
-                }
-            );
-            break;
-            
-        case 3:
-            toast.warn(
-                <div>
-                {mensaje}
-                </div>,{
-                    autoClose: auto
-                }
-            );
-            break;
-
-        case 4:
-            toast.error(
-                <div>
-                {mensaje}
-                </div>,{
-                    autoClose: auto
-                }
-            );
-            break;
-
-        case 5:
-            toast.success(
-                <div>
-                {mensaje}
-                </div>,{
-                    autoClose: auto
-                }
-            );
-            break;
-
-        case 6:
-            cargando = toast.warn(
-                <div>
-                {mensaje}
-                </div>,{
-                    autoClose: false
-                }
-            );
-            break;
-
-        case 7:
-            toast.update(cargando, {
-                render: 
-                    <div>
-                        {mensaje}
-                    </div>,
-                type: toast.TYPE.SUCCESS,
-                autoClose: auto
-              });
-            break;
-
-        case 8:
-            toast.update(cargando, {
-                render: 
-                    <div>
-                        {mensaje}
-                    </div>,
-                type: toast.TYPE.WARNING,
-                autoClose: auto
-              });
-            break;
-
-        case 9:
-            toast.update(cargando, {
-                render: 
-                    <div>
-                        {mensaje}
-                    </div>,
-                type: toast.TYPE.ERROR,
-                autoClose: auto
-              });
-            break;
-
-        case 10:
-            toast.success(
-                <div>
-                {mensaje}
-                </div>,{
-                    onClose: props => toast.dismiss(),
-                    autoClose: auto
-
-                }
-            );
-            break;
-
-        
-    
-        default:
-            break;
-    }
-    
+export function showSuccess(message, options = {}) {
+  return toast.success(message, options);
 }
+
+export function showError(message, options = {}) {
+  return toast.error(message, options);
+}
+
+export function showInfo(message, options = {}) {
+  return toast(message, options);
+}
+
+export function showLoading(message, options = {}) {
+  loadingToastId = toast.loading(message, options);
+  return loadingToastId;
+}
+
+export function dismissToast(toastId) {
+  toast.dismiss(toastId);
+}
+
+export const nuevoMensaje = (icono, mensaje, auto) => {
+  const duration = typeof auto === 'number' ? auto : undefined;
+  const options = duration ? { duration } : {};
+
+  switch (icono) {
+    case tiposAlertas.info:
+      return showInfo(mensaje, options);
+    case tiposAlertas.success:
+    case tiposAlertas.autoCloseCustom:
+      return showSuccess(mensaje, options);
+    case tiposAlertas.warn:
+      return toast(mensaje, {
+        icon: '⚠️',
+        ...options,
+      });
+    case tiposAlertas.error:
+      return showError(mensaje, options);
+    case tiposAlertas.cargando:
+      return showLoading(mensaje);
+    case tiposAlertas.cargadoSuccess:
+      if (loadingToastId) {
+        toast.dismiss(loadingToastId);
+        loadingToastId = null;
+      }
+      return showSuccess(mensaje, options);
+    case tiposAlertas.cargadoWarn:
+      if (loadingToastId) {
+        toast.dismiss(loadingToastId);
+        loadingToastId = null;
+      }
+      return toast(mensaje, {
+        icon: '⚠️',
+        ...options,
+      });
+    case tiposAlertas.cargadoError:
+      if (loadingToastId) {
+        toast.dismiss(loadingToastId);
+        loadingToastId = null;
+      }
+      return showError(mensaje, options);
+    case tiposAlertas.cerrarTodas:
+      toast.dismiss();
+      return null;
+    default:
+      return showInfo(mensaje, options);
+  }
+};
+
+export default toast;

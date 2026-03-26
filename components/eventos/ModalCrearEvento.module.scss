@@ -1,27 +1,40 @@
-.btnCircular {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background-color: $white0;
-  border: 1px solid $primary;
-  display: flex;
+.btnPrimary {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #c25887;
+  gap: var(--ag-space-1);
+  min-height: 48px;
+  width: 100%;
+  padding: 0 var(--ag-space-3);
+  border-radius: var(--ag-radius-md);
+  background: var(--ag-brand-rose);
+  border: 0;
+  color: var(--ag-surface-card);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+  font-weight: var(--ag-font-weight-semibold);
   cursor: pointer;
-  transition: background 0.3s;
-  padding: 0;
+  transition:
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    box-shadow var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+  box-shadow: var(--ag-shadow-soft);
+}
 
-  &:hover {
-    background-color: #c25887;
-  svg {
-    color: $white0;
-  }
-  }
+.btnPrimary:hover {
+  transform: translateY(-1px);
+  background-color: var(--ag-brand-rose-strong);
+  box-shadow: var(--ag-shadow-card);
+}
 
-  svg {
-    color: #c25887;
-    width: 24px;
-    height: 24px;
+.btnPrimary svg {
+  color: inherit;
+  width: 20px;
+  height: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnPrimary {
+    transition: none;
   }
 }

@@ -19,7 +19,7 @@ Módulo donde se gestionan las **solicitudes de alquiler de mobiliario realizada
 
 ## Flujo principal
 
-1. El organizador entra a **📊 Organizador Dashboard**.
+1. El organizador entra a **🏠 Organizador Home**.
 2. Selecciona la opción **Nuevo alquiler**.
 3. El sistema muestra un **catálogo con buscador y menú de categorías** en la parte superior.
 4. El organizador puede **agregar ítems al alquiler** de forma similar a un carrito.

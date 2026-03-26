@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { loginUsuario } from '@/components/initialized/data/helpersGetDB';
 import useUsuarioStore from '@/components/initialized/stored/useUsuarioStore';
-import { getHomePathByRole, ROLE_IDS } from '@/components/constants/roles';
+import { getDefaultPathByUser, getLoginErrorMessage } from '@/components/constants/roles';
+import { showError, showSuccess } from '@/components/initialized/Toast';
 
 export default function Login() {
   const setUsuario = useUsuarioStore((state) => state.setUsuario);
@@ -13,7 +14,6 @@ export default function Login() {
 
   const [correo, setCorreo] = useState('');
   const [pass, setPass] = useState('');
-  const [error, setError] = useState(null);
   const [cargando, setCargando] = useState(false);
   const [platformClass, setPlatformClass] = useState('');
 
@@ -32,30 +32,34 @@ export default function Login() {
 
   const handleLogin = async () => {
     setCargando(true);
-    setError(null);
     try {
       const result = await loginUsuario(correo, pass);
       const userData = result?.usuario || result; // backend retorna { success, userId, usuario }
       const userId = result?.userId ?? userData?.id;
 
-      if (!userId) {
-        setError('Credenciales inválidas');
+      if (!userId || !userData?.rol) {
+        showError(getLoginErrorMessage());
         return;
       }
 
       setDataUsuario(userData || null);
       setUsuario(userId);
-      let destino;
-      if (userData?.rol === ROLE_IDS.CLIENTE) {
-        const idEvento = userData?.idEventoAsignado || 'evento_no_asignado';
-        destino = `/evento/feed/${idEvento}`;
-      } else {
-        destino = getHomePathByRole(userData?.rol);
-      }
+      const destino = getDefaultPathByUser(userData);
+      showSuccess('Ingreso correcto.');
       router.push(destino);
     } catch (err) {
       console.error('Error al iniciar sesión', err.message);
-      setError('Hubo un error. Intenta de nuevo.');
+      const errorCode = err?.status || err?.data?.error;
+      if (errorCode === 409) {
+        showError('Debes actualizar la contraseña temporal antes de continuar.');
+        router.push({
+          pathname: '/_api/Login/cambiar-password',
+          query: { user: correo },
+        });
+        return;
+      }
+
+      showError(getLoginErrorMessage(errorCode));
     } finally {
       setCargando(false);
     }
@@ -98,7 +102,6 @@ export default function Login() {
               <button type="submit" disabled={cargando}>
                 {cargando ? 'Cargando...' : <u>Iniciar sesión</u>}
               </button>
-              {error && <p className={styles.error}>{error}</p>}
           </form>
         </div>
 

@@ -70,17 +70,17 @@ Flujo:
 1. El **usuario con rol Cliente** inicia sesión en Altezza.
 2. El sistema verifica si el cliente tiene un evento asignado.
 3. Si **no tiene evento asignado**, se muestra un mensaje indicando que aún no tiene un evento vinculado y que debe comunicarse con el administrador.
-4. Si **tiene evento asignado**, el sistema redirige automáticamente al **📰 Feed Evento**.
-5. En el Feed del evento el cliente verá el **menú con los módulos habilitados para su evento**.
-6. El Feed mostrará además **cards resumen cliqueables** de los módulos, con información reciente o destacada de cada uno.
+4. Si **tiene evento asignado**, el sistema redirige automáticamente al **🏠 Cliente Home**.
+5. En el Home del cliente el usuario verá el **menú con los módulos habilitados para su evento**.
+6. El Home mostrará además **cards resumen cliqueables** de los módulos, con información reciente o destacada de cada uno.
 
 ## Reglas
 
 - Este comportamiento aplica **solo para usuarios con rol Cliente**.
 - Un usuario cliente sin evento asignado no puede acceder a los módulos del sistema.
 - Los módulos visibles para el cliente dependen de la configuración realizada por el administrador al crear el evento.
-- El Feed del evento funciona como el punto central de navegación para el cliente.
-- Cada módulo puede tener una **vista previa resumida** dentro del Feed.
+- El Home del cliente funciona como el punto central de navegación para el cliente.
+- Cada módulo puede tener una **vista previa resumida** dentro del Home.
 - Cada card resumen debe permitir navegar al módulo completo mediante clic o acción de **Ver más**.
 
 ---
@@ -117,7 +117,7 @@ La sincronización en tiempo real aplica especialmente a:
 
 - 🧰 Colaborador Checklist Montaje
 - 📦 Colaborador Checklist Recogida
-- 📊 Colaborador Dashboard
+- 🏠 Colaborador Home
 - vistas administrativas del evento
 
 ## Requerimiento técnico

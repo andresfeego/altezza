@@ -36,3 +36,11 @@ export async function getTiposEvento() {
 export async function getLugares() {
   return await getDB('/lugares', { method: 'GET' });
 }
+
+export async function getUsuariosSistema() {
+  return await getDB('/usuariosSistema', { method: 'GET' });
+}
+
+export async function getRolesSistema() {
+  return await getDB('/rolesSistema', { method: 'GET' });
+}

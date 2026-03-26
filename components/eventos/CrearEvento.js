@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { FiX } from 'react-icons/fi';
 import styles from './CrearEvento.module.scss';
+import { showError, showSuccess } from '@/components/initialized/Toast';
 
 import { getTiposEvento, getLugares } from '@/components/initialized/data/helpersGetDB';
 import { crearEventoBasico } from '@/components/initialized/data/helpersSetDB';
@@ -40,7 +41,7 @@ export default function CrearEvento({ cerrar }) {
     e.preventDefault();
 
     if (!idPersonalizado || !nombre || !tipoEvento || !lugarRecepcion || !fechaRecepcion) {
-      toast.error('Por favor completa todos los campos obligatorios');
+      showError('Por favor completa todos los campos obligatorios');
       return;
     }
 
@@ -56,16 +57,22 @@ export default function CrearEvento({ cerrar }) {
     });
 
     if (res?.success) {
-      toast.success(`Evento creado con ID: ${idEvento}`);
+      showSuccess(`Evento creado con ID: ${idEvento}`);
       cerrar();
     } else {
-      toast.error('Ocurrió un error al crear el evento');
+      showError('Ocurrio un error al crear el evento');
     }
   };
 
   return (
     <form className={styles.formCrear} onSubmit={handleCrear}>
-      <h3>Nuevo evento</h3>
+      <button type="button" className={styles.iconClose} onClick={cerrar} aria-label="Cerrar modal">
+        <FiX size={18} />
+      </button>
+
+      <div className={styles.modalHeader}>
+        <h3>Nuevo evento</h3>
+      </div>
 
       <label>ID del evento</label>
       <div className={styles.idPreview}>
