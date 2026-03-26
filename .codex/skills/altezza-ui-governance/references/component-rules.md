@@ -25,6 +25,14 @@
 - keep card titles visually below section `h2` scale
 - current working guidance for card `h3`: around 1.2rem unless the module requires a tighter or larger variant
 
+## Primary actions
+
+- the primary action for an admin module should use a filled primary button style
+- the primary action should use the available width instead of a tiny floating control
+- a leading icon is valid when it improves scanability
+- home and dashboard previews should live in separate components, not inline inside the main home/dashboard component
+- shared admin module actions should come from the transversal shell before introducing local button variants
+
 ## Heading rules
 
 - all new `h1`, `h2`, `h3`, and `h4` usage must map to official heading tokens
@@ -33,6 +41,7 @@
 - use `h2` for section titles
 - use `h3` for card titles
 - use `h4` for minor subsection titles
+- when multiple admin modules share the same title pattern, use shell heading classes instead of per-module heading CSS
 
 ## Color rules
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { FiX } from 'react-icons/fi';
 import styles from './CrearEvento.module.scss';
 import { showError, showSuccess } from '@/components/initialized/Toast';
 
@@ -65,7 +66,13 @@ export default function CrearEvento({ cerrar }) {
 
   return (
     <form className={styles.formCrear} onSubmit={handleCrear}>
-      <h3>Nuevo evento</h3>
+      <button type="button" className={styles.iconClose} onClick={cerrar} aria-label="Cerrar modal">
+        <FiX size={18} />
+      </button>
+
+      <div className={styles.modalHeader}>
+        <h3>Nuevo evento</h3>
+      </div>
 
       <label>ID del evento</label>
       <div className={styles.idPreview}>

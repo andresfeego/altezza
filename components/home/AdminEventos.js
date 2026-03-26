@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
+import { FiCalendar, FiEyeOff, FiLayers } from 'react-icons/fi';
+import shellStyles from '@/components/admin/shared/AdminModuleShell.module.scss';
 import { getEventosActivos, getEventosInactivos } from '@/components/initialized/data/helpersGetDB';
 import ListaEventos from '@/components/eventos/ListaEventos';
+import ModalCrearEvento from '@/components/eventos/ModalCrearEvento';
 import styles from './AdminEventos.module.scss';
 
 export default function AdminEventos() {
@@ -19,14 +22,55 @@ export default function AdminEventos() {
   }, []);
 
   return (
-    <div className={styles.containerHome}>
-      <ListaEventos eventos={activos} titulo="Eventos activos" />
-      <button onClick={() => setMostrarInactivos((prev) => !prev)} className={styles.toggleButton}>
-        {mostrarInactivos ? 'Ocultar inactivos' : 'Mostrar inactivos'}
-      </button>
+    <div className={`${styles.containerHome} ${shellStyles.page}`}>
+      <section className={`${styles.hero} ${shellStyles.hero}`}>
+        <div className={`${styles.heroHeader} ${shellStyles.heroHeader}`}>
+          <h1 className={shellStyles.moduleTitle}>Administracion de eventos</h1>
+        </div>
+
+        <div className={`${styles.summaryCard} ${shellStyles.summaryCard}`}>
+          <div className={`${styles.summaryItem} ${shellStyles.summaryItem}`}>
+            <div className={`${styles.summaryTop} ${shellStyles.summaryTop}`}>
+              <span className={`${styles.metricIcon} ${shellStyles.metricIcon}`}><FiLayers size={14} /></span>
+              <strong>{activos.length + inactivos.length}</strong>
+            </div>
+            <span>Total</span>
+          </div>
+          <div className={`${styles.summaryItem} ${shellStyles.summaryItem}`}>
+            <div className={`${styles.summaryTop} ${shellStyles.summaryTop}`}>
+              <span className={`${styles.metricIcon} ${shellStyles.metricIcon}`}><FiCalendar size={14} /></span>
+              <strong>{activos.length}</strong>
+            </div>
+            <span>Activos</span>
+          </div>
+          <div className={`${styles.summaryItem} ${shellStyles.summaryItem}`}>
+            <div className={`${styles.summaryTop} ${shellStyles.summaryTop}`}>
+              <span className={`${styles.metricIcon} ${shellStyles.metricIcon}`}><FiEyeOff size={14} /></span>
+              <strong>{inactivos.length}</strong>
+            </div>
+            <span>Inactivos</span>
+          </div>
+        </div>
+
+        <div className={`${styles.heroActions} ${shellStyles.heroActions}`}>
+          <ModalCrearEvento label="Nuevo evento" className={shellStyles.primaryActionButton} />
+        </div>
+      </section>
+
+      <section className={`${styles.sectionCard} ${shellStyles.sectionCard}`}>
+        <ListaEventos eventos={activos} titulo="Eventos activos" />
+      </section>
+
+      <div className={styles.toggleWrap}>
+        <button onClick={() => setMostrarInactivos((prev) => !prev)} className={styles.toggleButton}>
+          {mostrarInactivos ? 'Ocultar inactivos' : 'Mostrar inactivos'}
+        </button>
+      </div>
 
       {mostrarInactivos && (
-        <ListaEventos eventos={inactivos} titulo="Eventos inactivos" inactivos />
+        <section className={`${styles.sectionCard} ${shellStyles.sectionCard}`}>
+          <ListaEventos eventos={inactivos} titulo="Eventos inactivos" inactivos />
+        </section>
       )}
     </div>
   );

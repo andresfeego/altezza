@@ -7,6 +7,9 @@
 - dashboards can be wider than forms
 - forms should remain more contained than tables or board-like screens
 - container spacing must follow the responsive density map
+- admin modules should reuse a shared module shell for inner container rhythm, module header, summary block, primary action row, and section card
+- admin module routes should also reuse a shared outer content container instead of redefining page padding module by module
+- current admin outer content baseline: desktop with menu offset; under `1024px`, `margin-left: 0` and `padding: 56px 16px 16px`
 
 ## Responsive density map
 
@@ -45,6 +48,13 @@ Notes:
 - target around 80% visual width for the title block inside the header area
 - use right-side breathing room based on the spacing scale
 - use bottom breathing room based on the spacing scale before the next summary or content block
+- internal section titles such as `h2` should come from shared shell classes when the structure is repeated across admin modules
+
+### Summary blocks
+
+- transversal summary blocks should use a 3-column grid
+- if there are more than 3 items, let them wrap into the needed rows
+- summary items should remain centered inside the card
 
 ### Filters and mobile card lists
 

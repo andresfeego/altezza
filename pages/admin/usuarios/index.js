@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FiCopy, FiLink2, FiRefreshCw, FiSearch, FiShield, FiUsers, FiX } from 'react-icons/fi';
 import layoutStyles from '@/components/home/AdminHome.module.scss';
+import shellStyles from '@/components/admin/shared/AdminModuleShell.module.scss';
 import styles from './usuarios.module.scss';
 import {
   getEventosActivos,
@@ -264,46 +265,46 @@ export default function AdminUsuariosPage() {
 
   return (
     <div className={layoutStyles.content}>
-      <div className={styles.page}>
-        <section className={styles.hero}>
-          <div className={styles.heroHeader}>
-            <h1>Administracion de usuarios</h1>
+      <div className={`${styles.page} ${shellStyles.page}`}>
+        <section className={`${styles.hero} ${shellStyles.hero}`}>
+          <div className={`${styles.heroHeader} ${shellStyles.heroHeader}`}>
+            <h1 className={shellStyles.moduleTitle}>Administracion de usuarios</h1>
           </div>
-          <div className={styles.summaryCard}>
-            <div className={styles.summaryItem}>
-              <div className={styles.summaryTop}>
-                <span className={styles.metricIcon}><FiUsers size={14} /></span>
+          <div className={`${styles.summaryCard} ${shellStyles.summaryCard}`}>
+            <div className={`${styles.summaryItem} ${shellStyles.summaryItem}`}>
+              <div className={`${styles.summaryTop} ${shellStyles.summaryTop}`}>
+                <span className={`${styles.metricIcon} ${shellStyles.metricIcon}`}><FiUsers size={14} /></span>
                 <strong>{metricas.total}</strong>
               </div>
               <span>Registrados</span>
             </div>
-            <div className={styles.summaryItem}>
-              <div className={styles.summaryTop}>
-                <span className={styles.metricIcon}><FiShield size={14} /></span>
+            <div className={`${styles.summaryItem} ${shellStyles.summaryItem}`}>
+              <div className={`${styles.summaryTop} ${shellStyles.summaryTop}`}>
+                <span className={`${styles.metricIcon} ${shellStyles.metricIcon}`}><FiShield size={14} /></span>
                 <strong>{metricas.activos}</strong>
               </div>
               <span>Activos</span>
             </div>
-            <div className={styles.summaryItem}>
-              <div className={styles.summaryTop}>
-                <span className={styles.metricIcon}><FiLink2 size={14} /></span>
+            <div className={`${styles.summaryItem} ${shellStyles.summaryItem}`}>
+              <div className={`${styles.summaryTop} ${shellStyles.summaryTop}`}>
+                <span className={`${styles.metricIcon} ${shellStyles.metricIcon}`}><FiLink2 size={14} /></span>
                 <strong>{metricas.conEvento}</strong>
               </div>
               <span>Con evento</span>
             </div>
           </div>
-          <div className={styles.heroActions}>
-            <button type="button" className={styles.primary} onClick={() => setIsModalOpen(true)}>
+          <div className={`${styles.heroActions} ${shellStyles.heroActions}`}>
+            <button type="button" className={shellStyles.primaryActionButton} onClick={() => setIsModalOpen(true)}>
               Nuevo usuario
             </button>
           </div>
         </section>
 
         <section className={styles.grid}>
-          <article className={`${styles.card} ${styles.tableCard}`}>
+          <article className={`${styles.card} ${styles.tableCard} ${shellStyles.sectionCard}`}>
             <div className={styles.toolbar}>
               <div>
-                <h2>Usuarios registrados</h2>
+                <h2 className={shellStyles.sectionTitle}>Usuarios registrados</h2>
               </div>
               <div className={styles.filters}>
                 <label className={styles.searchField}>

@@ -39,6 +39,9 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 ## Refinamientos UI Governance
 
 - La skill `altezza-ui-governance` debe aplicarse en cualquier trabajo de UI: componentes, pantallas, layouts, dashboards, formularios, modales, landings e interfaz visual web o mobile.
+- Los modulos administrativos deben reutilizar un shell transversal de modulo para contenedor interno, encabezado, titulo principal, bloque resumen, accion primaria y card base de seccion. No duplicar estas bases por modulo.
+- Las rutas de modulos administrativos deben entrar por un contenedor transversal de seccion. Regla base actual: desktop con compensacion lateral del menu; en `<=1024px`, `margin-left: 0` y `padding: 56px 16px 16px`.
+- El contenedor transversal de seccion no debe redefinirse por modulo salvo necesidad justificada. La base debe vivir en una capa compartida.
 - La interfaz debe priorizar fondos planos claros. Evitar gradientes decorativos como base de pantalla.
 - La jerarquia visual debe salir de composicion, espaciado, cards y sombras suaves, no de fondos recargados.
 - Las cards deben mantenerse blancas o casi blancas, con bordes suaves y sombras muy sutiles.
@@ -52,6 +55,7 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 - No usar badges decorativos de contexto como parte fija del encabezado de un modulo.
 - Los titulos principales de modulo o seccion deben alinearse a la derecha y ocupar aproximadamente el `80%` del ancho visual disponible del encabezado, con respiracion derecha basada en la escala de espaciado.
 - Los titulos principales de modulo o seccion deben tener tambien respiracion inferior basada en la escala, para separarse del bloque resumen o del contenido inmediato.
+- Los titulos de seccion internos como `h2` tambien deben salir de clases transversales del shell compartido. No resolver `h2` por modulo con estilos aislados si la estructura es la misma.
 - Los resumenes cortos de una seccion deben ser minimalistas, pequenos y preferiblemente concentrados en una sola pieza visual, no en varias cards pesadas.
 - No usar textos descriptivos del tipo "desde aqui puedes..." o "filtra, revisa..." dentro de las interfaces finales.
 - En flujos administrativos de crear o editar, priorizar modal sobre formulario incrustado cuando eso limpie mejor la lectura de la pantalla principal.
@@ -62,8 +66,11 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 - En pantallas menores a `512px`, paddings y margenes deben seguir estrictamente la escala y no bajar de `16px` como valor general.
 - En homes y secciones principales, el padding superior debe ser de al menos `56px` para no quedar debajo de controles flotantes.
 - Los bloques de resumen interno de un modulo deben concentrarse en una sola pieza compacta, idealmente a 3 columnas cuando el contenido lo permita.
+- Los bloques de resumen transversales deben resolverse como una grid de `3` columnas. Si hay mas items, deben caer en las filas necesarias manteniendo centrados los items dentro de la card.
 - Los bloques de filtros en interfaces deben dejar separacion inferior de `32px` respecto al contenido siguiente.
 - Las cards deben iniciar con un `h3` como titulo principal de la pieza. Regla visual actual para cards: `h3` alrededor de `1.2rem`, proporcionado por debajo del `h2` de seccion.
+- La accion principal de un modulo administrativo debe presentarse como boton primario lleno, de ancho disponible, y puede incluir icono al inicio cuando ayude a lectura.
+- Todo preview de `Home` o `Dashboard` debe vivir en un componente aparte. La regla es mantener el preview junto al dominio del modulo o de la superficie, no incrustado dentro del componente general del home/dashboard.
 - Los modales deben cerrar con icono `X` en la esquina superior derecha con separacion basada en `16px`.
 - El boton de cerrar de los modales debe ir en `position: absolute` respecto al modal, con `top: 8px` y `right: 8px`.
 - El bloque de titulo del modal debe tener respiracion superior basada en la escala. Regla actual: `16px`.
