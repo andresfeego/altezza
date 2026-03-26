@@ -1,43 +1,119 @@
 .page {
   display: grid;
-  gap: 24px;
+  gap: 28px;
 }
 
 .hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid;
   gap: 16px;
 
   h1 {
     margin: 0;
+    font-size: clamp(1.85rem, 3vw, 2.45rem);
+    line-height: 1.05;
+    color: #2f2624;
+    padding-top: 0 !important;
+    padding-bottom: 16px !important;
   }
 
-  p {
-    margin: 6px 0 0;
-    color: #6d6d6d;
-    max-width: 720px;
-  }
+}
+
+.heroHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.heroHeader h1 {
+  width: 80%;
+  margin-left: auto;
+  text-align: right;
+  padding-right: 24px;
+}
+
+.heroActions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.heroActions button {
+  min-width: 180px;
+}
+
+.summaryCard {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid #ece8e5;
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(23, 17, 13, 0.022);
+}
+
+.summaryItem {
+  display: grid;
+  gap: 4px;
+  align-content: flex-start;
+  min-width: 0;
+}
+
+.summaryTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.summaryItem strong {
+  font-size: 1rem;
+  color: #2f2624;
+  line-height: 1;
+}
+
+.summaryItem span:last-child {
+  color: #7a6f67;
+  font-size: 0.8rem;
+}
+
+.metricIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: #f7eff2;
+  color: #8a5360;
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
+  display: block;
 }
 
 .card {
   background: #fff;
-  border: 1px solid #ece7e2;
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid #ece8e5;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 10px 24px rgba(23, 17, 13, 0.03);
 }
 
 .card h2 {
   margin: 0 0 16px;
-  font-size: 1.1rem;
+  font-size: 1.375rem;
+  color: #2f2624;
+}
+
+.card h3,
+.modalCard h3 {
+  margin: 0 0 16px;
+  font-size: 1.2rem;
+  color: #3a302d;
+}
+
+.tableCard {
+  margin-top: 8px;
 }
 
 .sectionHeader {
@@ -48,15 +124,21 @@
   margin-bottom: 16px;
 }
 
+.modalHeader {
+  padding-top: 16px;
+  margin-bottom: 64px;
+}
+
 .sectionHeader p {
   margin: 6px 0 0;
-  color: #6d6d6d;
+  color: #736963;
   font-size: 0.92rem;
+  line-height: 1.65;
 }
 
 .form {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .twoCols {
@@ -67,23 +149,25 @@
 
 .form label {
   display: grid;
-  gap: 6px;
-  font-size: 0.92rem;
-  color: #444;
+  gap: 7px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4e4440;
 }
 
 .form input,
 .form select {
-  min-height: 42px;
-  border: 1px solid #d8d0c8;
+  min-height: 46px;
+  border: 1px solid #ddd5ce;
   border-radius: 12px;
-  padding: 0 12px;
+  padding: 0 14px;
   font-size: 0.95rem;
   background: #fff;
+  color: #2f2624;
 }
 
 .form button,
-.eventActions button {
+.assignRow button {
   border: 0;
   border-radius: 12px;
   min-height: 42px;
@@ -95,25 +179,58 @@
 .primary {
   background: #cc8f97;
   color: #fff;
+  box-shadow: 0 8px 18px rgba(204, 143, 151, 0.22);
 }
 
 .secondary {
-  background: #f2ece7;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #f7f3f0;
   color: #5a5049;
+  border: 1px solid #e7dfd8;
 }
 
 .toolbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 18px;
 }
 
-.toolbar input,
-.toolbar select {
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.searchField {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  min-width: 280px;
+  padding: 0 14px;
+  border: 1px solid #ddd5ce;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.searchField input {
+  width: 100%;
   min-height: 40px;
-  border: 1px solid #d8d0c8;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
+.filters select {
+  min-height: 44px;
+  border: 1px solid #ddd5ce;
   border-radius: 12px;
   padding: 0 12px;
   background: #fff;
@@ -121,17 +238,24 @@
 
 .tableWrap {
   overflow: auto;
+  border: 1px solid #ece8e5;
+  border-radius: 18px;
+}
+
+.mobileList {
+  display: none;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   min-width: 760px;
+  background: #fff;
 }
 
 .table th,
 .table td {
-  padding: 12px 10px;
+  padding: 14px 12px;
   border-bottom: 1px solid #efe9e2;
   text-align: left;
   vertical-align: top;
@@ -139,8 +263,12 @@
 }
 
 .table th {
+  background: #fcfcfd;
   color: #6c625a;
   font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .tag {
@@ -160,22 +288,23 @@
   gap: 10px;
 }
 
-.eventActions {
+.assignRow {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.eventActions select {
+.assignRow select {
   min-width: 150px;
-  min-height: 40px;
-  border: 1px solid #d8d0c8;
+  min-height: 42px;
+  border: 1px solid #ddd5ce;
   border-radius: 12px;
   padding: 0 12px;
 }
 
 .empty {
   color: #8b8178;
+  padding: 24px 16px !important;
 }
 
 .statusActive,
@@ -202,7 +331,118 @@
 .rowActions {
   display: grid;
   gap: 8px;
-  min-width: 170px;
+  min-width: 190px;
+}
+
+.userCard {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid #ece8e5;
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(23, 17, 13, 0.025);
+}
+
+.userCardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.userCardTop h3 {
+  display: block;
+  margin: 0;
+  color: #2f2624;
+}
+
+.userCardTop span {
+  color: #7b716b;
+  font-size: 0.92rem;
+}
+
+.userMeta,
+.userSection {
+  display: grid;
+  gap: 8px;
+}
+
+.userMeta span,
+.userSection {
+  color: #5f5550;
+  font-size: 0.92rem;
+}
+
+.userSection > strong {
+  color: #3a302d;
+}
+
+.mobileActions {
+  display: grid;
+  gap: 10px;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.58);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  z-index: 2000;
+}
+
+.modalCard {
+  position: relative;
+  width: min(100%, 680px);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  padding: 24px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid #ece8e5;
+  box-shadow: 0 18px 48px rgba(15, 12, 10, 0.12);
+}
+
+.iconClose {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid #ece8e5;
+  background: #fff;
+  color: #5f5550;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(15, 12, 10, 0.06);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 64px;
+  margin-bottom: 32px;
+}
+
+.modalActions button {
+  flex: 1 1 0;
+}
+
+.emptyState {
+  display: grid;
+  gap: 6px;
+  color: #7e746d;
+}
+
+.emptyState strong {
+  color: #3a302d;
 }
 
 .toastCard {
@@ -246,21 +486,180 @@
 }
 
 @media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
   .hero {
-    flex-direction: column;
+    gap: 14px;
   }
 
   .sectionHeader {
     flex-direction: column;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters {
+    justify-content: stretch;
+  }
+
+  .searchField {
+    min-width: 100%;
   }
 }
 
 @media (max-width: 640px) {
   .twoCols {
     grid-template-columns: 1fr;
+  }
+
+  .summaryCard {
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .rowActions {
+    min-width: 160px;
+  }
+
+  .page {
+    gap: 20px;
+  }
+
+  .heroHeader {
+    align-items: flex-start;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .filters {
+    display: grid;
+  }
+
+  .mobileList {
+    display: grid;
+    gap: 24px;
+  }
+
+  .tableWrap {
+    display: none;
+  }
+
+  .assignRow {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .assignRow select {
+    width: 100%;
+  }
+
+  .mobileActions button {
+    width: 100%;
+  }
+
+  .modalOverlay {
+    padding: 16px;
+  }
+
+  .modalCard {
+    width: 100%;
+    max-height: calc(100vh - 32px);
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .modalActions {
+    display: flex;
+  }
+
+  .heroActions button {
+    width: 100%;
+  }
+
+  .summaryItem strong {
+    font-size: 0.95rem;
+  }
+
+  .summaryItem span:last-child {
+    font-size: 0.76rem;
+  }
+
+  .metricIcon {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 512px) {
+  .page {
+    gap: 16px;
+  }
+
+  .summaryCard {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .filters {
+    gap: 16px;
+  }
+
+  .searchField {
+    padding: 0 16px;
+  }
+
+  .mobileList {
+    gap: 24px;
+  }
+
+  .userCard {
+    padding: 16px;
+  }
+
+  .hero,
+  .toolbar,
+  .form,
+  .twoCols,
+  .modalCard {
+    gap: 16px;
+  }
+
+  .summaryTop {
+    gap: 6px;
+  }
+
+  .metricIcon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .toolbar {
+    margin-bottom: 16px;
+  }
+
+  .searchField,
+  .filters select,
+  .assignRow select,
+  .form input,
+  .form select {
+    min-height: 44px;
+  }
+
+  .modalOverlay {
+    padding: 16px;
+  }
+
+  .modalCard {
+    padding: 16px;
   }
 }

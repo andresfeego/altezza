@@ -9,6 +9,7 @@ Use this skill when working on frontend UI for Altezza.
 
 ## Core rules
 
+- This skill is mandatory for all UI work in Altezza.
 - `Dashboard` is only for `Admin`.
 - `Home` is for `Cliente`, `Organizador`, and `Colaborador`.
 - Respect mobile-first layout decisions even when a screen is primarily used on desktop.
@@ -43,6 +44,7 @@ Use this skill when working on frontend UI for Altezza.
    - inline field validation
    - toast for submit result
 6. If touching navigation, preserve the product naming convention from `docs/product`.
+7. Validate spacing, typography, motion, and responsive density against the governance references before delivery.
 
 ## Pending rule
 

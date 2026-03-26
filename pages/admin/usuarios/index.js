@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { FiCopy } from 'react-icons/fi';
+import { FiCopy, FiLink2, FiRefreshCw, FiSearch, FiShield, FiUsers, FiX } from 'react-icons/fi';
 import layoutStyles from '@/components/home/AdminHome.module.scss';
 import styles from './usuarios.module.scss';
 import {
@@ -57,6 +57,7 @@ export default function AdminUsuariosPage() {
   const [eventos, setEventos] = useState([]);
   const [form, setForm] = useState(INITIAL_FORM);
   const [editingUserId, setEditingUserId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [filtro, setFiltro] = useState('');
   const [rolFiltro, setRolFiltro] = useState('todos');
   const [eventoSeleccionadoPorUsuario, setEventoSeleccionadoPorUsuario] = useState({});
@@ -105,6 +106,19 @@ export default function AdminUsuariosPage() {
     });
   }, [usuarios, filtro, rolFiltro]);
 
+  const metricas = useMemo(() => {
+    const activos = usuarios.filter((usuario) => Number(usuario.estado ?? 1) === 1).length;
+    const inactivos = usuarios.length - activos;
+    const conEvento = usuarios.filter((usuario) => usuario.eventosAsignados?.length).length;
+
+    return {
+      total: usuarios.length,
+      activos,
+      inactivos,
+      conEvento,
+    };
+  }, [usuarios]);
+
   const handleFormChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
@@ -112,6 +126,7 @@ export default function AdminUsuariosPage() {
   const resetForm = () => {
     setForm(INITIAL_FORM);
     setEditingUserId(null);
+    setIsModalOpen(false);
   };
 
   const showPasswordToast = ({ title, subtitle, tempPassword }) => {
@@ -127,6 +142,7 @@ export default function AdminUsuariosPage() {
 
   const handleEditarUsuario = (usuario) => {
     setEditingUserId(usuario.id);
+    setIsModalOpen(true);
     setForm({
       nombres: usuario.nombres || '',
       apellidos: usuario.apellidos || '',
@@ -250,93 +266,54 @@ export default function AdminUsuariosPage() {
     <div className={layoutStyles.content}>
       <div className={styles.page}>
         <section className={styles.hero}>
-          <div>
+          <div className={styles.heroHeader}>
             <h1>Administracion de usuarios</h1>
-            <p>
-              Desde aqui puedes crear usuarios del sistema, revisar su rol actual y vincularlos con uno o varios eventos.
-            </p>
+          </div>
+          <div className={styles.summaryCard}>
+            <div className={styles.summaryItem}>
+              <div className={styles.summaryTop}>
+                <span className={styles.metricIcon}><FiUsers size={14} /></span>
+                <strong>{metricas.total}</strong>
+              </div>
+              <span>Registrados</span>
+            </div>
+            <div className={styles.summaryItem}>
+              <div className={styles.summaryTop}>
+                <span className={styles.metricIcon}><FiShield size={14} /></span>
+                <strong>{metricas.activos}</strong>
+              </div>
+              <span>Activos</span>
+            </div>
+            <div className={styles.summaryItem}>
+              <div className={styles.summaryTop}>
+                <span className={styles.metricIcon}><FiLink2 size={14} /></span>
+                <strong>{metricas.conEvento}</strong>
+              </div>
+              <span>Con evento</span>
+            </div>
+          </div>
+          <div className={styles.heroActions}>
+            <button type="button" className={styles.primary} onClick={() => setIsModalOpen(true)}>
+              Nuevo usuario
+            </button>
           </div>
         </section>
 
         <section className={styles.grid}>
-          <article className={styles.card}>
-            <div className={styles.sectionHeader}>
-              <div>
-                <h2>{isEditing ? 'Editar usuario' : 'Crear usuario'}</h2>
-                <p>
-                  {isEditing
-                    ? 'Ajusta los datos base del usuario seleccionado.'
-                    : 'Crea un usuario del sistema y entrega su clave temporal.'}
-                </p>
-              </div>
-
-              {isEditing && (
-                <button type="button" className={styles.secondary} onClick={resetForm}>
-                  Cancelar edicion
-                </button>
-              )}
-            </div>
-
-            <form className={styles.form} onSubmit={handleGuardarUsuario}>
-              <div className={styles.twoCols}>
-                <label>
-                  Nombres
-                  <input value={form.nombres} onChange={(e) => handleFormChange('nombres', e.target.value)} />
-                </label>
-
-                <label>
-                  Apellidos
-                  <input value={form.apellidos} onChange={(e) => handleFormChange('apellidos', e.target.value)} />
-                </label>
-              </div>
-
-              <label>
-                Usuario
-                <input value={form.user} onChange={(e) => handleFormChange('user', e.target.value)} />
-              </label>
-
-              <div className={styles.twoCols}>
-                <label>
-                  Rol
-                  <select value={form.rol} onChange={(e) => handleFormChange('rol', e.target.value)}>
-                    <option value="">Selecciona</option>
-                    {roles.map((rol) => (
-                      <option key={rol.id} value={rol.id}>
-                        {rol.nombre}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-
-                <label>
-                  Telefono
-                  <input value={form.telefon} onChange={(e) => handleFormChange('telefon', e.target.value)} />
-                </label>
-              </div>
-
-              <label>
-                Estado
-                <select value={form.estado} onChange={(e) => handleFormChange('estado', e.target.value)}>
-                  <option value="1">Activo</option>
-                  <option value="0">Inactivo</option>
-                </select>
-              </label>
-
-              <button className={styles.primary} type="submit" disabled={saving}>
-                {saving ? (isEditing ? 'Guardando...' : 'Creando...') : (isEditing ? 'Guardar cambios' : 'Crear usuario')}
-              </button>
-            </form>
-          </article>
-
-          <article className={styles.card}>
+          <article className={`${styles.card} ${styles.tableCard}`}>
             <div className={styles.toolbar}>
-              <h2>Usuarios registrados</h2>
-              <div className={styles.eventActions}>
-                <input
-                  placeholder="Buscar usuario"
-                  value={filtro}
-                  onChange={(e) => setFiltro(e.target.value)}
-                />
+              <div>
+                <h2>Usuarios registrados</h2>
+              </div>
+              <div className={styles.filters}>
+                <label className={styles.searchField}>
+                  <FiSearch size={16} />
+                  <input
+                    placeholder="Buscar por nombre, usuario o telefono"
+                    value={filtro}
+                    onChange={(e) => setFiltro(e.target.value)}
+                  />
+                </label>
                 <select value={rolFiltro} onChange={(e) => setRolFiltro(e.target.value)}>
                   <option value="todos">Todos los roles</option>
                   {roles.map((rol) => (
@@ -349,118 +326,294 @@ export default function AdminUsuariosPage() {
             </div>
 
             {loading ? (
-              <p>Cargando usuarios...</p>
+              <div className={styles.emptyState}>
+                <strong>Cargando usuarios...</strong>
+                <span>Estamos preparando la vista administrativa.</span>
+              </div>
             ) : (
-              <div className={styles.tableWrap}>
-                <table className={styles.table}>
-                  <thead>
-                    <tr>
-                      <th>Usuario</th>
-                      <th>Rol</th>
-                      <th>Estado</th>
-                      <th>Telefono</th>
-                      <th>Eventos</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {usuariosFiltrados.map((usuario) => (
-                      <tr key={usuario.id}>
-                        <td>
-                          <strong>{usuario.nombres} {usuario.apellidos}</strong>
-                          <br />
-                          {usuario.user}
-                        </td>
-                        <td>{usuario.rolNombre}</td>
-                        <td>
-                          <span className={usuario.estado ? styles.statusActive : styles.statusInactive}>
-                            {usuario.estado ? 'Activo' : 'Inactivo'}
-                          </span>
-                        </td>
-                        <td>{usuario.telefon}</td>
-                        <td>
-                          <div className={styles.eventsCell}>
-                            <div>
-                              {usuario.eventosAsignados?.length ? (
-                                usuario.eventosAsignados.map((idEvento) => (
-                                  <span className={styles.tag} key={`${usuario.id}-${idEvento}`}>
-                                    {idEvento}
-                                    <button
-                                      type="button"
-                                      className={styles.secondary}
-                                      onClick={() => handleQuitarEvento(usuario.id, idEvento)}
-                                      style={{ marginLeft: 8, minHeight: 28 }}
-                                    >
-                                      Quitar
-                                    </button>
-                                  </span>
-                                ))
-                              ) : (
-                                <span className={styles.empty}>Sin eventos asignados</span>
-                              )}
-                            </div>
+              <>
+                <div className={styles.mobileList}>
+                  {usuariosFiltrados.map((usuario) => (
+                    <article key={`mobile-${usuario.id}`} className={styles.userCard}>
+                      <div className={styles.userCardTop}>
+                        <div>
+                          <h3>{usuario.nombres} {usuario.apellidos}</h3>
+                          <span>{usuario.user}</span>
+                        </div>
+                        <span className={usuario.estado ? styles.statusActive : styles.statusInactive}>
+                          {usuario.estado ? 'Activo' : 'Inactivo'}
+                        </span>
+                      </div>
 
-                            <div className={styles.eventActions}>
-                              <select
-                                value={eventoSeleccionadoPorUsuario[usuario.id] || ''}
-                                onChange={(e) =>
-                                  setEventoSeleccionadoPorUsuario((prev) => ({
-                                    ...prev,
-                                    [usuario.id]: e.target.value,
-                                  }))
-                                }
-                              >
-                                <option value="">Selecciona evento</option>
-                                {eventos.map((evento) => (
-                                  <option key={evento.id} value={evento.id}>
-                                    {evento.nombre}
-                                  </option>
-                                ))}
-                              </select>
+                      <div className={styles.userMeta}>
+                        <span><strong>Rol:</strong> {usuario.rolNombre}</span>
+                        <span><strong>Telefono:</strong> {usuario.telefon}</span>
+                      </div>
+
+                      <div className={styles.userSection}>
+                        <strong>Eventos</strong>
+                        <div className={styles.eventsCell}>
+                          <div>
+                            {usuario.eventosAsignados?.length ? (
+                              usuario.eventosAsignados.map((idEvento) => (
+                                <span className={styles.tag} key={`mobile-${usuario.id}-${idEvento}`}>
+                                  {idEvento}
+                                  <button
+                                    type="button"
+                                    className={styles.secondary}
+                                    onClick={() => handleQuitarEvento(usuario.id, idEvento)}
+                                    style={{ marginLeft: 8, minHeight: 28 }}
+                                  >
+                                    Quitar
+                                  </button>
+                                </span>
+                              ))
+                            ) : (
+                              <span className={styles.empty}>Sin eventos asignados</span>
+                            )}
+                          </div>
+
+                          <div className={styles.assignRow}>
+                            <select
+                              value={eventoSeleccionadoPorUsuario[usuario.id] || ''}
+                              onChange={(e) =>
+                                setEventoSeleccionadoPorUsuario((prev) => ({
+                                  ...prev,
+                                  [usuario.id]: e.target.value,
+                                }))
+                              }
+                            >
+                              <option value="">Selecciona evento</option>
+                              {eventos.map((evento) => (
+                                <option key={evento.id} value={evento.id}>
+                                  {evento.nombre}
+                                </option>
+                              ))}
+                            </select>
+                            <button
+                              type="button"
+                              className={styles.secondary}
+                              onClick={() => handleAsignarEvento(usuario.id)}
+                            >
+                              Asignar
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className={styles.mobileActions}>
+                        <button
+                          type="button"
+                          className={styles.secondary}
+                          onClick={() => handleEditarUsuario(usuario)}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.secondary}
+                          onClick={() => handleRegenerarPassTemp(usuario)}
+                        >
+                          <FiRefreshCw size={15} />
+                          Generar pass temp
+                        </button>
+                      </div>
+                    </article>
+                  ))}
+
+                  {!usuariosFiltrados.length && (
+                    <div className={styles.emptyState}>
+                      <strong>No hay usuarios que coincidan con los filtros actuales.</strong>
+                      <span>Ajusta la busqueda o cambia el rol seleccionado.</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className={styles.tableWrap}>
+                  <table className={styles.table}>
+                    <thead>
+                      <tr>
+                        <th>Usuario</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Telefono</th>
+                        <th>Eventos</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {usuariosFiltrados.map((usuario) => (
+                        <tr key={usuario.id}>
+                          <td>
+                            <strong>{usuario.nombres} {usuario.apellidos}</strong>
+                            <br />
+                            {usuario.user}
+                          </td>
+                          <td>{usuario.rolNombre}</td>
+                          <td>
+                            <span className={usuario.estado ? styles.statusActive : styles.statusInactive}>
+                              {usuario.estado ? 'Activo' : 'Inactivo'}
+                            </span>
+                          </td>
+                          <td>{usuario.telefon}</td>
+                          <td>
+                            <div className={styles.eventsCell}>
+                              <div>
+                                {usuario.eventosAsignados?.length ? (
+                                  usuario.eventosAsignados.map((idEvento) => (
+                                    <span className={styles.tag} key={`${usuario.id}-${idEvento}`}>
+                                      {idEvento}
+                                      <button
+                                        type="button"
+                                        className={styles.secondary}
+                                        onClick={() => handleQuitarEvento(usuario.id, idEvento)}
+                                        style={{ marginLeft: 8, minHeight: 28 }}
+                                      >
+                                        Quitar
+                                      </button>
+                                    </span>
+                                  ))
+                                ) : (
+                                  <span className={styles.empty}>Sin eventos asignados</span>
+                                )}
+                              </div>
+
+                              <div className={styles.assignRow}>
+                                <select
+                                  value={eventoSeleccionadoPorUsuario[usuario.id] || ''}
+                                  onChange={(e) =>
+                                    setEventoSeleccionadoPorUsuario((prev) => ({
+                                      ...prev,
+                                      [usuario.id]: e.target.value,
+                                    }))
+                                  }
+                                >
+                                  <option value="">Selecciona evento</option>
+                                  {eventos.map((evento) => (
+                                    <option key={evento.id} value={evento.id}>
+                                      {evento.nombre}
+                                    </option>
+                                  ))}
+                                </select>
+                                <button
+                                  type="button"
+                                  className={styles.secondary}
+                                  onClick={() => handleAsignarEvento(usuario.id)}
+                                >
+                                  Asignar
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div className={styles.rowActions}>
                               <button
                                 type="button"
                                 className={styles.secondary}
-                                onClick={() => handleAsignarEvento(usuario.id)}
+                                onClick={() => handleEditarUsuario(usuario)}
                               >
-                                Asignar
+                                Editar
+                              </button>
+                              <button
+                                type="button"
+                                className={styles.secondary}
+                                onClick={() => handleRegenerarPassTemp(usuario)}
+                              >
+                                <FiRefreshCw size={15} />
+                                Generar pass temp
                               </button>
                             </div>
-                          </div>
-                        </td>
-                        <td>
-                          <div className={styles.rowActions}>
-                            <button
-                              type="button"
-                              className={styles.secondary}
-                              onClick={() => handleEditarUsuario(usuario)}
-                            >
-                              Editar
-                            </button>
-                            <button
-                              type="button"
-                              className={styles.secondary}
-                              onClick={() => handleRegenerarPassTemp(usuario)}
-                            >
-                              Generar pass temp
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                        </tr>
+                      ))}
 
-                    {!usuariosFiltrados.length && (
-                      <tr>
-                        <td colSpan="6" className={styles.empty}>
-                          No hay usuarios que coincidan con los filtros actuales.
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                      {!usuariosFiltrados.length && (
+                        <tr>
+                          <td colSpan="6" className={styles.empty}>
+                            <div className={styles.emptyState}>
+                              <strong>No hay usuarios que coincidan con los filtros actuales.</strong>
+                              <span>Ajusta la busqueda o cambia el rol seleccionado.</span>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </>
             )}
           </article>
         </section>
+
+        {isModalOpen && (
+          <div className={styles.modalOverlay} onClick={resetForm}>
+            <div className={styles.modalCard} onClick={(event) => event.stopPropagation()}>
+              <div className={`${styles.sectionHeader} ${styles.modalHeader}`}>
+                <div>
+                  <h2>{isEditing ? 'Editar usuario' : 'Nuevo usuario'}</h2>
+                </div>
+                <button type="button" className={styles.iconClose} onClick={resetForm} aria-label="Cerrar modal">
+                  <FiX size={18} />
+                </button>
+              </div>
+
+              <form className={styles.form} onSubmit={handleGuardarUsuario}>
+                <div className={styles.twoCols}>
+                  <label>
+                    Nombres
+                    <input value={form.nombres} onChange={(e) => handleFormChange('nombres', e.target.value)} />
+                  </label>
+
+                  <label>
+                    Apellidos
+                    <input value={form.apellidos} onChange={(e) => handleFormChange('apellidos', e.target.value)} />
+                  </label>
+                </div>
+
+                <label>
+                  Usuario
+                  <input value={form.user} onChange={(e) => handleFormChange('user', e.target.value)} />
+                </label>
+
+                <div className={styles.twoCols}>
+                  <label>
+                    Rol
+                    <select value={form.rol} onChange={(e) => handleFormChange('rol', e.target.value)}>
+                      <option value="">Selecciona</option>
+                      {roles.map((rol) => (
+                        <option key={rol.id} value={rol.id}>
+                          {rol.nombre}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  <label>
+                    Telefono
+                    <input value={form.telefon} onChange={(e) => handleFormChange('telefon', e.target.value)} />
+                  </label>
+                </div>
+
+                <label>
+                  Estado
+                  <select value={form.estado} onChange={(e) => handleFormChange('estado', e.target.value)}>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                  </select>
+                </label>
+
+                <div className={styles.modalActions}>
+                  <button type="button" className={styles.secondary} onClick={resetForm}>
+                    Cancelar
+                  </button>
+                  <button className={styles.primary} type="submit" disabled={saving}>
+                    {saving ? (isEditing ? 'Guardando...' : 'Creando...') : (isEditing ? 'Guardar cambios' : 'Crear usuario')}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
