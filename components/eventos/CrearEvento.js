@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import styles from './CrearEvento.module.scss';
+import { showError, showSuccess } from '@/components/initialized/Toast';
 
 import { getTiposEvento, getLugares } from '@/components/initialized/data/helpersGetDB';
 import { crearEventoBasico } from '@/components/initialized/data/helpersSetDB';
@@ -40,7 +40,7 @@ export default function CrearEvento({ cerrar }) {
     e.preventDefault();
 
     if (!idPersonalizado || !nombre || !tipoEvento || !lugarRecepcion || !fechaRecepcion) {
-      toast.error('Por favor completa todos los campos obligatorios');
+      showError('Por favor completa todos los campos obligatorios');
       return;
     }
 
@@ -56,10 +56,10 @@ export default function CrearEvento({ cerrar }) {
     });
 
     if (res?.success) {
-      toast.success(`Evento creado con ID: ${idEvento}`);
+      showSuccess(`Evento creado con ID: ${idEvento}`);
       cerrar();
     } else {
-      toast.error('Ocurrió un error al crear el evento');
+      showError('Ocurrio un error al crear el evento');
     }
   };
 

@@ -188,7 +188,7 @@ export default function SideMenu({ onSelect }) {
               onClick={() => {
                 setSelectedIndex(idx);
                 onSelect?.(item);
-                const targetUrl = item.url || '/url_vacia';
+                const targetUrl = item.url || '/';
                 router.push(targetUrl);
                 if (isMobile) setOpenMobile(false);
               }}

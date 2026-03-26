@@ -1,7 +1,7 @@
 import styles from './FormularioEdicion.module.scss';
 import { useState } from 'react';
 import EditorPersonalizado from './EditorPersonalizado'; // subcomponente por tipo de evento
-import { toast } from 'react-toastify';
+import { showSuccess } from '@/components/initialized/Toast';
 
 export default function FormularioEdicion({ evento, cerrar }) {
   const [nombre, setNombre] = useState(evento.nombre || '');
@@ -13,7 +13,7 @@ export default function FormularioEdicion({ evento, cerrar }) {
 
   const handleGuardar = async () => {
     // Aquí iría la lógica para guardar en backend (no implementada todavía)
-    toast.success('Cambios guardados');
+    showSuccess('Cambios guardados');
     cerrar(); // cerrar modo edición
   };
 

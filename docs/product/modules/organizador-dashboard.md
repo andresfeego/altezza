@@ -1,6 +1,6 @@
 ← Volver al índice: [docs/product/README.md](../README.md)
 
-# 📊 Organizador Dashboard
+# 🏠 Organizador Home
 
 ## Descripción
 

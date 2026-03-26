@@ -23,7 +23,7 @@ nombre del evento, lugar, fecha de ceremonia, fecha de recepción, fecha límite
 
 Además puede contener campos adicionales según el tipo de evento (por ejemplo matrimonio, quince años, etc.)\
 \
-Preview - Feed Evento: En el **📰 Feed Evento** este módulo aparece como una **card de resumen** con los datos principales del evento:
+Preview - Cliente Home: En el **🏠 Cliente Home** este módulo aparece como una **card de resumen** con los datos principales del evento:
 
 - Nombre del evento
 - Lugar

@@ -15,6 +15,8 @@
 - [Sistema](#sistema)
   - [Comportamientos](#comportamientos)
   - [Event Mode (opcional)](#event-mode-opcional)
+- [Base de desarrollo](#base-de-desarrollo)
+- [Reglas de desarrollo](#reglas-de-desarrollo)
 
 ---
 
@@ -31,7 +33,7 @@
 
 ### Admin
 
-- [🏠 Admin Home](modules/admin-home.md)
+- [📊 Admin Dashboard](modules/admin-home.md)
 - [🎉 Admin Eventos](modules/admin-eventos.md)
 - [🎨 Decoración (solo admin dentro de evento)](modules/admin-decoracion.md)
 - [🪑 Admin Mobiliario](modules/admin-mobiliario.md)
@@ -43,7 +45,7 @@
 
 ### Cliente
 
-- [📰 Feed Evento](modules/cliente-feed-evento.md)
+- [🏠 Cliente Home](modules/cliente-feed-evento.md)
 - [📋 Datos Evento](modules/cliente-datos-evento.md)
 - [🍹 Calculador Trago](modules/cliente-calculador-trago.md)
 - [📸 Fotos Compartidas](modules/cliente-fotos-compartidas.md)
@@ -60,12 +62,12 @@
 
 ### Organizador (propuesto)
 
-- [📊 Organizador Dashboard](modules/organizador-dashboard.md)
+- [🏠 Organizador Home](modules/organizador-dashboard.md)
 - [🪑 Organizador Alquiler Mobiliario](modules/organizador-alquiler-mobiliario.md)
 
 ### Colaborador (propuesto)
 
-- [📊 Colaborador Dashboard](modules/colaborador-dashboard.md)
+- [🏠 Colaborador Home](modules/colaborador-dashboard.md)
 - [🧰 Colaborador Checklist Montaje](modules/colaborador-checklist-montaje.md)
 - [📦 Colaborador Checklist Recogida](modules/colaborador-checklist-recogida.md)
 - [🗓️ Colaborador Agenda](modules/colaborador-agenda.md)
@@ -81,3 +83,11 @@
 ### Event Mode (opcional)
 
 - Ver: [system/event-mode.md](system/event-mode.md)
+
+## Base de desarrollo
+
+- Ver: [base-desarrollo.md](base-desarrollo.md)
+
+## Reglas de desarrollo
+
+- Ver: [reglas-desarrollo.md](reglas-desarrollo.md)

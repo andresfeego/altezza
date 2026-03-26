@@ -1,6 +1,6 @@
 ← Volver al índice: [docs/product/README.md](../README.md)
 
-# 📊 Colaborador Dashboard
+# 🏠 Colaborador Home
 
 ## Descripción
 
@@ -15,4 +15,4 @@ Panel principal para el personal operativo que trabaja en el evento. Desde aquí
 
 ## Notas
 
-El objetivo de este dashboard es ofrecer una vista simple para el equipo de trabajo que se encuentra en campo, permitiendo acceder rápidamente a las tareas necesarias para preparar y cerrar el evento.
+El objetivo de este home es ofrecer una vista simple para el equipo de trabajo que se encuentra en campo, permitiendo acceder rápidamente a las tareas necesarias para preparar y cerrar el evento.

@@ -17,8 +17,8 @@ Herramienta que ayuda a estimar la cantidad de bebidas necesarias para el evento
 
 El módulo permite calcular y guardar una estimación de bebidas para facilitar la planificación del evento.
 
-Preview - Feed Evento:
-En el **📰 Feed Evento** aparecerá una **card preview** del cálculo realizado.
+Preview - Cliente Home:
+En el **🏠 Cliente Home** aparecerá una **card preview** del cálculo realizado.
 
 La card mostrará:
 

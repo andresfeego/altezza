@@ -1,25 +1,12 @@
-import { useState } from 'react';
 import styles from '@/components/home/AdminHome.module.scss';
 
-const TITLES = {
-  colaborador: 'Colaborador',
-  agenda: 'Agenda',
-  catalogo: 'Catálogo',
-  pendientes: 'Pendientes',
-  ajustes: 'Ajustes',
-};
-
 export default function ColaboradorHome() {
-  const [selected, setSelected] = useState('colaborador');
-
   return (
-    <>
-      <div className={styles.content}>
-        <main style={{ padding: '2rem' }}>
-          <h1>Home - Colaborador</h1>
-          <p>Sección: {TITLES[selected] || 'Colaborador'}</p>
-        </main>
-      </div>
-    </>
+    <div className={styles.content}>
+      <main style={{ padding: '2rem' }}>
+        <h1>Colaborador</h1>
+        <p>La experiencia de colaborador esta prevista en el manual, pero su navegacion funcional aun no esta implementada.</p>
+      </main>
+    </div>
   );
 }
