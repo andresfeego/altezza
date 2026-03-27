@@ -64,13 +64,29 @@ function buildBarPath(height) {
   ].join(' ');
 }
 
-function matchesPath(item, pathname) {
+function normalizePath(path = '') {
+  return String(path || '').split('?')[0].split('#')[0];
+}
+
+function matchesPath(item, pathname, asPath) {
   if (!item) return false;
+  const cleanPathname = normalizePath(pathname);
+  const cleanAsPath = normalizePath(asPath);
   if (item.baseUrl) {
-    return pathname === item.baseUrl || pathname.startsWith(item.baseUrl + '/');
+    return (
+      cleanPathname === item.baseUrl ||
+      cleanPathname.startsWith(item.baseUrl + '/') ||
+      cleanAsPath === item.baseUrl ||
+      cleanAsPath.startsWith(item.baseUrl + '/')
+    );
   }
   if (item.url) {
-    return pathname === item.url || pathname.startsWith(item.url);
+    return (
+      cleanPathname === item.url ||
+      cleanPathname.startsWith(item.url) ||
+      cleanAsPath === item.url ||
+      cleanAsPath.startsWith(item.url)
+    );
   }
   return false;
 }
@@ -144,12 +160,12 @@ export default function SideMenu({ onSelect }) {
 
   useEffect(() => {
     if (!items.length) return;
-    const idx = items.findIndex((item) => matchesPath(item, router.pathname));
+    const idx = items.findIndex((item) => matchesPath(item, router.pathname, router.asPath));
     const nextIndex = idx >= 0 ? idx : -1;
     if (nextIndex !== selectedIndex) {
       setSelectedIndex(nextIndex);
     }
-  }, [router.pathname, items, selectedIndex]);
+  }, [router.asPath, router.pathname, items, selectedIndex]);
 
   return (
     <>

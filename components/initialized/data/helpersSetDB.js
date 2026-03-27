@@ -30,6 +30,14 @@ export const crearEventoBasico = async ({ id, nombre, idTipoEvento, fechaHoraRec
   }
 };
 
+export const actualizarModulosClientePorEvento = async ({ idEvento, modules }) => {
+  return await setDB(`/eventos/${idEvento}/modulos-cliente`, {
+    modules,
+  }, {
+    method: 'PUT',
+  });
+};
+
 export const crearUsuarioSistema = async ({ nombres, apellidos, user, rol, telefon }) => {
   return await setDB('/usuariosSistema', {
     nombres,

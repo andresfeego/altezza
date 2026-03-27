@@ -58,7 +58,13 @@ export default function AdminEventos() {
       </section>
 
       <section className={`${styles.sectionCard} ${shellStyles.sectionCard}`}>
-        <ListaEventos eventos={activos} titulo="Eventos activos" />
+        <ListaEventos
+          eventos={activos}
+          titulo="Eventos activos"
+          getEventHref={(evento) => `/admin/eventos/${evento.id}`}
+          eyebrow="Workspace del evento"
+          helperText="Entrar a gestionar modulos, datos y acciones del evento"
+        />
       </section>
 
       <div className={styles.toggleWrap}>
@@ -69,7 +75,14 @@ export default function AdminEventos() {
 
       {mostrarInactivos && (
         <section className={`${styles.sectionCard} ${shellStyles.sectionCard}`}>
-          <ListaEventos eventos={inactivos} titulo="Eventos inactivos" inactivos />
+          <ListaEventos
+            eventos={inactivos}
+            titulo="Eventos inactivos"
+            inactivos
+            getEventHref={(evento) => `/admin/eventos/${evento.id}`}
+            eyebrow="Workspace del evento"
+            helperText="Entrar a revisar configuracion del evento"
+          />
         </section>
       )}
     </div>

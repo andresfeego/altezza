@@ -22,7 +22,7 @@
 
 ## Roles
 
-- **ADMIN**: administra el sistema y puede entrar a cualquier evento en modo admin.
+- **ADMIN**: administra el sistema y puede entrar a cualquier evento desde un workspace administrativo propio.
 - **CLIENTE**: dueño del evento; ve solo módulos habilitados por admin.
 - **ORGANIZADOR (propuesto)**: alquiler de mobiliario propio de Altezza.
 - **COLABORADOR (propuesto)**: operación del evento (checklists, agenda).

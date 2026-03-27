@@ -11,10 +11,13 @@
 
 ## Roles (según uso en frontend)
 - Si el usuario es **CLIENTE**:
-  - redirige a: `/evento/feed/<idEvento>`
-  - `idEvento` viene del backend como `idEventoAsignado`.
+  - con `0` eventos: redirige a `/home/cliente`
+  - con `1` evento: redirige a `/evento/feed/<idEvento>`
+  - con `2+` eventos: redirige a `/home/cliente`
+  - el backend entrega `eventosAsignados` y el front resuelve `eventoActivo`.
 - Si no es cliente:
   - redirige a home según rol: `getHomePathByRole(rol)`.
+  - no debe recibir eventos asignados en login.
 
 ## Respuesta esperada del backend
 El frontend soporta 2 formas:
@@ -25,7 +28,8 @@ Campos usados por el front:
 - `id`
 - `rol`
 - `rolNombre`
-- `idEventoAsignado` (solo rol cliente)
+- `eventosAsignados` (solo rol cliente)
+- `idEventoAsignado` como compatibilidad cuando solo existe un evento asignado
 
 ## Pendiente (no implementado hoy)
 - Flujo de recuperación/cambio de contraseña en UI.

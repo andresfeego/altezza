@@ -33,6 +33,13 @@
   padding: var(--ag-space-2);
 }
 
+.eyebrow,
+.helper {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
 .info h3 {
   margin: 0;
   font-size: var(--ag-heading-h3-size);

@@ -2,7 +2,14 @@ import shellStyles from '@/components/admin/shared/AdminModuleShell.module.scss'
 import styles from './ListaEventos.module.scss';
 import EventoCard from './EventoCard';
 
-export default function ListaEventos({ eventos = [], titulo = '', inactivos = false }) {
+export default function ListaEventos({
+  eventos = [],
+  titulo = '',
+  inactivos = false,
+  getEventHref = null,
+  eyebrow = '',
+  helperText = '',
+}) {
   return (
     <div className={styles.wrapper}>
       <div className={`${styles.titleWrapper} ${shellStyles.sectionHeader}`}>
@@ -12,7 +19,14 @@ export default function ListaEventos({ eventos = [], titulo = '', inactivos = fa
       {eventos.length ? (
         <div className={styles.grid}>
           {eventos.map((evento) => (
-            <EventoCard key={evento.id} evento={evento} inactivo={inactivos} />
+            <EventoCard
+              key={evento.id}
+              evento={evento}
+              inactivo={inactivos}
+              href={typeof getEventHref === 'function' ? getEventHref(evento) : null}
+              eyebrow={eyebrow}
+              helperText={helperText}
+            />
           ))}
         </div>
       ) : (

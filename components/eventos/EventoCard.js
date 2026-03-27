@@ -3,11 +3,18 @@ import Image from 'next/image';
 import { MdImage } from 'react-icons/md';
 import Link from 'next/link';
 
-export default function EventoCard({ evento, inactivo = false  }) {
+export default function EventoCard({
+  evento,
+  inactivo = false,
+  href = null,
+  eyebrow = '',
+  helperText = '',
+}) {
   const tieneImagen = evento?.imagenPrincipal && evento.imagenPrincipal.length > 10;
+  const targetHref = href || `/evento/feed/${evento.id}`;
 
   return (
-    <Link href={`/feed/${evento.id}`} className={`${styles.card} ${inactivo ? styles.inactivo : ''}`}>
+    <Link href={targetHref} className={`${styles.card} ${inactivo ? styles.inactivo : ''}`}>
       <div className={styles.imagen}>
         {tieneImagen ? (
           <Image
@@ -25,8 +32,10 @@ export default function EventoCard({ evento, inactivo = false  }) {
       </div>
 
       <div className={styles.info}>
+        {eyebrow ? <span className={styles.eyebrow}>{eyebrow}</span> : null}
         <h3>{evento.nombre}</h3>
         <p>{evento.tipoEvento}</p>
+        {helperText ? <span className={styles.helper}>{helperText}</span> : null}
       </div>
     </Link>
   );
