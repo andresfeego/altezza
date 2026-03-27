@@ -7,6 +7,7 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 ## Reglas base
 
 - `docs/product` es la fuente de verdad funcional.
+- Para trabajo de UI en este repo, el punto de entrada operativo es `.codex/skills/altezza-ui-governance/SKILL.md`, pero las reglas activas de desarrollo y diseno se leen primero aqui en `docs/product/reglas-desarrollo.md`.
 - El backend y el frontend no deben inventar contratos fuera de esa base sin dejarlo documentado.
 - Si un cambio afecta datos, primero se revisa esquema y contrato antes de tocar UI.
 
@@ -57,6 +58,7 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 - Los titulos principales de modulo o seccion deben tener tambien respiracion inferior basada en la escala, para separarse del bloque resumen o del contenido inmediato.
 - Los titulos de seccion internos como `h2` tambien deben salir de clases transversales del shell compartido. No resolver `h2` por modulo con estilos aislados si la estructura es la misma.
 - Los resumenes cortos de una seccion deben ser minimalistas, pequenos y preferiblemente concentrados en una sola pieza visual, no en varias cards pesadas.
+- En listas verticales de items, acciones o modulos, usar una sola estrategia de separacion. Regla base: solo separador superior en el item siguiente. No duplicar separador inferior + superior entre dos bloques consecutivos.
 - No usar textos descriptivos del tipo "desde aqui puedes..." o "filtra, revisa..." dentro de las interfaces finales.
 - En flujos administrativos de crear o editar, priorizar modal sobre formulario incrustado cuando eso limpie mejor la lectura de la pantalla principal.
 - La escala de espaciado del proyecto debe usar secuencias basadas en `8px`, pero la unidad minima de uso general en UI sera `16px`.
@@ -71,6 +73,12 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 - Las cards deben iniciar con un `h3` como titulo principal de la pieza. Regla visual actual para cards: `h3` alrededor de `1.2rem`, proporcionado por debajo del `h2` de seccion.
 - La accion principal de un modulo administrativo debe presentarse como boton primario lleno, de ancho disponible, y puede incluir icono al inicio cuando ayude a lectura.
 - Todo preview de `Home` o `Dashboard` debe vivir en un componente aparte. La regla es mantener el preview junto al dominio del modulo o de la superficie, no incrustado dentro del componente general del home/dashboard.
+- En listas administrativas largas para asignar entidades, no usar `select` cuando el volumen vuelva opaca la busqueda. Regla base: usar input de filtrado y lista scrollable con acciones por fila.
+- Cuando una fila administrativa combine identidad y acciones, usar esta jerarquia:
+  - primera linea: nombre principal y metadato corto alineado a la derecha
+  - segunda linea: identificador secundario pequeno
+  - tercera linea: acciones de contacto o acceso
+  - cuarta linea: estado a la izquierda y menu de acciones a la derecha
 - Los modales deben cerrar con icono `X` en la esquina superior derecha con separacion basada en `16px`.
 - El boton de cerrar de los modales debe ir en `position: absolute` respecto al modal, con `top: 8px` y `right: 8px`.
 - El bloque de titulo del modal debe tener respiracion superior basada en la escala. Regla actual: `16px`.
@@ -92,6 +100,7 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 - La tipografia del sistema debe tender a esta escala: `12, 14, 16, 20, 24, 32, 40, 48` con line-heights `16, 20, 24, 32, 40, 48, 56, 64` y pesos `400, 500, 600, 700`.
 - En tipografia se evitan tamanos `13px`, `15px`, `17px` y pesos `300` o `800+` salvo necesidad justificada.
 - Todo `h1`, `h2`, `h3` y `h4` nuevo debe usar tokens oficiales del proyecto. No definir headings nuevos con tamanos quemados.
+- Todo icono nuevo en la app debe tomar su tamano desde tokens tipograficos y su contenedor desde tokens de espaciado. No dejar `width`, `height` o `font-size` quemados para iconografia nueva.
 - Todo color nuevo en pantallas, componentes o modulos debe salir de tokens del proyecto. No asignar colores quemados en codigo nuevo.
 - Motion baseline:
   - duraciones permitidas: `150ms`, `200ms`, `250ms`, `300ms`

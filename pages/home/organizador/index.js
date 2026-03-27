@@ -1,12 +1,10 @@
-import styles from '@/components/home/AdminHome.module.scss';
+import RoleHomePlaceholder from '@/components/home/RoleHomePlaceholder';
 
 export default function OrganizadorHome() {
   return (
-    <div className={styles.content}>
-      <main style={{ padding: '2rem' }}>
-        <h1>Organizador</h1>
-        <p>La experiencia de organizador esta prevista en el manual, pero su navegacion funcional aun no esta implementada.</p>
-      </main>
-    </div>
+    <RoleHomePlaceholder
+      title="Organizador Home"
+      description="La superficie de organizador ya tiene punto de entrada definido, pero sus modulos operativos aun no se han construido en esta fase."
+    />
   );
 }

@@ -17,19 +17,21 @@ Flujo:
 1. El administrador accede al panel administrativo.
 2. Ingresa al listado de eventos.
 3. Hace clic sobre uno de los eventos.
-4. El sistema abre la vista interna de ese evento.
-5. Dentro del evento, el administrador ve una interfaz muy similar a la del cliente, basada en módulos.
-6. El menú del evento para el administrador mostrará primero los **módulos administrativos por defecto** y después los módulos activos del evento.
+4. El sistema abre el **workspace administrativo del evento**.
+5. Dentro de este workspace el administrador ve un resumen del evento, acciones globales y accesos a los módulos que puede gestionar.
+6. El administrador puede entrar a módulos administrativos del evento y también configurar qué módulos estarán disponibles para el cliente.
+7. Si necesita revisar la experiencia cliente, lo hará mediante una acción explícita de **preview** o **ver como cliente**, no reutilizando la navegación principal del cliente.
 
 ## Reglas
 
 - El administrador puede entrar a cualquier evento desde su panel administrativo.
-- La vista interna del evento para administrador conserva una lógica similar a la experiencia del cliente, para mantener consistencia de navegación.
-- Los **módulos administrativos por defecto** del administrador dentro del evento deben aparecer **al inicio del menú**.
-- A continuación de estos se listan los **módulos activos del evento** (los mismos que puede ver el cliente). Esta aclaración define explícitamente el orden del menú dentro del evento para el modo administrador.
-- Después de los módulos administrativos por defecto, se muestran los módulos activos del evento.
-- La interfaz debe mostrar un elemento visual diferencial que deje claro que el usuario está dentro de un evento, pero en **modo administrador**.
-- Un ejemplo de módulo administrativo por defecto es **🎨 Decoración**, que siempre será visible para el administrador dentro de cada evento y nunca será visible para el cliente.
+- Las rutas `/evento/...` quedan reservadas para la experiencia del cliente.
+- El administrador no debe entrar al feed cliente como flujo principal de trabajo.
+- La gestión del evento para admin debe vivir bajo rutas separadas del tipo `/admin/eventos/:id...`.
+- El workspace admin del evento debe exponer acciones generales del evento y accesos a módulos administrativos o de configuración.
+- La configuración de módulos del cliente se gestiona desde el workspace admin del evento.
+- Si existe un modo preview para revisar la experiencia cliente, debe estar visualmente diferenciado y ser secundario frente al workspace admin.
+- Un ejemplo de módulo administrativo por defecto es **🎨 Decoración**, visible para admin dentro del evento y nunca para cliente.
 
 ---
 
@@ -68,19 +70,22 @@ Comportamiento del sistema cuando un **usuario con rol Cliente** inicia sesión.
 Flujo:
 
 1. El **usuario con rol Cliente** inicia sesión en Altezza.
-2. El sistema verifica si el cliente tiene un evento asignado.
-3. Si **no tiene evento asignado**, se muestra un mensaje indicando que aún no tiene un evento vinculado y que debe comunicarse con el administrador.
-4. Si **tiene evento asignado**, el sistema redirige automáticamente al **🏠 Cliente Home**.
-5. En el Home del cliente el usuario verá el **menú con los módulos habilitados para su evento**.
-6. El Home mostrará además **cards resumen cliqueables** de los módulos, con información reciente o destacada de cada uno.
+2. El sistema verifica cuántos eventos tiene asignados el cliente.
+3. Si **no tiene eventos asignados**, entra a **🏠 Cliente Home** y ve un empty state.
+4. Si **tiene un solo evento**, entra directamente al **Feed del evento**.
+5. Si **tiene dos o más eventos**, entra a **🏠 Cliente Home** como selector de eventos.
+6. Una vez existe un evento activo, el menú del cliente muestra solo los módulos habilitados para ese evento.
+7. El feed del evento muestra además **cards resumen cliqueables** de los módulos habilitados, con información reciente o destacada de cada uno.
 
 ## Reglas
 
 - Este comportamiento aplica **solo para usuarios con rol Cliente**.
-- Un usuario cliente sin evento asignado no puede acceder a los módulos del sistema.
+- Un usuario cliente sin evento asignado no puede acceder a módulos del evento.
 - Los módulos visibles para el cliente dependen de la configuración realizada por el administrador al crear el evento.
-- El Home del cliente funciona como el punto central de navegación para el cliente.
-- Cada módulo puede tener una **vista previa resumida** dentro del Home.
+- `Cliente Home` funciona como empty state cuando no hay eventos y como selector cuando hay múltiples eventos.
+- El `Feed del evento` funciona como la experiencia principal del cliente cuando ya existe un evento activo.
+- Sin evento activo, el menú cliente no debe mostrar módulos del evento.
+- Cada módulo puede tener una **vista previa resumida** dentro del feed del evento.
 - Cada card resumen debe permitir navegar al módulo completo mediante clic o acción de **Ver más**.
 
 ---

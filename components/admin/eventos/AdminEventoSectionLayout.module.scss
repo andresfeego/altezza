@@ -1,0 +1,37 @@
+.topMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-1);
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-1);
+}
+
+.navLink {
+  align-items: center;
+  background: var(--ag-surface-soft);
+  border-radius: var(--ag-radius-pill);
+  color: var(--ag-text-base);
+  display: inline-flex;
+  justify-content: center;
+  min-height: var(--ag-space-5);
+  padding: 0 var(--ag-space-2);
+  text-decoration: none;
+  transition:
+    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.navLinkActive {
+  background: var(--ag-brand-wine);
+  color: var(--ag-surface-card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navLink {
+    transition: none;
+  }
+}

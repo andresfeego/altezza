@@ -122,11 +122,13 @@
 
   body{
     margin: 0px;
-    font-family: 'Libre Baskerville' ,sans-serif!important;
-    font-weight: 300 !important;
+    font-family: var(--ag-font-body);
+    font-size: var(--ag-text-body-size);
+    line-height: var(--ag-text-body-line);
+    color: var(--ag-text-base);
+    background: var(--ag-surface-page);
     overflow-x: hidden;
     transition: all 0.5s ease 0s;
-    font-weight: 100;
   
   }
  

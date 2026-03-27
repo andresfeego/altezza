@@ -20,6 +20,10 @@ export async function getResumenEventoById(id) {
   return await getDB('/resumenEvento/' + id, { method: 'GET' });
 }
 
+export async function getModulosClientePorEvento(idEvento) {
+  return await getDB(`/eventos/${idEvento}/modulos-cliente`, { method: 'GET' });
+}
+
 export const getDetalleEvento = async (idEvento) => {
   try {
     return await getDB(`/eventos/detalle_completo/${idEvento}`, { method: 'GET' });

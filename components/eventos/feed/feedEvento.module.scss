@@ -1,19 +1,31 @@
-// components/eventos/feed/feedEvento.module.scss
-
 .contenedorFeed {
+  display: grid;
+  gap: var(--ag-space-4);
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  max-width: var(--ag-max-content);
+  padding: var(--ag-space-2);
+  width: 100%;
 }
 
 .gridModulos {
-  display: flex;
-  padding: 1rem;
-  max-width: 1140px;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: flex-start;
-  align-items: stretch;
+  display: grid;
+  gap: var(--ag-space-3);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 768px) {
+  .gridModulos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .contenedorFeed {
+    gap: var(--ag-space-5);
+    padding: var(--ag-space-4);
+  }
+
+  .gridModulos {
+    gap: var(--ag-space-4);
+  }
 }

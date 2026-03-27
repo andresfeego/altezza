@@ -13,7 +13,8 @@ Campos vistos en query de login:
 - `telefon`
 - `pass` (secreto; no debe salir al front)
 - `passTemp` (secreto)
-- `idEventoAsignado` (solo rol cliente; join `evento_has_usuario.idEvento`)
+- `eventosAsignados` (solo rol cliente; detalle construido desde `evento_has_usuario`)
+- `idEventoAsignado` como compatibilidad cuando el cliente tiene un solo evento
 
 ## Evento (`evento`)
 Campos usados/retornados en distintas queries:
@@ -31,6 +32,16 @@ Campos usados/retornados en distintas queries:
 - `numeroInvitados`
 - `hashtag`
 - `imagenPrincipal` (ruta relativa tipo `/<evento>/<modulo>/file.webp`)
+
+## Módulos cliente por evento (`evento_modulo_cliente`)
+Campos relevantes:
+- `id`
+- `idEvento`
+- `moduleKey`
+- `enabled`
+
+Uso:
+- controla qué módulos del cliente se muestran en menú, feed y guardas por evento
 
 ## Tipo de evento (`tipo_evento`)
 - `id`

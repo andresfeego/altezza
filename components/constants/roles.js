@@ -24,8 +24,17 @@ export function getDefaultPathByUser(user) {
   const rol = user?.rol;
 
   if (rol === ROLE_IDS.CLIENTE) {
-    const idEvento = user?.idEventoAsignado;
-    return idEvento ? `/evento/feed/${idEvento}` : '/home/cliente';
+    const eventosAsignados = Array.isArray(user?.eventosAsignados)
+      ? user.eventosAsignados.filter((evento) => evento && (evento.id || typeof evento === 'string'))
+      : [];
+
+    if (eventosAsignados.length === 1) {
+      const singleEvent = eventosAsignados[0];
+      const eventId = typeof singleEvent === 'string' ? singleEvent : singleEvent.id;
+      return `/evento/feed/${eventId}`;
+    }
+
+    return '/home/cliente';
   }
 
   return getRoleHomePath(rol);

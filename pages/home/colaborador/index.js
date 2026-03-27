@@ -1,12 +1,10 @@
-import styles from '@/components/home/AdminHome.module.scss';
+import RoleHomePlaceholder from '@/components/home/RoleHomePlaceholder';
 
 export default function ColaboradorHome() {
   return (
-    <div className={styles.content}>
-      <main style={{ padding: '2rem' }}>
-        <h1>Colaborador</h1>
-        <p>La experiencia de colaborador esta prevista en el manual, pero su navegacion funcional aun no esta implementada.</p>
-      </main>
-    </div>
+    <RoleHomePlaceholder
+      title="Colaborador Home"
+      description="La superficie de colaborador ya respeta su entrada por rol, pero la operacion en campo y sus checklists siguen pendientes para una fase posterior."
+    />
   );
 }

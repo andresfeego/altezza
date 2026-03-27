@@ -1,0 +1,252 @@
+.page {
+  display: grid;
+  gap: var(--ag-space-4);
+  margin: 0 auto;
+  max-width: var(--ag-max-content);
+  min-height: calc(100vh - var(--ag-space-8));
+}
+
+.hero {
+  align-items: end;
+  background: var(--ag-surface-card-alt);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  box-shadow: var(--ag-shadow-soft);
+  display: grid;
+  gap: var(--ag-space-3);
+  padding: var(--ag-space-4);
+}
+
+.heroCopy {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
+.eyebrow {
+  color: var(--ag-brand-wine);
+  font-size: var(--ag-text-label-size);
+  font-weight: var(--ag-text-label-weight);
+  letter-spacing: 0.08em;
+  line-height: var(--ag-text-label-line);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h1-size);
+  font-weight: var(--ag-heading-h1-weight);
+  line-height: var(--ag-heading-h1-line);
+  margin: 0;
+}
+
+.lead,
+.eventBody p,
+.emptyCopy p {
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-body-size);
+  font-weight: var(--ag-text-body-weight);
+  line-height: var(--ag-text-body-line);
+  margin: 0;
+}
+
+.lead {
+  max-width: 56rem;
+}
+
+.eventBadge {
+  background: var(--ag-surface-card-alt);
+  border: 1px solid var(--ag-border-strong);
+  border-radius: var(--ag-radius-md);
+  display: grid;
+  gap: var(--ag-space-1);
+  justify-self: start;
+  min-width: 224px;
+  padding: var(--ag-space-3);
+}
+
+.eventBadge strong {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-font-size-24);
+  font-weight: var(--ag-font-weight-bold);
+  line-height: var(--ag-line-height-32);
+}
+
+.eventBadgeMuted {
+  background: var(--ag-surface-soft);
+}
+
+.badgeLabel {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  font-weight: var(--ag-text-caption-weight);
+  line-height: var(--ag-text-caption-line);
+  text-transform: uppercase;
+}
+
+.eventGrid {
+  display: grid;
+  gap: var(--ag-space-3);
+}
+
+.eventCard,
+.emptyState {
+  background: var(--ag-surface-card);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  box-shadow: var(--ag-shadow-soft);
+}
+
+.eventCard {
+  overflow: hidden;
+}
+
+.eventMedia {
+  background: var(--ag-surface-soft);
+  min-height: 208px;
+  position: relative;
+}
+
+.eventPlaceholder {
+  align-items: center;
+  color: var(--ag-text-soft);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.eventBody {
+  display: grid;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-3);
+}
+
+.eventHeader {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-2);
+  justify-content: space-between;
+}
+
+.eventHeader h3,
+.emptyGuidance h3 {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h3-size);
+  font-weight: var(--ag-heading-h3-weight);
+  line-height: var(--ag-heading-h3-line);
+  margin: 0;
+}
+
+.eventTag {
+  background: var(--ag-surface-soft);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-pill);
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  font-weight: var(--ag-font-weight-medium);
+  line-height: var(--ag-text-caption-line);
+  padding: 0 var(--ag-space-2);
+}
+
+.primaryAction {
+  align-items: center;
+  background: var(--ag-brand-wine);
+  border: none;
+  border-radius: var(--ag-radius-pill);
+  color: var(--ag-surface-card);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--ag-text-label-size);
+  font-weight: var(--ag-font-weight-semibold);
+  justify-content: center;
+  line-height: var(--ag-text-label-line);
+  min-height: 48px;
+  padding: 0 var(--ag-space-3);
+  text-decoration: none;
+  transition:
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    box-shadow var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+  width: fit-content;
+}
+
+.primaryAction:hover,
+.primaryAction:focus-visible {
+  background: var(--ag-brand-wine-strong);
+  box-shadow: var(--ag-shadow-soft);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.list {
+  color: var(--ag-text-base);
+  display: grid;
+  gap: var(--ag-space-1);
+  line-height: var(--ag-text-body-line);
+  margin: 0;
+  padding-left: var(--ag-space-3);
+}
+
+.emptyState {
+  align-items: center;
+  display: grid;
+  gap: var(--ag-space-3);
+  justify-items: start;
+  padding: var(--ag-space-4);
+}
+
+.emptyIcon {
+  align-items: center;
+  background: var(--ag-danger-soft);
+  border: 1px solid var(--ag-border-strong);
+  border-radius: var(--ag-radius-pill);
+  color: var(--ag-brand-wine);
+  display: inline-flex;
+  font-size: var(--ag-font-size-20);
+  font-weight: var(--ag-font-weight-bold);
+  height: 64px;
+  justify-content: center;
+  width: 64px;
+}
+
+.emptyCopy,
+.emptyGuidance {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
+.emptyCopy h2 {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h2-size);
+  font-weight: var(--ag-heading-h2-weight);
+  line-height: var(--ag-heading-h2-line);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .eventGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .emptyState {
+    grid-template-columns: auto minmax(0, 1.2fr) minmax(0, 1fr);
+    padding: var(--ag-space-5);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page {
+    gap: var(--ag-space-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primaryAction {
+    transition-duration: 0ms;
+  }
+}

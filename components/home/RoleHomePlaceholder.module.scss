@@ -1,0 +1,42 @@
+.page {
+  margin: 0 auto;
+  max-width: var(--ag-max-content);
+}
+
+.card {
+  background: var(--ag-surface-card);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  box-shadow: var(--ag-shadow-soft);
+  display: grid;
+  gap: var(--ag-space-2);
+  min-height: 240px;
+  padding: var(--ag-space-4);
+}
+
+.eyebrow {
+  color: var(--ag-brand-wine);
+  font-size: var(--ag-text-label-size);
+  font-weight: var(--ag-text-label-weight);
+  line-height: var(--ag-text-label-line);
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.card h1 {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h1-size);
+  font-weight: var(--ag-heading-h1-weight);
+  line-height: var(--ag-heading-h1-line);
+  margin: 0;
+}
+
+.description {
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-body-size);
+  font-weight: var(--ag-text-body-weight);
+  line-height: var(--ag-text-body-line);
+  margin: 0;
+  max-width: 48rem;
+}

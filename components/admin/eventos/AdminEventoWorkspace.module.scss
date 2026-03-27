@@ -1,0 +1,225 @@
+.page {
+  display: grid;
+  gap: var(--ag-space-4);
+}
+
+.sectionCard {
+  display: grid;
+  gap: var(--ag-space-3);
+}
+
+.summaryCard,
+.inlineState {
+  background: var(--ag-surface-card);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  box-shadow: var(--ag-shadow-soft);
+}
+
+.hero {
+  margin-left: calc(var(--ag-space-4) * -1);
+  margin-right: calc(var(--ag-space-4) * -1);
+}
+
+.heroMedia {
+  background: linear-gradient(180deg, rgba(47, 38, 36, 0.06) 0%, rgba(47, 38, 36, 0.24) 100%);
+  min-height: 416px;
+  overflow: hidden;
+  position: relative;
+}
+
+.heroMedia::after {
+  background: linear-gradient(180deg, rgba(24, 18, 18, 0.04) 0%, rgba(24, 18, 18, 0.52) 100%);
+  content: '';
+  inset: 0;
+  position: absolute;
+}
+
+.heroOverlay {
+  align-content: end;
+  display: grid;
+  gap: var(--ag-space-2);
+  inset: 0;
+  padding: var(--ag-space-4);
+  position: absolute;
+  z-index: 1;
+}
+
+.mediaPlaceholder {
+  align-items: center;
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  font-size: var(--ag-font-size-32);
+  height: 100%;
+  justify-content: center;
+  background: linear-gradient(135deg, #ccbfb4 0%, #a98f7b 100%);
+}
+
+.actionCard p,
+.inlineState p {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+  margin: 0;
+}
+
+.summaryBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-1);
+  margin-bottom: var(--ag-space-2);
+}
+
+.heroTitle {
+  color: var(--ag-surface-card);
+  font-size: var(--ag-heading-h1-size);
+  font-weight: var(--ag-heading-h1-weight);
+  line-height: var(--ag-heading-h1-line);
+  margin: 0;
+  max-width: 720px;
+  padding-bottom: var(--ag-space-6);
+}
+
+.metaPill,
+.actionState {
+  align-items: center;
+  background: var(--ag-surface-soft);
+  border-radius: var(--ag-radius-pill);
+  color: var(--ag-text-base);
+  display: inline-flex;
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+  justify-self: start;
+  min-height: 24px;
+  padding: 0 var(--ag-space-1);
+  width: fit-content;
+}
+
+.metaPillActive {
+  background: var(--ag-success-soft);
+  color: var(--ag-success);
+}
+
+.overlapCard {
+  margin-top: calc(var(--ag-space-7) * -1);
+  position: relative;
+  z-index: 2;
+}
+
+.summaryRow {
+  display: grid;
+  gap: 0;
+}
+
+.summaryItem {
+  display: flex;
+  align-items: center;
+  gap: var(--ag-space-2);
+  min-height: 56px;
+}
+
+.summaryTop {
+  align-items: center;
+  display: flex;
+  gap: var(--ag-space-2);
+  width: 100%;
+}
+
+.metricIcon,
+.actionIcon {
+  align-items: center;
+  background: var(--ag-surface-soft);
+  border-radius: var(--ag-radius-pill);
+  color: var(--ag-brand-wine);
+  display: inline-flex;
+  flex: 0 0 var(--ag-space-5);
+  font-size: var(--ag-text-label-size);
+  height: var(--ag-space-5);
+  justify-content: center;
+  width: var(--ag-space-5);
+}
+
+.summaryItem strong {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h3-size);
+  line-height: var(--ag-heading-h3-line);
+  font-weight: var(--ag-heading-h3-weight);
+  margin: 0;
+}
+
+.actionItem h3 {
+  color: var(--ag-text-strong);
+  margin: 0;
+}
+
+.actionGrid {
+  display: grid;
+  gap: 0;
+}
+
+.actionItem {
+  color: inherit;
+  display: grid;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-3) 0;
+  text-decoration: none;
+}
+
+.actionItem:first-child {
+  padding-top: 0;
+}
+
+.actionItem:last-child {
+  padding-bottom: 0;
+}
+
+.actionItem:hover .actionState {
+  background: var(--ag-brand-wine);
+  color: var(--ag-surface-card);
+}
+
+.actionHead {
+  align-items: center;
+  display: flex;
+  gap: var(--ag-space-2);
+}
+
+.actionDivider {
+  width: 100%;
+  height: 1px;
+  background: var(--ag-border-soft);
+}
+
+.inlineState {
+  padding: var(--ag-space-3);
+}
+
+@media (max-width: 1024px) {
+  .actionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    margin-left: calc(var(--ag-space-3) * -1);
+    margin-right: calc(var(--ag-space-3) * -1);
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    gap: var(--ag-space-3);
+  }
+
+  .hero {
+    margin-left: calc(var(--ag-space-2) * -1);
+    margin-right: calc(var(--ag-space-2) * -1);
+  }
+
+  .heroMedia {
+    min-height: 320px;
+  }
+
+  .heroOverlay {
+    padding: var(--ag-space-3);
+  }
+}

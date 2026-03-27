@@ -30,9 +30,21 @@ Este documento define:
 ## Superficies iniciales por rol
 
 - `Admin` entra a `Admin Dashboard`
-- `Cliente` entra a `Cliente Home`
+- `Cliente` entra a `Cliente Home` si tiene `0` o `2+` eventos y entra directo al `Feed del evento` si tiene `1`
 - `Organizador` entra a `Organizador Home`
 - `Colaborador` entra a `Colaborador Home`
+
+## Decisión de arquitectura acordada
+
+- las rutas `/evento/...` quedan reservadas para la experiencia `Cliente`
+- `Admin` no reutiliza el feed cliente como flujo principal de trabajo
+- la gestión del evento para `Admin` debe vivir en un workspace propio bajo rutas tipo `/admin/eventos/:id...`
+- desde ese workspace el admin configura módulos cliente, entra a módulos administrativos del evento y, si aplica, abre un preview cliente como acción secundaria
+- el workspace admin base ya quedó abierto en:
+  - `/admin/eventos/:id`
+  - `/admin/eventos/:id/datos`
+  - `/admin/eventos/:id/usuarios`
+  - `/admin/eventos/:id/preview`
 
 ## Matriz de resúmenes por superficie inicial
 
@@ -84,7 +96,7 @@ Incluye:
 
 Entrega esperada:
 
-- un usuario cliente entra y cae en su evento
+- un usuario cliente entra al contexto correcto según `0/1/N` eventos asignados
 - un admin entra y ve su panel
 - cada rol solo ve módulos válidos para su experiencia
 
@@ -156,7 +168,7 @@ Pendientes acordados:
 
 Estado: `🟡 Parcial`
 Estado funcional: `🟢 Hecho`
-Estado UX/UI: `🎨 Diseño pendiente`
+Estado UX/UI: `🟡 Parcial`
 
 Objetivo:
 
@@ -172,10 +184,12 @@ Falta:
 
 - llevar esa lógica a una experiencia visual consistente entre pantallas
 - definir mejor las pantallas vacías para roles todavía no desarrollados
+- validar manualmente entrada real de los 4 roles
 
 Riesgo técnico:
 
 - hoy hay mezcla entre home por rol y navegación directa al evento
+- la arquitectura de `Admin Eventos` todavía debe separarse formalmente de la experiencia cliente del evento
 
 #### 3. 🎫 Contexto de evento asignado
 
@@ -189,14 +203,15 @@ Objetivo:
 
 Ya existe:
 
-- `idEventoAsignado` en sesión
-- rutas dinámicas para `Cliente Home` y `Datos Evento`
+- `eventosAsignados` en sesión para cliente
+- `idEventoAsignado` solo como compatibilidad o caso único
+- `evento activo` resuelto en frontend
+- rutas dinámicas para `Feed del evento` y `Datos Evento`
 
 Falta:
 
-- centralizar el acceso al evento activo
-- proteger la navegación cuando no exista evento asignado
-- evitar que el cliente quede en rutas inválidas o manuales
+- terminar de validar el caso `cliente con 2+ eventos` con data real
+- desacoplar más el contexto de evento activo del store de usuario si luego el producto lo requiere
 
 Riesgo técnico:
 
@@ -205,8 +220,8 @@ Riesgo técnico:
 #### 4. 🧭 Navegación por rol
 
 Estado: `🟡 Parcial`
-Estado funcional: `🟡 Parcial`
-Estado UX/UI: `🎨 Diseño pendiente`
+Estado funcional: `🟢 Hecho`
+Estado UX/UI: `🟡 Parcial`
 
 Objetivo:
 
@@ -220,10 +235,9 @@ Ya existe:
 
 Falta:
 
-- corregir módulos visibles por rol
-- quitar opciones placeholder de flujos reales
-- alinear menú cliente con el manual
-- alinear menú organizador y colaborador con rutas reales o esconderlos mientras no existan
+- validar manualmente navegación por rol
+- seguir reemplazando placeholders cliente por módulos funcionales
+- decidir siguientes superficies reales para organizador y colaborador
 
 Riesgo técnico:
 
@@ -235,12 +249,14 @@ Avance aplicado:
 - `✅` se agregaron `Invitaciones` y `Acomodación` a la navegación base del cliente
 - `✅` organizador y colaborador dejaron de mostrar rutas falsas tipo `/url_vacia`
 - `🧪` `Invitaciones` y `Acomodación` quedaron solo con placeholder mínimo hasta construir su lógica real
+- `✅` las cards de `Admin Eventos` ya entran al workspace admin del evento
+- `✅` el header superior ya soporta volver a `Admin Eventos` desde las subrutas del workspace
 
 #### 5. 🧩 Activación de módulos por evento
 
-Estado: `🔴 No iniciado`
-Estado funcional: `🔴 No iniciado`
-Estado UX/UI: `🔴 No iniciado`
+Estado: `🟡 Parcial`
+Estado funcional: `🟢 Hecho`
+Estado UX/UI: `🟡 Parcial`
 
 Objetivo:
 
@@ -248,17 +264,23 @@ Objetivo:
 
 Ya existe:
 
-- no hay una implementación funcional real
+- modelo y endpoint de módulos habilitados por evento
+- carga de esa configuración en frontend
+- filtrado real de menú cliente
+- filtrado de previews en feed cliente
+- bloqueo de acceso manual a módulos deshabilitados
+- gestión administrativa de módulos dentro del workspace del evento
+- guardado inmediato por módulo desde admin
+- preview administrativo del estado visible para cliente
 
 Falta:
 
-- modelo de módulos habilitados por evento
-- carga de esa configuración en frontend
-- filtrado real de menú, home y acceso a rutas
+- validar manualmente el flujo final de configuración y preview
+- cerrar detalles visuales pendientes del panel admin-evento
 
 Riesgo técnico:
 
-- esta es una regla central del producto y hoy no se cumple
+- esta es una regla central del producto y ya existe base funcional, pero aún falta validación integral y cierre visual
 
 #### 6. 🛡️ Guardas de acceso y permisos
 

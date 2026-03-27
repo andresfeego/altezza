@@ -3,7 +3,7 @@ import styles from './resumenDatosEvento.module.scss';
 
 export default function ResumenDatosEvento({ evento }) {
   return (
-    <Link href={`/datos_evento/${evento.idEvento}`} className={styles.linkResumen}>
+    <Link href={`/evento/datos_evento/${evento.idEvento}`} className={styles.linkResumen}>
       <div className={styles.contenedorResumen}>
         <section>
           <h3> Datos del evento</h3>

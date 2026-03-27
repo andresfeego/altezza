@@ -1,7 +1,7 @@
-import "./stylesGlobal.scss"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useUsuarioStore from '@/components/initialized/stored/useUsuarioStore';
+import useEventoStore from '@/components/initialized/stored/useEventoStore';
 import './app.scss';
 import '@/components/ui/governance/tokens.scss';
 import LoadingScreen from '@/components/ui/LoadingScreen';
@@ -9,13 +9,29 @@ import NextTopLoader from 'nextjs-toploader';
 import { Toaster } from 'react-hot-toast';
 import UserMenuButton from '@/components/ui/UserMenuButton';
 import { getDefaultPathByUser, getRoleHomePath, ROLE_IDS } from '@/components/constants/roles';
+import {
+  canAccessClientRoute,
+  getAssignedEventCount,
+  getAssignedEvents,
+  hasAssignedEvent,
+  isClienteEventRoute,
+} from '@/components/constants/eventContext';
 import SideMenu from '@/components/navigation/SideMenu';
+import { getModulosClientePorEvento } from '@/components/initialized/data/helpersGetDB';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const usuario = useUsuarioStore((state) => state.usuario);
   const clearUsuario = useUsuarioStore((state) => state.clearUsuario);
   const dataUsuario = useUsuarioStore((state) => state.dataUsuario);
+  const setEventoActivo = useEventoStore((state) => state.setEventoActivo);
+  const setEventoActivoById = useEventoStore((state) => state.setEventoActivoById);
+  const clearEventoActivo = useEventoStore((state) => state.clearEventoActivo);
+  const idEventoActivo = useEventoStore((state) => state.idEventoActivo);
+  const setLoadingModulosCliente = useEventoStore((state) => state.setLoadingModulosCliente);
+  const setErrorModulosCliente = useEventoStore((state) => state.setErrorModulosCliente);
+  const modulosCliente = useEventoStore((state) => state.modulosCliente);
+  const hasResolvedModulosCliente = useEventoStore((state) => state.hasResolvedModulosCliente);
   const [loading, setLoading] = useState(true);
   const [hydrated, setHydrated] = useState(false);
 
@@ -50,13 +66,15 @@ function MyApp({ Component, pageProps }) {
     const roleHome = getRoleHomePath(dataUsuario?.rol);
     const defaultPath = getDefaultPathByUser(dataUsuario);
     const isCliente = dataUsuario?.rol === ROLE_IDS.CLIENTE;
-    const hasEventoAsignado = Boolean(dataUsuario?.idEventoAsignado);
+    const hasEventoAsignado = hasAssignedEvent(dataUsuario);
+    const eventosAsignados = getAssignedEvents(dataUsuario);
+    const totalEventosAsignados = getAssignedEventCount(dataUsuario);
     const isRoleHomeRoute =
       router.pathname.startsWith('/home/admin') ||
       router.pathname.startsWith('/home/cliente') ||
       router.pathname.startsWith('/home/organizador') ||
       router.pathname.startsWith('/home/colaborador');
-    const isEventoRoute = router.pathname.startsWith('/evento/');
+    const isEventoRoute = isClienteEventRoute(router.pathname);
 
     if (router.pathname === '/' && defaultPath && router.pathname !== defaultPath) {
       router.replace(defaultPath);
@@ -69,21 +87,124 @@ function MyApp({ Component, pageProps }) {
         return;
       }
 
-      if (hasEventoAsignado && router.pathname.startsWith('/home/cliente')) {
+      if (
+        router.pathname.startsWith('/home/cliente') &&
+        totalEventosAsignados === 1 &&
+        defaultPath !== '/home/cliente'
+      ) {
         router.replace(defaultPath);
         return;
       }
 
-      if (!hasEventoAsignado && isEventoRoute) {
+      const derivedActiveEventId =
+        idEventoActivo ||
+        (eventosAsignados.length === 1 ? eventosAsignados[0].id : null) ||
+        (typeof router.query?.idEvento === 'string' &&
+        eventosAsignados.some((evento) => evento.id === router.query.idEvento)
+          ? router.query.idEvento
+          : null);
+
+      const routeAccess = canAccessClientRoute({
+        pathname: router.pathname,
+        user: dataUsuario,
+        activeEventId: derivedActiveEventId,
+        moduleState: modulosCliente,
+        hasResolvedModules: hasResolvedModulosCliente || !hasEventoAsignado,
+      });
+
+      if (!routeAccess.allowed && isEventoRoute) {
         router.replace('/home/cliente');
       }
+      return;
+    }
+
+    if (isEventoRoute) {
+      router.replace(roleHome || '/');
       return;
     }
 
     if (isRoleHomeRoute && roleHome && !router.pathname.startsWith(roleHome)) {
       router.replace(roleHome);
     }
-  }, [dataUsuario, hydrated, router, router.pathname, usuario]);
+  }, [dataUsuario, hasResolvedModulosCliente, hydrated, idEventoActivo, modulosCliente, router, router.pathname, router.query?.idEvento, usuario]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+
+    if (!usuario || dataUsuario?.rol !== ROLE_IDS.CLIENTE) {
+      clearEventoActivo();
+      return;
+    }
+
+    const eventosAsignados = getAssignedEvents(dataUsuario);
+    if (!eventosAsignados.length) {
+      clearEventoActivo();
+      return;
+    }
+
+    let nextEventoActivoId = null;
+    const hasSingleEvent = eventosAsignados.length === 1;
+
+    if (hasSingleEvent) {
+      nextEventoActivoId = eventosAsignados[0].id;
+    } else if (idEventoActivo && eventosAsignados.some((evento) => evento.id === idEventoActivo)) {
+      nextEventoActivoId = idEventoActivo;
+    } else if (
+      typeof router.query?.idEvento === 'string' &&
+      eventosAsignados.some((evento) => evento.id === router.query.idEvento)
+    ) {
+      nextEventoActivoId = router.query.idEvento;
+    }
+
+    if (!nextEventoActivoId) {
+      clearEventoActivo();
+      return;
+    }
+
+    if (nextEventoActivoId !== idEventoActivo) {
+      setEventoActivoById(nextEventoActivoId);
+    }
+
+    let cancelled = false;
+
+    async function cargarContextoEvento() {
+      try {
+        setLoadingModulosCliente(true);
+        const response = await getModulosClientePorEvento(nextEventoActivoId);
+        if (cancelled) return;
+
+        setEventoActivo({
+          idEventoActivo: response?.idEvento || nextEventoActivoId,
+          modulosCliente: response?.modules || [],
+        });
+      } catch (error) {
+        if (cancelled) return;
+        clearEventoActivo();
+        setErrorModulosCliente(error?.message || 'No fue posible cargar los modulos del evento.');
+      } finally {
+        if (!cancelled) {
+          setLoadingModulosCliente(false);
+        }
+      }
+    }
+
+    cargarContextoEvento();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    clearEventoActivo,
+    dataUsuario,
+    hydrated,
+    idEventoActivo,
+    router.query?.idEvento,
+    setErrorModulosCliente,
+    setEventoActivo,
+    setEventoActivoById,
+    setLoadingModulosCliente,
+    usuario,
+  ]);
 
   if (!hydrated || loading) return <LoadingScreen />;
   const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
@@ -130,8 +251,8 @@ function MyApp({ Component, pageProps }) {
     }}
   />
   {usuario && !isManual && !isGovernanceLab && <SideMenu />}
-  <Component {...pageProps} />
   {usuario && !isManual && !isGovernanceLab && <UserMenuButton />}
+  <Component {...pageProps} />
   </>
   );
 }
