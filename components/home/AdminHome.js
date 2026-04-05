@@ -1,6 +1,10 @@
 import AdminDashboard from '@/components/admin/dashboard/AdminDashboard';
-import styles from './AdminHome.module.scss';
+import PageShell from '@/components/ui/layout/PageShell';
 
 export default function AdminHome() {
-  return <div className={styles.content}><AdminDashboard /></div>;
+  return (
+    <PageShell surface="admin">
+        <AdminDashboard />
+    </PageShell>
+  );
 }

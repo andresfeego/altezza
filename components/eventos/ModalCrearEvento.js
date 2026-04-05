@@ -1,8 +1,8 @@
 // /components/eventos/ModalCrearEvento.js
 import { useState } from 'react';
-import { Box, Modal } from '@mui/material';
+import Button from '@/components/ui/actions/Button';
+import ModalShell from '@/components/ui/layout/ModalShell';
 import CrearEvento from './CrearEvento';
-import { transparent } from '@components/ui/ModalStyles';
 import styles from './ModalCrearEvento.module.scss';
 
 export default function ModalCrearEvento({ label = 'Nuevo evento', className = '' }) {
@@ -12,15 +12,18 @@ export default function ModalCrearEvento({ label = 'Nuevo evento', className = '
 
   return (
     <>
-      <button className={`${styles.btnPrimary} ${className}`.trim()} onClick={handleOpen}>
+      <Button className={`${styles.btnPrimary} ${className}`.trim()} onClick={handleOpen}>
         {label}
-      </button>
+      </Button>
 
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={transparent}>
+      {open ? (
+        <ModalShell
+          title="Nuevo evento"
+          onClose={handleClose}
+        >
           <CrearEvento cerrar={handleClose} />
-        </Box>
-      </Modal>
+        </ModalShell>
+      ) : null}
     </>
   );
 }

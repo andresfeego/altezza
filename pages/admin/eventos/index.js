@@ -1,10 +1,10 @@
-import layoutStyles from '@/components/home/AdminHome.module.scss';
 import AdminEventos from '@/components/home/AdminEventos';
+import PageShell from '@/components/ui/layout/PageShell';
 
 export default function AdminEventosPage() {
   return (
-    <div className={layoutStyles.content}>
-      <AdminEventos />
-    </div>
+    <PageShell surface="admin">
+        <AdminEventos />
+    </PageShell>
   );
 }

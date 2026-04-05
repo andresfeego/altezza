@@ -1,0 +1,45 @@
+.shell {
+  width: 100%;
+  margin-left: 38px;
+  padding: 0 var(--ag-space-4) var(--ag-space-4);
+}
+
+.content {
+  width: 100%;
+  max-width: var(--ag-max-content);
+  margin: 0 auto;
+}
+
+.admin,
+.home,
+.event {
+  display: grid;
+  gap: var(--ag-space-4);
+}
+
+.basic {
+  display: grid;
+  gap: var(--ag-space-3);
+  padding-top: var(--ag-space-4);
+}
+
+.basic :global(h1) {
+  margin: 0;
+}
+
+@media (min-width: 1025px) {
+  .basic :global(h1) {
+    margin-top: var(--ag-space-4);
+  }
+}
+
+@media (max-width: 1024px) {
+  .shell {
+    margin-left: 0;
+    padding: 56px var(--ag-space-2) var(--ag-space-2);
+  }
+
+  .basic {
+    padding-top: 0;
+  }
+}

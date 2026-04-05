@@ -81,32 +81,11 @@
   line-height: var(--ag-text-caption-line);
 }
 
-.actionButton,
-.secondaryButton {
-  align-items: center;
-  border: none;
-  border-radius: var(--ag-radius-pill);
-  cursor: pointer;
-  display: inline-flex;
-  font-size: var(--ag-text-label-size);
-  justify-content: center;
-  line-height: var(--ag-text-label-line);
-  min-height: var(--ag-space-5);
-  padding: 0 var(--ag-space-2);
-}
-
-.actionButton {
-  background: var(--ag-brand-wine);
-  color: var(--ag-surface-card);
+.assignActionButton {
   flex: 0 0 auto;
   justify-self: end;
   white-space: nowrap;
   width: fit-content;
-}
-
-.secondaryButton {
-  background: var(--ag-surface-soft);
-  color: var(--ag-text-base);
 }
 
 .infoList {
@@ -254,10 +233,6 @@
   align-items: center;
 }
 
-.actionMenuWrap {
-  position: relative;
-}
-
 .statusPill,
 .moduleBadge {
   align-items: center;
@@ -308,20 +283,6 @@
   text-decoration: none;
 }
 
-.iconActionButton {
-  align-items: center;
-  background: var(--ag-surface-soft);
-  border: none;
-  border-radius: var(--ag-radius-pill);
-  color: var(--ag-text-base);
-  cursor: pointer;
-  display: inline-flex;
-  font-size: var(--ag-text-label-size);
-  height: var(--ag-space-5);
-  justify-content: center;
-  width: var(--ag-space-5);
-}
-
 .phoneIcon,
 .whatsappIcon {
   align-items: center;
@@ -329,34 +290,6 @@
   display: inline-flex;
   font-size: var(--ag-text-label-size);
   justify-content: center;
-}
-
-.actionMenu {
-  background: var(--ag-surface-card);
-  border: 1px solid var(--ag-border-soft);
-  border-radius: var(--ag-radius-lg);
-  box-shadow: var(--ag-shadow-card);
-  display: grid;
-  min-width: 200px;
-  overflow: hidden;
-  position: absolute;
-  right: 0;
-  top: calc(100% + var(--ag-space-1));
-  z-index: 3;
-}
-
-.menuOption {
-  background: transparent;
-  border: none;
-  color: var(--ag-text-base);
-  cursor: pointer;
-  min-height: var(--ag-space-5);
-  padding: 0 var(--ag-space-2);
-  text-align: left;
-}
-
-.menuOption + .menuOption {
-  border-top: 1px solid var(--ag-border-soft);
 }
 
 .moduleMeta {

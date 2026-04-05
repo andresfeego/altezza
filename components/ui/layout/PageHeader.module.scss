@@ -1,0 +1,88 @@
+.header {
+  display: grid;
+  gap: var(--ag-space-3);
+}
+
+.copy {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--ag-brand-wine);
+  font-size: var(--ag-text-label-size);
+  line-height: var(--ag-text-label-line);
+  font-weight: var(--ag-text-label-weight);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0 0 var(--ag-space-2);
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h1-size);
+  line-height: var(--ag-heading-h1-line);
+  font-weight: var(--ag-heading-h1-weight);
+}
+
+.description {
+  margin: 0;
+  max-width: 52ch;
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.right .actions {
+  justify-content: flex-end;
+}
+
+.right .copy {
+  justify-items: end;
+}
+
+.right .title,
+.right .description {
+  width: 80%;
+  text-align: right;
+}
+
+.right .title {
+  padding-right: var(--ag-space-3);
+}
+
+.right .description {
+  padding-right: var(--ag-space-3);
+}
+
+@media (min-width: 1025px) {
+  .title {
+    margin-top: var(--ag-space-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .title {
+    margin-top: 0;
+  }
+
+  .right .title,
+  .right .description {
+    width: 100%;
+    padding-right: var(--ag-space-2);
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .right .actions {
+    justify-content: stretch;
+  }
+}

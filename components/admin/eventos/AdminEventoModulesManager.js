@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { FiCheckCircle } from 'react-icons/fi';
 import { MdImage } from 'react-icons/md';
+import Button from '@/components/ui/actions/Button';
 import {
   CLIENT_MODULE_DEFINITIONS,
 } from '@/components/constants/clientModules';
@@ -196,14 +197,14 @@ export default function AdminEventoModulesManager({ evento = null }) {
                     Activo
                   </span>
                 ) : (
-                  <button
-                    type="button"
+                  <Button
+                    variant={moduleDef.enabled ? 'primary' : 'secondary'}
                     className={`${styles.moduleStateButton} ${moduleDef.enabled ? styles.moduleStateEnabled : styles.moduleStateDisabled}`}
                     disabled={loading || Boolean(savingKey)}
                     onClick={() => handleToggleModule(moduleDef.key, !moduleDef.enabled)}
                   >
                     {savingKey === moduleDef.key ? 'Guardando...' : moduleDef.enabled ? 'Activo' : 'Inactivo'}
-                  </button>
+                  </Button>
                 )}
 
                 {moduleDef.required ? (

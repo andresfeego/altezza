@@ -1,14 +1,35 @@
 @import '../initialized/variables.scss';
 
 .containerHome {
-  max-width: $max-content-width;
+  max-width: var(--ag-max-content);
   display: block;
-  margin: 0 48px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .content {
+  width: 100%;
   margin-left: 38px; // ancho del menú
   padding: 0 32px 32px;
+}
+
+.page {
+  width: 100%;
+  max-width: var(--ag-max-content);
+  margin: 0 auto;
+}
+
+.basicPage {
+  width: 100%;
+  max-width: var(--ag-max-content);
+  margin: 0 auto;
+  display: grid;
+  gap: var(--ag-space-3);
+  padding-top: var(--ag-space-4);
+}
+
+.basicPage h1 {
+  margin: 0;
 }
 
 .placeholder {
@@ -23,6 +44,16 @@
 @media (max-width: 1024px) {
   .content {
     margin-left: 0;
-    padding: 0 16px 16px;
+    padding: 56px 16px 16px;
+  }
+
+  .basicPage {
+    padding-top: 0;
+  }
+}
+
+@media (min-width: 1025px) {
+  .basicPage h1 {
+    margin-top: var(--ag-space-4);
   }
 }

@@ -1,40 +1,9 @@
 .btnPrimary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--ag-space-1);
-  min-height: 48px;
-  width: 100%;
-  padding: 0 var(--ag-space-3);
-  border-radius: var(--ag-radius-md);
-  background: var(--ag-brand-rose);
-  border: 0;
-  color: var(--ag-surface-card);
-  font-size: var(--ag-text-body-size);
-  line-height: var(--ag-text-body-line);
-  font-weight: var(--ag-font-weight-semibold);
-  cursor: pointer;
-  transition:
-    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
-    box-shadow var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
-    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
-  box-shadow: var(--ag-shadow-soft);
+  width: fit-content;
 }
 
-.btnPrimary:hover {
-  transform: translateY(-1px);
-  background-color: var(--ag-brand-rose-strong);
-  box-shadow: var(--ag-shadow-card);
-}
-
-.btnPrimary svg {
-  color: inherit;
-  width: 20px;
-  height: 20px;
-}
-
-@media (prefers-reduced-motion: reduce) {
+@media (max-width: 640px) {
   .btnPrimary {
-    transition: none;
+    width: 100%;
   }
 }

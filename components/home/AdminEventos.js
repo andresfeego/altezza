@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { FiCalendar, FiEyeOff, FiLayers } from 'react-icons/fi';
 import shellStyles from '@/components/admin/shared/AdminModuleShell.module.scss';
 import { getEventosActivos, getEventosInactivos } from '@/components/initialized/data/helpersGetDB';
+import PageHeader from '@/components/ui/layout/PageHeader';
 import ListaEventos from '@/components/eventos/ListaEventos';
 import ModalCrearEvento from '@/components/eventos/ModalCrearEvento';
 import styles from './AdminEventos.module.scss';
@@ -23,10 +24,12 @@ export default function AdminEventos() {
 
   return (
     <div className={`${styles.containerHome} ${shellStyles.page}`}>
-      <section className={`${styles.hero} ${shellStyles.hero}`}>
-        <div className={`${styles.heroHeader} ${shellStyles.heroHeader}`}>
-          <h1 className={shellStyles.moduleTitle}>Administracion de eventos</h1>
-        </div>
+      <section className={styles.hero}>
+        <PageHeader
+          title="Administracion de eventos"
+          align="right"
+          actions={<ModalCrearEvento label="Nuevo evento" />}
+        />
 
         <div className={`${styles.summaryCard} ${shellStyles.summaryCard}`}>
           <div className={`${styles.summaryItem} ${shellStyles.summaryItem}`}>
@@ -50,10 +53,6 @@ export default function AdminEventos() {
             </div>
             <span>Inactivos</span>
           </div>
-        </div>
-
-        <div className={`${styles.heroActions} ${shellStyles.heroActions}`}>
-          <ModalCrearEvento label="Nuevo evento" className={shellStyles.primaryActionButton} />
         </div>
       </section>
 

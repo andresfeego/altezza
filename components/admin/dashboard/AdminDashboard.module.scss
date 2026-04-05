@@ -3,23 +3,6 @@
   gap: var(--ag-space-4);
 }
 
-.header {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.header h1 {
-  width: 80%;
-  margin: 0 0 var(--ag-space-2);
-  padding-right: var(--ag-space-3);
-  padding-bottom: var(--ag-space-2);
-  text-align: right;
-  font-size: var(--ag-heading-h1-size);
-  line-height: var(--ag-heading-h1-line);
-  font-weight: var(--ag-heading-h1-weight);
-  color: var(--ag-text-strong);
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -140,11 +123,6 @@
 @media (max-width: 640px) {
   .dashboard {
     gap: var(--ag-space-3);
-  }
-
-  .header h1 {
-    width: 80%;
-    padding-right: var(--ag-space-2);
   }
 
   .grid {

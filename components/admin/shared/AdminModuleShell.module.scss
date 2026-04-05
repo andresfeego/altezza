@@ -26,6 +26,12 @@
   color: var(--ag-text-strong);
 }
 
+@media (min-width: 1025px) {
+  .moduleTitle {
+    margin-top: var(--ag-space-4);
+  }
+}
+
 .sectionHeader {
   display: flex;
   align-items: flex-start;
@@ -146,6 +152,7 @@
   }
 
   .moduleTitle {
+    margin-top: 0;
     width: 100%;
     padding-right: var(--ag-space-2);
   }
