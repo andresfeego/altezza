@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
-import { FiMoreHorizontal, FiPhone } from 'react-icons/fi';
+import { FiPhone } from 'react-icons/fi';
+import ActionMenu from '@/components/ui/actions/ActionMenu';
+import Button from '@/components/ui/actions/Button';
 import AdminEventoSectionLayout from './AdminEventoSectionLayout';
 import { getUsuariosSistema } from '@/components/initialized/data/helpersGetDB';
 import { actualizarUsuarioSistema, asignarUsuarioAEvento, quitarUsuarioDeEvento } from '@/components/initialized/data/helpersSetDB';
@@ -134,6 +136,21 @@ export default function AdminEventoUsuariosView({ idEvento }) {
     }
   }
 
+  const getUserActionItems = (usuario) => ([
+    {
+      id: 'estado',
+      label: usuario.estado ? 'Desactivar usuario' : 'Activar usuario',
+      onClick: () => handleToggleEstado(usuario),
+      disabled: saving,
+    },
+    {
+      id: 'quitar',
+      label: 'Quitar del evento',
+      onClick: () => handleQuitarUsuario(usuario.id),
+      disabled: saving,
+    },
+  ]);
+
   return (
     <AdminEventoSectionLayout idEvento={idEvento} sectionId="usuarios" sectionTitle="Usuarios del evento">
       {({ evento, loading }) => {
@@ -166,14 +183,13 @@ export default function AdminEventoUsuariosView({ idEvento }) {
                         <span>{usuario.user}</span>
                       </div>
 
-                      <button
-                        type="button"
-                        className={styles.actionButton}
+                      <Button
+                        className={styles.assignActionButton}
                         disabled={saving}
                         onClick={() => handleAsignarUsuario(usuario.id)}
                       >
                         {saving ? 'Guardando...' : 'Agregar'}
-                      </button>
+                      </Button>
                     </article>
                   ))}
                 </div>
@@ -230,42 +246,14 @@ export default function AdminEventoUsuariosView({ idEvento }) {
                         {usuario.estado ? 'Activo' : 'Inactivo'}
                       </span>
 
-                      <div className={styles.actionMenuWrap}>
-                        <button
-                          type="button"
-                          className={styles.iconActionButton}
-                          disabled={saving}
-                          aria-label={`Acciones para ${usuario.nombres} ${usuario.apellidos}`}
-                          onClick={() =>
-                            setOpenMenuUserId((current) =>
-                              current === usuario.id ? null : usuario.id
-                            )
-                          }
-                        >
-                          <FiMoreHorizontal />
-                        </button>
-
-                        {openMenuUserId === usuario.id ? (
-                          <div className={styles.actionMenu}>
-                            <button
-                              type="button"
-                              className={styles.menuOption}
-                              disabled={saving}
-                              onClick={() => handleToggleEstado(usuario)}
-                            >
-                              {usuario.estado ? 'Desactivar usuario' : 'Activar usuario'}
-                            </button>
-                            <button
-                              type="button"
-                              className={styles.menuOption}
-                              disabled={saving}
-                              onClick={() => handleQuitarUsuario(usuario.id)}
-                            >
-                              Quitar del evento
-                            </button>
-                          </div>
-                        ) : null}
-                      </div>
+                      <ActionMenu
+                        open={openMenuUserId === usuario.id}
+                        onToggle={() =>
+                          setOpenMenuUserId((current) => (current === usuario.id ? null : usuario.id))
+                        }
+                        triggerLabel={`Acciones para ${usuario.nombres} ${usuario.apellidos}`}
+                        items={getUserActionItems(usuario)}
+                      />
                     </div>
                   </article>
                 ))}

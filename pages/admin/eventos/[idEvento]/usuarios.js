@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
 import AdminEventoUsuariosView from '@/components/admin/eventos/AdminEventoUsuariosView';
-import layoutStyles from '@/components/home/AdminHome.module.scss';
+import PageShell from '@/components/ui/layout/PageShell';
 
 export default function AdminEventoUsuariosPage() {
   const router = useRouter();
   const { idEvento } = router.query;
 
   return (
-    <div className={layoutStyles.content}>
-      <AdminEventoUsuariosView idEvento={idEvento} />
-    </div>
+    <PageShell surface="event">
+        <AdminEventoUsuariosView idEvento={idEvento} />
+    </PageShell>
   );
 }

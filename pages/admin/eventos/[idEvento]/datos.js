@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
 import AdminEventoDatosView from '@/components/admin/eventos/AdminEventoDatosView';
-import layoutStyles from '@/components/home/AdminHome.module.scss';
+import PageShell from '@/components/ui/layout/PageShell';
 
 export default function AdminEventoDatosPage() {
   const router = useRouter();
   const { idEvento } = router.query;
 
   return (
-    <div className={layoutStyles.content}>
-      <AdminEventoDatosView idEvento={idEvento} />
-    </div>
+    <PageShell surface="event">
+        <AdminEventoDatosView idEvento={idEvento} />
+    </PageShell>
   );
 }

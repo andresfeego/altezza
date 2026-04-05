@@ -1,0 +1,73 @@
+.wrap {
+  position: relative;
+  width: fit-content;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--ag-border-soft);
+  border-radius: 999px;
+  background: var(--ag-surface-card);
+  color: var(--ag-text-base);
+  box-shadow: var(--ag-shadow-soft);
+  cursor: pointer;
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  z-index: 4;
+  display: grid;
+  min-width: 220px;
+  overflow: hidden;
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  background: var(--ag-surface-card);
+  box-shadow: var(--ag-shadow-card);
+}
+
+.right {
+  right: 0;
+}
+
+.left {
+  left: 0;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  background: transparent;
+  color: var(--ag-text-base);
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--ag-text-label-size);
+  line-height: var(--ag-text-label-line);
+}
+
+.item + .item {
+  border-top: 1px solid var(--ag-border-soft);
+}
+
+.itemIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item:hover,
+.trigger:hover,
+.trigger:focus-visible {
+  color: var(--ag-brand-wine);
+  outline: none;
+}

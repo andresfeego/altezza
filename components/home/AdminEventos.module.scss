@@ -3,6 +3,11 @@
   margin: 0 auto;
 }
 
+.hero {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
 .toggleWrap {
   display: flex;
   justify-content: center;

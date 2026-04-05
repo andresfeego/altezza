@@ -6,30 +6,6 @@
 .hero {
   display: grid;
   gap: 16px;
-
-  h1 {
-    margin: 0;
-    font-size: clamp(1.85rem, 3vw, 2.45rem);
-    line-height: 1.05;
-    color: #2f2624;
-    padding-top: 0 !important;
-    padding-bottom: 16px !important;
-  }
-
-}
-
-.heroHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-  gap: 16px;
-}
-
-.heroHeader h1 {
-  width: 80%;
-  margin-left: auto;
-  text-align: right;
-  padding-right: 24px;
 }
 
 .heroActions {
@@ -105,8 +81,7 @@
   color: #2f2624;
 }
 
-.card h3,
-.modalCard h3 {
+.card h3 {
   margin: 0 0 16px;
   font-size: 1.2rem;
   color: #3a302d;
@@ -125,8 +100,8 @@
 }
 
 .modalHeader {
-  padding-top: 16px;
-  margin-bottom: 64px;
+  padding-top: var(--ag-space-2);
+  margin-bottom: var(--ag-space-7);
 }
 
 .sectionHeader p {
@@ -166,8 +141,7 @@
   color: #2f2624;
 }
 
-.form button,
-.assignRow button {
+.form button {
   border: 0;
   border-radius: 12px;
   min-height: 42px;
@@ -176,20 +150,9 @@
   cursor: pointer;
 }
 
-.primary {
-  background: #cc8f97;
-  color: #fff;
-  box-shadow: 0 8px 18px rgba(204, 143, 151, 0.22);
-}
-
-.secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: #f7f3f0;
-  color: #5a5049;
-  border: 1px solid #e7dfd8;
+.disabledButton {
+  opacity: 0.55;
+  pointer-events: none;
 }
 
 .toolbar {
@@ -218,10 +181,12 @@
   border: 1px solid #ddd5ce;
   border-radius: 12px;
   background: #fff;
+  box-sizing: border-box;
 }
 
 .searchField input {
   width: 100%;
+  min-width: 0;
   min-height: 40px;
   border: 0;
   outline: none;
@@ -276,30 +241,31 @@
   align-items: center;
   min-height: 28px;
   padding: 0 10px;
-  border-radius: 999px;
-  background: #f6f0eb;
-  color: #5a5049;
-  font-size: 0.85rem;
+  gap: 8px;
+  border-radius: var(--ag-radius-pill);
+  background: var(--ag-surface-soft);
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-caption-size);
   margin: 0 8px 8px 0;
+}
+
+.tagButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding: 0 10px;
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-pill);
+  background: var(--ag-surface-card);
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  cursor: pointer;
 }
 
 .eventsCell {
   display: grid;
   gap: 10px;
-}
-
-.assignRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.assignRow select {
-  min-width: 150px;
-  min-height: 42px;
-  border: 1px solid #ddd5ce;
-  border-radius: 12px;
-  padding: 0 12px;
 }
 
 .empty {
@@ -329,9 +295,8 @@
 }
 
 .rowActions {
-  display: grid;
-  gap: 8px;
-  min-width: 190px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .userCard {
@@ -383,55 +348,16 @@
   gap: 10px;
 }
 
-.modalOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 10, 10, 0.58);
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  z-index: 2000;
-}
-
-.modalCard {
-  position: relative;
-  width: min(100%, 680px);
-  max-height: calc(100vh - 48px);
-  overflow: auto;
-  padding: 24px;
-  border-radius: 22px;
-  background: #fff;
-  border: 1px solid #ece8e5;
-  box-shadow: 0 18px 48px rgba(15, 12, 10, 0.12);
-}
-
-.iconClose {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border-radius: 999px;
-  border: 1px solid #ece8e5;
-  background: #fff;
-  color: #5f5550;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(15, 12, 10, 0.06);
-}
-
 .modalActions {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
-  margin-top: 64px;
-  margin-bottom: 32px;
+  gap: var(--ag-space-2);
+  margin-top: var(--ag-space-7);
+  margin-bottom: var(--ag-space-4);
 }
 
-.modalActions button {
+.modalActions button,
+.modalActions a {
   flex: 1 1 0;
 }
 
@@ -485,6 +411,133 @@
   cursor: pointer;
 }
 
+.passwordPanel {
+  display: grid;
+  gap: 16px;
+}
+
+.passwordBlock {
+  display: grid;
+  gap: 8px;
+  padding: var(--ag-space-3);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  background: var(--ag-surface-card);
+  box-shadow: var(--ag-shadow-soft);
+}
+
+.passwordLabel,
+.passwordMeta {
+  color: #7a6f67;
+  font-size: 0.9rem;
+}
+
+.passwordValue {
+  font-size: var(--ag-font-size-24);
+  color: var(--ag-text-strong);
+  letter-spacing: 0.04em;
+}
+
+.modalPrimaryLink {
+  width: 100%;
+}
+
+.assignModalCard {
+  width: min(100%, 840px);
+}
+
+.assignModalBody {
+  display: grid;
+  gap: 16px;
+}
+
+.assignModalBody > * {
+  min-width: 0;
+}
+
+.assignSummary {
+  display: grid;
+  gap: 4px;
+  padding: var(--ag-space-3);
+  border-radius: var(--ag-radius-lg);
+  border: 1px solid var(--ag-border-soft);
+  background: var(--ag-surface-card-alt);
+}
+
+.assignSummary span {
+  color: #7a6f67;
+  font-size: 0.92rem;
+}
+
+.assignedEventsWrap {
+  display: grid;
+  gap: 10px;
+}
+
+.assignedEventsWrap > strong {
+  color: #3a302d;
+}
+
+.assignedEventsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.assignTableWrap {
+  overflow: auto;
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  background: var(--ag-surface-card);
+}
+
+.assignTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+  background: #fff;
+}
+
+.assignTable th,
+.assignTable td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #efe9e2;
+  text-align: left;
+  vertical-align: top;
+  font-size: 0.93rem;
+}
+
+.assignTable th {
+  background: #fcfcfd;
+  color: var(--ag-text-muted);
+  font-weight: var(--ag-font-weight-bold);
+  font-size: var(--ag-text-caption-size);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.assignActionCell {
+  width: 160px;
+}
+
+.assignTableButton {
+  width: 100%;
+}
+
+.assignStatusButton {
+  background: var(--ag-surface-soft);
+  color: var(--ag-text-muted);
+  border-color: var(--ag-border-soft);
+  box-shadow: none;
+}
+
+.modalSearchField {
+  width: 100%;
+  min-width: 100%;
+  background: var(--ag-surface-card);
+  border-color: var(--ag-border-soft);
+}
+
 @media (max-width: 1024px) {
   .hero {
     gap: 14px;
@@ -526,10 +579,6 @@
     gap: 20px;
   }
 
-  .heroHeader {
-    align-items: flex-start;
-  }
-
   .card {
     padding: 16px;
     border-radius: 20px;
@@ -548,32 +597,16 @@
     display: none;
   }
 
-  .assignRow {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .assignRow select {
-    width: 100%;
-  }
-
   .mobileActions button {
     width: 100%;
   }
 
-  .modalOverlay {
-    padding: 16px;
-  }
-
-  .modalCard {
+  .assignModalCard {
     width: 100%;
-    max-height: calc(100vh - 32px);
-    padding: 16px;
-    border-radius: 16px;
   }
 
   .modalActions {
-    display: flex;
+    display: grid;
   }
 
   .heroActions button {
@@ -629,8 +662,7 @@
   .hero,
   .toolbar,
   .form,
-  .twoCols,
-  .modalCard {
+  .twoCols {
     gap: 16px;
   }
 
@@ -649,17 +681,9 @@
 
   .searchField,
   .filters select,
-  .assignRow select,
   .form input,
   .form select {
     min-height: 44px;
   }
 
-  .modalOverlay {
-    padding: 16px;
-  }
-
-  .modalCard {
-    padding: 16px;
-  }
 }

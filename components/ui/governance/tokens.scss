@@ -41,8 +41,8 @@
   --ag-text-card-title-line: var(--ag-line-height-32);
   --ag-text-card-title-weight: var(--ag-font-weight-semibold);
 
-  --ag-text-page-title-size: var(--ag-font-size-32);
-  --ag-text-page-title-line: var(--ag-line-height-40);
+  --ag-text-page-title-size: clamp(1.85rem, 3vw, 2.45rem);
+  --ag-text-page-title-line: 1.05;
   --ag-text-page-title-weight: var(--ag-font-weight-bold);
 
   --ag-text-hero-title-size: var(--ag-font-size-40);

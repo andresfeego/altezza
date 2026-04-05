@@ -1,0 +1,107 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: var(--ag-radius-md);
+  border: 1px solid var(--ag-border-soft);
+  box-shadow: none;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    box-shadow var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    border-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.neutral {
+  background: var(--ag-surface-card);
+  color: var(--ag-text-base);
+}
+
+.primary {
+  background: var(--ag-surface-soft);
+  border-color: var(--ag-border-soft);
+  color: var(--ag-text-strong);
+}
+
+.primary .iconBadge {
+  background: rgba(108, 60, 60, 0.08);
+  color: var(--ag-brand-wine);
+}
+
+.dangerSoft {
+  background: var(--ag-danger-soft);
+  color: var(--ag-text-base);
+}
+
+.subtle {
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  gap: 10px;
+}
+
+.subtle .iconBadge {
+  width: 22px;
+  height: 22px;
+  color: var(--ag-text-muted);
+}
+
+.subtle .label {
+  color: var(--ag-text-muted);
+  font-weight: var(--ag-font-weight-medium);
+}
+
+.iconBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ag-brand-wine);
+  font-size: var(--ag-text-label-size);
+}
+
+.label {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-text-label-size);
+  line-height: var(--ag-text-label-line);
+  font-weight: var(--ag-font-weight-medium);
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--ag-shadow-soft);
+  border-color: var(--ag-border-strong);
+  outline: none;
+}
+
+.subtle:hover,
+.subtle:focus-visible {
+  transform: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.subtle:hover .iconBadge,
+.subtle:hover .label,
+.subtle:focus-visible .iconBadge,
+.subtle:focus-visible .label {
+  color: var(--ag-brand-wine);
+}
+
+@media (max-width: 640px) {
+  .button {
+    min-height: 46px;
+  }
+}
