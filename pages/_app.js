@@ -209,6 +209,7 @@ function MyApp({ Component, pageProps }) {
   if (!hydrated || loading) return <LoadingScreen />;
   const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
   const isGovernanceLab = router.pathname === '/ui-governance-lab';
+  const isAdminEventWorkspaceRoute = router.pathname.startsWith('/admin/eventos/[idEvento]');
 
   return (
   <>
@@ -250,7 +251,7 @@ function MyApp({ Component, pageProps }) {
       },
     }}
   />
-  {usuario && !isManual && !isGovernanceLab && <SideMenu />}
+  {usuario && !isManual && !isGovernanceLab && !isAdminEventWorkspaceRoute && <SideMenu />}
   {usuario && !isManual && !isGovernanceLab && <UserMenuButton />}
   <Component {...pageProps} />
   </>
