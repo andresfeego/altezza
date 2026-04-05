@@ -12,6 +12,32 @@
   gap: var(--ag-space-3);
 }
 
+.sectionBlock {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
+.sectionHeader {
+  align-items: end;
+  display: flex;
+  gap: var(--ag-space-2);
+  justify-content: space-between;
+}
+
+.sectionHeader h3 {
+  margin: 0;
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h3-size);
+  font-weight: var(--ag-heading-h3-weight);
+  line-height: var(--ag-heading-h3-line);
+}
+
+.sectionHeader span {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
 .assignBar {
   align-items: center;
   display: grid;
@@ -38,8 +64,10 @@
 }
 
 .availableList {
+  background: var(--ag-surface-card);
   border: 1px solid var(--ag-border-soft);
   border-radius: var(--ag-radius-lg);
+  box-shadow: var(--ag-shadow-soft);
   display: grid;
   gap: 0;
   max-height: calc(var(--ag-space-7) * 5);
@@ -150,6 +178,33 @@
 .moduleList {
   display: grid;
   gap: 0;
+}
+
+.assignedGrid {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.assignedGrid > * {
+  max-width: 100%;
+}
+
+.assignedCard {
+  display: grid;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-3);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  background: var(--ag-surface-card);
+  box-shadow: var(--ag-shadow-soft);
+}
+
+.assignedCardTop {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: start;
 }
 
 .userRow,
@@ -292,6 +347,12 @@
   justify-content: center;
 }
 
+.contactMuted {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
 .moduleMeta {
   display: inline-flex;
   flex-wrap: wrap;
@@ -308,6 +369,19 @@
 }
 
 @media (max-width: 640px) {
+  .sectionHeader {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .assignedGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .assignedCardTop {
+    grid-template-columns: 1fr;
+  }
+
   .moduleHeader {
     align-items: flex-start;
     flex-direction: column;
@@ -316,5 +390,17 @@
   .moduleMeta {
     justify-content: flex-start;
     margin-left: 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  .assignedGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .assignedGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
