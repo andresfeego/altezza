@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
-import { FiMoreHorizontal, FiPhone } from 'react-icons/fi';
+import { FiPhone } from 'react-icons/fi';
+import ActionMenu from '@/components/ui/actions/ActionMenu';
+import Button from '@/components/ui/actions/Button';
 import AdminEventoSectionLayout from './AdminEventoSectionLayout';
 import { getUsuariosSistema } from '@/components/initialized/data/helpersGetDB';
 import { actualizarUsuarioSistema, asignarUsuarioAEvento, quitarUsuarioDeEvento } from '@/components/initialized/data/helpersSetDB';
@@ -18,6 +20,20 @@ function buildWhatsappUrl(phone) {
 }
 
 export default function AdminEventoUsuariosView({ idEvento }) {
+  return (
+    <AdminEventoSectionLayout idEvento={idEvento} sectionId="usuarios" sectionTitle="Usuarios del evento">
+      {({ evento, loading }) => (
+        <AdminEventoUsuariosPanel
+          idEvento={idEvento}
+          evento={evento}
+          loading={loading}
+        />
+      )}
+    </AdminEventoSectionLayout>
+  );
+}
+
+export function AdminEventoUsuariosPanel({ idEvento, evento = null, loading = false }) {
   const [usuarios, setUsuarios] = useState([]);
   const [loadingUsuarios, setLoadingUsuarios] = useState(true);
   const [searchValue, setSearchValue] = useState('');
@@ -134,148 +150,146 @@ export default function AdminEventoUsuariosView({ idEvento }) {
     }
   }
 
+  const getUserActionItems = (usuario) => ([
+    {
+      id: 'estado',
+      label: usuario.estado ? 'Desactivar usuario' : 'Activar usuario',
+      onClick: () => handleToggleEstado(usuario),
+      disabled: saving,
+    },
+    {
+      id: 'quitar',
+      label: 'Quitar del evento',
+      onClick: () => handleQuitarUsuario(usuario.id),
+      disabled: saving,
+    },
+  ]);
+
+  if (loading || loadingUsuarios) {
+    return <div className={styles.inlineState}>Cargando usuarios del evento...</div>;
+  }
+
+  if (!evento) {
+    return <div className={styles.inlineState}>No fue posible cargar el contexto del evento.</div>;
+  }
+
   return (
-    <AdminEventoSectionLayout idEvento={idEvento} sectionId="usuarios" sectionTitle="Usuarios del evento">
-      {({ evento, loading }) => {
-        if (loading || loadingUsuarios) {
-          return <div className={styles.inlineState}>Cargando usuarios del evento...</div>;
-        }
+    <div className={styles.stack}>
+      <section className={styles.sectionBlock}>
+        <div className={styles.sectionHeader}>
+          <h3>Usuarios asignados</h3>
+          <span>{usuariosEvento.length} vinculados</span>
+        </div>
 
-        if (!evento) {
-          return <div className={styles.inlineState}>No fue posible cargar el contexto del evento.</div>;
-        }
+        {usuariosEvento.length ? (
+          <div className={styles.assignedGrid}>
+            {usuariosEvento.map((usuario) => (
+              <article key={usuario.id} className={styles.assignedCard}>
+                <div className={styles.assignedCardTop}>
+                  <div className={styles.userHeader}>
+                    <div className={styles.userTitleRow}>
+                      <strong>{usuario.nombres} {usuario.apellidos}</strong>
+                      <span className={styles.roleMeta}>{usuario.rolNombre || 'Sin rol'}</span>
+                    </div>
+                    <div className={styles.userIdentity}>
+                      <span>{usuario.user}</span>
+                    </div>
+                  </div>
 
-        return (
-          <div className={styles.stack}>
-            <div className={styles.assignPanel}>
-              <input
-                type="text"
-                className={styles.assignField}
-                placeholder="Buscar cliente por nombre o usuario"
-                value={searchValue}
-                disabled={saving}
-                onChange={(event) => setSearchValue(event.target.value)}
-              />
+                  <ActionMenu
+                    open={openMenuUserId === usuario.id}
+                    onToggle={() =>
+                      setOpenMenuUserId((current) => (current === usuario.id ? null : usuario.id))
+                    }
+                    triggerLabel={`Acciones para ${usuario.nombres} ${usuario.apellidos}`}
+                    items={getUserActionItems(usuario)}
+                  />
+                </div>
 
-              {usuariosDisponiblesFiltrados.length ? (
-                <div className={styles.availableList}>
-                  {usuariosDisponiblesFiltrados.map((usuario) => (
-                    <article key={`disponible-${usuario.id}`} className={styles.availableRow}>
-                      <div className={styles.availableIdentity}>
-                        <strong>{usuario.nombres} {usuario.apellidos}</strong>
-                        <span>{usuario.user}</span>
-                      </div>
-
-                      <button
-                        type="button"
-                        className={styles.actionButton}
-                        disabled={saving}
-                        onClick={() => handleAsignarUsuario(usuario.id)}
+                <div className={styles.userMeta}>
+                  {buildWhatsappUrl(usuario.telefon) ? (
+                    <>
+                      <a
+                        href={`tel:${normalizePhone(usuario.telefon)}`}
+                        className={styles.phoneBadge}
                       >
-                        {saving ? 'Guardando...' : 'Agregar'}
-                      </button>
-                    </article>
-                  ))}
+                        <span className={styles.phoneIcon}>
+                          <FiPhone />
+                        </span>
+                        <span>Cel.: {usuario.telefon}</span>
+                      </a>
+                      <a
+                        href={buildWhatsappUrl(usuario.telefon)}
+                        className={styles.whatsappBadge}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Abrir WhatsApp para ${usuario.nombres} ${usuario.apellidos}`}
+                      >
+                        <span className={styles.whatsappIcon}>
+                          <FaWhatsapp />
+                        </span>
+                      </a>
+                    </>
+                  ) : (
+                    <span className={styles.contactMuted}>Sin telefono registrado</span>
+                  )}
                 </div>
-              ) : (
-                <div className={styles.inlineState}>
-                  No hay clientes disponibles que coincidan con la busqueda.
+
+                <div className={styles.rowActions}>
+                  <span className={`${styles.statusPill} ${usuario.estado ? styles.statusActive : styles.statusInactive}`}>
+                    {usuario.estado ? 'Activo' : 'Inactivo'}
+                  </span>
                 </div>
-              )}
-            </div>
-
-            {usuariosEvento.length ? (
-              <div className={styles.userList}>
-                {usuariosEvento.map((usuario) => (
-                  <article key={usuario.id} className={styles.userRow}>
-                    <div className={styles.userHeader}>
-                      <div className={styles.userTitleRow}>
-                        <strong>{usuario.nombres} {usuario.apellidos}</strong>
-                        <span className={styles.roleMeta}>{usuario.rolNombre || 'Sin rol'}</span>
-                      </div>
-                      <div className={styles.userIdentity}>
-                        <span>{usuario.user}</span>
-                      </div>
-                    </div>
-
-                    <div className={styles.userMeta}>
-                      {buildWhatsappUrl(usuario.telefon) ? (
-                        <>
-                          <a
-                            href={`tel:${normalizePhone(usuario.telefon)}`}
-                            className={styles.phoneBadge}
-                          >
-                            <span className={styles.phoneIcon}>
-                              <FiPhone />
-                            </span>
-                            <span>Cel.: {usuario.telefon}</span>
-                          </a>
-                          <a
-                            href={buildWhatsappUrl(usuario.telefon)}
-                            className={styles.whatsappBadge}
-                            target="_blank"
-                            rel="noreferrer"
-                            aria-label={`Abrir WhatsApp para ${usuario.nombres} ${usuario.apellidos}`}
-                          >
-                            <span className={styles.whatsappIcon}>
-                              <FaWhatsapp />
-                            </span>
-                          </a>
-                        </>
-                      ) : null}
-                    </div>
-
-                    <div className={styles.rowActions}>
-                      <span className={`${styles.statusPill} ${usuario.estado ? styles.statusActive : styles.statusInactive}`}>
-                        {usuario.estado ? 'Activo' : 'Inactivo'}
-                      </span>
-
-                      <div className={styles.actionMenuWrap}>
-                        <button
-                          type="button"
-                          className={styles.iconActionButton}
-                          disabled={saving}
-                          aria-label={`Acciones para ${usuario.nombres} ${usuario.apellidos}`}
-                          onClick={() =>
-                            setOpenMenuUserId((current) =>
-                              current === usuario.id ? null : usuario.id
-                            )
-                          }
-                        >
-                          <FiMoreHorizontal />
-                        </button>
-
-                        {openMenuUserId === usuario.id ? (
-                          <div className={styles.actionMenu}>
-                            <button
-                              type="button"
-                              className={styles.menuOption}
-                              disabled={saving}
-                              onClick={() => handleToggleEstado(usuario)}
-                            >
-                              {usuario.estado ? 'Desactivar usuario' : 'Activar usuario'}
-                            </button>
-                            <button
-                              type="button"
-                              className={styles.menuOption}
-                              disabled={saving}
-                              onClick={() => handleQuitarUsuario(usuario.id)}
-                            >
-                              Quitar del evento
-                            </button>
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <div className={styles.inlineState}>Este evento no tiene usuarios vinculados todavia.</div>
-            )}
+              </article>
+            ))}
           </div>
-        );
-      }}
-    </AdminEventoSectionLayout>
+        ) : (
+          <div className={styles.inlineState}>Este evento no tiene usuarios vinculados todavia.</div>
+        )}
+      </section>
+
+      <section className={styles.sectionBlock}>
+        <div className={styles.sectionHeader}>
+          <h3>Asignar clientes</h3>
+          <span>{usuariosDisponiblesFiltrados.length} disponibles</span>
+        </div>
+
+        <div className={styles.assignPanel}>
+          <input
+            type="text"
+            className={styles.assignField}
+            placeholder="Buscar cliente por nombre o usuario"
+            value={searchValue}
+            disabled={saving}
+            onChange={(event) => setSearchValue(event.target.value)}
+          />
+
+          {usuariosDisponiblesFiltrados.length ? (
+            <div className={styles.availableList}>
+              {usuariosDisponiblesFiltrados.map((usuario) => (
+                <article key={`disponible-${usuario.id}`} className={styles.availableRow}>
+                  <div className={styles.availableIdentity}>
+                    <strong>{usuario.nombres} {usuario.apellidos}</strong>
+                    <span>{usuario.user}</span>
+                  </div>
+
+                  <Button
+                    className={styles.assignActionButton}
+                    disabled={saving}
+                    onClick={() => handleAsignarUsuario(usuario.id)}
+                  >
+                    {saving ? 'Guardando...' : 'Agregar'}
+                  </Button>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.inlineState}>
+              No hay clientes disponibles que coincidan con la busqueda.
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
   );
 }

@@ -41,6 +41,7 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 
 - La skill `altezza-ui-governance` debe aplicarse en cualquier trabajo de UI: componentes, pantallas, layouts, dashboards, formularios, modales, landings e interfaz visual web o mobile.
 - Los modulos administrativos deben reutilizar un shell transversal de modulo para contenedor interno, encabezado, titulo principal, bloque resumen, accion primaria y card base de seccion. No duplicar estas bases por modulo.
+- Los modulos cliente tambien deben reutilizar un shell transversal de modulo para encabezado principal, resumen, toolbar, estados vacios y piezas base de seccion. La base actual para Fase 1 debe construirse desde `EventClientModuleShell` y no desde headers locales por modulo.
 - Las rutas de modulos administrativos deben entrar por un contenedor transversal de seccion. Regla base actual: desktop con compensacion lateral del menu; en `<=1024px`, `margin-left: 0` y `padding: 56px 16px 16px`.
 - El contenedor transversal de seccion no debe redefinirse por modulo salvo necesidad justificada. La base debe vivir en una capa compartida.
 - La interfaz debe priorizar fondos planos claros. Evitar gradientes decorativos como base de pantalla.
@@ -54,13 +55,25 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 - Antes de convertir una decision visual en regla definitiva, revisar si el resultado esta afectado por herencia global desde `stylesGlobal.scss`.
 - Los titulos principales de modulo o seccion no deben ir dentro de cards visuales.
 - No usar badges decorativos de contexto como parte fija del encabezado de un modulo.
+- No usar textos de contexto redundantes sobre el `h1` cuando el titulo principal ya explica suficientemente la vista. Ejemplos a evitar: `Modulo cliente`, `Invitacion actual`, `Gestion de ...` como eyebrow por defecto sin valor real.
 - Los titulos principales de modulo o seccion deben alinearse a la derecha y ocupar aproximadamente el `80%` del ancho visual disponible del encabezado, con respiracion derecha basada en la escala de espaciado.
 - Los titulos principales de modulo o seccion deben tener tambien respiracion inferior basada en la escala, para separarse del bloque resumen o del contenido inmediato.
 - Los titulos de seccion internos como `h2` tambien deben salir de clases transversales del shell compartido. No resolver `h2` por modulo con estilos aislados si la estructura es la misma.
 - Los resumenes cortos de una seccion deben ser minimalistas, pequenos y preferiblemente concentrados en una sola pieza visual, no en varias cards pesadas.
+- Las cards de resumen del `feed` deben ser especialmente sobrias. Regla base:
+  - no usar eyebrow tipo `Resumen del modulo`
+  - no usar descripcion larga si las metricas ya explican el estado
+  - no usar CTA textual fijo como `Ver modulo` cuando toda la card ya es clickeable
+  - priorizar titulo + metricas + jerarquia limpia
+  - el espaciado interno entre titulo y bloque de metricas debe ser compacto; baseline actual para previews del feed: `gap: var(--ag-space-3)` en el contenedor principal de la card
+- En modales y detalles internos, evitar la composicion `card sobre card sobre card`. La regla base es una sola superficie principal por nivel; dentro de ella, listas y textos deben resolverse con divisores, bloques planos o panels suaves solo cuando sean realmente necesarios.
 - En listas verticales de items, acciones o modulos, usar una sola estrategia de separacion. Regla base: solo separador superior en el item siguiente. No duplicar separador inferior + superior entre dos bloques consecutivos.
+- En listas internas de modales o detalles, la preferencia es visual tipo lista o tabla editorial: filas limpias, un solo divisor entre items, sin fondo diferenciado por fila salvo necesidad funcional.
+- Cuando una lista secundaria dentro de un modal pueda crecer demasiado, no expandirla completa por defecto. Regla base: usar acordeon o seccion colapsable y limitar la altura visible con scroll interno.
 - No usar textos descriptivos del tipo "desde aqui puedes..." o "filtra, revisa..." dentro de las interfaces finales.
 - En flujos administrativos de crear o editar, priorizar modal sobre formulario incrustado cuando eso limpie mejor la lectura de la pantalla principal.
+- En formularios, evitar ayudas textuales de relleno bajo toggles, switches o campos cuando el control ya es autoexplicativo. Solo dejar microcopy adicional si resuelve una duda funcional real.
+- Los switches deben verse como control directo sobre fondo limpio. No envolver toggles simples dentro de cards o superficies de otro color si eso agrega ruido visual.
 - La escala de espaciado del proyecto debe usar secuencias basadas en `8px`, pero la unidad minima de uso general en UI sera `16px`.
 - Los valores permitidos de espaciado son `0, 8, 16, 24, 32, 40, 48, 64`. `96` y `128` solo deben usarse en secciones grandes y justificadas.
 - En espaciado quedan prohibidos valores arbitrarios como `10px`, `14px`, `18px`, `22px` o `30px`.
@@ -102,6 +115,12 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
 - Todo `h1`, `h2`, `h3` y `h4` nuevo debe usar tokens oficiales del proyecto. No definir headings nuevos con tamanos quemados.
 - Todo icono nuevo en la app debe tomar su tamano desde tokens tipograficos y su contenedor desde tokens de espaciado. No dejar `width`, `height` o `font-size` quemados para iconografia nueva.
 - Todo color nuevo en pantallas, componentes o modulos debe salir de tokens del proyecto. No asignar colores quemados en codigo nuevo.
+- Los badges por categoria deben construirse solo con tokens semanticos y, si hace falta matiz, con `color-mix(...)` derivado de esos mismos tokens. No inventar colores por valor especifico del dato.
+- Los badges de estado deben expresar la semantica del dato con familia de tokens del sistema: `success`, `warning`, `danger`, `info` o neutrales. No usar color solo por decoracion.
+- Cuando un estado sea neutro o no confirmado, usar la escala `--ag-gray-*` del sistema en vez de improvisar grises por mezcla si el caso requiere una lectura claramente neutral.
+- En grupos de iconos de estado o acciones compactas dentro de una misma fila, todos los iconos deben compartir la misma geometria base: tamano, borde, radio, hover y sombra. Solo debe cambiar el tono semantico.
+- Para iconos compactos con significado no obvio, usar tooltip visual del sistema en desktop hover. Evitar `title` nativo del navegador cuando ya exista una capa de tooltip por CSS o componente.
+- Los badges o pills informativos que no sean accionables no deben tomar cursor de texto ni parecer enlaces. Sobrescribir su cursor a un estado neutro si hace falta.
 - Motion baseline:
   - duraciones permitidas: `150ms`, `200ms`, `250ms`, `300ms`
   - easing recomendado: `ease-out` o `cubic-bezier(0.4, 0, 0.2, 1)`
@@ -113,6 +132,9 @@ Este archivo fija reglas operativas para trabajar el producto entre frontend, ba
   - tipografia dentro de la escala acordada
   - motion funcional y no decorativo
   - soporte para `prefers-reduced-motion`
+  - que no haya textos redundantes en encabezados
+  - que no existan superficies anidadas sin justificacion
+  - que menus de acciones cierren al abrir otro, al ejecutar accion y al hacer click fuera
 
 ## Front y back al mismo tiempo
 

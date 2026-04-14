@@ -1,8 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
-import { FiCopy, FiLink2, FiRefreshCw, FiSearch, FiShield, FiUsers, FiX } from 'react-icons/fi';
-import layoutStyles from '@/components/home/AdminHome.module.scss';
+import { FaWhatsapp } from 'react-icons/fa';
+import { FiCopy, FiEdit2, FiLink2, FiRefreshCw, FiSearch, FiShield, FiUsers } from 'react-icons/fi';
 import shellStyles from '@/components/admin/shared/AdminModuleShell.module.scss';
 import styles from './usuarios.module.scss';
+import PageShell from '@/components/ui/layout/PageShell';
+import PageHeader from '@/components/ui/layout/PageHeader';
+import ModalShell from '@/components/ui/layout/ModalShell';
+import Button from '@/components/ui/actions/Button';
+import ActionMenu from '@/components/ui/actions/ActionMenu';
+import InlineChipAction from '@/components/ui/actions/InlineChipAction';
 import {
   getEventosActivos,
   getRolesSistema,
@@ -25,6 +31,17 @@ const INITIAL_FORM = {
   telefon: '',
   estado: '1',
 };
+
+function normalizePhone(value) {
+  return String(value || '').replace(/\D/g, '');
+}
+
+function buildWhatsappUrl(phone, message = '') {
+  const digits = normalizePhone(phone);
+  if (!digits || digits === '0' || digits === '1') return null;
+  const encoded = message ? `?text=${encodeURIComponent(message)}` : '';
+  return `https://wa.me/${digits}${encoded}`;
+}
 
 function PasswordToastContent({ title, subtitle, tempPassword, toastId }) {
   const handleCopy = async () => {
@@ -61,9 +78,13 @@ export default function AdminUsuariosPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filtro, setFiltro] = useState('');
   const [rolFiltro, setRolFiltro] = useState('todos');
-  const [eventoSeleccionadoPorUsuario, setEventoSeleccionadoPorUsuario] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [passwordModal, setPasswordModal] = useState(null);
+  const [assignModal, setAssignModal] = useState(null);
+  const [eventSearch, setEventSearch] = useState('');
+  const [assigningEventId, setAssigningEventId] = useState(null);
+  const [openActionMenuUserId, setOpenActionMenuUserId] = useState(null);
   const isEditing = Boolean(editingUserId);
 
   const cargarDatos = async () => {
@@ -142,6 +163,7 @@ export default function AdminUsuariosPage() {
   };
 
   const handleEditarUsuario = (usuario) => {
+    setOpenActionMenuUserId(null);
     setEditingUserId(usuario.id);
     setIsModalOpen(true);
     setForm({
@@ -202,15 +224,10 @@ export default function AdminUsuariosPage() {
     }
   };
 
-  const handleAsignarEvento = async (idUsuario) => {
-    const idEvento = eventoSeleccionadoPorUsuario[idUsuario];
-
-    if (!idEvento) {
-      showError('Selecciona un evento para asignar.');
-      return;
-    }
-
+  const handleAsignarEvento = async (idUsuario, idEvento) => {
+    if (!idEvento) return;
     try {
+      setAssigningEventId(idEvento);
       const result = await asignarUsuarioAEvento({ idUsuario, idEvento });
 
       if (!result?.success) {
@@ -220,9 +237,14 @@ export default function AdminUsuariosPage() {
 
       showSuccess(result.alreadyAssigned ? 'El usuario ya estaba asignado a ese evento.' : 'Evento asignado correctamente.');
       await cargarDatos();
+      if (!result.alreadyAssigned) {
+        setAssignModal((current) => (current ? { ...current, eventosAsignados: [...(current.eventosAsignados || []), idEvento] } : current));
+      }
     } catch (error) {
       console.error(error);
       showError('Ocurrio un error al asignar el evento.');
+    } finally {
+      setAssigningEventId(null);
     }
   };
 
@@ -232,18 +254,21 @@ export default function AdminUsuariosPage() {
 
       if (!result?.success) {
         showError('No fue posible quitar la asignacion.');
-        return;
+        return false;
       }
 
       showSuccess('Asignacion eliminada.');
       await cargarDatos();
+      return true;
     } catch (error) {
       console.error(error);
       showError('Ocurrio un error al quitar la asignacion.');
+      return false;
     }
   };
 
   const handleRegenerarPassTemp = async (usuario) => {
+    setOpenActionMenuUserId(null);
     try {
       const result = await regenerarPassTempUsuario({ idUsuario: usuario.id });
 
@@ -252,9 +277,8 @@ export default function AdminUsuariosPage() {
         return;
       }
 
-      showPasswordToast({
-        title: `Clave temporal regenerada para ${usuario.nombres}`,
-        subtitle: 'Nueva clave temporal',
+      setPasswordModal({
+        usuario,
         tempPassword: result.tempPassword,
       });
     } catch (error) {
@@ -263,13 +287,59 @@ export default function AdminUsuariosPage() {
     }
   };
 
+  const eventosFiltrados = useMemo(() => {
+    const term = eventSearch.trim().toLowerCase();
+    if (!term) return eventos;
+
+    return eventos.filter((evento) => {
+      const nombre = String(evento?.nombre || '').toLowerCase();
+      const id = String(evento?.id || '').toLowerCase();
+      return nombre.includes(term) || id.includes(term);
+    });
+  }, [eventSearch, eventos]);
+
+  const buildPasswordWhatsappMessage = (usuario, tempPassword) => {
+    const nombre = `${usuario?.nombres || ''} ${usuario?.apellidos || ''}`.trim() || 'usuario';
+    return `Hola ${nombre}. Desde Altezza compartimos tu nueva clave temporal de acceso: ${tempPassword}. Por favor ingresa con esta clave y actualizala por una personal en tu proximo acceso.`;
+  };
+
+  const getUserActionItems = (usuario) => ([
+    {
+      id: 'editar',
+      label: 'Editar',
+      icon: <FiEdit2 size={15} />,
+      onClick: () => handleEditarUsuario(usuario),
+    },
+    {
+      id: 'password',
+      label: 'Generar pass temp',
+      icon: <FiRefreshCw size={15} />,
+      onClick: () => handleRegenerarPassTemp(usuario),
+    },
+    {
+      id: 'eventos',
+      label: 'Asignar eventos',
+      icon: <FiLink2 size={15} />,
+      onClick: () => {
+        setOpenActionMenuUserId(null);
+        setAssignModal(usuario);
+        setEventSearch('');
+      },
+    },
+  ]);
+
   return (
-    <div className={layoutStyles.content}>
-      <div className={`${styles.page} ${shellStyles.page}`}>
-        <section className={`${styles.hero} ${shellStyles.hero}`}>
-          <div className={`${styles.heroHeader} ${shellStyles.heroHeader}`}>
-            <h1 className={shellStyles.moduleTitle}>Administracion de usuarios</h1>
-          </div>
+    <PageShell surface="admin" contentClassName={`${styles.page} ${shellStyles.page}`}>
+        <section className={styles.hero}>
+          <PageHeader
+            title="Administracion de usuarios"
+            align="right"
+            actions={(
+              <Button onClick={() => setIsModalOpen(true)}>
+                Nuevo usuario
+              </Button>
+            )}
+          />
           <div className={`${styles.summaryCard} ${shellStyles.summaryCard}`}>
             <div className={`${styles.summaryItem} ${shellStyles.summaryItem}`}>
               <div className={`${styles.summaryTop} ${shellStyles.summaryTop}`}>
@@ -292,11 +362,6 @@ export default function AdminUsuariosPage() {
               </div>
               <span>Con evento</span>
             </div>
-          </div>
-          <div className={`${styles.heroActions} ${shellStyles.heroActions}`}>
-            <button type="button" className={shellStyles.primaryActionButton} onClick={() => setIsModalOpen(true)}>
-              Nuevo usuario
-            </button>
           </div>
         </section>
 
@@ -353,71 +418,30 @@ export default function AdminUsuariosPage() {
 
                       <div className={styles.userSection}>
                         <strong>Eventos</strong>
-                        <div className={styles.eventsCell}>
-                          <div>
-                            {usuario.eventosAsignados?.length ? (
-                              usuario.eventosAsignados.map((idEvento) => (
-                                <span className={styles.tag} key={`mobile-${usuario.id}-${idEvento}`}>
-                                  {idEvento}
-                                  <button
-                                    type="button"
-                                    className={styles.secondary}
-                                    onClick={() => handleQuitarEvento(usuario.id, idEvento)}
-                                    style={{ marginLeft: 8, minHeight: 28 }}
-                                  >
-                                    Quitar
-                                  </button>
-                                </span>
-                              ))
-                            ) : (
-                              <span className={styles.empty}>Sin eventos asignados</span>
-                            )}
-                          </div>
-
-                          <div className={styles.assignRow}>
-                            <select
-                              value={eventoSeleccionadoPorUsuario[usuario.id] || ''}
-                              onChange={(e) =>
-                                setEventoSeleccionadoPorUsuario((prev) => ({
-                                  ...prev,
-                                  [usuario.id]: e.target.value,
-                                }))
-                              }
-                            >
-                              <option value="">Selecciona evento</option>
-                              {eventos.map((evento) => (
-                                <option key={evento.id} value={evento.id}>
-                                  {evento.nombre}
-                                </option>
-                              ))}
-                            </select>
-                            <button
-                              type="button"
-                              className={styles.secondary}
-                              onClick={() => handleAsignarEvento(usuario.id)}
-                            >
-                              Asignar
-                            </button>
-                          </div>
+                      <div className={styles.eventsCell}>
+                        <div>
+                          {usuario.eventosAsignados?.length ? (
+                            usuario.eventosAsignados.map((idEvento) => (
+                              <InlineChipAction
+                                key={`mobile-${usuario.id}-${idEvento}`}
+                                label={idEvento}
+                                actionLabel="Quitar"
+                                onAction={() => handleQuitarEvento(usuario.id, idEvento)}
+                              />
+                            ))
+                          ) : (
+                            <span className={styles.empty}>Sin eventos asignados</span>
+                          )}
                         </div>
+                      </div>
                       </div>
 
                       <div className={styles.mobileActions}>
-                        <button
-                          type="button"
-                          className={styles.secondary}
-                          onClick={() => handleEditarUsuario(usuario)}
-                        >
-                          Editar
-                        </button>
-                        <button
-                          type="button"
-                          className={styles.secondary}
-                          onClick={() => handleRegenerarPassTemp(usuario)}
-                        >
-                          <FiRefreshCw size={15} />
-                          Generar pass temp
-                        </button>
+                        <ActionMenu
+                          open={openActionMenuUserId === `mobile-${usuario.id}`}
+                          onToggle={() => setOpenActionMenuUserId((current) => current === `mobile-${usuario.id}` ? null : `mobile-${usuario.id}`)}
+                          items={getUserActionItems(usuario)}
+                        />
                       </div>
                     </article>
                   ))}
@@ -462,67 +486,26 @@ export default function AdminUsuariosPage() {
                               <div>
                                 {usuario.eventosAsignados?.length ? (
                                   usuario.eventosAsignados.map((idEvento) => (
-                                    <span className={styles.tag} key={`${usuario.id}-${idEvento}`}>
-                                      {idEvento}
-                                      <button
-                                        type="button"
-                                        className={styles.secondary}
-                                        onClick={() => handleQuitarEvento(usuario.id, idEvento)}
-                                        style={{ marginLeft: 8, minHeight: 28 }}
-                                      >
-                                        Quitar
-                                      </button>
-                                    </span>
+                                    <InlineChipAction
+                                      key={`${usuario.id}-${idEvento}`}
+                                      label={idEvento}
+                                      actionLabel="Quitar"
+                                      onAction={() => handleQuitarEvento(usuario.id, idEvento)}
+                                    />
                                   ))
                                 ) : (
                                   <span className={styles.empty}>Sin eventos asignados</span>
                                 )}
                               </div>
-
-                              <div className={styles.assignRow}>
-                                <select
-                                  value={eventoSeleccionadoPorUsuario[usuario.id] || ''}
-                                  onChange={(e) =>
-                                    setEventoSeleccionadoPorUsuario((prev) => ({
-                                      ...prev,
-                                      [usuario.id]: e.target.value,
-                                    }))
-                                  }
-                                >
-                                  <option value="">Selecciona evento</option>
-                                  {eventos.map((evento) => (
-                                    <option key={evento.id} value={evento.id}>
-                                      {evento.nombre}
-                                    </option>
-                                  ))}
-                                </select>
-                                <button
-                                  type="button"
-                                  className={styles.secondary}
-                                  onClick={() => handleAsignarEvento(usuario.id)}
-                                >
-                                  Asignar
-                                </button>
-                              </div>
                             </div>
                           </td>
                           <td>
                             <div className={styles.rowActions}>
-                              <button
-                                type="button"
-                                className={styles.secondary}
-                                onClick={() => handleEditarUsuario(usuario)}
-                              >
-                                Editar
-                              </button>
-                              <button
-                                type="button"
-                                className={styles.secondary}
-                                onClick={() => handleRegenerarPassTemp(usuario)}
-                              >
-                                <FiRefreshCw size={15} />
-                                Generar pass temp
-                              </button>
+                              <ActionMenu
+                                open={openActionMenuUserId === usuario.id}
+                                onToggle={() => setOpenActionMenuUserId((current) => current === usuario.id ? null : usuario.id)}
+                                items={getUserActionItems(usuario)}
+                              />
                             </div>
                           </td>
                         </tr>
@@ -547,17 +530,7 @@ export default function AdminUsuariosPage() {
         </section>
 
         {isModalOpen && (
-          <div className={styles.modalOverlay} onClick={resetForm}>
-            <div className={styles.modalCard} onClick={(event) => event.stopPropagation()}>
-              <div className={`${styles.sectionHeader} ${styles.modalHeader}`}>
-                <div>
-                  <h2>{isEditing ? 'Editar usuario' : 'Nuevo usuario'}</h2>
-                </div>
-                <button type="button" className={styles.iconClose} onClick={resetForm} aria-label="Cerrar modal">
-                  <FiX size={18} />
-                </button>
-              </div>
-
+          <ModalShell title={isEditing ? 'Editar usuario' : 'Nuevo usuario'} onClose={resetForm}>
               <form className={styles.form} onSubmit={handleGuardarUsuario}>
                 <div className={styles.twoCols}>
                   <label>
@@ -604,18 +577,174 @@ export default function AdminUsuariosPage() {
                 </label>
 
                 <div className={styles.modalActions}>
-                  <button type="button" className={styles.secondary} onClick={resetForm}>
+                  <Button variant="secondary" onClick={resetForm}>
                     Cancelar
-                  </button>
-                  <button className={styles.primary} type="submit" disabled={saving}>
+                  </Button>
+                  <Button type="submit" disabled={saving}>
                     {saving ? (isEditing ? 'Guardando...' : 'Creando...') : (isEditing ? 'Guardar cambios' : 'Crear usuario')}
-                  </button>
+                  </Button>
                 </div>
               </form>
-            </div>
-          </div>
+          </ModalShell>
         )}
-      </div>
-    </div>
+
+        {passwordModal && (
+          <ModalShell
+            eyebrow="Gestion de acceso"
+            title="Clave temporal generada"
+            description="Comparte esta clave solo con el usuario correcto. La recomendacion es enviarla por WhatsApp y pedir cambio inmediato al primer ingreso."
+            onClose={() => setPasswordModal(null)}
+            footer={(
+              <>
+                <Button
+                  variant="secondary"
+                  iconLeading={<FiCopy size={16} />}
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(passwordModal.tempPassword);
+                      showSuccess('Clave temporal copiada al portapapeles.');
+                    } catch (error) {
+                      console.error(error);
+                      showError('No fue posible copiar la clave temporal.');
+                    }
+                  }}
+                >
+                  Copiar
+                </Button>
+                <Button
+                  as="a"
+                  iconLeading={<FaWhatsapp size={16} />}
+                  className={`${styles.modalPrimaryLink} ${!buildWhatsappUrl(passwordModal.usuario.telefon) ? styles.disabledButton : ''}`}
+                  href={buildWhatsappUrl(
+                    passwordModal.usuario.telefon,
+                    buildPasswordWhatsappMessage(passwordModal.usuario, passwordModal.tempPassword)
+                  ) || '#'}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-disabled={!buildWhatsappUrl(passwordModal.usuario.telefon)}
+                  onClick={(event) => {
+                    if (!buildWhatsappUrl(passwordModal.usuario.telefon)) {
+                      event.preventDefault();
+                      showError('El usuario no tiene un telefono valido para WhatsApp.');
+                    }
+                  }}
+                >
+                  Enviar por WP
+                </Button>
+              </>
+            )}
+          >
+              <div className={styles.passwordPanel}>
+                <div className={styles.passwordBlock}>
+                  <span className={styles.passwordLabel}>Usuario</span>
+                  <strong>{passwordModal.usuario.nombres} {passwordModal.usuario.apellidos}</strong>
+                  <span className={styles.passwordMeta}>{passwordModal.usuario.user}</span>
+                </div>
+
+                <div className={styles.passwordBlock}>
+                  <span className={styles.passwordLabel}>Nueva clave temporal</span>
+                  <strong className={styles.passwordValue}>{passwordModal.tempPassword}</strong>
+                  <span className={styles.passwordMeta}>Uso unico sugerido para el siguiente acceso.</span>
+                </div>
+              </div>
+          </ModalShell>
+        )}
+
+        {assignModal && (
+          <ModalShell
+            eyebrow="Relacion usuario-evento"
+            title="Asignar eventos"
+            description="Busca el evento correcto y gestiona las asignaciones activas desde una sola superficie."
+            onClose={() => setAssignModal(null)}
+            size="lg"
+            className={styles.assignModalCard}
+          >
+              <div className={styles.assignModalBody}>
+                <div className={styles.assignSummary}>
+                  <strong>{assignModal.nombres} {assignModal.apellidos}</strong>
+                  <span>{assignModal.user}</span>
+                </div>
+
+                <label className={`${styles.searchField} ${styles.modalSearchField}`}>
+                  <FiSearch size={16} />
+                  <input
+                    placeholder="Buscar evento por nombre o id"
+                    value={eventSearch}
+                    onChange={(event) => setEventSearch(event.target.value)}
+                  />
+                </label>
+
+                {assignModal.eventosAsignados?.length ? (
+                  <div className={styles.assignedEventsWrap}>
+                    <strong>Eventos asignados</strong>
+                    <div className={styles.assignedEventsList}>
+                      {assignModal.eventosAsignados.map((idEvento) => (
+                        <InlineChipAction
+                          key={`assign-modal-${assignModal.id}-${idEvento}`}
+                          label={idEvento}
+                          actionLabel="Quitar"
+                          onAction={async () => {
+                            const success = await handleQuitarEvento(assignModal.id, idEvento);
+                            if (!success) return;
+                            setAssignModal((current) => (
+                              current
+                                ? { ...current, eventosAsignados: (current.eventosAsignados || []).filter((value) => value !== idEvento) }
+                                : current
+                            ));
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                <div className={styles.assignTableWrap}>
+                  <table className={styles.assignTable}>
+                    <thead>
+                      <tr>
+                        <th>Evento</th>
+                        <th>ID</th>
+                        <th>Accion</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {eventosFiltrados.map((evento) => {
+                        const yaAsignado = Array.isArray(assignModal.eventosAsignados) && assignModal.eventosAsignados.includes(evento.id);
+
+                        return (
+                        <tr key={`evento-${assignModal.id}-${evento.id}`}>
+                          <td>{evento.nombre}</td>
+                          <td>{evento.id}</td>
+                          <td className={styles.assignActionCell}>
+                              <Button
+                                variant={yaAsignado ? 'secondary' : 'primary'}
+                                className={`${styles.assignTableButton} ${yaAsignado ? styles.assignStatusButton : ''}`}
+                                disabled={yaAsignado || assigningEventId === evento.id}
+                                onClick={() => handleAsignarEvento(assignModal.id, evento.id)}
+                              >
+                                {yaAsignado ? 'Asignado' : assigningEventId === evento.id ? 'Guardando...' : 'Asignar'}
+                              </Button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+
+                      {!eventosFiltrados.length && (
+                        <tr>
+                          <td colSpan="3" className={styles.empty}>
+                            <div className={styles.emptyState}>
+                              <strong>No hay eventos que coincidan con la busqueda.</strong>
+                              <span>Ajusta el termino para encontrar el evento que quieres asignar.</span>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </ModalShell>
+        )}
+    </PageShell>
   );
 }

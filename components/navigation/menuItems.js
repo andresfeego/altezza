@@ -15,12 +15,12 @@ import {
 export const baseItems = {
   [ROLE_IDS.ADMIN_WEDDING]: [
     { id: 'home', label: 'Home', icon: <FiHome />, url: '/home/admin' },
+    { id: 'usuarios', label: 'Usuarios', icon: <LuUserRoundCog />, url: '/admin/usuarios' },
     { id: 'eventos', label: 'Eventos', icon: <LuPartyPopper />, url: '/admin/eventos' },
     { id: 'mobiliario', label: 'Mobiliario', icon: <GiWoodenChair />, url: '/admin/mobiliario' },
     { id: 'alquiler', label: 'Alquiler', icon: <TbTruckLoading />, url: '/admin/alquiler' },
     { id: 'cotizador', label: 'Cotizador', icon: <MdOutlinePriceChange />, url: '/admin/cotizador' },
     { id: 'frases', label: 'Frases', icon: <TbAlphabetLatin />, url: '/admin/frases' },
-    { id: 'usuarios', label: 'Usuarios', icon: <LuUserRoundCog />, url: '/admin/usuarios' },
   ],
   [ROLE_IDS.CLIENTE]: [],
   [ROLE_IDS.ORGANIZADOR]: [

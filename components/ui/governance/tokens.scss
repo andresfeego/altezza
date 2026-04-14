@@ -41,8 +41,8 @@
   --ag-text-card-title-line: var(--ag-line-height-32);
   --ag-text-card-title-weight: var(--ag-font-weight-semibold);
 
-  --ag-text-page-title-size: var(--ag-font-size-32);
-  --ag-text-page-title-line: var(--ag-line-height-40);
+  --ag-text-page-title-size: clamp(1.85rem, 3vw, 2.45rem);
+  --ag-text-page-title-line: 1.05;
   --ag-text-page-title-weight: var(--ag-font-weight-bold);
 
   --ag-text-hero-title-size: var(--ag-font-size-40);
@@ -67,8 +67,30 @@
 
   --ag-brand-rose: #ec9fb5;
   --ag-brand-rose-strong: #c76a84;
-  --ag-brand-wine: #6c3c3c;
-  --ag-brand-wine-strong: #4d2626;
+  --ag-brand-wine: #ffc4c4;
+  --ag-brand-wine-strong: #b97a7a;
+  --ag-nav-primary-bg: var(--ag-brand-wine-strong);
+  --ag-nav-primary-active: var(--ag-surface-card);
+  --ag-nav-primary-active-text: var(--ag-brand-wine-strong);
+  --ag-nav-context-bg: var(--ag-brand-rose);
+  --ag-nav-context-active: var(--ag-surface-card);
+  --ag-nav-context-active-text: var(--ag-brand-rose-strong);
+  --ag-nav-item-text: rgba(255, 255, 255, 0.92);
+  --ag-nav-item-border: rgba(255, 255, 255, 0.14);
+  --ag-nav-item-hover: rgba(255, 255, 255, 0.08);
+  --ag-nav-tooltip-bg: rgba(0, 0, 0, 0.8);
+  --ag-nav-backdrop: rgba(0, 0, 0, 0.25);
+
+  --ag-gray-0: #383838;
+  --ag-gray-1: #505050;
+  --ag-gray-2: #636363;
+  --ag-gray-3: #818181;
+  --ag-gray-4: #969696;
+  --ag-gray-5: #afafaf;
+  --ag-gray-6: #c4c4c4;
+  --ag-gray-7: #dddddd;
+  --ag-gray-8: #eeeeee;
+  --ag-gray-9: #f7f7f7;
 
   --ag-surface-page: #fbf7f4;
   --ag-surface-card: #ffffff;

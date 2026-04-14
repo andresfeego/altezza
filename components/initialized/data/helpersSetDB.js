@@ -86,3 +86,73 @@ export const actualizarUsuarioSistema = async ({ idUsuario, nombres, apellidos, 
 export const regenerarPassTempUsuario = async ({ idUsuario }) => {
   return await setDB(`/usuariosSistema/${idUsuario}/regenerarPassTemp`, {});
 };
+
+export const crearInvitadoEvento = async ({ idEvento, nombre, telefono, whatsapp, parentescoId, grupoEdadId }) => {
+  return await setDB(`/eventos/${idEvento}/invitados`, {
+    nombre,
+    telefono,
+    whatsapp,
+    parentescoId,
+    grupoEdadId,
+  });
+};
+
+export const actualizarInvitadoEvento = async ({ idEvento, idInvitado, nombre, telefono, whatsapp, parentescoId, grupoEdadId, estadoAsistenciaId }) => {
+  return await setDB(`/eventos/${idEvento}/invitados/${idInvitado}`, {
+    nombre,
+    telefono,
+    whatsapp,
+    parentescoId,
+    grupoEdadId,
+    estadoAsistenciaId,
+  }, {
+    method: 'PUT',
+  });
+};
+
+export const eliminarInvitadoEvento = async ({ idEvento, idInvitado }) => {
+  return await setDB(`/eventos/${idEvento}/invitados/${idInvitado}`, {}, {
+    method: 'DELETE',
+  });
+};
+
+export const crearInvitacionEvento = async ({ idEvento, label, mensajePersonalizado }) => {
+  return await setDB(`/eventos/${idEvento}/invitaciones`, {
+    label,
+    mensajePersonalizado,
+  });
+};
+
+export const actualizarInvitacionEvento = async ({ idEvento, idInvitacion, label, mensajePersonalizado }) => {
+  return await setDB(`/eventos/${idEvento}/invitaciones/${idInvitacion}`, {
+    label,
+    mensajePersonalizado,
+  }, {
+    method: 'PUT',
+  });
+};
+
+export const asignarInvitadoAInvitacion = async ({ idEvento, idInvitacion, idInvitado, principal = false }) => {
+  return await setDB(`/eventos/${idEvento}/invitaciones/${idInvitacion}/invitados`, {
+    idInvitado,
+    principal,
+  });
+};
+
+export const quitarInvitadoDeInvitacion = async ({ idEvento, idInvitacion, idInvitado }) => {
+  return await setDB(`/eventos/${idEvento}/invitaciones/${idInvitacion}/invitados/${idInvitado}`, {}, {
+    method: 'DELETE',
+  });
+};
+
+export const definirPrincipalInvitacion = async ({ idEvento, idInvitacion, idInvitado }) => {
+  return await setDB(`/eventos/${idEvento}/invitaciones/${idInvitacion}/principal/${idInvitado}`, {}, {
+    method: 'PUT',
+  });
+};
+
+export const eliminarInvitacionEvento = async ({ idEvento, idInvitacion }) => {
+  return await setDB(`/eventos/${idEvento}/invitaciones/${idInvitacion}`, {}, {
+    method: 'DELETE',
+  });
+};

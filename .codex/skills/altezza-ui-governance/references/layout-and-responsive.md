@@ -8,6 +8,7 @@
 - forms should remain more contained than tables or board-like screens
 - container spacing must follow the responsive density map
 - admin modules should reuse a shared module shell for inner container rhythm, module header, summary block, primary action row, and section card
+- client event modules should reuse a shared module shell for page header, summary, toolbar, and state blocks instead of rebuilding those structures per module
 - admin module routes should also reuse a shared outer content container instead of redefining page padding module by module
 - current admin outer content baseline: desktop with menu offset; under `1024px`, `margin-left: 0` and `padding: 56px 16px 16px`
 
@@ -49,17 +50,25 @@ Notes:
 - use right-side breathing room based on the spacing scale
 - use bottom breathing room based on the spacing scale before the next summary or content block
 - internal section titles such as `h2` should come from shared shell classes when the structure is repeated across admin modules
+- do not add eyebrow/context text by default if it only repeats the title or module nature
 
 ### Summary blocks
 
 - transversal summary blocks should use a 3-column grid
 - if there are more than 3 items, let them wrap into the needed rows
 - summary items should remain centered inside the card
+- feed preview cards should be lighter than module detail screens
+- the preferred feed preview composition is:
+  - title
+  - compact metric block or one concise data block
+  - no redundant eyebrow
+  - no long descriptive copy unless the module is still mostly empty
 
 ### Filters and mobile card lists
 
 - filter blocks should leave 32px bottom separation before the next content block
 - vertical mobile card lists should use a wider gap; current rule: 24px
+- internal lists inside modals should prefer row dividers over nested cards when the goal is quick scanability
 
 ## Responsive behavior
 
@@ -71,6 +80,7 @@ Notes:
 - modal close button should be absolutely positioned relative to the modal, top 8px and right 8px
 - modal title block should keep top breathing room based on the spacing scale; current rule: 16px
 - modal action block should keep 64px top spacing and 32px bottom spacing
+- modal content should normally have one dominant surface level; internal text sections such as label, notes, or messages should be flat unless interaction requires containment
 
 ## Page actions
 

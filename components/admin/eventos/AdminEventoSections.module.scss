@@ -12,6 +12,32 @@
   gap: var(--ag-space-3);
 }
 
+.sectionBlock {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
+.sectionHeader {
+  align-items: end;
+  display: flex;
+  gap: var(--ag-space-2);
+  justify-content: space-between;
+}
+
+.sectionHeader h3 {
+  margin: 0;
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h3-size);
+  font-weight: var(--ag-heading-h3-weight);
+  line-height: var(--ag-heading-h3-line);
+}
+
+.sectionHeader span {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
 .assignBar {
   align-items: center;
   display: grid;
@@ -38,8 +64,10 @@
 }
 
 .availableList {
+  background: var(--ag-surface-card);
   border: 1px solid var(--ag-border-soft);
   border-radius: var(--ag-radius-lg);
+  box-shadow: var(--ag-shadow-soft);
   display: grid;
   gap: 0;
   max-height: calc(var(--ag-space-7) * 5);
@@ -81,32 +109,11 @@
   line-height: var(--ag-text-caption-line);
 }
 
-.actionButton,
-.secondaryButton {
-  align-items: center;
-  border: none;
-  border-radius: var(--ag-radius-pill);
-  cursor: pointer;
-  display: inline-flex;
-  font-size: var(--ag-text-label-size);
-  justify-content: center;
-  line-height: var(--ag-text-label-line);
-  min-height: var(--ag-space-5);
-  padding: 0 var(--ag-space-2);
-}
-
-.actionButton {
-  background: var(--ag-brand-wine);
-  color: var(--ag-surface-card);
+.assignActionButton {
   flex: 0 0 auto;
   justify-self: end;
   white-space: nowrap;
   width: fit-content;
-}
-
-.secondaryButton {
-  background: var(--ag-surface-soft);
-  color: var(--ag-text-base);
 }
 
 .infoList {
@@ -171,6 +178,33 @@
 .moduleList {
   display: grid;
   gap: 0;
+}
+
+.assignedGrid {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.assignedGrid > * {
+  max-width: 100%;
+}
+
+.assignedCard {
+  display: grid;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-3);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  background: var(--ag-surface-card);
+  box-shadow: var(--ag-shadow-soft);
+}
+
+.assignedCardTop {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: start;
 }
 
 .userRow,
@@ -254,10 +288,6 @@
   align-items: center;
 }
 
-.actionMenuWrap {
-  position: relative;
-}
-
 .statusPill,
 .moduleBadge {
   align-items: center;
@@ -308,20 +338,6 @@
   text-decoration: none;
 }
 
-.iconActionButton {
-  align-items: center;
-  background: var(--ag-surface-soft);
-  border: none;
-  border-radius: var(--ag-radius-pill);
-  color: var(--ag-text-base);
-  cursor: pointer;
-  display: inline-flex;
-  font-size: var(--ag-text-label-size);
-  height: var(--ag-space-5);
-  justify-content: center;
-  width: var(--ag-space-5);
-}
-
 .phoneIcon,
 .whatsappIcon {
   align-items: center;
@@ -331,32 +347,10 @@
   justify-content: center;
 }
 
-.actionMenu {
-  background: var(--ag-surface-card);
-  border: 1px solid var(--ag-border-soft);
-  border-radius: var(--ag-radius-lg);
-  box-shadow: var(--ag-shadow-card);
-  display: grid;
-  min-width: 200px;
-  overflow: hidden;
-  position: absolute;
-  right: 0;
-  top: calc(100% + var(--ag-space-1));
-  z-index: 3;
-}
-
-.menuOption {
-  background: transparent;
-  border: none;
-  color: var(--ag-text-base);
-  cursor: pointer;
-  min-height: var(--ag-space-5);
-  padding: 0 var(--ag-space-2);
-  text-align: left;
-}
-
-.menuOption + .menuOption {
-  border-top: 1px solid var(--ag-border-soft);
+.contactMuted {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
 }
 
 .moduleMeta {
@@ -375,6 +369,19 @@
 }
 
 @media (max-width: 640px) {
+  .sectionHeader {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .assignedGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .assignedCardTop {
+    grid-template-columns: 1fr;
+  }
+
   .moduleHeader {
     align-items: flex-start;
     flex-direction: column;
@@ -383,5 +390,17 @@
   .moduleMeta {
     justify-content: flex-start;
     margin-left: 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  .assignedGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .assignedGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

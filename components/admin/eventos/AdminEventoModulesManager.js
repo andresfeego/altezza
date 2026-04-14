@@ -2,7 +2,9 @@ import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { FiCheckCircle } from 'react-icons/fi';
 import { MdImage } from 'react-icons/md';
+import Button from '@/components/ui/actions/Button';
 import {
+  buildClientModuleState,
   CLIENT_MODULE_DEFINITIONS,
 } from '@/components/constants/clientModules';
 import { getModulosClientePorEvento } from '@/components/initialized/data/helpersGetDB';
@@ -10,7 +12,7 @@ import { actualizarModulosClientePorEvento } from '@/components/initialized/data
 import { showError, showSuccess } from '@/components/initialized/Toast';
 import styles from './AdminEventoModulesManager.module.scss';
 
-export default function AdminEventoModulesManager({ evento = null }) {
+export default function AdminEventoModulesManager({ evento = null, onModulesChange = null }) {
   const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(false);
   const [savingKey, setSavingKey] = useState('');
@@ -30,6 +32,7 @@ export default function AdminEventoModulesManager({ evento = null }) {
         const response = await getModulosClientePorEvento(selectedEventId);
         if (cancelled) return;
         setModules(response?.modules || []);
+        onModulesChange?.(response?.modules || [], buildClientModuleState(response?.modules || []));
       } catch (error) {
         if (cancelled) return;
         setModules([]);
@@ -82,6 +85,7 @@ export default function AdminEventoModulesManager({ evento = null }) {
       });
 
       setModules(response?.modules || []);
+      onModulesChange?.(response?.modules || [], buildClientModuleState(response?.modules || []));
       showSuccess(successMessage);
     } catch (error) {
       showError('No fue posible guardar la configuracion de modulos.');
@@ -111,6 +115,7 @@ export default function AdminEventoModulesManager({ evento = null }) {
 
     setSavingKey(moduleKey);
     setModules(optimisticModules);
+    onModulesChange?.(optimisticModules, buildClientModuleState(optimisticModules));
 
     try {
       await persistModules(
@@ -119,6 +124,7 @@ export default function AdminEventoModulesManager({ evento = null }) {
       );
     } catch (error) {
       setModules(previousModules);
+      onModulesChange?.(previousModules, buildClientModuleState(previousModules));
     } finally {
       setSavingKey('');
     }
@@ -196,14 +202,14 @@ export default function AdminEventoModulesManager({ evento = null }) {
                     Activo
                   </span>
                 ) : (
-                  <button
-                    type="button"
+                  <Button
+                    variant={moduleDef.enabled ? 'primary' : 'secondary'}
                     className={`${styles.moduleStateButton} ${moduleDef.enabled ? styles.moduleStateEnabled : styles.moduleStateDisabled}`}
-                    disabled={loading || Boolean(savingKey)}
+                    disabled={loading || savingKey === moduleDef.key}
                     onClick={() => handleToggleModule(moduleDef.key, !moduleDef.enabled)}
                   >
                     {savingKey === moduleDef.key ? 'Guardando...' : moduleDef.enabled ? 'Activo' : 'Inactivo'}
-                  </button>
+                  </Button>
                 )}
 
                 {moduleDef.required ? (

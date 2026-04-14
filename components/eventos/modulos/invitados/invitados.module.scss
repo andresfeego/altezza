@@ -1,0 +1,475 @@
+.page,
+.embeddedPage {
+  display: grid;
+  gap: var(--ag-space-3);
+  margin: 0 auto;
+  max-width: var(--ag-max-content);
+}
+
+.summaryCard,
+.toolbarCard,
+.emptyCard {
+  background: var(--ag-surface-card);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  box-shadow: var(--ag-shadow-soft);
+}
+.emptyCard h3 {
+  margin: 0;
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h1-size);
+  font-weight: var(--ag-heading-h1-weight);
+  line-height: var(--ag-heading-h1-line);
+}
+
+.emptyCard p {
+  margin: 0;
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+  max-width: 52ch;
+}
+
+.summaryCard {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: var(--ag-space-3);
+}
+
+.summaryMetric {
+  display: grid;
+  gap: var(--ag-space-1);
+  justify-items: center;
+  text-align: center;
+}
+
+.summaryMetric strong {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h2-size);
+  line-height: var(--ag-heading-h2-line);
+  font-weight: var(--ag-heading-h2-weight);
+}
+
+.summaryMetric span {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+.toolbarCard {
+  display: grid;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-3);
+}
+
+.toolbarTop {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+}
+
+.searchField,
+.formField input,
+.formField select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 var(--ag-space-2);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-pill);
+  background: var(--ag-surface-card);
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+  box-sizing: border-box;
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-1);
+}
+
+.filterChip {
+  min-height: 40px;
+  padding: 0 var(--ag-space-2);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-pill);
+  background: var(--ag-surface-card);
+  color: var(--ag-text-muted);
+  cursor: pointer;
+  transition:
+    background-color 200ms ease-out,
+    color 200ms ease-out,
+    border-color 200ms ease-out;
+}
+
+.filterChipActive {
+  background: var(--ag-surface-soft);
+  border-color: var(--ag-brand-wine);
+  color: var(--ag-brand-wine-strong);
+}
+
+.invitedGrid {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.invitedCard {
+  display: grid;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-3);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  background: var(--ag-surface-card);
+  box-shadow: var(--ag-shadow-soft);
+}
+
+.invitedTop {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: start;
+}
+
+.invitedIdentity {
+  display: grid;
+  gap: var(--ag-space-1);
+}
+
+.invitedIdentity strong {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h4-size);
+  font-weight: var(--ag-heading-h4-weight);
+  line-height: var(--ag-heading-h4-line);
+}
+
+.invitedIdentity span,
+.contactMuted {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+.invitedMeta,
+.invitedContactRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-1);
+}
+
+.metaPill,
+.phoneBadge,
+.whatsappBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border-radius: var(--ag-radius-pill);
+  text-decoration: none;
+}
+
+.metaPill {
+  padding: 0 var(--ag-space-2);
+  background: var(--ag-surface-soft);
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+.metaPillButton {
+  border: 0;
+  cursor: pointer;
+  transition:
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.metaPillButton:hover {
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--ag-surface-soft) 72%, var(--ag-brand-wine) 28%);
+  color: var(--ag-brand-wine-strong);
+}
+
+.metaMuted {
+  color: var(--ag-text-muted);
+}
+
+.phoneBadge {
+  gap: var(--ag-space-1);
+  padding: 0 var(--ag-space-2);
+  background: var(--ag-surface-soft);
+  color: var(--ag-text-base);
+}
+
+.whatsappBadge {
+  width: 40px;
+  background: var(--ag-surface-soft);
+  color: var(--ag-success);
+}
+
+.phoneIcon,
+.whatsappIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ag-success);
+}
+
+.emptyCard {
+  display: grid;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-4);
+}
+
+.formGrid {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
+.formField {
+  display: grid;
+  gap: var(--ag-space-1);
+}
+
+.formField span {
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+.switchField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ag-space-2);
+  min-height: 48px;
+}
+
+.switchLabel {
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+  font-weight: var(--ag-font-weight-medium);
+}
+
+.switchControl {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switchControl input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.switchTrack {
+  display: inline-flex;
+  align-items: center;
+  width: 56px;
+  height: 32px;
+  padding: 0 4px;
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-pill);
+  background: var(--ag-surface-card);
+  transition:
+    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    border-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.switchThumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--ag-text-muted);
+  box-shadow: var(--ag-shadow-soft);
+  transition:
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.switchControl input:checked + .switchTrack {
+  background: color-mix(in srgb, var(--ag-success-soft) 72%, var(--ag-surface-card) 28%);
+  border-color: color-mix(in srgb, var(--ag-success) 28%, var(--ag-border-soft) 72%);
+}
+
+.switchControl input:checked + .switchTrack .switchThumb {
+  transform: translateX(24px);
+  background: var(--ag-success);
+}
+
+.switchControl input:focus-visible + .switchTrack {
+  outline: 2px solid color-mix(in srgb, var(--ag-brand-wine) 32%, transparent);
+  outline-offset: 2px;
+}
+
+.fieldError {
+  color: var(--ag-brand-wine-strong);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+.invitationDetailGrid {
+  display: grid;
+  gap: var(--ag-space-5);
+}
+
+.invitationDetailSection {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
+.detailLabel {
+  color: var(--ag-brand-wine);
+  font-size: var(--ag-text-label-size);
+  line-height: var(--ag-text-label-line);
+  font-weight: var(--ag-text-label-weight);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.invitationMembers {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
+.invitationMembersPanel,
+.invitationMessagePanel {
+  display: grid;
+  gap: var(--ag-space-0);
+  padding: var(--ag-space-2);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  background: var(--ag-surface-card);
+}
+
+.invitationTextBlock {
+  padding: 0;
+}
+
+.invitationMemberRow {
+  display: grid;
+  gap: var(--ag-space-1);
+  padding: var(--ag-space-2) 0;
+}
+
+.invitationMemberRow:not(:last-child) {
+  border-bottom: 1px solid var(--ag-border-soft);
+}
+
+.invitationMemberTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ag-space-2);
+}
+
+.invitationMemberTop strong {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+}
+
+.primaryMemberPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 var(--ag-space-2);
+  border-radius: var(--ag-radius-pill);
+  background: color-mix(in srgb, var(--ag-brand-wine) 12%, var(--ag-surface-card) 88%);
+  color: var(--ag-brand-wine-strong);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+  font-weight: var(--ag-font-weight-semibold);
+}
+
+.invitationMemberBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-1);
+}
+
+.relationshipPill {
+  background: color-mix(in srgb, var(--ag-surface-soft) 72%, var(--ag-brand-wine) 28%);
+  color: var(--ag-brand-wine-strong);
+}
+
+.agePill {
+  background: color-mix(in srgb, var(--ag-surface-soft) 62%, var(--ag-info-soft) 38%);
+  color: var(--ag-info);
+}
+
+.statusPill {
+  gap: var(--ag-space-1);
+}
+
+.statusPillSuccess {
+  background: var(--ag-success-soft);
+  color: var(--ag-success);
+}
+
+.statusPillWarning {
+  background: var(--ag-warning-soft);
+  color: var(--ag-warning);
+}
+
+.statusPillDanger {
+  background: var(--ag-danger-soft);
+  color: var(--ag-danger);
+}
+
+.statusPillInfo {
+  background: var(--ag-info-soft);
+  color: var(--ag-info);
+}
+
+.statusIcon,
+.supportIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.invitationMemberSupport {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-1);
+}
+
+.invitationMessage {
+  margin: 0;
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+}
+
+@media (max-width: 768px) {
+  .invitationMemberTop {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .toolbarTop,
+  .invitedTop,
+  .switchField {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryCard {
+    grid-template-columns: 1fr;
+  }
+
+  .invitedGrid {
+    grid-template-columns: 1fr;
+  }
+}
