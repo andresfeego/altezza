@@ -1,0 +1,638 @@
+.page,
+.embeddedPage {
+  display: grid;
+  gap: var(--ag-space-3);
+  margin: 0 auto;
+  max-width: var(--ag-max-content);
+}
+
+.summaryCard,
+.toolbarCard,
+.emptyCard,
+.invitationCard {
+  background: var(--ag-surface-card);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  box-shadow: var(--ag-shadow-soft);
+}
+
+.summaryCard {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: var(--ag-space-3);
+}
+
+.summaryMetric {
+  display: grid;
+  gap: var(--ag-space-1);
+  justify-items: center;
+  text-align: center;
+}
+
+.summaryMetric strong {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h2-size);
+  line-height: var(--ag-heading-h2-line);
+  font-weight: var(--ag-heading-h2-weight);
+}
+
+.summaryMetric span {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+.toolbarCard {
+  display: grid;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-3);
+}
+
+.inlineActionsRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-1);
+}
+
+.filterChip {
+  min-height: 40px;
+  padding: 0 var(--ag-space-2);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-pill);
+  background: var(--ag-surface-card);
+  color: var(--ag-text-muted);
+  cursor: pointer;
+  transition:
+    background-color 200ms ease-out,
+    color 200ms ease-out,
+    border-color 200ms ease-out;
+}
+
+.filterChipActive {
+  background: var(--ag-surface-soft);
+  border-color: var(--ag-brand-wine);
+  color: var(--ag-brand-wine-strong);
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+.importModalGrid {
+  display: grid;
+  gap: var(--ag-space-3);
+}
+
+.importActionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-2);
+}
+
+.importMetaRow {
+  display: grid;
+  gap: var(--ag-space-1);
+}
+
+.importFeedbackBlock {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
+.importScrollableList {
+  display: grid;
+  gap: var(--ag-space-1);
+  max-height: 224px;
+  overflow-y: auto;
+  padding-right: var(--ag-space-1);
+}
+
+.importPreviewRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ag-space-2);
+  padding-bottom: var(--ag-space-2);
+  border-bottom: 1px solid var(--ag-border-soft);
+}
+
+.importPreviewRow:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.importHintBlock {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: start;
+  gap: var(--ag-space-2);
+}
+
+.importHintBlock svg {
+  color: var(--ag-text-muted);
+  margin-top: 2px;
+}
+
+.toolbarTop {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+}
+
+.searchField,
+.formField input,
+.formField textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 var(--ag-space-2);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-pill);
+  background: var(--ag-surface-card);
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+  box-sizing: border-box;
+}
+
+.formField textarea {
+  min-height: 144px;
+  padding: var(--ag-space-2);
+  border-radius: var(--ag-radius-lg);
+  resize: vertical;
+}
+
+.emptyCard {
+  display: grid;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-4);
+}
+
+.emptyCard h3 {
+  margin: 0;
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h1-size);
+  font-weight: var(--ag-heading-h1-weight);
+  line-height: var(--ag-heading-h1-line);
+}
+
+.emptyCard p,
+.supportMuted {
+  margin: 0;
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+}
+
+.invitationGrid {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.invitationCard {
+  display: grid;
+  gap: var(--ag-space-4);
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  padding: var(--ag-space-3);
+}
+
+.invitationCardTop {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: start;
+}
+
+.invitationIdentity {
+  display: grid;
+  gap: var(--ag-space-1);
+}
+
+.invitationIdentity strong {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h4-size);
+  line-height: var(--ag-heading-h4-line);
+  font-weight: var(--ag-heading-h4-weight);
+}
+
+.invitationIdentity span,
+.detailLabel,
+.statLabel {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+.invitationStats {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.invitationStat {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 4px;
+  height: 48px;
+  overflow: hidden;
+  padding: var(--ag-space-2);
+  border-radius: var(--ag-radius-lg);
+  background: var(--ag-surface-soft);
+  align-content: start;
+}
+
+.statValue {
+  display: flex;
+  align-items: flex-start;
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h4-size);
+  line-height: var(--ag-heading-h4-line);
+  font-weight: var(--ag-heading-h4-weight);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.statValueEllipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.invitationTextGroup,
+.invitationDetailSection {
+  display: grid;
+  gap: var(--ag-space-1);
+}
+
+.memberListPreview,
+.membersList {
+  display: grid;
+}
+
+.memberListPreview {
+  align-content: start;
+}
+
+.memberPreviewRow,
+.memberRow {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-2) 0;
+  border-bottom: 1px solid var(--ag-border-soft);
+}
+
+.memberPreviewRow:first-child,
+.memberRow:first-child {
+  padding-top: 0;
+}
+
+.memberPreviewRow:last-child,
+.memberRow:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.memberPreviewName,
+.memberIdentity strong {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+  font-weight: var(--ag-font-weight-semibold);
+}
+
+.memberPreviewActions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--ag-space-1);
+}
+
+.memberIdentity {
+  display: grid;
+  gap: var(--ag-space-1);
+}
+
+.memberMetaRow,
+.memberActions,
+.memberSupport {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-1);
+  align-items: center;
+}
+
+.supportLine {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+.metaPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 var(--ag-space-2);
+  border-radius: var(--ag-radius-pill);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+.metaMuted {
+  background: var(--ag-surface-soft);
+  color: var(--ag-text-muted);
+}
+
+.statusIconBadge,
+.memberWhatsappButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--ag-border-soft) 72%, var(--ag-surface-card) 28%);
+  text-decoration: none;
+  transition:
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    box-shadow var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    border-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.statusIconBadge {
+  background: color-mix(in srgb, var(--ag-surface-card) 88%, var(--ag-surface-soft) 12%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ag-surface-card) 65%, transparent 35%);
+}
+
+.statusSuccess {
+  color: var(--ag-success);
+  background: color-mix(in srgb, var(--ag-success-soft) 72%, var(--ag-surface-card) 28%);
+  border-color: color-mix(in srgb, var(--ag-success) 24%, var(--ag-surface-card) 76%);
+}
+
+.statusWarning {
+  color: var(--ag-warning);
+  background: color-mix(in srgb, var(--ag-warning-soft) 72%, var(--ag-surface-card) 28%);
+  border-color: color-mix(in srgb, var(--ag-warning) 24%, var(--ag-surface-card) 76%);
+}
+
+.statusDanger {
+  color: var(--ag-danger);
+  background: color-mix(in srgb, var(--ag-danger-soft) 72%, var(--ag-surface-card) 28%);
+  border-color: color-mix(in srgb, var(--ag-danger) 24%, var(--ag-surface-card) 76%);
+}
+
+.statusInfo {
+  color: var(--ag-info);
+  background: color-mix(in srgb, var(--ag-info-soft) 72%, var(--ag-surface-card) 28%);
+  border-color: color-mix(in srgb, var(--ag-info) 24%, var(--ag-surface-card) 76%);
+}
+
+.statusNeutral {
+  color: var(--ag-gray-5);
+  background: var(--ag-gray-8);
+  border-color: var(--ag-gray-7);
+}
+
+.memberWhatsappButton {
+  color: var(--ag-success);
+  background: color-mix(in srgb, var(--ag-success-soft) 72%, var(--ag-surface-card) 28%);
+  border-color: color-mix(in srgb, var(--ag-success) 24%, var(--ag-surface-card) 76%);
+}
+
+.primaryMemberPill {
+  position: relative;
+  cursor: default;
+  color: var(--ag-brand-wine-strong);
+  background: color-mix(in srgb, var(--ag-brand-wine) 10%, var(--ag-surface-card) 90%);
+  border-color: color-mix(in srgb, var(--ag-brand-wine) 22%, var(--ag-surface-card) 78%);
+}
+
+.statusIconBadge:hover,
+.memberWhatsappButton:hover,
+.iconOnlyActionButton:hover,
+.statusIconBadge:focus-visible,
+.memberWhatsappButton:focus-visible,
+.iconOnlyActionButton:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--ag-shadow-soft);
+  outline: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .statusIconBadge::after,
+  .memberWhatsappButton::after,
+  .iconOnlyActionButton::after,
+  .primaryMemberPill::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%) translateY(4px);
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    padding: 6px 10px;
+    border-radius: var(--ag-radius-md);
+    background: var(--ag-text-strong);
+    color: var(--ag-surface-card);
+    font-size: var(--ag-text-caption-size);
+    line-height: 1;
+    box-shadow: var(--ag-shadow-soft);
+    transition:
+      opacity var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+      transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+  }
+
+  .statusIconBadge:hover::after,
+  .memberWhatsappButton:hover::after,
+  .iconOnlyActionButton:hover::after,
+  .primaryMemberPill:hover::after,
+  .statusIconBadge:focus-visible::after,
+  .memberWhatsappButton:focus-visible::after,
+  .iconOnlyActionButton:focus-visible::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.manageGrid {
+  display: grid;
+  gap: var(--ag-space-4);
+}
+
+.accordionTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ag-space-2);
+  width: 100%;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ag-text-strong);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+  font-weight: var(--ag-font-weight-semibold);
+  cursor: pointer;
+  transition:
+    color var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.accordionTriggerOpen {
+  color: var(--ag-brand-wine-strong);
+}
+
+.accordionIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ag-text-muted);
+  transition:
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.accordionTriggerOpen .accordionIcon {
+  color: var(--ag-brand-wine);
+}
+
+.accordionPanel {
+  display: grid;
+  gap: var(--ag-space-2);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    max-height var(--ag-motion-duration-medium) var(--ag-motion-ease-out),
+    opacity var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    padding var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    border-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.accordionPanelOpen {
+  max-height: 420px;
+  padding: var(--ag-space-2);
+  border: 1px solid var(--ag-gray-7);
+  border-radius: var(--ag-radius-lg);
+  background: var(--ag-gray-9);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.membersListScrollable {
+  display: grid;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.emptyInnerState {
+  display: grid;
+  gap: var(--ag-space-1);
+  padding: var(--ag-space-2) 0;
+}
+
+.inlineActionButton,
+.inlineDangerButton,
+.assignButton {
+  min-height: 36px;
+}
+
+.iconOnlyActionButton {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.iconOnlyActionButton :global(.label) {
+  display: none;
+}
+
+.manageMembersButton {
+  align-self: start;
+  margin-top: var(--ag-space-3);
+}
+
+.inlineDangerButton {
+  color: var(--ag-danger);
+}
+
+.formGrid {
+  display: grid;
+  gap: var(--ag-space-2);
+}
+
+.formField {
+  display: grid;
+  gap: var(--ag-space-1);
+}
+
+.formField span {
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+@media (max-width: 900px) {
+  .summaryCard,
+  .invitationStats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .invitationGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .toolbarTop {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .summaryCard,
+  .invitationGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .memberPreviewRow,
+  .memberRow {
+    flex-direction: column;
+  }
+
+  .memberPreviewActions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .memberActions,
+  .assignButton {
+    width: 100%;
+  }
+}

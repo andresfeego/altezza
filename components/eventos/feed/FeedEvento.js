@@ -1,5 +1,7 @@
 import BarraEvento from './BarraEvento';
 import ResumenDatosEvento from '@/components/eventos/modulos/datos_evento/ResumenDatosEvento';
+import FeedInvitadosPreview from '@/components/eventos/feed/FeedInvitadosPreview';
+import FeedInvitacionesPreview from '@/components/eventos/feed/FeedInvitacionesPreview';
 import FeedModulePreview from '@/components/eventos/feed/FeedModulePreview';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import useEventoStore from '@/components/initialized/stored/useEventoStore';
@@ -48,12 +50,26 @@ export default function FeedEvento({ evento }) {
         {hasDatosEvento ? <ResumenDatosEvento evento={evento} /> : null}
 
         {previewModules.map((moduleDef) => (
-          <FeedModulePreview
-            key={moduleDef.key}
-            title={moduleDef.label}
-            description={summaryCopyByModule[moduleDef.key] || `Accede al modulo ${moduleDef.label} desde la experiencia de este evento.`}
-            href={resolveClientModuleUrl(moduleDef, eventId)}
-          />
+          moduleDef.key === 'invitados' ? (
+            <FeedInvitadosPreview
+              key={moduleDef.key}
+              eventId={eventId}
+              href={resolveClientModuleUrl(moduleDef, eventId)}
+            />
+          ) : moduleDef.key === 'invitaciones' ? (
+            <FeedInvitacionesPreview
+              key={moduleDef.key}
+              eventId={eventId}
+              href={resolveClientModuleUrl(moduleDef, eventId)}
+            />
+          ) : (
+            <FeedModulePreview
+              key={moduleDef.key}
+              title={moduleDef.label}
+              description={summaryCopyByModule[moduleDef.key] || `Accede al modulo ${moduleDef.label} desde la experiencia de este evento.`}
+              href={resolveClientModuleUrl(moduleDef, eventId)}
+            />
+          )
         ))}
       </div>
     </div>

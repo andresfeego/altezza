@@ -17,6 +17,7 @@ Use this skill when working on frontend UI for Altezza.
 - Use shared design tokens before introducing new sizes, colors, shadows, or radii.
 - Do not leave hardcoded visual sizes in new UI. Spacing, typography, icon size, and icon containers must come from project tokens.
 - In vertical content lists, use a single separation strategy. Prefer only the top divider of the next item. Do not combine top and bottom separators between the same two rows.
+- Avoid nested surface noise. Do not stack multiple card-looking layers when a list, divider, or flat block can solve the composition more cleanly.
 - Use toast for action-level outcomes and inline messages for field-specific validation.
 - If a form validates data, the field must show its own error state. Toast is complementary, not the only feedback.
 - Keep the visual direction `luxury modern`, sober, warm, and premium.
@@ -46,12 +47,19 @@ Use this skill when working on frontend UI for Altezza.
 4. Reuse shared tokens and shared UI components first.
    - Icon containers must use spacing tokens.
    - Icon glyph size must use typography tokens.
+   - Reuse the current transversal shells before inventing local headers or wrappers.
+     - admin modules: shared admin shell
+     - client event modules: `EventClientModuleShell`
 5. Include loading, empty, error, success, and responsive states.
 6. If touching forms, keep:
    - inline field validation
    - toast for submit result
 7. If touching navigation, preserve the product naming convention from `docs/product`.
 8. Validate spacing, typography, motion, and responsive density against the governance references before delivery.
+9. Before shipping a modal or detail view, explicitly check:
+   - no redundant eyebrow text above the main title
+   - no card-inside-card visual smell
+   - row action menus close on outside click and on action click
 
 ## Pending rule
 

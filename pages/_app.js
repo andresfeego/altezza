@@ -17,13 +17,14 @@ import {
   isClienteEventRoute,
 } from '@/components/constants/eventContext';
 import SideMenu from '@/components/navigation/SideMenu';
-import { getModulosClientePorEvento } from '@/components/initialized/data/helpersGetDB';
+import { getModulosClientePorEvento, getUsuarioSesion } from '@/components/initialized/data/helpersGetDB';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const usuario = useUsuarioStore((state) => state.usuario);
   const clearUsuario = useUsuarioStore((state) => state.clearUsuario);
   const dataUsuario = useUsuarioStore((state) => state.dataUsuario);
+  const setDataUsuario = useUsuarioStore((state) => state.setDataUsuario);
   const setEventoActivo = useEventoStore((state) => state.setEventoActivo);
   const setEventoActivoById = useEventoStore((state) => state.setEventoActivoById);
   const clearEventoActivo = useEventoStore((state) => state.clearEventoActivo);
@@ -205,6 +206,50 @@ function MyApp({ Component, pageProps }) {
     setLoadingModulosCliente,
     usuario,
   ]);
+
+  useEffect(() => {
+    if (!hydrated || !usuario || dataUsuario?.rol !== ROLE_IDS.CLIENTE) return undefined;
+    if (typeof window === 'undefined' || typeof EventSource === 'undefined') return undefined;
+
+    const streamUrl = `${process.env.HOST_NAME}/stream/usuarios/${usuario}`;
+    const source = new EventSource(streamUrl);
+    let cancelled = false;
+
+    async function refreshUsuarioSesion() {
+      try {
+        const response = await getUsuarioSesion(usuario);
+        if (cancelled) return;
+        const refreshedUser = response?.usuario || response;
+        if (refreshedUser) {
+          setDataUsuario(refreshedUser);
+        }
+      } catch (error) {
+        if (cancelled) return;
+        console.error('No fue posible refrescar la sesion del usuario.', error);
+      }
+    }
+
+    source.onmessage = async (event) => {
+      try {
+        const payload = JSON.parse(event.data || '{}');
+        if (payload?.type === 'usuario_eventos_actualizados' && Number(payload?.idUsuario) === Number(usuario)) {
+          await refreshUsuarioSesion();
+        }
+      } catch (error) {
+        console.error('No fue posible procesar el evento SSE del usuario.', error);
+      }
+    };
+
+    source.onerror = (error) => {
+      if (cancelled) return;
+      console.error('Se perdio la conexion SSE del usuario.', error);
+    };
+
+    return () => {
+      cancelled = true;
+      source.close();
+    };
+  }, [dataUsuario?.rol, hydrated, setDataUsuario, usuario]);
 
   if (!hydrated || loading) return <LoadingScreen />;
   const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');

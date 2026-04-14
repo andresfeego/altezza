@@ -19,6 +19,18 @@ Use semantic tokens, not raw hex values in screen components.
 - `--ag-brand-wine`
 - `--ag-brand-wine-strong`
 
+### Neutral Scale
+- `--ag-gray-0`
+- `--ag-gray-1`
+- `--ag-gray-2`
+- `--ag-gray-3`
+- `--ag-gray-4`
+- `--ag-gray-5`
+- `--ag-gray-6`
+- `--ag-gray-7`
+- `--ag-gray-8`
+- `--ag-gray-9`
+
 ### Surface
 
 - `--ag-surface-page`
@@ -159,6 +171,7 @@ Suggested motion token names:
 - brand color should be measured, not dominant
 - warm neutrals should carry most of the interface
 - error, warning, success, and info must remain clearly distinguishable
+- neutral or unconfirmed states should prefer the governed `--ag-gray-*` scale when a semantic family would overstate the meaning
 - avoid introducing one-off colors in modules
 - all new colors in implementation must come from tokens
 - all new heading sizes in implementation must come from official heading tokens

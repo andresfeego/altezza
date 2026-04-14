@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import styles from './ActionMenu.module.scss';
 
@@ -8,15 +9,33 @@ function joinClasses(...values) {
 export default function ActionMenu({
   open = false,
   onToggle,
+  onClose,
   align = 'right',
   items = [],
   triggerLabel = 'Abrir acciones',
   className = '',
 }) {
   const alignClass = align === 'left' ? styles.left : styles.right;
+  const wrapRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    function handlePointerDown(event) {
+      if (!wrapRef.current?.contains(event.target)) {
+        onClose?.();
+      }
+    }
+
+    document.addEventListener('pointerdown', handlePointerDown);
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+    };
+  }, [onClose, open]);
 
   return (
-    <div className={joinClasses(styles.wrap, className)}>
+    <div ref={wrapRef} className={joinClasses(styles.wrap, className)}>
       <button
         type="button"
         className={styles.trigger}

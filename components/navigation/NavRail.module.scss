@@ -27,11 +27,11 @@
 }
 
 .primary .path {
-  fill: var(--ag-brand-wine-strong);
+  fill: var(--ag-nav-primary-bg);
 }
 
 .context .path {
-  fill: #d9aeb6;
+  fill: var(--ag-nav-context-bg);
 }
 
 .items {
@@ -56,43 +56,43 @@
   height: 32px;
   padding: 0;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid var(--ag-nav-item-border);
   background: transparent;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--ag-nav-item-text);
   cursor: pointer;
   transition: all 0.18s ease;
   transform: translateX(0);
 }
 
 .item:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--ag-nav-item-hover);
 }
 
 .active {
-  background: var(--ag-surface-card);
+  background: var(--ag-nav-primary-active);
   border-color: var(--ag-border-soft);
   transform: translateX(20px);
 }
 
 .primary .active {
-  color: var(--ag-brand-wine-strong);
+  color: var(--ag-nav-primary-active-text);
 }
 
 .context .active {
-  color: #b36b78;
+  color: var(--ag-nav-context-active-text);
 }
 
 .adminItem {
-  border-color: var(--ag-brand-wine);
+  border-color: var(--ag-nav-item-border);
 }
 
 .context .adminItem {
-  color: var(--ag-brand-wine-strong);
+  color: var(--ag-nav-item-text);
 }
 
 .context .adminItem.active {
-  border-color: var(--ag-brand-wine);
-  color: var(--ag-brand-wine-strong);
+  border-color: var(--ag-border-soft);
+  color: var(--ag-nav-context-active-text);
 }
 
 .icon {
@@ -110,7 +110,7 @@
   transform: translateY(-50%);
   padding: 6px 10px;
   border-radius: 10px;
-  background: rgba(0, 0, 0, 0.8);
+  background: var(--ag-nav-tooltip-bg);
   color: var(--ag-surface-card);
   font-size: 0.85rem;
   opacity: 0;
