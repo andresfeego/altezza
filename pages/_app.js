@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useUsuarioStore from '@/components/initialized/stored/useUsuarioStore';
 import useEventoStore from '@/components/initialized/stored/useEventoStore';
+import 'cssgram/source/css/cssgram.min.css';
 import './app.scss';
 import '@/components/ui/governance/tokens.scss';
 import LoadingScreen from '@/components/ui/LoadingScreen';
@@ -45,11 +46,12 @@ function MyApp({ Component, pageProps }) {
     if (!hydrated) return;
 
     const rutasPublicas = ['/_api/Login/login', '/_api/Login/cambiar-password', '/_api/registro/registro', '/ui-governance-lab'];
+    const isPublicInvitation = router.pathname === '/invitacion/[idInvitacion]/[idInvitado]';
 
     const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
     const isGovernanceLab = router.pathname === '/ui-governance-lab';
 
-    if (rutasPublicas.includes(router.pathname) || isManual || isGovernanceLab) {
+    if (rutasPublicas.includes(router.pathname) || isManual || isGovernanceLab || isPublicInvitation) {
       setLoading(false);
       return;
     }
@@ -255,6 +257,7 @@ function MyApp({ Component, pageProps }) {
   const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
   const isGovernanceLab = router.pathname === '/ui-governance-lab';
   const isAdminEventWorkspaceRoute = router.pathname.startsWith('/admin/eventos/[idEvento]');
+  const isPublicInvitation = router.pathname === '/invitacion/[idInvitacion]/[idInvitado]';
 
   return (
   <>
@@ -296,8 +299,8 @@ function MyApp({ Component, pageProps }) {
       },
     }}
   />
-  {usuario && !isManual && !isGovernanceLab && !isAdminEventWorkspaceRoute && <SideMenu />}
-  {usuario && !isManual && !isGovernanceLab && <UserMenuButton />}
+  {usuario && !isManual && !isGovernanceLab && !isAdminEventWorkspaceRoute && !isPublicInvitation && <SideMenu />}
+  {usuario && !isManual && !isGovernanceLab && !isPublicInvitation && <UserMenuButton />}
   <Component {...pageProps} />
   </>
   );

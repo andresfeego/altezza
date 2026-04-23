@@ -32,6 +32,7 @@ function normalizeInvitacionList(response) {
 
   return response.map((item) => ({
     ...item,
+    enviada: Boolean(Number(item?.enviada || 0)),
     listaInvitados: Array.isArray(item?.listaInvitados) ? item.listaInvitados : [],
   }));
 }
@@ -41,7 +42,7 @@ function memberMatchesAttendanceFilter(member, filterId) {
 
   switch (filterId) {
     case 'sinConfirmar':
-      return confirmed === 0;
+      return confirmed <= 0;
     case 'quiza':
       return confirmed === 2;
     case 'asistire':
@@ -284,6 +285,27 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
     }
   }
 
+  async function handleToggleInvitacionEnviada(invitacion, enviada) {
+    if (!invitacion?.id) return;
+
+    try {
+      setSaving(true);
+      await actualizarInvitacionEvento({
+        idEvento,
+        idInvitacion: invitacion.id,
+        label: String(invitacion?.label || '').trim(),
+        mensajePersonalizado: String(invitacion?.mensaje_personalizado || '').trim(),
+        enviada: Boolean(enviada),
+      });
+      showSuccess(enviada ? 'Invitacion marcada como enviada.' : 'Invitacion marcada como no enviada.');
+      await reloadModule();
+    } catch (error) {
+      showError(error?.data?.message || 'No fue posible actualizar el estado de envio.');
+    } finally {
+      setSaving(false);
+    }
+  }
+
   async function handleImportInvitaciones(invitacionesImportadas) {
     if (!Array.isArray(invitacionesImportadas) || !invitacionesImportadas.length) return;
 
@@ -405,6 +427,7 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
                 setOpenMenuId(null);
                 handleDeleteInvitacion(invitacion);
               }}
+              onToggleSent={(enviada) => handleToggleInvitacionEnviada(invitacion, enviada)}
               busy={saving}
             />
           ))}

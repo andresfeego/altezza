@@ -3,6 +3,7 @@ import {
   FiClock,
   FiCopy,
   FiEdit3,
+  FiExternalLink,
   FiHelpCircle,
   FiStar,
   FiTrash2,
@@ -61,8 +62,21 @@ function getEstadoAsistenciaMeta(value) {
   }
 }
 
+function resolveInvitationOrigin() {
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return window.location.origin.replace(/\/$/, '');
+  }
+
+  const configuredOrigin = String(process.env.NEXT_PUBLIC_SITE_ORIGIN || '').trim();
+  return configuredOrigin.replace(/\/$/, '');
+}
+
 function buildInvitacionLink(idInvitacion, idInvitado) {
-  return `https://www.altezzaeventos.in/invitacion/${idInvitacion}/${idInvitado}`;
+  const origin = resolveInvitationOrigin();
+  const path = `/invitacion/${idInvitacion}/${idInvitado}`;
+
+  if (!origin) return path;
+  return `${origin}${path}`;
 }
 
 function buildWhatsappUrl(invitacion, invitado) {
@@ -108,6 +122,35 @@ function buildInvitacionShareMessage(invitacion, invitado) {
   return `${saludo}${intro}${schedule}${labelText}${customText}\n\nConfirma tu asistencia aqui:\n${inviteUrl}`;
 }
 
+async function copyTextWithFallback(value) {
+  const text = String(value || '');
+
+  if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  if (typeof document === 'undefined') {
+    throw new Error('Clipboard unavailable');
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  textarea.style.pointerEvents = 'none';
+  document.body.appendChild(textarea);
+  textarea.select();
+
+  const copied = document.execCommand('copy');
+  document.body.removeChild(textarea);
+
+  if (!copied) {
+    throw new Error('Copy command failed');
+  }
+}
+
 export default function InvitacionCard({
   invitacion,
   index,
@@ -117,12 +160,14 @@ export default function InvitacionCard({
   onEdit,
   onDelete,
   onManageMembers,
+  onToggleSent,
   busy = false,
 }) {
   const integrantes = Array.isArray(invitacion?.listaInvitados) ? invitacion.listaInvitados : [];
   const principal = getPrincipal(invitacion);
   const message = String(invitacion?.mensaje_personalizado || '').trim();
   const invitadoShare = principal || integrantes[0] || null;
+  const enviada = Boolean(Number(invitacion?.enviada || 0));
 
   async function handleCopyInvitation() {
     if (!invitadoShare?.id || !invitacion?.id) {
@@ -131,12 +176,28 @@ export default function InvitacionCard({
     }
 
     try {
-      await navigator.clipboard.writeText(buildInvitacionShareMessage(invitacion, invitadoShare));
+      await copyTextWithFallback(buildInvitacionShareMessage(invitacion, invitadoShare));
       showSuccess('Invitacion copiada al portapapeles.');
       onCloseMenu?.();
     } catch (error) {
       showError('No fue posible copiar la invitacion.');
     }
+  }
+
+  function handleViewInvitation() {
+    if (!invitadoShare?.id || !invitacion?.id) {
+      showError('No hay un invitado disponible para abrir esta invitacion.');
+      return;
+    }
+
+    const inviteUrl = buildInvitacionLink(invitacion.id, invitadoShare.id);
+    const popup = window.open(inviteUrl, '_blank');
+    if (!popup) {
+      showError('El navegador bloqueo la nueva pestaña. Habilita popups para este sitio.');
+      return;
+    }
+    popup.opener = null;
+    onCloseMenu?.();
   }
 
   return (
@@ -174,6 +235,13 @@ export default function InvitacionCard({
               disabled: busy || !invitadoShare?.id,
             },
             {
+              id: 'view',
+              label: 'Ver invitacion',
+              icon: <FiExternalLink />,
+              onClick: handleViewInvitation,
+              disabled: busy || !invitadoShare?.id,
+            },
+            {
               id: 'delete',
               label: 'Eliminar',
               icon: <FiTrash2 />,
@@ -183,6 +251,23 @@ export default function InvitacionCard({
           ]}
           triggerLabel="Abrir acciones de la invitacion"
         />
+      </div>
+
+      <div className={styles.invitationSentBlock}>
+        <div className={styles.invitationSentRow}>
+          <span className={styles.statLabel}>Enviada</span>
+          <span className={styles.switchControl}>
+            <input
+              type="checkbox"
+              checked={enviada}
+              onChange={(event) => onToggleSent?.(event.target.checked)}
+              disabled={busy}
+            />
+            <span className={styles.switchTrack} aria-hidden="true">
+              <span className={styles.switchThumb} />
+            </span>
+          </span>
+        </div>
       </div>
 
       <div className={styles.invitationStats}>

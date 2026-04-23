@@ -215,6 +215,19 @@
   gap: var(--ag-space-1);
 }
 
+.invitationSentBlock {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.invitationSentRow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ag-space-2);
+}
+
 .invitationIdentity strong {
   color: var(--ag-text-strong);
   font-size: var(--ag-heading-h4-size);
@@ -241,7 +254,7 @@
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
   gap: 4px;
-  height: 48px;
+  min-height: 48px;
   overflow: hidden;
   padding: var(--ag-space-2);
   border-radius: var(--ag-radius-lg);
@@ -264,6 +277,60 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.switchControl {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switchControl input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.switchTrack {
+  display: inline-flex;
+  align-items: center;
+  width: 56px;
+  height: 32px;
+  padding: 0 4px;
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-pill);
+  background: var(--ag-surface-card);
+  transition:
+    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    border-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.switchThumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--ag-text-muted);
+  box-shadow: var(--ag-shadow-soft);
+  transition:
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.switchControl input:checked + .switchTrack {
+  background: color-mix(in srgb, var(--ag-success-soft) 72%, var(--ag-surface-card) 28%);
+  border-color: color-mix(in srgb, var(--ag-success) 28%, var(--ag-border-soft) 72%);
+}
+
+.switchControl input:checked + .switchTrack .switchThumb {
+  transform: translateX(24px);
+  background: var(--ag-success);
+}
+
+.switchControl input:focus-visible + .switchTrack {
+  outline: 2px solid color-mix(in srgb, var(--ag-brand-wine) 32%, transparent);
+  outline-offset: 2px;
 }
 
 .invitationTextGroup,

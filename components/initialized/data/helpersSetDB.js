@@ -123,10 +123,11 @@ export const crearInvitacionEvento = async ({ idEvento, label, mensajePersonaliz
   });
 };
 
-export const actualizarInvitacionEvento = async ({ idEvento, idInvitacion, label, mensajePersonalizado }) => {
+export const actualizarInvitacionEvento = async ({ idEvento, idInvitacion, label, mensajePersonalizado, enviada }) => {
   return await setDB(`/eventos/${idEvento}/invitaciones/${idInvitacion}`, {
     label,
     mensajePersonalizado,
+    enviada,
   }, {
     method: 'PUT',
   });
