@@ -29,53 +29,163 @@ export default function MusicPlayerView({ data, styles }) {
     if (!audio) return undefined;
 
     const initialMuted = Boolean(data?.initiallyMuted);
+    const syncMutedState = () => setIsMuted(Boolean(audio.muted));
 
     audio.loop = true;
     audio.muted = initialMuted;
+    syncMutedState();
 
     async function startPlayback() {
       try {
         audio.muted = initialMuted;
         await audio.play();
+        syncMutedState();
       } catch (_error) {
-        try {
-          // Fallback for browsers that only allow autoplay while muted.
+        audio.pause();
+        syncMutedState();
+      }
+    }
+
+    if (Boolean(data?.autoplay)) {
+      startPlayback();
+    }
+
+    async function startOnFirstInteraction() {
+      if (!initialMuted && audio.muted) {
+        audio.muted = false;
+      }
+
+      if (!audio.paused) {
+        syncMutedState();
+        return;
+      }
+
+      try {
+        if (!initialMuted) {
+          audio.muted = false;
+        } else {
           audio.muted = true;
-          setIsMuted(true);
+        }
+        await audio.play();
+        syncMutedState();
+      } catch (_error) {
+        // Browser policy can still block playback until a stronger gesture.
+        syncMutedState();
+      }
+    }
+
+    async function playUnmute() {
+      // eslint-disable-next-line no-console
+      console.debug('[music] playUnmute called');
+      audio.muted = false;
+      setIsMuted(false);
+      try {
+        await audio.play();
+        // eslint-disable-next-line no-console
+        console.debug('[music] playUnmute -> audio.play resolved');
+        interactionEvents.forEach((eventName) => {
+          window.removeEventListener(eventName, startOnFirstInteraction);
+        });
+      } catch (_error) {
+        // eslint-disable-next-line no-console
+        console.debug('[music] playUnmute -> audio.play blocked', _error);
+        // Browser may still require a stronger user interaction.
+      }
+    }
+
+    function mute() {
+      audio.muted = true;
+      setIsMuted(true);
+    }
+
+    function unmute() {
+      audio.muted = false;
+      setIsMuted(false);
+    }
+
+    async function toggleMute() {
+      // eslint-disable-next-line no-console
+      console.debug('[music] toggleMute called');
+      const nextMuted = !audio.muted;
+      audio.muted = nextMuted;
+      setIsMuted(nextMuted);
+      // eslint-disable-next-line no-console
+      console.debug('[music] toggleMute -> muted:', nextMuted);
+      if (audio.paused) {
+        try {
           await audio.play();
-        } catch (_innerError) {
-          audio.pause();
+          // eslint-disable-next-line no-console
+          console.debug('[music] toggleMute -> resumed playback');
+        } catch (_error) {
+          // eslint-disable-next-line no-console
+          console.debug('[music] toggleMute -> resume blocked', _error);
+          // noop
         }
       }
     }
 
-    startPlayback();
+    function handleEnvelopOpen() {
+      playUnmute();
+    }
 
-    return undefined;
-  }, [data?.audioSrc, data?.initiallyMuted]);
+    audio.addEventListener('volumechange', syncMutedState);
+    audio.addEventListener('play', syncMutedState);
+    audio.addEventListener('pause', syncMutedState);
+    window.addEventListener('envelopIntro:open', handleEnvelopOpen);
+    window.__invMusicControls = {
+      playUnmute,
+      mute,
+      unmute,
+      toggleMute,
+    };
+
+    const interactionEvents = ['pointerdown', 'touchstart', 'keydown'];
+    interactionEvents.forEach((eventName) => {
+      window.addEventListener(eventName, startOnFirstInteraction, { once: true, passive: true });
+    });
+
+    return () => {
+      audio.removeEventListener('volumechange', syncMutedState);
+      audio.removeEventListener('play', syncMutedState);
+      audio.removeEventListener('pause', syncMutedState);
+      window.removeEventListener('envelopIntro:open', handleEnvelopOpen);
+      if (window.__invMusicControls?.playUnmute === playUnmute) {
+        delete window.__invMusicControls;
+      }
+      interactionEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, startOnFirstInteraction);
+      });
+    };
+  }, [data?.audioSrc, data?.autoplay, data?.initiallyMuted]);
 
   async function handleMuteToggle() {
+    // eslint-disable-next-line no-console
+    console.debug('[music] mute button clicked');
+    if (typeof window !== 'undefined' && typeof window.__invMusicControls?.toggleMute === 'function') {
+      try {
+        // eslint-disable-next-line no-console
+        console.debug('[music] using window.__invMusicControls.toggleMute');
+        await window.__invMusicControls.toggleMute();
+        return;
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.debug('[music] global toggleMute failed, fallback to local', error);
+      }
+    }
     const audio = audioRef.current;
     if (!audio) return;
-
+    // eslint-disable-next-line no-console
+    console.debug('[music] using local fallback toggle');
     const nextMuted = !audio.muted;
     audio.muted = nextMuted;
     setIsMuted(nextMuted);
-
-    if (audio.paused) {
-      try {
-        await audio.play();
-      } catch (_error) {
-        // Keep the control responsive even if the browser still blocks playback.
-      }
-    }
   }
 
   if (!data?.audioSrc) return null;
 
   return (
     <div className={styles.musicDock}>
-      <audio ref={audioRef} preload="metadata" loop src={data.audioSrc} />
+      <audio ref={audioRef} preload="metadata" loop autoPlay={Boolean(data?.autoplay)} playsInline src={data.audioSrc} />
       <button
         type="button"
         className={styles.musicToggleButton}

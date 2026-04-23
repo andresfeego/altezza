@@ -16,7 +16,7 @@ export default function buildInvitacionesSummary(invitaciones = [], invitados = 
     if (item?.id && idsAgrupados.has(String(item.id))) return false;
     return true;
   }).length;
-  const sinConfirmar = integrantesAgrupados.filter((item) => !item?.confirmado || Number(item?.confirmado) === 0).length;
+  const sinConfirmar = integrantesAgrupados.filter((item) => Number(item?.confirmado || 0) <= 0).length;
   const asistire = integrantesAgrupados.filter((item) => Number(item?.confirmado) === 1).length;
   const quiza = integrantesAgrupados.filter((item) => Number(item?.confirmado) === 2).length;
   const noAsistire = integrantesAgrupados.filter((item) => Number(item?.confirmado) === 3).length;

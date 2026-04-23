@@ -6,6 +6,7 @@ import ModalShell from '@/components/ui/layout/ModalShell';
 import styles from './invitaciones.module.scss';
 
 const TEMPLATE_HEADERS = [
+  'id_invitacion',
   'label',
   'mensaje_personalizado',
   'nombre_invitado',
@@ -15,59 +16,7 @@ const TEMPLATE_HEADERS = [
   'grupo_edad',
   'principal',
 ];
-
-function buildWorkbookTemplate(parentescos = [], gruposEdad = []) {
-  const cargaRows = [
-    TEMPLATE_HEADERS,
-    ['Familia Perez', 'Mesa familia novia', 'Ana Perez', '3001234567', 'SI', parentescos[0]?.parentesco || '', gruposEdad[0]?.grupo || '', 'SI'],
-    ['Familia Perez', 'Mesa familia novia', 'Carlos Perez', '3007654321', 'SI', parentescos[1]?.parentesco || parentescos[0]?.parentesco || '', gruposEdad[0]?.grupo || '', 'NO'],
-    ['Amigos oficina', '', 'Luisa Romero', '', 'NO', parentescos[2]?.parentesco || parentescos[0]?.parentesco || '', gruposEdad[0]?.grupo || '', 'SI'],
-  ];
-  const catalogosRows = [
-    ['parentescos_validos', 'grupos_edad_validos'],
-    ...Array.from({ length: Math.max(parentescos.length, gruposEdad.length) }, (_, index) => [
-      parentescos[index]?.parentesco || '',
-      gruposEdad[index]?.grupo || '',
-    ]),
-  ];
-
-  const instruccionesRows = [
-    ['campo', 'descripcion'],
-    ['label', 'Agrupa filas que pertenecen a la misma invitacion.'],
-    ['mensaje_personalizado', 'Texto interno opcional para identificar la invitacion.'],
-    ['nombre_invitado', 'Nombre completo del integrante.'],
-    ['telefono', 'Telefono del invitado. Puede quedar vacio.'],
-    ['whatsapp', 'Usa SI o NO.'],
-    ['parentesco', 'Usa uno de los valores de Catalogos.'],
-    ['grupo_edad', 'Usa uno de los valores de Catalogos.'],
-    ['principal', 'Usa SI para el integrante principal y NO para los demas.'],
-  ];
-
-  const workbook = XLSX.utils.book_new();
-  const cargaSheet = XLSX.utils.aoa_to_sheet(cargaRows);
-  const catalogosSheet = XLSX.utils.aoa_to_sheet(catalogosRows);
-  const instruccionesSheet = XLSX.utils.aoa_to_sheet(instruccionesRows);
-
-  cargaSheet['!cols'] = [
-    { wch: 28 },
-    { wch: 32 },
-    { wch: 28 },
-    { wch: 18 },
-    { wch: 14 },
-    { wch: 24 },
-    { wch: 18 },
-    { wch: 14 },
-  ];
-
-  catalogosSheet['!cols'] = [{ wch: 28 }, { wch: 20 }];
-  instruccionesSheet['!cols'] = [{ wch: 24 }, { wch: 64 }];
-
-  XLSX.utils.book_append_sheet(workbook, cargaSheet, 'Carga');
-  XLSX.utils.book_append_sheet(workbook, catalogosSheet, 'Catalogos');
-  XLSX.utils.book_append_sheet(workbook, instruccionesSheet, 'Instrucciones');
-
-  return workbook;
-}
+const INVITACIONES_TEMPLATE_URL = '/scrAppaltezza/templates/plantilla_invitaciones_altezza.xlsx';
 
 function parseCsv(text) {
   const normalizedText = String(text || '').replace(/^\uFEFF/, '');
@@ -161,7 +110,10 @@ function buildImportPreview(rows, parentescos = [], gruposEdad = []) {
   const [headerRow, ...dataRows] = rows;
   const headers = headerRow.map((item) => slugify(item));
   const requiredHeaders = TEMPLATE_HEADERS.map((item) => slugify(item));
-  const missingHeaders = requiredHeaders.filter((header) => !headers.includes(header));
+  const legacyHeaders = requiredHeaders.filter((item) => item !== 'id_invitacion');
+  const usesTemplateWithInvitationId = headers.includes('id_invitacion');
+  const activeRequiredHeaders = usesTemplateWithInvitationId ? requiredHeaders : legacyHeaders;
+  const missingHeaders = activeRequiredHeaders.filter((header) => !headers.includes(header));
 
   if (missingHeaders.length) {
     return {
@@ -181,12 +133,28 @@ function buildImportPreview(rows, parentescos = [], gruposEdad = []) {
     const rowData = Object.fromEntries(headers.map((header, headerIndex) => [header, String(row[headerIndex] || '').trim()]));
 
     if (!Object.values(rowData).some(Boolean)) return;
-    if (String(rowData.label || '').startsWith('#')) return;
+    if (
+      String(rowData.id_invitacion || '').startsWith('#')
+      || String(rowData.label || '').startsWith('#')
+      || String(rowData.nombre_invitado || '').startsWith('#')
+    ) return;
 
-    const label = rowData.label;
+    const invitationIdRaw = String(rowData.id_invitacion || '').trim();
+    const invitationId = invitationIdRaw ? Number(invitationIdRaw) : null;
+    const label = String(rowData.label || '').trim();
     const nombre = rowData.nombre_invitado;
 
-    if (!label) {
+    if (usesTemplateWithInvitationId) {
+      if (!invitationIdRaw) {
+        errors.push(`Fila ${rowNumber}: falta id_invitacion.`);
+        return;
+      }
+
+      if (!Number.isFinite(invitationId) || invitationId <= 0) {
+        errors.push(`Fila ${rowNumber}: id_invitacion invalido (${invitationIdRaw}).`);
+        return;
+      }
+    } else if (!label) {
       errors.push(`Fila ${rowNumber}: falta label.`);
       return;
     }
@@ -209,8 +177,14 @@ function buildImportPreview(rows, parentescos = [], gruposEdad = []) {
       return;
     }
 
-    const current = groups.get(label) || {
-      label,
+    const groupKey = usesTemplateWithInvitationId
+      ? `id:${invitationId}`
+      : `label:${label.toLowerCase()}`;
+
+    const current = groups.get(groupKey) || {
+      importGroupKey: groupKey,
+      importSourceId: usesTemplateWithInvitationId ? invitationId : null,
+      label: label || (usesTemplateWithInvitationId ? `Invitacion ${invitationId}` : ''),
       mensajePersonalizado: rowData.mensaje_personalizado || '',
       integrantes: [],
     };
@@ -228,16 +202,28 @@ function buildImportPreview(rows, parentescos = [], gruposEdad = []) {
       current.mensajePersonalizado = rowData.mensaje_personalizado;
     }
 
-    groups.set(label, current);
-  });
-
-  const invitations = Array.from(groups.values()).map((group) => {
-    if (!group.integrantes.some((item) => item.principal) && group.integrantes.length) {
-      group.integrantes[0].principal = true;
+    if (!current.label && label) {
+      current.label = label;
     }
 
-    return group;
+    groups.set(groupKey, current);
   });
+
+  const invitations = Array.from(groups.values())
+    .sort((a, b) => {
+      if (a.importSourceId !== null && b.importSourceId !== null) {
+        return a.importSourceId - b.importSourceId;
+      }
+
+      return String(a.label || '').localeCompare(String(b.label || ''), 'es', { sensitivity: 'base' });
+    })
+    .map((group) => {
+      if (!group.integrantes.some((item) => item.principal) && group.integrantes.length) {
+        group.integrantes[0].principal = true;
+      }
+
+      return group;
+    });
 
   return {
     errors,
@@ -245,6 +231,12 @@ function buildImportPreview(rows, parentescos = [], gruposEdad = []) {
     invitesCount: invitations.length,
     membersCount: invitations.reduce((acc, item) => acc + item.integrantes.length, 0),
   };
+}
+
+function getInvitationPreviewKey(item, index) {
+  if (item?.importGroupKey) return item.importGroupKey;
+  if (item?.label) return `${item.label}-${index}`;
+  return `inv-${index}`;
 }
 
 export default function InvitacionesImportModal({
@@ -297,22 +289,12 @@ export default function InvitacionesImportModal({
   }
 
   function handleDownloadTemplate() {
-    const workbook = buildWorkbookTemplate(parentescos, gruposEdad);
-    const arrayBuffer = XLSX.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
-    });
-    const blob = new Blob([arrayBuffer], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    });
-    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.href = url;
+    link.href = INVITACIONES_TEMPLATE_URL;
     link.download = 'plantilla_invitaciones_altezza.xlsx';
     document.body.appendChild(link);
     link.click();
     link.remove();
-    URL.revokeObjectURL(url);
   }
 
   return (
@@ -383,8 +365,8 @@ export default function InvitacionesImportModal({
           <section className={styles.importFeedbackBlock}>
             <span className={styles.detailLabel}>Preview de importacion</span>
             <div className={styles.importScrollableList}>
-              {preview.invitations.map((item) => (
-                <div key={item.label} className={styles.importPreviewRow}>
+              {preview.invitations.map((item, index) => (
+                <div key={getInvitationPreviewKey(item, index)} className={styles.importPreviewRow}>
                   <div>
                     <strong>{item.label}</strong>
                     <p className={styles.supportMuted}>
@@ -403,7 +385,7 @@ export default function InvitacionesImportModal({
         <div className={styles.importHintBlock}>
           <FiFileText aria-hidden="true" />
           <p className={styles.supportMuted}>
-            Completa la hoja Carga y consulta Catalogos para usar los valores exactos de parentesco y grupo de edad.
+            Completa la hoja Carga (incluyendo id_invitacion) y consulta Catalogos para usar los valores exactos.
           </p>
         </div>
       </div>

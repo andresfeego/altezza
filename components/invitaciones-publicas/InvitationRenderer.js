@@ -1,4 +1,7 @@
 import HeroImage1Module from './modules/HeroImage1Module';
+import HeroImage2Module from './modules/HeroImage2Module';
+import EnvelopIntroModule from './modules/EnvelopIntroModule';
+import SaveTheDateCalendarModule from './modules/SaveTheDateCalendarModule';
 import SimpleImageModule from './modules/SimpleImageModule';
 import BiblicalQuoteModule from './modules/BiblicalQuoteModule';
 import CountdownImageModule from './modules/CountdownImageModule';
@@ -8,6 +11,7 @@ import GiftEnvelopesModule from './modules/GiftEnvelopesModule';
 import ClosingMessageModule from './modules/ClosingMessageModule';
 import WelcomeMessageModule from './modules/WelcomeMessageModule';
 import PhotoSliderModule from './modules/PhotoSliderModule';
+import ImageSliderSepiaModule from './modules/ImageSliderSepiaModule';
 import MusicPlayerModule from './modules/MusicPlayerModule';
 import CountdownModule from './modules/CountdownModule';
 import CoupleFamilyModule from './modules/CoupleFamilyModule';
@@ -18,8 +22,14 @@ import WeddingTerracotaTemplate from './templates/wedding-terracota';
 
 function resolveModuleData(module, payload) {
   switch (module.type) {
+    case 'envelop_intro':
+      return EnvelopIntroModule({ module, ...payload });
     case 'hero_image_1':
       return HeroImage1Module({ module, ...payload });
+    case 'hero_image_2':
+      return HeroImage2Module({ module, ...payload });
+    case 'save_the_date_calendar':
+      return SaveTheDateCalendarModule({ module, ...payload });
     case 'simple_image':
       return SimpleImageModule({ module, ...payload });
     case 'biblical_quote':
@@ -38,6 +48,8 @@ function resolveModuleData(module, payload) {
       return WelcomeMessageModule({ module, ...payload });
     case 'photo_slider':
       return PhotoSliderModule({ module, ...payload });
+    case 'image_slider_sepia':
+      return ImageSliderSepiaModule({ module, ...payload });
     case 'music_player':
       return MusicPlayerModule({ module, ...payload });
     case 'countdown':

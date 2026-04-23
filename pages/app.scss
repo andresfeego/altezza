@@ -131,4 +131,21 @@
     transition: all 0.5s ease 0s;
   
   }
+
+.fx-filtered {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.fx-filtered > img,
+.fx-filtered > video,
+.fx-filtered > picture > img,
+.fx-filtered > .fx-filtered-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
  

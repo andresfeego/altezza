@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "canvas-confetti": "^1.9.4",
     "cookie": "^1.0.2",
+    "cssgram": "^0.1.3",
     "http-proxy-middleware": "^2.0.6",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
@@ -47,6 +48,7 @@
   },
   "scripts": {
     "dev": "next dev -p 3002",
+    "dev:local": "bash scripts/dev-local.sh",
     "build": "next build",
     "start": "next start"
   },

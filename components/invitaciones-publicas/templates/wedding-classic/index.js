@@ -1,4 +1,5 @@
 import HeroImage1View from '../../module-views/HeroImage1View';
+import EnvelopIntroView from '../../module-views/EnvelopIntroView';
 import SimpleImageView from '../../module-views/SimpleImageView';
 import BiblicalQuoteView from '../../module-views/BiblicalQuoteView';
 import CountdownImageView from '../../module-views/CountdownImageView';
@@ -9,6 +10,7 @@ import ClosingMessageView from '../../module-views/ClosingMessageView';
 import WelcomeMessageView from '../../module-views/WelcomeMessageView';
 import MusicPlayerView from '../../module-views/MusicPlayerView';
 import PhotoSliderView from '../../module-views/PhotoSliderView';
+import ImageSliderSepiaView from '../../module-views/ImageSliderSepiaView';
 import CountdownView from '../../module-views/CountdownView';
 import CoupleFamilyView from '../../module-views/CoupleFamilyView';
 import EventDetailsView from '../../module-views/EventDetailsView';
@@ -18,6 +20,7 @@ import styles from './index.module.scss';
 const TEMPLATE_DEBUG = false;
 
 const MODULE_COMPONENTS = {
+  envelop_intro: EnvelopIntroView,
   hero_image_1: HeroImage1View,
   simple_image: SimpleImageView,
   biblical_quote: BiblicalQuoteView,
@@ -29,6 +32,7 @@ const MODULE_COMPONENTS = {
   welcome_message: WelcomeMessageView,
   music_player: MusicPlayerView,
   photo_slider: PhotoSliderView,
+  image_slider_sepia: ImageSliderSepiaView,
   countdown: CountdownView,
   couple_family: CoupleFamilyView,
   event_details: EventDetailsView,

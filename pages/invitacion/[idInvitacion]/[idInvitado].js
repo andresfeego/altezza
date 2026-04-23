@@ -1,8 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
 import InvitationRenderer from '@/components/invitaciones-publicas/InvitationRenderer';
 import { confirmarInvitacionPublica } from '@/components/initialized/data/helpersPublicInvitacion';
+import terracotaToastStyles from '@/components/invitaciones-publicas/templates/wedding-terracota/toast.module.scss';
+import classicToastStyles from '@/components/invitaciones-publicas/templates/wedding-classic/toast.module.scss';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 const ATTENDANCE_OPTIONS = [
   { value: 1, label: 'Asistire' },
@@ -19,29 +22,21 @@ function normalizeGuests(listaInvitados = []) {
     : [];
 }
 
-function renderAttendanceToast(title, message) {
+function getToastStylesByTemplate(templateKey) {
+  if (String(templateKey || '').trim() === 'wedding_terracota') {
+    return terracotaToastStyles;
+  }
+
+  return classicToastStyles;
+}
+
+function renderAttendanceToast(title, message, templateKey) {
+  const toastStyles = getToastStylesByTemplate(templateKey);
+
   return toast.custom((toastInstance) => (
-    <div
-      style={{
-        display: 'grid',
-        gap: '6px',
-        minWidth: '280px',
-        maxWidth: '340px',
-        padding: '16px 18px',
-        borderRadius: '0',
-        background: '#fff',
-        border: '1px solid rgba(237, 203, 142, 0.42)',
-        boxShadow: '0 14px 32px rgba(154, 129, 86, 0.16)',
-        color: '#EDCB8E',
-        textAlign: 'center',
-      }}
-    >
-      <strong style={{ fontSize: '0.78rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
-        {title}
-      </strong>
-      <span style={{ fontSize: '0.96rem', lineHeight: 1.6, color: 'rgba(237, 203, 142, 0.88)' }}>
-        {message}
-      </span>
+    <div className={toastStyles.toastCard}>
+      <strong className={toastStyles.toastTitle}>{title}</strong>
+      <span className={toastStyles.toastMessage}>{message}</span>
     </div>
   ), {
     id: `attendance-${Date.now()}`,
@@ -59,6 +54,8 @@ export default function InvitationPublicRoute({
 }) {
   const [guests, setGuests] = useState(() => normalizeGuests(listaInvitados));
   const [savingGuestIds, setSavingGuestIds] = useState([]);
+  const [cardReady, setCardReady] = useState(false);
+  const invitationRootRef = useRef(null);
 
   const seo = evento?.seo || {};
   const absoluteImage = seo?.image || evento?.imagenPrincipal || '';
@@ -117,10 +114,14 @@ export default function InvitationPublicRoute({
         }],
       });
 
-      renderAttendanceToast('Actualizado', resolveAttendanceMessage(confirmado));
+      renderAttendanceToast('Actualizado', resolveAttendanceMessage(confirmado), evento?.templateKey);
     } catch (error) {
       setGuests(previousGuests);
-      renderAttendanceToast('No actualizado', error?.data?.message || error?.message || 'No fue posible guardar la confirmacion.');
+      renderAttendanceToast(
+        'No actualizado',
+        error?.data?.message || error?.message || 'No fue posible guardar la confirmacion.',
+        evento?.templateKey
+      );
     } finally {
       setSavingGuestIds((current) => current.filter((item) => item !== Number(idInvitado)));
     }
@@ -132,6 +133,64 @@ export default function InvitationPublicRoute({
     isSavingGuest: (idInvitado) => savingGuestIds.includes(Number(idInvitado)),
     onChange: handleChangeGuest,
   }), [guests, savingGuestIds]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    function waitForImage(img) {
+      if (!img) return Promise.resolve();
+      if (img.complete && img.naturalWidth > 0) {
+        if (typeof img.decode === 'function') {
+          return img.decode().catch(() => undefined);
+        }
+        return Promise.resolve();
+      }
+
+      return new Promise((resolve) => {
+        const done = () => {
+          img.removeEventListener('load', done);
+          img.removeEventListener('error', done);
+          resolve();
+        };
+        img.addEventListener('load', done, { once: true });
+        img.addEventListener('error', done, { once: true });
+      });
+    }
+
+    async function markReadyWhenImagesLoaded() {
+      try {
+        if (typeof document !== 'undefined' && document.fonts?.ready) {
+          await document.fonts.ready;
+        }
+      } catch (_error) {
+        // noop
+      }
+
+      requestAnimationFrame(async () => {
+        const root = invitationRootRef.current;
+        const images = root ? Array.from(root.querySelectorAll('img')) : [];
+
+        if (images.length > 0) {
+          const timeoutPromise = new Promise((resolve) => {
+            setTimeout(resolve, 12000);
+          });
+
+          await Promise.race([
+            Promise.all(images.map((img) => waitForImage(img))),
+            timeoutPromise,
+          ]);
+        }
+
+        if (!cancelled) setCardReady(true);
+      });
+    }
+
+    markReadyWhenImagesLoaded();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [modules, evento?.id, invitacion?.id]);
 
   return (
     <>
@@ -148,14 +207,27 @@ export default function InvitationPublicRoute({
         {absoluteImage ? <meta name="twitter:image" content={absoluteImage} /> : null}
       </Head>
 
-      <InvitationRenderer
-        evento={evento}
-        invitacion={invitacion}
-        invitadoActual={invitadoActual}
-        listaInvitados={guests}
-        modules={modules}
-        attendanceState={attendanceState}
-      />
+      <div ref={invitationRootRef}>
+        <InvitationRenderer
+          evento={evento}
+          invitacion={invitacion}
+          invitadoActual={invitadoActual}
+          listaInvitados={guests}
+          modules={modules}
+          attendanceState={attendanceState}
+        />
+      </div>
+      {!cardReady ? (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 2147483647,
+          }}
+        >
+          <LoadingScreen mensaje="Cargando invitacion..." />
+        </div>
+      ) : null}
     </>
   );
 }

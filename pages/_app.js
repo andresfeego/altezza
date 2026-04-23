@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useUsuarioStore from '@/components/initialized/stored/useUsuarioStore';
 import useEventoStore from '@/components/initialized/stored/useEventoStore';
+import 'cssgram/source/css/cssgram.min.css';
 import './app.scss';
 import '@/components/ui/governance/tokens.scss';
 import LoadingScreen from '@/components/ui/LoadingScreen';

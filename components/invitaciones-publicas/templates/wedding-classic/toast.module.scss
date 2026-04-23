@@ -1,0 +1,26 @@
+.toastCard {
+  display: grid;
+  gap: 6px;
+  min-width: 280px;
+  max-width: 340px;
+  padding: 16px 18px;
+  border-radius: 0;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid rgba(237, 203, 142, 0.42);
+  box-shadow: 0 14px 32px rgba(154, 129, 86, 0.16);
+  color: #edcb8e;
+}
+
+.toastTitle {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #edcb8e;
+}
+
+.toastMessage {
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: rgba(237, 203, 142, 0.88);
+}

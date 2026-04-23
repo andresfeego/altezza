@@ -6,7 +6,7 @@ const TERRACOTA_HERO_BACKGROUND = (
     : terracotaHeroBackgroundAsset?.src || ''
 );
 
-export default function HeroImage1Module({ module, evento, invitacion }) {
+export default function HeroImage2Module({ module, evento, invitacion }) {
   const isTerracotaTemplate = String(evento?.templateKey || '').trim() === 'wedding_terracota';
   const backgroundImage = String(
     (isTerracotaTemplate ? TERRACOTA_HERO_BACKGROUND : '') ||
@@ -16,21 +16,21 @@ export default function HeroImage1Module({ module, evento, invitacion }) {
       invitacion?.imagenPrincipal ||
       ''
   ).trim();
-  const logoImage = String(module?.config?.logoImage || '').trim();
 
   if (!backgroundImage) {
     return null;
   }
 
-  const eventDate = invitacion?.fechaHoraCeremonia
-    ? new Date(invitacion.fechaHoraCeremonia).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })
-    : '';
-
   return {
     backgroundImage,
-    logoImage,
-    text1: String(module?.config?.text1 || '').trim(),
-    text2: eventDate,
-    text3: String(evento?.nombre || invitacion?.nombreEvento || '').trim(),
+    logoImage: String(module?.config?.logoImage || '').trim(),
+    imageSrc: String(module?.config?.imageSrc || '').trim(),
+    imageAlt: String(module?.config?.imageAlt || 'Imagen principal de la invitacion').trim(),
+    coupleNames: String(
+      module?.config?.coupleNames ||
+      evento?.nombre ||
+      invitacion?.nombreEvento ||
+      ''
+    ).trim(),
   };
 }
