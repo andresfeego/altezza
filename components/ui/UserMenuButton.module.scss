@@ -1,67 +1,101 @@
 @import '../initialized/variables.scss';
 
-.container {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  z-index: 1700;
+.header {
+  width: 100%;
+  background: $white0;
+  border-bottom: 1px solid rgba($secondary, 0.08);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.04);
 }
 
-.fab {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, $primary 0%, $primaryDark 100%);
-  color: $white0;
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 64px;
+  padding: 0 32px 0 94px;
+}
+
+.leftSlot {
   display: flex;
   align-items: center;
-  justify-content: center;
-  border: none;
-  padding: 0;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 0;
 }
 
-.fab:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
-}
-
-.menu {
-  min-width: 280px;
-  background: $white0;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
-  overflow: hidden;
-  border: 1px solid $primaryTransparent;
-}
-
-.userInfo {
-  padding: 12px 14px 4px 14px;
+.backLink {
+  align-items: center;
   color: $secondary;
+  display: inline-flex;
+  gap: 8px;
+  min-height: 32px;
+  text-decoration: none;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.identity {
+  display: grid;
+  justify-items: end;
+  text-align: right;
+  gap: 2px;
 }
 
 .name {
+  color: $secondary;
+  font-size: 0.92rem;
   font-weight: 600;
-  font-size: 0.98rem;
   line-height: 1.2;
 }
 
 .role {
-  font-size: 0.65rem;
-  color: $secondaryDark;
-  margin-top: 2px;
+  color: rgba($secondaryDark, 0.82);
+  font-size: 0.64rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.divider {
-  margin: 8px 0;
-  border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+.menuAnchor {
+  position: relative;
+}
+
+.iconButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba($secondary, 0.12);
+  background: linear-gradient(135deg, rgba($primary, 0.18) 0%, rgba($primaryDark, 0.28) 100%);
+  color: $secondary;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.iconButton:hover {
+  transform: translateY(-1px);
+  border-color: rgba($secondary, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background: $white0;
+  border: 1px solid rgba($secondary, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  z-index: 1800;
 }
 
 .menuButton {
@@ -69,26 +103,57 @@
   background: transparent;
   border: none;
   color: $secondary;
-  padding: 12px 16px;
+  padding: 16px;
   text-align: left;
   font-size: 0.95rem;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+}
+
+.menuButton:hover {
+  background: rgba($primary, 0.1);
+  color: $secondaryDark;
 }
 
 .menuButtonIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
-  color: $secondaryDark;
+  color: rgba($secondaryDark, 0.82);
 }
 
-.menuButton:hover {
-  background: rgba($primary, 0.12);
-  color: $secondaryDark;
+@media (max-width: 1024px) {
+  .inner {
+    padding-left: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .inner {
+    min-height: 56px;
+    padding: 0 var(--ag-space-2);
+  }
+
+  .backLink {
+    font-size: 0.88rem;
+  }
+
+  .account {
+    gap: 10px;
+  }
+
+  .name {
+    font-size: 0.84rem;
+  }
+
+  .role {
+    font-size: 0.6rem;
+  }
+
+  .menu {
+    min-width: 200px;
+  }
 }

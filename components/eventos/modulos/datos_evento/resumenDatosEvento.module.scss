@@ -1,22 +1,54 @@
-// components/eventos/modulos/datos_evento/resumenDatosEvento.module.scss
-
-.contenedorResumen {
-  flex: 1 1 320px; 
-  background: #fff;
-  padding: 1.5rem;
-  max-width: fit-content;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
+.linkResumen {
+  color: inherit;
+  display: block;
+  text-decoration: none;
 }
 
-.contenedorResumen:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+.contenedorResumen {
+  background: var(--ag-surface-card);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  box-shadow: var(--ag-shadow-soft);
+  display: grid;
+  gap: var(--ag-space-2);
+  min-height: 220px;
+  padding: var(--ag-space-3);
+  transition:
+    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    box-shadow var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    border-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
+}
+
+.contenedorResumen:hover,
+.linkResumen:focus-visible .contenedorResumen {
+  border-color: var(--ag-border-strong);
+  box-shadow: var(--ag-shadow-card);
+  transform: translateY(-1px);
+}
+
+.contenedorResumen section {
+  display: grid;
+  gap: var(--ag-space-2);
 }
 
 .contenedorResumen h3 {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h3-size);
+  font-weight: var(--ag-heading-h3-weight);
+  line-height: var(--ag-heading-h3-line);
+  margin: 0;
+}
+
+.contenedorResumen p {
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-body-size);
+  font-weight: var(--ag-text-body-weight);
+  line-height: var(--ag-text-body-line);
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contenedorResumen {
+    transition: none;
+  }
 }

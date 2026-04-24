@@ -1,0 +1,10 @@
+.shell {
+  display: grid;
+  gap: var(--ag-space-3);
+}
+
+@media (min-width: 1025px) {
+  .shell {
+    gap: var(--ag-space-4);
+  }
+}

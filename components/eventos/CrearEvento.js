@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import Button from '@/components/ui/actions/Button';
 import styles from './CrearEvento.module.scss';
+import { showError, showSuccess } from '@/components/initialized/Toast';
 
 import { getTiposEvento, getLugares } from '@/components/initialized/data/helpersGetDB';
 import { crearEventoBasico } from '@/components/initialized/data/helpersSetDB';
@@ -40,7 +41,7 @@ export default function CrearEvento({ cerrar }) {
     e.preventDefault();
 
     if (!idPersonalizado || !nombre || !tipoEvento || !lugarRecepcion || !fechaRecepcion) {
-      toast.error('Por favor completa todos los campos obligatorios');
+      showError('Por favor completa todos los campos obligatorios');
       return;
     }
 
@@ -56,17 +57,15 @@ export default function CrearEvento({ cerrar }) {
     });
 
     if (res?.success) {
-      toast.success(`Evento creado con ID: ${idEvento}`);
+      showSuccess(`Evento creado con ID: ${idEvento}`);
       cerrar();
     } else {
-      toast.error('Ocurrió un error al crear el evento');
+      showError('Ocurrio un error al crear el evento');
     }
   };
 
   return (
     <form className={styles.formCrear} onSubmit={handleCrear}>
-      <h3>Nuevo evento</h3>
-
       <label>ID del evento</label>
       <div className={styles.idPreview}>
         <span className={styles.prefijoPreview}>
@@ -114,9 +113,9 @@ export default function CrearEvento({ cerrar }) {
         required
       />
 
-      <div className={styles.botones}>
-        <button type="button" onClick={cerrar}>Cancelar</button>
-        <button type="submit">Crear evento</button>
+      <div className={styles.actions}>
+        <Button variant="secondary" onClick={cerrar}>Cancelar</Button>
+        <Button type="submit">Crear evento</Button>
       </div>
     </form>
   );

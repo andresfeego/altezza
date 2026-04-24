@@ -1,0 +1,140 @@
+.menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 62px;
+  z-index: 1400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.primary {
+  left: 0;
+}
+
+.context {
+  left: 62px;
+}
+
+.shell {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.primary .path {
+  fill: var(--ag-nav-primary-bg);
+}
+
+.context .path {
+  fill: var(--ag-nav-context-bg);
+}
+
+.items {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+.item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--ag-nav-item-border);
+  background: transparent;
+  color: var(--ag-nav-item-text);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  transform: translateX(0);
+}
+
+.item:hover {
+  background: var(--ag-nav-item-hover);
+}
+
+.active {
+  background: var(--ag-nav-primary-active);
+  border-color: var(--ag-border-soft);
+  transform: translateX(20px);
+}
+
+.primary .active {
+  color: var(--ag-nav-primary-active-text);
+}
+
+.context .active {
+  color: var(--ag-nav-context-active-text);
+}
+
+.adminItem {
+  border-color: var(--ag-nav-item-border);
+}
+
+.context .adminItem {
+  color: var(--ag-nav-item-text);
+}
+
+.context .adminItem.active {
+  border-color: var(--ag-border-soft);
+  color: var(--ag-nav-context-active-text);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.item::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 105%;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--ag-nav-tooltip-bg);
+  color: var(--ag-surface-card);
+  font-size: 0.85rem;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.item:hover::after {
+  opacity: 1;
+  transform: translate(6px, -50%);
+}
+
+@media (max-width: 768px) {
+  .menu,
+  .context {
+    width: 56px;
+  }
+
+  .context {
+    left: 56px;
+  }
+
+  .active {
+    transform: translateX(14px);
+  }
+}

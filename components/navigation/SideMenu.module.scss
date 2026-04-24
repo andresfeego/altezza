@@ -1,5 +1,3 @@
-@import '../initialized/variables.scss';
-
 .menu {
   position: fixed;
   top: 0;
@@ -23,7 +21,7 @@
 }
 
 .path {
-  fill: $secondary;
+  fill: var(--ag-nav-primary-bg);
 }
 
 .items {
@@ -44,9 +42,9 @@
   height: 32px;
   border-radius: 50%;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--ag-nav-item-border);
   background: transparent;
-  color: $white0;
+  color: var(--ag-nav-item-text);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -57,13 +55,13 @@
 }
 
 .item:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--ag-nav-item-hover);
 }
 
 .active {
-  background: $white0;
-  color: $secondary;
-  border-color: $gray8;
+  background: var(--ag-nav-primary-active);
+  color: var(--ag-nav-primary-active-text);
+  border-color: var(--ag-border-soft);
   transform: translateX(20px);
 }
 
@@ -80,8 +78,8 @@
   left: 105%;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.8);
-  color: $white0;
+  background: var(--ag-nav-tooltip-bg);
+  color: var(--ag-surface-card);
   padding: 6px 10px;
   border-radius: 10px;
   font-size: 0.85rem;
@@ -113,17 +111,17 @@
 
   .mobileToggle {
     position: fixed;
-    top: 16px;
-  left: 16px;
-  width: 48px;
-  height: 48px;
-  padding: 0;
-  border-radius: 50%;
-  background: $secondary;
-  color: $white0;
-  border: none;
-  display: grid;
-  place-items: center;
+    bottom: 16px;
+    left: 16px;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--ag-nav-primary-bg);
+    color: var(--ag-surface-card);
+    border: none;
+    display: grid;
+    place-items: center;
     z-index: 1500;
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
     cursor: pointer;
@@ -132,7 +130,7 @@
   .backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.25);
+    background: var(--ag-nav-backdrop);
     z-index: 1399;
   }
 }

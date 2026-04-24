@@ -1,0 +1,114 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: var(--ag-space-3);
+  background: rgba(10, 10, 10, 0.58);
+}
+
+.modal {
+  position: relative;
+  width: min(100%, 680px);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  padding: var(--ag-space-3);
+  border-radius: 22px;
+  border: 1px solid var(--ag-border-soft);
+  background: linear-gradient(180deg, rgba(255, 252, 249, 0.98) 0%, rgba(255, 255, 255, 1) 100%);
+  box-shadow: var(--ag-shadow-lifted);
+}
+
+.lg {
+  width: min(100%, 840px);
+}
+
+.header {
+  display: block;
+  margin-bottom: var(--ag-space-7);
+  padding-top: var(--ag-space-2);
+  padding-right: calc(40px + var(--ag-space-2));
+}
+
+.headerCopy {
+  display: grid;
+  gap: var(--ag-space-1);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--ag-brand-wine);
+  font-size: var(--ag-text-label-size);
+  line-height: var(--ag-text-label-line);
+  font-weight: var(--ag-text-label-weight);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h2-size);
+  line-height: var(--ag-heading-h2-line);
+  font-weight: var(--ag-heading-h2-weight);
+}
+
+.description {
+  margin: 0;
+  max-width: 52ch;
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+}
+
+.closeButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--ag-border-soft);
+  background: var(--ag-surface-card);
+  color: var(--ag-text-base);
+  cursor: pointer;
+  box-shadow: var(--ag-shadow-soft);
+}
+
+.body {
+  display: grid;
+  gap: var(--ag-space-3);
+}
+
+.footer {
+  display: flex;
+  gap: var(--ag-space-2);
+  margin-top: var(--ag-space-7);
+  margin-bottom: var(--ag-space-4);
+}
+
+.footer > * {
+  flex: 1 1 0;
+}
+
+@media (max-width: 640px) {
+  .overlay {
+    padding: var(--ag-space-2);
+  }
+
+  .modal {
+    width: 100%;
+    max-height: calc(100vh - 32px);
+    padding: var(--ag-space-2);
+    border-radius: 16px;
+  }
+
+  .footer {
+    display: grid;
+  }
+}

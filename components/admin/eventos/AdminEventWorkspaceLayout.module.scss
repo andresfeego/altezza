@@ -1,0 +1,171 @@
+.workspace {
+  min-height: 100vh;
+  background: var(--ag-surface-page);
+}
+
+.primaryRail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1410;
+  width: 28px;
+  background: var(--ag-brand-wine-strong);
+  overflow: visible;
+}
+
+.contextRail {
+  z-index: 1190;
+}
+
+.contextRailMenu {
+  left: 28px !important;
+  z-index: 1190 !important;
+}
+
+.content {
+  margin-left: 90px;
+  min-height: 100vh;
+  padding: var(--ag-space-4);
+  display: grid;
+  justify-items: center;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: var(--ag-space-2);
+  margin-bottom: var(--ag-space-4);
+  width: min(100%, calc(var(--ag-max-content) + 160px));
+}
+
+.homeBackButton {
+  position: absolute;
+  left: 0;
+  bottom: var(--ag-space-4);
+  z-index: 1420;
+  width: 64px;
+  height: 40px;
+  padding: 0 16px 0 0;
+  border-radius: 0 999px 999px 0;
+  border: 0;
+  background: var(--ag-brand-wine-strong);
+  color: var(--ag-surface-card);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-decoration: none;
+  box-shadow: 0 10px 22px rgba(96, 43, 50, 0.22);
+  transition:
+    transform 200ms ease-out,
+    background-color 200ms ease-out,
+    box-shadow 200ms ease-out;
+}
+
+.homeBackButton:hover,
+.homeBackButton:focus-visible {
+  background: var(--ag-brand-wine);
+  outline: none;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(96, 43, 50, 0.28);
+}
+
+.eventIdentity {
+  display: grid;
+  gap: 4px;
+  justify-items: end;
+  text-align: right;
+}
+
+.eventIdentity strong {
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h3-size);
+  line-height: var(--ag-heading-h3-line);
+  font-weight: var(--ag-heading-h3-weight);
+}
+
+.eventIdentity span {
+  color: var(--ag-text-muted);
+  font-size: var(--ag-text-caption-size);
+  line-height: var(--ag-text-caption-line);
+}
+
+.canvas {
+  display: grid;
+  gap: var(--ag-space-3);
+  width: min(100%, calc(var(--ag-max-content) + 160px));
+}
+
+.surfaceCard {
+  display: grid;
+  gap: var(--ag-space-2);
+  padding: var(--ag-space-4);
+  border: 1px solid var(--ag-border-soft);
+  border-radius: var(--ag-radius-lg);
+  background: var(--ag-surface-card);
+  box-shadow: var(--ag-shadow-soft);
+}
+
+.surfaceCard h1 {
+  margin: 0;
+  color: var(--ag-text-strong);
+  font-size: var(--ag-heading-h1-size);
+  line-height: var(--ag-heading-h1-line);
+  font-weight: var(--ag-heading-h1-weight);
+}
+
+.surfaceCard p {
+  margin: 0;
+  max-width: 56ch;
+  color: var(--ag-text-base);
+  font-size: var(--ag-text-body-size);
+  line-height: var(--ag-text-body-line);
+}
+
+.loadingState {
+  color: var(--ag-text-muted);
+}
+
+@media (max-width: 1024px) {
+  .content {
+    margin-left: 90px;
+    padding: 56px var(--ag-space-3) var(--ag-space-3);
+  }
+}
+
+@media (max-width: 768px) {
+  .workspace {
+    display: block;
+  }
+
+  .primaryRail {
+    width: 20px;
+  }
+
+  .contextRailMenu {
+    left: 20px !important;
+  }
+
+  .content {
+    margin-left: 76px;
+    padding: 56px var(--ag-space-2) var(--ag-space-2);
+  }
+
+  .homeBackButton {
+    left: 0;
+    bottom: var(--ag-space-3);
+    width: 64px;
+    height: 40px;
+    padding-right: 16px;
+  }
+
+  .topbar {
+    justify-content: flex-end;
+  }
+
+  .eventIdentity {
+    justify-items: start;
+    text-align: left;
+  }
+}

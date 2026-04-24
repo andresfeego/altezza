@@ -1,13 +1,12 @@
-import styles from '@/components/home/AdminHome.module.scss';
+import EventModulePlaceholder from '@/components/eventos/EventModulePlaceholder';
 
 const PendientesPage = () => {
   return (
-    <div className={styles.content}>
-      <main style={{ padding: '2rem' }}>
-        <h1>Pendientes</h1>
-        <hr />
-      </main>
-    </div>
+    <EventModulePlaceholder
+      title="Pendientes"
+      description="El modulo de pendientes seguira en una fase posterior, cuando entremos a planeacion y seguimiento del evento."
+      note="Por ahora la base transversal ya permite controlarlo desde menu, evento activo y permisos."
+    />
   );
 };
 

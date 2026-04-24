@@ -1,27 +1,29 @@
 // /components/eventos/ModalCrearEvento.js
 import { useState } from 'react';
-import { Box, Modal } from '@mui/material';
-import { FiPlus } from 'react-icons/fi';
+import Button from '@/components/ui/actions/Button';
+import ModalShell from '@/components/ui/layout/ModalShell';
 import CrearEvento from './CrearEvento';
-import { transparent } from '@components/ui/ModalStyles';
 import styles from './ModalCrearEvento.module.scss';
 
-export default function ModalCrearEvento() {
+export default function ModalCrearEvento({ label = 'Nuevo evento', className = '' }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <>
-      <button className={styles.btnCircular} onClick={handleOpen}>
-        <FiPlus size={20} />
-      </button>
+      <Button className={`${styles.btnPrimary} ${className}`.trim()} onClick={handleOpen}>
+        {label}
+      </Button>
 
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={transparent}>
+      {open ? (
+        <ModalShell
+          title="Nuevo evento"
+          onClose={handleClose}
+        >
           <CrearEvento cerrar={handleClose} />
-        </Box>
-      </Modal>
+        </ModalShell>
+      ) : null}
     </>
   );
 }

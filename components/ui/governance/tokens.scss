@@ -1,0 +1,146 @@
+:root {
+  --ag-font-body: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+  --ag-font-display: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+
+  --ag-font-size-12: 12px;
+  --ag-font-size-14: 14px;
+  --ag-font-size-16: 16px;
+  --ag-font-size-20: 20px;
+  --ag-font-size-24: 24px;
+  --ag-font-size-32: 32px;
+  --ag-font-size-40: 40px;
+  --ag-font-size-48: 48px;
+
+  --ag-line-height-16: 16px;
+  --ag-line-height-20: 20px;
+  --ag-line-height-24: 24px;
+  --ag-line-height-32: 32px;
+  --ag-line-height-40: 40px;
+  --ag-line-height-48: 48px;
+  --ag-line-height-56: 56px;
+  --ag-line-height-64: 64px;
+
+  --ag-font-weight-regular: 400;
+  --ag-font-weight-medium: 500;
+  --ag-font-weight-semibold: 600;
+  --ag-font-weight-bold: 700;
+
+  --ag-text-caption-size: var(--ag-font-size-12);
+  --ag-text-caption-line: var(--ag-line-height-16);
+  --ag-text-caption-weight: var(--ag-font-weight-regular);
+
+  --ag-text-label-size: var(--ag-font-size-14);
+  --ag-text-label-line: var(--ag-line-height-20);
+  --ag-text-label-weight: var(--ag-font-weight-medium);
+
+  --ag-text-body-size: var(--ag-font-size-16);
+  --ag-text-body-line: var(--ag-line-height-24);
+  --ag-text-body-weight: var(--ag-font-weight-regular);
+
+  --ag-text-card-title-size: var(--ag-font-size-20);
+  --ag-text-card-title-line: var(--ag-line-height-32);
+  --ag-text-card-title-weight: var(--ag-font-weight-semibold);
+
+  --ag-text-page-title-size: clamp(1.85rem, 3vw, 2.45rem);
+  --ag-text-page-title-line: 1.05;
+  --ag-text-page-title-weight: var(--ag-font-weight-bold);
+
+  --ag-text-hero-title-size: var(--ag-font-size-40);
+  --ag-text-hero-title-line: var(--ag-line-height-48);
+  --ag-text-hero-title-weight: var(--ag-font-weight-bold);
+
+  --ag-heading-h1-size: var(--ag-text-page-title-size);
+  --ag-heading-h1-line: var(--ag-text-page-title-line);
+  --ag-heading-h1-weight: var(--ag-text-page-title-weight);
+
+  --ag-heading-h2-size: 1.375rem;
+  --ag-heading-h2-line: var(--ag-line-height-32);
+  --ag-heading-h2-weight: var(--ag-font-weight-semibold);
+
+  --ag-heading-h3-size: 1.2rem;
+  --ag-heading-h3-line: var(--ag-line-height-24);
+  --ag-heading-h3-weight: var(--ag-font-weight-semibold);
+
+  --ag-heading-h4-size: var(--ag-font-size-16);
+  --ag-heading-h4-line: var(--ag-line-height-24);
+  --ag-heading-h4-weight: var(--ag-font-weight-medium);
+
+  --ag-brand-rose: #ec9fb5;
+  --ag-brand-rose-strong: #c76a84;
+  --ag-brand-wine: #e0a6a6;
+  --ag-brand-wine-strong: #b97a7a;
+  --ag-nav-primary-bg: var(--ag-brand-wine-strong);
+  --ag-nav-primary-active: var(--ag-surface-card);
+  --ag-nav-primary-active-text: var(--ag-brand-wine-strong);
+  --ag-nav-context-bg: var(--ag-brand-rose);
+  --ag-nav-context-active: var(--ag-surface-card);
+  --ag-nav-context-active-text: var(--ag-brand-rose-strong);
+  --ag-nav-item-text: rgba(255, 255, 255, 0.92);
+  --ag-nav-item-border: rgba(255, 255, 255, 0.14);
+  --ag-nav-item-hover: rgba(255, 255, 255, 0.08);
+  --ag-nav-tooltip-bg: rgba(0, 0, 0, 0.8);
+  --ag-nav-backdrop: rgba(0, 0, 0, 0.25);
+
+  --ag-gray-0: #383838;
+  --ag-gray-1: #505050;
+  --ag-gray-2: #636363;
+  --ag-gray-3: #818181;
+  --ag-gray-4: #969696;
+  --ag-gray-5: #afafaf;
+  --ag-gray-6: #c4c4c4;
+  --ag-gray-7: #dddddd;
+  --ag-gray-8: #eeeeee;
+  --ag-gray-9: #f7f7f7;
+
+  --ag-surface-page: #fbf7f4;
+  --ag-surface-card: #ffffff;
+  --ag-surface-card-alt: #fff8f3;
+  --ag-surface-soft: #f4ece7;
+
+  --ag-text-strong: #2f2624;
+  --ag-text-base: #4b413d;
+  --ag-text-muted: #6d625d;
+  --ag-text-soft: #93847c;
+
+  --ag-border-soft: #eadfd7;
+  --ag-border-strong: #d7c7bd;
+
+  --ag-success: #5d9364;
+  --ag-success-soft: #edf6ee;
+  --ag-warning: #b98734;
+  --ag-warning-soft: #f9f0de;
+  --ag-danger: #bf5d5d;
+  --ag-danger-soft: #f9e9e7;
+  --ag-info: #5a84a8;
+  --ag-info-soft: #eaf2f8;
+
+  --ag-radius-sm: 8px;
+  --ag-radius-md: 12px;
+  --ag-radius-lg: 18px;
+  --ag-radius-pill: 999px;
+
+  --ag-shadow-soft: 0 10px 24px rgba(34, 25, 22, 0.05);
+  --ag-shadow-card: 0 18px 40px rgba(34, 25, 22, 0.08);
+  --ag-shadow-lifted: 0 22px 50px rgba(34, 25, 22, 0.12);
+
+  --ag-space-1: 8px;
+  --ag-space-2: 16px;
+  --ag-space-3: 24px;
+  --ag-space-4: 32px;
+  --ag-space-5: 40px;
+  --ag-space-6: 48px;
+  --ag-space-7: 64px;
+  --ag-space-8: 96px;
+  --ag-space-9: 128px;
+
+  --ag-motion-duration-fast: 150ms;
+  --ag-motion-duration-base: 200ms;
+  --ag-motion-duration-medium: 250ms;
+  --ag-motion-duration-slow: 300ms;
+
+  --ag-motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ag-motion-ease-out: ease-out;
+
+  --ag-max-content: 1280px;
+  --ag-max-form: 760px;
+}

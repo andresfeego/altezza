@@ -1,25 +1,10 @@
-import { useState } from 'react';
-import styles from '@/components/home/AdminHome.module.scss';
-
-const TITLES = {
-  organizador: 'Organizador',
-  agenda: 'Agenda',
-  catalogo: 'Catálogo',
-  pendientes: 'Pendientes',
-  ajustes: 'Ajustes',
-};
+import RoleHomePlaceholder from '@/components/home/RoleHomePlaceholder';
 
 export default function OrganizadorHome() {
-  const [selected, setSelected] = useState('organizador');
-
   return (
-    <>
-      <div className={styles.content}>
-        <main style={{ padding: '2rem' }}>
-          <h1>Home - Organizador</h1>
-          <p>Sección: {TITLES[selected] || 'Organizador'}</p>
-        </main>
-      </div>
-    </>
+    <RoleHomePlaceholder
+      title="Organizador Home"
+      description="La superficie de organizador ya tiene punto de entrada definido, pero sus modulos operativos aun no se han construido en esta fase."
+    />
   );
 }
