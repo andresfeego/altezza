@@ -33,14 +33,31 @@ export const baseItems = {
 
 export function getMenuItemsByRole(rol) {
   const state = typeof useUsuarioStore.getState === 'function' ? useUsuarioStore.getState() : {};
-  const storeRol = state?.dataUsuario?.rol;
-  const totalEventosAsignados = getAssignedEventCount(state?.dataUsuario);
-  const singleAssignedEvent = getSingleAssignedEvent(state?.dataUsuario);
   const eventoState = typeof useEventoStore.getState === 'function' ? useEventoStore.getState() : {};
+  const dataUsuario = state?.dataUsuario;
+  const storeRol = dataUsuario?.rol;
+  const totalEventosAsignados = getAssignedEventCount(dataUsuario);
+  const singleAssignedEvent = getSingleAssignedEvent(dataUsuario);
   const idEventoActivo = eventoState?.idEventoActivo || singleAssignedEvent?.id || null;
   const modulosCliente = eventoState?.modulosCliente || {};
-
   const effectiveRol = storeRol ?? rol;
+
+  return resolveMenuItemsByRole({
+    rol: effectiveRol,
+    totalEventosAsignados,
+    idEventoActivo,
+    modulosCliente,
+  });
+}
+
+export function resolveMenuItemsByRole({
+  rol,
+  totalEventosAsignados = 0,
+  idEventoActivo = null,
+  modulosCliente = {},
+}) {
+  const effectiveRol = rol;
+
   let items = baseItems[effectiveRol] || baseItems[ROLE_IDS.ADMIN_WEDDING] || [];
 
   if (effectiveRol === ROLE_IDS.CLIENTE) {

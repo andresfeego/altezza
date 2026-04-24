@@ -1,4 +1,5 @@
 import terracotaHeroBackgroundAsset from '../templates/wedding-terracota/assets/images/fondo_hero.webp';
+import { formatDateInColombia } from '@/components/utils/datetimeColombia';
 
 const TERRACOTA_HERO_BACKGROUND = (
   typeof terracotaHeroBackgroundAsset === 'string'
@@ -23,7 +24,10 @@ export default function HeroImage1Module({ module, evento, invitacion }) {
   }
 
   const eventDate = invitacion?.fechaHoraCeremonia
-    ? new Date(invitacion.fechaHoraCeremonia).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })
+    ? formatDateInColombia(invitacion.fechaHoraCeremonia, {
+      options: { year: 'numeric', month: 'long', day: 'numeric' },
+      fallback: '',
+    })
     : '';
 
   return {

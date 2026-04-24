@@ -57,6 +57,7 @@ export default function AdminEventoPreviewView({ idEvento }) {
     [modulesByKey]
   );
 
+  const baseModulesCount = renderedModules.filter((moduleDef) => moduleDef.required).length;
   const activeOptional = renderedModules.filter((moduleDef) => !moduleDef.required && moduleDef.enabled).length;
 
   return (
@@ -78,7 +79,7 @@ export default function AdminEventoPreviewView({ idEvento }) {
 
             <div className={styles.metrics}>
               <div className={styles.metric}>
-                <strong>2</strong>
+                <strong>{baseModulesCount}</strong>
                 <span>Base</span>
               </div>
               <div className={styles.metric}>

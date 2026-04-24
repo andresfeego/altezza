@@ -1,3 +1,5 @@
+import { getDatePartsInColombia } from '@/components/utils/datetimeColombia';
+
 function firstLetter(value) {
   const normalized = String(value || '').trim();
   return normalized ? normalized.charAt(0).toUpperCase() : '';
@@ -14,14 +16,9 @@ function splitCoupleNames(rawCoupleName = '') {
 }
 
 function formatEventDateShort(rawDate) {
-  if (!rawDate) return '';
-  const date = new Date(rawDate);
-  if (Number.isNaN(date.getTime())) return '';
-
-  const day = String(date.getUTCDate()).padStart(2, '0');
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const year = String(date.getUTCFullYear()).slice(-2);
-  return `${day}.${month}.${year}`;
+  const parts = getDatePartsInColombia(rawDate);
+  if (!parts) return '';
+  return `${parts.dayLabel}.${parts.monthLabel}.${parts.shortYearLabel}`;
 }
 
 export default function EnvelopIntroModule({ module, evento, invitacion }) {

@@ -48,6 +48,7 @@ export const CLIENT_MODULE_DEFINITIONS = [
     label: 'Feed del evento',
     icon: <FiHome />,
     required: true,
+    defaultEnabled: true,
     needsEventoId: true,
     baseUrl: '/evento/feed',
   },
@@ -55,7 +56,8 @@ export const CLIENT_MODULE_DEFINITIONS = [
     key: 'datos_evento',
     label: 'Datos del evento',
     icon: <BsListTask />,
-    required: true,
+    required: false,
+    defaultEnabled: true,
     needsEventoId: true,
     baseUrl: '/evento/datos_evento',
   },
@@ -133,9 +135,16 @@ export const CLIENT_MODULE_DEFINITIONS = [
   },
 ];
 
+function resolveModuleDefaultEnabled(moduleDef = {}) {
+  if (typeof moduleDef.defaultEnabled === 'boolean') {
+    return moduleDef.defaultEnabled;
+  }
+  return Boolean(moduleDef.required);
+}
+
 export function getDefaultClientModuleState() {
   return CLIENT_MODULE_DEFINITIONS.reduce((acc, moduleDef) => {
-    acc[moduleDef.key] = Boolean(moduleDef.required);
+    acc[moduleDef.key] = resolveModuleDefaultEnabled(moduleDef);
     return acc;
   }, {});
 }
@@ -188,5 +197,8 @@ export function isClientModuleEnabled(moduleKey, moduleState = {}) {
   const moduleDef = CLIENT_MODULE_DEFINITIONS.find((item) => item.key === moduleKey);
   if (!moduleDef) return false;
   if (moduleDef.required) return true;
+  if (!Object.prototype.hasOwnProperty.call(moduleState, moduleKey)) {
+    return resolveModuleDefaultEnabled(moduleDef);
+  }
   return Boolean(moduleState[moduleKey]);
 }

@@ -51,6 +51,8 @@ export default function InvitationPublicRoute({
   invitadoActual,
   listaInvitados,
   modules,
+  canonicalUrl,
+  seoImageAbsolute,
 }) {
   const [guests, setGuests] = useState(() => normalizeGuests(listaInvitados));
   const [savingGuestIds, setSavingGuestIds] = useState([]);
@@ -58,7 +60,20 @@ export default function InvitationPublicRoute({
   const invitationRootRef = useRef(null);
 
   const seo = evento?.seo || {};
-  const absoluteImage = seo?.image || evento?.imagenPrincipal || '';
+  const seoTitle = seo?.title || 'Invitacion Altezza';
+  const seoDescription = seo?.description || 'Invitacion digital de Altezza.';
+  const fallbackImage = seo?.image || evento?.imagenPrincipal || '';
+  const absoluteImage = seoImageAbsolute || fallbackImage;
+  const pageUrl = String(canonicalUrl || '').trim();
+  const siteName = 'Altezza Invitaciones';
+  const imageAlt = `${invitacion?.nombre || evento?.nombre || 'Invitacion'} | portada`;
+  const ogImageType = (() => {
+    const normalized = String(absoluteImage || '').toLowerCase();
+    if (normalized.endsWith('.png')) return 'image/png';
+    if (normalized.endsWith('.webp')) return 'image/webp';
+    if (normalized.endsWith('.jpg') || normalized.endsWith('.jpeg')) return 'image/jpeg';
+    return 'image/jpeg';
+  })();
   const attendanceModule = useMemo(
     () => Array.isArray(modules) ? modules.find((item) => item?.type === 'attendance_confirm') : null,
     [modules]
@@ -195,16 +210,26 @@ export default function InvitationPublicRoute({
   return (
     <>
       <Head>
-        <title>{seo?.title || 'Invitacion Altezza'}</title>
-        <meta name="description" content={seo?.description || 'Invitacion digital de Altezza.'} />
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription} />
+        <meta name="robots" content="index,follow" />
+        {pageUrl ? <link rel="canonical" href={pageUrl} /> : null}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={seo?.title || 'Invitacion Altezza'} />
-        <meta property="og:description" content={seo?.description || 'Invitacion digital de Altezza.'} />
+        <meta property="og:locale" content="es_CO" />
+        <meta property="og:site_name" content={siteName} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDescription} />
+        {pageUrl ? <meta property="og:url" content={pageUrl} /> : null}
         {absoluteImage ? <meta property="og:image" content={absoluteImage} /> : null}
+        {absoluteImage ? <meta property="og:image:alt" content={imageAlt} /> : null}
+        {absoluteImage ? <meta property="og:image:width" content="1200" /> : null}
+        {absoluteImage ? <meta property="og:image:height" content="630" /> : null}
+        {absoluteImage ? <meta property="og:image:type" content={ogImageType} /> : null}
         <meta name="twitter:card" content={absoluteImage ? 'summary_large_image' : 'summary'} />
-        <meta name="twitter:title" content={seo?.title || 'Invitacion Altezza'} />
-        <meta name="twitter:description" content={seo?.description || 'Invitacion digital de Altezza.'} />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={seoDescription} />
         {absoluteImage ? <meta name="twitter:image" content={absoluteImage} /> : null}
+        {absoluteImage ? <meta name="twitter:image:alt" content={imageAlt} /> : null}
       </Head>
 
       <div ref={invitationRootRef}>
@@ -237,9 +262,10 @@ export async function getServerSideProps({ params, req }) {
   const host = req?.headers?.host;
   const rawProto = req?.headers?.['x-forwarded-proto'];
   const proto = String(rawProto || 'https').split(',')[0].trim() || 'https';
+  const origin = host ? `${proto}://${host}` : '';
   const baseInternal = process.env.HOST_NAME_INTERNAL;
   const endpoint = host
-    ? `${proto}://${host}/api/responseAltezza/public/invitaciones/${idInvitacion}/${idInvitado}`
+    ? `${origin}/api/responseAltezza/public/invitaciones/${idInvitacion}/${idInvitado}`
     : `${baseInternal}/public/invitaciones/${idInvitacion}/${idInvitado}`;
 
   try {
@@ -286,6 +312,16 @@ export async function getServerSideProps({ params, req }) {
       });
     }
 
+    const seoImageRaw = payload?.evento?.seo?.image || payload?.evento?.imagenPrincipal || '';
+    const resolvedSeoImage = String(seoImageRaw || '').trim()
+      ? (String(seoImageRaw || '').startsWith('/') && origin
+        ? `${origin}${String(seoImageRaw || '').trim()}`
+        : String(seoImageRaw || '').trim())
+      : '';
+    const canonicalUrl = origin
+      ? `${origin}/invitacion/${idInvitacion}/${idInvitado}`
+      : '';
+
     return {
       props: {
         evento: payload?.evento || null,
@@ -293,6 +329,8 @@ export async function getServerSideProps({ params, req }) {
         invitadoActual: payload?.invitadoActual || null,
         listaInvitados: Array.isArray(payload?.listaInvitados) ? payload.listaInvitados : [],
         modules: Array.isArray(payload?.modules) ? payload.modules : [],
+        canonicalUrl,
+        seoImageAbsolute: resolvedSeoImage,
       },
     };
   } catch (error) {

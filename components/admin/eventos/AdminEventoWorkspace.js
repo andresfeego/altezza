@@ -7,6 +7,7 @@ import {
   FiLayers,
   FiMapPin,
 } from 'react-icons/fi';
+import { formatDateTimeInColombia } from '@/components/utils/datetimeColombia';
 import shellStyles from '@/components/admin/shared/AdminModuleShell.module.scss';
 import AdminEventoModulesManager from '@/components/admin/eventos/AdminEventoModulesManager';
 import { ADMIN_EVENT_SECTIONS, getAdminEventoSectionHref } from '@/components/admin/eventos/adminEventoSections';
@@ -15,16 +16,16 @@ import { showError } from '@/components/initialized/Toast';
 import styles from './AdminEventoWorkspace.module.scss';
 
 function formatDate(value) {
-  if (!value) return 'Sin fecha definida';
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return 'Sin fecha definida';
-  return new Intl.DateTimeFormat('es-CO', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(parsed);
+  return formatDateTimeInColombia(value, {
+    options: {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    },
+    fallback: 'Sin fecha definida',
+  });
 }
 
 export default function AdminEventoWorkspace({ idEvento }) {

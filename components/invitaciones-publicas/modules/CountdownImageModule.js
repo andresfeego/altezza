@@ -1,3 +1,5 @@
+import { formatDateInColombia } from '@/components/utils/datetimeColombia';
+
 function getTargetDate(module, invitacion) {
   const target = module?.config?.target === 'fechaHoraRecepcion'
     ? invitacion?.fechaHoraRecepcion
@@ -17,10 +19,8 @@ export default function CountdownImageModule({ module, invitacion }) {
   return {
     title: String(module?.config?.title || 'Cuenta regresiva').trim(),
     targetDate: targetDate.toISOString(),
-    displayDate: targetDate.toLocaleDateString('es-CO', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    displayDate: formatDateInColombia(targetDate, {
+      options: { year: 'numeric', month: 'long', day: 'numeric' },
     }),
     backgroundImage,
   };

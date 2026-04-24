@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { formatDateInColombia, getDatePartsInColombia } from '@/components/utils/datetimeColombia';
 import styles from './resumenDatosEvento.module.scss';
 
 export default function ResumenDatosEvento({ evento }) {
@@ -13,12 +14,14 @@ export default function ResumenDatosEvento({ evento }) {
             <strong>Fecha:</strong>{' '}
             {(() => {
               const valor = evento.fechaEvento;
-              if (!valor || isNaN(new Date(valor))) return 'Sin definir';
-
-              const fecha = new Date(valor);
-              const dia = String(fecha.getDate()).padStart(2, '0');
-              const mes = fecha.toLocaleString('es-CO', { month: 'short' }).replace('.', '');
-              const anio = fecha.getFullYear();
+              const parts = getDatePartsInColombia(valor);
+              if (!parts) return 'Sin definir';
+              const mes = formatDateInColombia(valor, {
+                options: { month: 'short' },
+                fallback: '',
+              }).replace('.', '');
+              const dia = parts.dayLabel;
+              const anio = parts.year;
               return `${dia}-${mes.charAt(0).toUpperCase() + mes.slice(1)}-${anio}`;
             })()}
           </p>
