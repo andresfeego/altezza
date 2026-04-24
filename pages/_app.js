@@ -253,11 +253,58 @@ function MyApp({ Component, pageProps }) {
     };
   }, [dataUsuario?.rol, hydrated, setDataUsuario, usuario]);
 
-  if (!hydrated || loading) return <LoadingScreen />;
   const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
   const isGovernanceLab = router.pathname === '/ui-governance-lab';
   const isAdminEventWorkspaceRoute = router.pathname.startsWith('/admin/eventos/[idEvento]');
   const isPublicInvitation = router.pathname === '/invitacion/[idInvitacion]/[idInvitado]';
+
+  if (isPublicInvitation) {
+    return (
+      <>
+        <NextTopLoader
+          color="#E6B7B1"
+          initialPosition={0.5}
+          crawlSpeed={200}
+          height={5}
+          crawl={true}
+          showSpinner={true}
+          easing="ease"
+          speed={200}
+          shadow="0 0 13px #E6B7B1,0 0 8px #C48C96"
+          zIndex={1600}
+          showAtBottom={false}
+        />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            duration: 3500,
+            style: {
+              background: '#fffaf7',
+              color: '#453b34',
+              border: '1px solid #ecdcd2',
+              borderRadius: '14px',
+              boxShadow: '0 14px 32px rgba(0, 0, 0, 0.08)',
+            },
+            success: {
+              iconTheme: {
+                primary: '#5b9b6c',
+                secondary: '#fff',
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: '#c96e6e',
+                secondary: '#fff',
+              },
+            },
+          }}
+        />
+        <Component {...pageProps} />
+      </>
+    );
+  }
+
+  if (!hydrated || loading) return <LoadingScreen />;
 
   return (
   <>
