@@ -64,6 +64,7 @@ export default function AdminEventoModulesManager({ evento = null, onModulesChan
     enabled: moduleDef.required ? true : Boolean(modulesByKey[moduleDef.key]?.enabled),
   }));
 
+  const baseModulesCount = renderedModules.filter((moduleDef) => moduleDef.required).length;
   const enabledOptionalModules = renderedModules.filter((moduleDef) => !moduleDef.required && moduleDef.enabled);
   const configurableModulesCount = renderedModules.filter((moduleDef) => !moduleDef.required).length;
   const hasSelectedEventImage = Boolean(evento?.imagenPrincipal && evento.imagenPrincipal.length > 10);
@@ -174,7 +175,7 @@ export default function AdminEventoModulesManager({ evento = null, onModulesChan
 
       <div className={styles.summaryRow}>
         <div className={styles.summaryMetric}>
-          <strong>2</strong>
+          <strong>{baseModulesCount}</strong>
           <span>Base</span>
         </div>
         <div className={styles.summaryMetric}>

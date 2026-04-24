@@ -3,6 +3,7 @@ import { useState } from 'react';
 import CropImagen from '@/components/ui/CropImagen/CropImagen';
 import { uploadImagenEvento } from '@/components/initialized/data/helpersSetDB';
 import { base64ToFile } from "@/components/utils/base64ToFile";
+import { formatDateInColombia, getDatePartsInColombia } from '@/components/utils/datetimeColombia';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import FormularioEdicion from './FormularioEdicion'; // este lo creamos después
@@ -63,11 +64,14 @@ export default function DatosEvento({ evento }) {
             <li><span>Fecha:</span>{' '}
               {(() => {
                 const valor = evento.fechaHoraCeremonia;
-                if (!valor || isNaN(new Date(valor))) return 'Sin definir';
-                const fecha = new Date(valor);
-                const dia = String(fecha.getDate()).padStart(2, '0');
-                const mes = fecha.toLocaleString('es-CO', { month: 'short' }).replace('.', '');
-                const anio = fecha.getFullYear();
+                const parts = getDatePartsInColombia(valor);
+                if (!parts) return 'Sin definir';
+                const mes = formatDateInColombia(valor, {
+                  options: { month: 'short' },
+                  fallback: '',
+                }).replace('.', '');
+                const dia = parts.dayLabel;
+                const anio = parts.year;
                 return `${dia}-${mes.charAt(0).toUpperCase() + mes.slice(1)}-${anio}`;
               })()}
             </li>

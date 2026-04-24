@@ -143,13 +143,13 @@
 }
 
 .secondaryAccentChar::before {
-  content: '´';
+  content: "´";
   position: absolute;
   left: 50%;
-  top: -0.48em;
+  top: 20px;
   transform: translateX(-50%);
   color: currentColor;
-  font-size: 0.74em;
+  font-size: 0.54em;
   line-height: 1;
   pointer-events: none;
 }

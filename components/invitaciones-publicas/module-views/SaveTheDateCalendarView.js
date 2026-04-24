@@ -1,12 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
+import { COLOMBIA_TIMEZONE, getDatePartsInColombia } from '@/components/utils/datetimeColombia';
 
 const TOTAL_ANIMATION_MS = 3000;
 
 function buildCalendarModel(date) {
   const weekdayLabels = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
-  const year = date.getFullYear();
-  const month = date.getMonth();
+  const parts = getDatePartsInColombia(date);
+  if (!parts) return null;
+  const year = parts.year;
+  const month = parts.month - 1;
   const firstDay = new Date(year, month, 1);
   const firstDayMondayIndex = (firstDay.getDay() + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -24,7 +27,9 @@ function buildCalendarModel(date) {
     cells.push(null);
   }
 
-  const monthLabel = new Intl.DateTimeFormat('es-CO', { month: 'long' }).format(date).toUpperCase();
+  const monthLabel = new Intl.DateTimeFormat('es-CO', { timeZone: COLOMBIA_TIMEZONE, month: 'long' })
+    .format(date)
+    .toUpperCase();
 
   return {
     weekdayLabels,
@@ -32,7 +37,7 @@ function buildCalendarModel(date) {
     yearLabel: String(year),
     monthLabel,
     daysInMonth,
-    selectedDay: date.getDate(),
+    selectedDay: parts.day,
   };
 }
 
@@ -49,6 +54,7 @@ export default function SaveTheDateCalendarView({ data, styles }) {
   }
 
   const calendar = buildCalendarModel(eventDate);
+  if (!calendar) return null;
   const dayList = useMemo(
     () => Array.from({ length: calendar.daysInMonth }, (_, index) => index + 1),
     [calendar.daysInMonth]

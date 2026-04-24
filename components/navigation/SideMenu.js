@@ -2,7 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import useUsuarioStore from '@/components/initialized/stored/useUsuarioStore';
-import { getMenuItemsByRole } from '@/components/navigation/menuItems';
+import useEventoStore from '@/components/initialized/stored/useEventoStore';
+import { getAssignedEventCount, getSingleAssignedEvent } from '@/components/constants/eventContext';
+import { resolveMenuItemsByRole } from '@/components/navigation/menuItems';
 import styles from './SideMenu.module.scss';
 
 const SHAPE = {
@@ -93,8 +95,23 @@ function matchesPath(item, pathname, asPath) {
 
 export default function SideMenu({ onSelect }) {
   const router = useRouter();
-  const rol = useUsuarioStore((state) => state.dataUsuario?.rol);
-  const items = useMemo(() => getMenuItemsByRole(rol), [rol]);
+  const dataUsuario = useUsuarioStore((state) => state.dataUsuario);
+  const rol = dataUsuario?.rol;
+  const idEventoActivoStore = useEventoStore((state) => state.idEventoActivo);
+  const modulosCliente = useEventoStore((state) => state.modulosCliente);
+  const totalEventosAsignados = getAssignedEventCount(dataUsuario);
+  const singleAssignedEvent = getSingleAssignedEvent(dataUsuario);
+  const idEventoActivo = idEventoActivoStore || singleAssignedEvent?.id || null;
+  const items = useMemo(
+    () =>
+      resolveMenuItemsByRole({
+        rol,
+        totalEventosAsignados,
+        idEventoActivo,
+        modulosCliente,
+      }),
+    [rol, totalEventosAsignados, idEventoActivo, modulosCliente]
+  );
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [notchY, setNotchY] = useState(0);
   const [menuHeight, setMenuHeight] = useState(0);

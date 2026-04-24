@@ -95,31 +95,14 @@ function buildWhatsappUrl(invitacion, invitado) {
 
 function buildInvitacionShareMessage(invitacion, invitado) {
   const eventName = String(invitacion?.nombre || '').trim();
-  const dateSource = invitacion?.fechaHoraCeremonia || invitacion?.fechaHoraRecepcion;
+  const guestName = String(invitado?.nombre || '').trim();
   const inviteUrl = buildInvitacionLink(invitacion?.id, invitado?.id);
+  const title = eventName || 'Nos casamos';
+  const greeting = guestName
+    ? `Hola ${guestName} Nos casamos !! y nos encantaría compartir este día tan especial con ustedes.`
+    : 'Hola Nos casamos !! y nos encantaría compartir este día tan especial con ustedes.';
 
-  let fecha = '';
-  let hora = '';
-
-  if (dateSource) {
-    const date = new Date(dateSource);
-    fecha = date.toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-    hora = date.toLocaleTimeString('es-CO', { hour: 'numeric', minute: '2-digit', hour12: true });
-  }
-
-  const saludo = invitado?.nombre ? `Hola ${invitado.nombre},` : 'Hola,';
-  const intro = eventName
-    ? ` queremos celebrar contigo ${eventName}.`
-    : ' queremos celebrar contigo este momento tan especial.';
-  const schedule = fecha
-    ? `\nLa invitacion corresponde al ${fecha}${hora ? ` a las ${hora}` : ''}.`
-    : '';
-  const label = String(invitacion?.label || '').trim();
-  const labelText = label ? `\nReferencia: ${label}.` : '';
-  const custom = String(invitacion?.mensaje_personalizado || '').trim();
-  const customText = custom ? `\n${custom}` : '';
-
-  return `${saludo}${intro}${schedule}${labelText}${customText}\n\nConfirma tu asistencia aqui:\n${inviteUrl}`;
+  return `${title}\n\n${greeting}\n\nconfirma tu asistencia aqui:\n${inviteUrl}`;
 }
 
 async function copyTextWithFallback(value) {

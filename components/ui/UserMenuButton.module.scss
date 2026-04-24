@@ -134,7 +134,7 @@
 @media (max-width: 640px) {
   .inner {
     min-height: 56px;
-    padding: 0 16px;
+    padding: 0 var(--ag-space-2);
   }
 
   .backLink {

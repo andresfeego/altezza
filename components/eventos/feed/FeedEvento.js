@@ -1,4 +1,3 @@
-import BarraEvento from './BarraEvento';
 import ResumenDatosEvento from '@/components/eventos/modulos/datos_evento/ResumenDatosEvento';
 import FeedInvitadosPreview from '@/components/eventos/feed/FeedInvitadosPreview';
 import FeedInvitacionesPreview from '@/components/eventos/feed/FeedInvitacionesPreview';
@@ -41,11 +40,6 @@ export default function FeedEvento({ evento }) {
 
   return (
     <div className={styles.contenedorFeed}>
-      <BarraEvento
-        tipo={evento.nombreTipoEvento}
-        nombre={evento.nombreEvento}
-      />
-
       <div className={styles.gridModulos}>
         {hasDatosEvento ? <ResumenDatosEvento evento={evento} /> : null}
 

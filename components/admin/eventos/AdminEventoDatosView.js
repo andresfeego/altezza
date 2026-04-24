@@ -1,17 +1,18 @@
 import AdminEventoSectionLayout from './AdminEventoSectionLayout';
+import { formatDateTimeInColombia } from '@/components/utils/datetimeColombia';
 import styles from './AdminEventoSections.module.scss';
 
 function formatDate(value) {
-  if (!value) return 'Sin definir';
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return 'Sin definir';
-  return new Intl.DateTimeFormat('es-CO', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(parsed);
+  return formatDateTimeInColombia(value, {
+    options: {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    },
+    fallback: 'Sin definir',
+  });
 }
 
 function buildRows(evento) {
