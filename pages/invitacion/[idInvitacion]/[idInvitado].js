@@ -245,14 +245,40 @@ export async function getServerSideProps({ params }) {
     });
 
     if (response.status === 404) {
+      console.warn('[SSR invitacion] backend 404', {
+        idInvitacion,
+        idInvitado,
+        endpoint,
+        hostName: process.env.HOST_NAME,
+        hostNameInternal: process.env.HOST_NAME_INTERNAL,
+      });
       return { notFound: true };
     }
 
     if (!response.ok) {
+      const body = await response.text().catch(() => '');
+      console.error('[SSR invitacion] backend non-OK', {
+        status: response.status,
+        idInvitacion,
+        idInvitado,
+        endpoint,
+        body: body?.slice?.(0, 300),
+      });
       throw new Error(`Error HTTP ${response.status}`);
     }
 
     const payload = await response.json();
+
+    if (!payload?.evento || !payload?.invitacion || !payload?.invitadoActual) {
+      console.warn('[SSR invitacion] payload incompleto', {
+        idInvitacion,
+        idInvitado,
+        endpoint,
+        hasEvento: Boolean(payload?.evento),
+        hasInvitacion: Boolean(payload?.invitacion),
+        hasInvitadoActual: Boolean(payload?.invitadoActual),
+      });
+    }
 
     return {
       props: {
@@ -264,6 +290,13 @@ export async function getServerSideProps({ params }) {
       },
     };
   } catch (error) {
+    console.error('[SSR invitacion] error catch', {
+      idInvitacion,
+      idInvitado,
+      endpoint,
+      message: error?.message,
+      stack: error?.stack?.split('\n')?.slice(0, 3)?.join(' | '),
+    });
     return {
       notFound: true,
     };
