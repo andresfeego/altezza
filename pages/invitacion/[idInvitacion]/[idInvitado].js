@@ -235,7 +235,8 @@ export default function InvitationPublicRoute({
 export async function getServerSideProps({ params, req }) {
   const { idInvitacion, idInvitado } = params || {};
   const host = req?.headers?.host;
-  const proto = req?.headers?.['x-forwarded-proto'] || 'https';
+  const rawProto = req?.headers?.['x-forwarded-proto'];
+  const proto = String(rawProto || 'https').split(',')[0].trim() || 'https';
   const baseInternal = process.env.HOST_NAME_INTERNAL;
   const endpoint = host
     ? `${proto}://${host}/api/responseAltezza/public/invitaciones/${idInvitacion}/${idInvitado}`
