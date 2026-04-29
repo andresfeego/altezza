@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+const EMPTY_COUNTDOWN_ITEMS = [
+  { label: 'Dias', value: 0 },
+  { label: 'Horas', value: 0 },
+  { label: 'Minutos', value: 0 },
+  { label: 'Segundos', value: 0 },
+];
 
 function buildCountdownItems(targetDateValue) {
   const targetDate = targetDateValue ? new Date(targetDateValue) : null;
@@ -16,17 +23,13 @@ function buildCountdownItems(targetDateValue) {
 }
 
 export default function CountdownImageView({ data, styles }) {
-  const [items, setItems] = useState(() => buildCountdownItems(data?.targetDate));
+  const [items, setItems] = useState(EMPTY_COUNTDOWN_ITEMS);
+  const [isCompleted, setIsCompleted] = useState(false);
   const [isConfettiReady, setIsConfettiReady] = useState(false);
   const canvasRef = useRef(null);
   const confettiRef = useRef(null);
   const triggerRef = useRef(null);
   const hasFiredRef = useRef(false);
-  const isCompleted = useMemo(() => {
-    if (!data?.targetDate) return true;
-    return new Date(data.targetDate).getTime() <= Date.now();
-  }, [data?.targetDate, items]);
-
   useEffect(() => {
     let isMounted = true;
 
@@ -53,10 +56,16 @@ export default function CountdownImageView({ data, styles }) {
   useEffect(() => {
     if (!data?.targetDate) return undefined;
 
-    setItems(buildCountdownItems(data.targetDate));
+    const updateCountdown = () => {
+      const nextItems = buildCountdownItems(data.targetDate);
+      setItems(nextItems);
+      setIsCompleted(nextItems.every((item) => item.value === 0));
+    };
+
+    updateCountdown();
 
     const intervalId = window.setInterval(() => {
-      setItems(buildCountdownItems(data.targetDate));
+      updateCountdown();
     }, 1000);
 
     return () => window.clearInterval(intervalId);
