@@ -8,3 +8,9 @@
     gap: var(--ag-space-4);
   }
 }
+
+@media (max-width: 1024px) {
+  .shell {
+    padding: 32px 16px;
+  }
+}

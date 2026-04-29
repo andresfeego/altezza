@@ -687,19 +687,21 @@
 }
 
 @media (max-width: 680px) {
-  .summaryCard,
+  .summaryCard{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
   .invitationGrid {
     grid-template-columns: 1fr;
   }
 
   .memberPreviewRow,
   .memberRow {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .memberPreviewActions {
-    width: 100%;
-    justify-content: flex-start;
+    width: 37%;
+    justify-content: flex-end;
   }
 
   .memberActions,
