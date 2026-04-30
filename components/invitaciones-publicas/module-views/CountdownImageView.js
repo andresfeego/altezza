@@ -23,6 +23,7 @@ function buildCountdownItems(targetDateValue) {
 }
 
 export default function CountdownImageView({ data, styles }) {
+  const enableConfetti = data?.enableConfetti !== false;
   const [items, setItems] = useState(EMPTY_COUNTDOWN_ITEMS);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isConfettiReady, setIsConfettiReady] = useState(false);
@@ -31,6 +32,8 @@ export default function CountdownImageView({ data, styles }) {
   const triggerRef = useRef(null);
   const hasFiredRef = useRef(false);
   useEffect(() => {
+    if (!enableConfetti) return undefined;
+
     let isMounted = true;
 
     if (!canvasRef.current) return undefined;
@@ -51,7 +54,7 @@ export default function CountdownImageView({ data, styles }) {
       confettiRef.current = null;
       setIsConfettiReady(false);
     };
-  }, []);
+  }, [enableConfetti]);
 
   useEffect(() => {
     if (!data?.targetDate) return undefined;
@@ -72,6 +75,7 @@ export default function CountdownImageView({ data, styles }) {
   }, [data?.targetDate]);
 
   useEffect(() => {
+    if (!enableConfetti) return undefined;
     if (!triggerRef.current || !isConfettiReady) return undefined;
 
     const observer = new window.IntersectionObserver(
@@ -117,17 +121,19 @@ export default function CountdownImageView({ data, styles }) {
     observer.observe(triggerRef.current);
 
     return () => observer.disconnect();
-  }, [isConfettiReady]);
+  }, [enableConfetti, isConfettiReady]);
 
   if (!data?.backgroundImage || !data?.targetDate) return null;
 
   return (
     <section className={`${styles.moduleCard} ${styles.countdownImageModule}`}>
-      <canvas
-        ref={canvasRef}
-        className={styles.countdownImageConfettiCanvas}
-        aria-hidden="true"
-      />
+      {enableConfetti ? (
+        <canvas
+          ref={canvasRef}
+          className={styles.countdownImageConfettiCanvas}
+          aria-hidden="true"
+        />
+      ) : null}
       <img
         className={styles.countdownImageBackground}
         src={data.backgroundImage}

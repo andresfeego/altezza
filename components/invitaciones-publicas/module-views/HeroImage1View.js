@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 export default function HeroImage1View({ data, styles }) {
-  const leaves = Array.from({ length: 14 }, (_, index) => index);
+  const leaves = Array.from({ length: 21 }, (_, index) => index);
   const textSequence = useMemo(
     () => [
       data.text1 ? { key: 'eyebrow', value: data.text1, className: styles.heroImageEyebrow } : null,

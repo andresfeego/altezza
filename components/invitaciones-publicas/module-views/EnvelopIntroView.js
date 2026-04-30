@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import envelopTopAsset from '../templates/wedding-classic/assets/images/envelop_top.png';
 import envelopBottomAsset from '../templates/wedding-classic/assets/images/envelop_bottom.png';
 
-export default function EnvelopIntroView({ styles }) {
+export default function EnvelopIntroView({ data, styles }) {
   const envelopTopSrc = typeof envelopTopAsset === 'string' ? envelopTopAsset : envelopTopAsset?.src || '';
   const envelopBottomSrc = typeof envelopBottomAsset === 'string' ? envelopBottomAsset : envelopBottomAsset?.src || '';
   const [buttonFading, setButtonFading] = useState(false);
@@ -106,6 +106,9 @@ export default function EnvelopIntroView({ styles }) {
         </div>
         <div className={styles.envelopIntroBottom}>
           <img src={envelopBottomSrc} alt="" aria-hidden="true" className={styles.envelopIntroImage} />
+          {data?.invitationLabel ? (
+            <div className={styles.envelopIntroInvitationLabel}>{data.invitationLabel}</div>
+          ) : null}
         </div>
       </div>
     </section>
