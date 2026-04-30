@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import shellStyles from '@/components/home/AdminHome.module.scss';
 import EventClientModuleShell from '@/components/eventos/shared/EventClientModuleShell';
 import {
+  getPaisesTelefono,
   getGruposEdad,
   getInvitadosEvento,
   getInvitacionesEvento,
@@ -93,6 +94,7 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
   const [invitados, setInvitados] = useState([]);
   const [parentescos, setParentescos] = useState([]);
   const [gruposEdad, setGruposEdad] = useState([]);
+  const [paisesTelefono, setPaisesTelefono] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -108,6 +110,7 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
       setLoading(false);
       setInvitaciones([]);
       setInvitados([]);
+      setPaisesTelefono([]);
       return;
     }
 
@@ -116,11 +119,12 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
     async function loadModule() {
       try {
         setLoading(true);
-        const [listaInvitaciones, listaInvitados, listaParentescos, listaGruposEdad] = await Promise.all([
+        const [listaInvitaciones, listaInvitados, listaParentescos, listaGruposEdad, listaPaisesTelefono] = await Promise.all([
           getInvitacionesEvento(idEvento),
           getInvitadosEvento(idEvento),
           getParentescos(),
           getGruposEdad(),
+          getPaisesTelefono(),
         ]);
 
         if (cancelled) return;
@@ -129,12 +133,14 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
         setInvitados(Array.isArray(listaInvitados) ? listaInvitados : []);
         setParentescos(Array.isArray(listaParentescos) ? listaParentescos : []);
         setGruposEdad(Array.isArray(listaGruposEdad) ? listaGruposEdad : []);
+        setPaisesTelefono(Array.isArray(listaPaisesTelefono) ? listaPaisesTelefono : []);
       } catch (error) {
         if (cancelled) return;
         setInvitaciones([]);
         setInvitados([]);
         setParentescos([]);
         setGruposEdad([]);
+        setPaisesTelefono([]);
         showError('No fue posible cargar el modulo de invitaciones.');
       } finally {
         if (!cancelled) {
@@ -161,17 +167,39 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
   );
 
   async function reloadModule() {
-    const [listaInvitaciones, listaInvitados, listaParentescos, listaGruposEdad] = await Promise.all([
+    const [listaInvitaciones, listaInvitados, listaParentescos, listaGruposEdad, listaPaisesTelefono] = await Promise.all([
       getInvitacionesEvento(idEvento),
       getInvitadosEvento(idEvento),
       getParentescos(),
       getGruposEdad(),
+      getPaisesTelefono(),
     ]);
 
     setInvitaciones(normalizeInvitacionList(listaInvitaciones));
     setInvitados(Array.isArray(listaInvitados) ? listaInvitados : []);
     setParentescos(Array.isArray(listaParentescos) ? listaParentescos : []);
     setGruposEdad(Array.isArray(listaGruposEdad) ? listaGruposEdad : []);
+    setPaisesTelefono(Array.isArray(listaPaisesTelefono) ? listaPaisesTelefono : []);
+  }
+
+  function normalizeDialCode(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    const digits = raw.replace(/[^\d]/g, '');
+    return digits ? `+${digits}` : '';
+  }
+
+  function resolveCountryPhoneId(codigoPaisRaw) {
+    const normalized = normalizeDialCode(codigoPaisRaw);
+    const defaultCountry = paisesTelefono.find((item) => String(item?.iso2 || '').toUpperCase() === 'CO') || null;
+
+    if (!normalized) return defaultCountry?.id || null;
+
+    const exact = paisesTelefono.find(
+      (item) => normalizeDialCode(item?.codigoTelefono) === normalized
+    );
+
+    return exact?.id || defaultCountry?.id || null;
   }
 
   async function handleSaveInvitacion(payload) {
@@ -325,10 +353,16 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
         }
 
         for (const member of invitation.integrantes) {
+          const idPaisTelefono = resolveCountryPhoneId(member.codigoPais);
+          if (!idPaisTelefono) {
+            throw new Error('No fue posible resolver el codigo de pais para la importacion.');
+          }
+
           const createdGuest = await crearInvitadoEvento({
             idEvento,
             nombre: member.nombre,
             telefono: member.telefono,
+            idPaisTelefono,
             whatsapp: member.whatsapp,
             parentescoId: member.parentescoId,
             grupoEdadId: member.grupoEdadId,

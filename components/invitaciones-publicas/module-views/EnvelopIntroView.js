@@ -59,10 +59,13 @@ export default function EnvelopIntroView({ data, styles }) {
 
     const OPENING_MS = 3000;
     const MODULE_FADE_MS = 2000;
+    const FADE_LEAD_MS = 2000;
+    const FADE_START_MS = Math.max(0, OPENING_MS - FADE_LEAD_MS);
+    const HIDE_AT_MS = Math.max(OPENING_MS, FADE_START_MS + MODULE_FADE_MS);
 
     timersRef.current.push(setTimeout(() => {
       setModuleFading(true);
-    }, OPENING_MS));
+    }, FADE_START_MS));
 
     timersRef.current.push(setTimeout(() => {
       setHidden(true);
@@ -75,7 +78,7 @@ export default function EnvelopIntroView({ data, styles }) {
       if (flowBlock) {
         flowBlock.style.display = 'none';
       }
-    }, OPENING_MS + MODULE_FADE_MS));
+    }, HIDE_AT_MS));
   }
 
   return (

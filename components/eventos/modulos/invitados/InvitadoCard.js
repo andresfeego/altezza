@@ -7,8 +7,8 @@ function normalizePhone(value) {
   return String(value || '').replace(/\D/g, '');
 }
 
-function buildWhatsappUrl(phone) {
-  const digits = normalizePhone(phone);
+function buildWhatsappUrl(countryCode, phone) {
+  const digits = `${normalizePhone(countryCode)}${normalizePhone(phone)}`;
   if (!digits) return null;
   return `https://wa.me/${digits}`;
 }
@@ -23,7 +23,10 @@ export default function InvitadoCard({
   onCloseMenu,
   busy = false,
 }) {
-  const whatsappUrl = buildWhatsappUrl(invitado?.telefono);
+  const countryCode = String(invitado?.codigoPaisTelefono || '').trim();
+  const phoneDisplay = [countryCode, invitado?.telefono].filter(Boolean).join(' ').trim();
+  const phoneDigits = `${normalizePhone(countryCode)}${normalizePhone(invitado?.telefono)}`;
+  const whatsappUrl = buildWhatsappUrl(countryCode, invitado?.telefono);
 
   return (
     <article className={styles.invitedCard}>
@@ -78,11 +81,11 @@ export default function InvitadoCard({
 
       <div className={styles.invitedContactRow}>
         {invitado?.telefono ? (
-          <a href={`tel:${normalizePhone(invitado.telefono)}`} className={styles.phoneBadge}>
+          <a href={`tel:${phoneDigits}`} className={styles.phoneBadge}>
             <span className={styles.phoneIcon}>
               <FiPhone />
             </span>
-            <span>{invitado.telefono}</span>
+            <span>{phoneDisplay}</span>
           </a>
         ) : (
           <span className={styles.contactMuted}>Sin telefono</span>

@@ -87,20 +87,22 @@ export const regenerarPassTempUsuario = async ({ idUsuario }) => {
   return await setDB(`/usuariosSistema/${idUsuario}/regenerarPassTemp`, {});
 };
 
-export const crearInvitadoEvento = async ({ idEvento, nombre, telefono, whatsapp, parentescoId, grupoEdadId }) => {
+export const crearInvitadoEvento = async ({ idEvento, nombre, telefono, idPaisTelefono, whatsapp, parentescoId, grupoEdadId }) => {
   return await setDB(`/eventos/${idEvento}/invitados`, {
     nombre,
     telefono,
+    idPaisTelefono,
     whatsapp,
     parentescoId,
     grupoEdadId,
   });
 };
 
-export const actualizarInvitadoEvento = async ({ idEvento, idInvitado, nombre, telefono, whatsapp, parentescoId, grupoEdadId, estadoAsistenciaId }) => {
+export const actualizarInvitadoEvento = async ({ idEvento, idInvitado, nombre, telefono, idPaisTelefono, whatsapp, parentescoId, grupoEdadId, estadoAsistenciaId }) => {
   return await setDB(`/eventos/${idEvento}/invitados/${idInvitado}`, {
     nombre,
     telefono,
+    idPaisTelefono,
     whatsapp,
     parentescoId,
     grupoEdadId,

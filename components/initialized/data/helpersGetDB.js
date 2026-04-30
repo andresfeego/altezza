@@ -57,6 +57,10 @@ export async function getGruposEdad() {
   return await getDB('/gruposEdad', { method: 'GET' });
 }
 
+export async function getPaisesTelefono() {
+  return await getDB('/paisesTelefono', { method: 'GET' });
+}
+
 export async function getInvitadosEvento(idEvento) {
   return await getDB(`/eventos/${idEvento}/invitados`, { method: 'GET' });
 }
