@@ -173,6 +173,17 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
     () => buildInvitacionesSummary(invitaciones, invitados),
     [invitaciones, invitados]
   );
+  const paisesTelefonoMap = useMemo(() => {
+    const map = new Map();
+    if (!Array.isArray(paisesTelefono)) return map;
+    paisesTelefono.forEach((item) => {
+      const id = Number(item?.id || 0);
+      if (id > 0) {
+        map.set(id, item?.codigoTelefono || '');
+      }
+    });
+    return map;
+  }, [paisesTelefono]);
 
   async function reloadModule() {
     const [listaInvitaciones, listaInvitados, listaParentescos, listaGruposEdad, listaPaisesTelefono] = await Promise.all([
@@ -554,6 +565,7 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
                 handleDeleteInvitacion(invitacion);
               }}
               onToggleSent={(enviada) => handleToggleInvitacionEnviada(invitacion, enviada)}
+              paisesTelefonoMap={paisesTelefonoMap}
               busy={saving}
             />
           ))}

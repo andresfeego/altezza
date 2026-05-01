@@ -79,16 +79,38 @@ function buildInvitacionLink(idInvitacion, idInvitado) {
   return `${origin}${path}`;
 }
 
-function buildWhatsappUrl(invitacion, invitado) {
+function normalizeDialCode(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+  const digits = raw.replace(/[^\d]/g, '');
+  return digits ? `+${digits}` : '';
+}
+
+function resolveGuestDialCode(invitado, paisesTelefonoMap = null) {
+  const fromGuest = normalizeDialCode(invitado?.codigoPaisTelefono || invitado?.codigoPais);
+  if (fromGuest) return fromGuest;
+
+  const idPaisTelefono = Number(invitado?.idPaisTelefono || 0);
+  if (idPaisTelefono > 0 && paisesTelefonoMap instanceof Map) {
+    const fromMap = normalizeDialCode(paisesTelefonoMap.get(idPaisTelefono));
+    if (fromMap) return fromMap;
+  }
+
+  return '+57';
+}
+
+function buildWhatsappUrl(invitacion, invitado, paisesTelefonoMap = null) {
   const rawPhone = String(invitado?.telefono || '').trim();
   if (!rawPhone) return null;
 
-  const digits = rawPhone.replace(/\D/g, '');
-  const normalized = rawPhone.startsWith('+')
-    ? digits
-    : digits.startsWith('57')
-      ? digits
-      : `57${digits}`;
+  const phoneDigits = rawPhone.replace(/\D/g, '');
+  if (!phoneDigits) return null;
+
+  const dialCodeDigits = resolveGuestDialCode(invitado, paisesTelefonoMap).replace(/\D/g, '');
+  let normalized = phoneDigits;
+  if (dialCodeDigits && !phoneDigits.startsWith(dialCodeDigits)) {
+    normalized = `${dialCodeDigits}${phoneDigits}`;
+  }
 
   return `https://wa.me/${normalized}?text=${encodeURIComponent(buildInvitacionShareMessage(invitacion, invitado))}`;
 }
@@ -98,9 +120,15 @@ function buildInvitacionShareMessage(invitacion, invitado) {
   const guestName = String(invitado?.nombre || '').trim();
   const inviteUrl = buildInvitacionLink(invitacion?.id, invitado?.id);
   const title = eventName || 'Nos casamos';
+  const totalGuests = Array.isArray(invitacion?.listaInvitadosOriginal)
+    ? invitacion.listaInvitadosOriginal.length
+    : Array.isArray(invitacion?.listaInvitados)
+      ? invitacion.listaInvitados.length
+      : 0;
+  const audienceText = totalGuests <= 1 ? 'contigo' : 'con ustedes';
   const greeting = guestName
-    ? `Hola ${guestName} Nos casamos !! y nos encantaría compartir este día tan especial con ustedes.`
-    : 'Hola Nos casamos !! y nos encantaría compartir este día tan especial con ustedes.';
+    ? `Hola ${guestName} Nos casamos !! y nos encantaría compartir este día tan especial ${audienceText}.`
+    : `Hola Nos casamos !! y nos encantaría compartir este día tan especial ${audienceText}.`;
 
   return `${title}\n\n${greeting}\n\nconfirma tu asistencia aqui:\n${inviteUrl}`;
 }
@@ -144,6 +172,7 @@ export default function InvitacionCard({
   onDelete,
   onManageMembers,
   onToggleSent,
+  paisesTelefonoMap = null,
   busy = false,
 }) {
   const integrantes = Array.isArray(invitacion?.listaInvitados) ? invitacion.listaInvitados : [];
@@ -159,7 +188,8 @@ export default function InvitacionCard({
     }
 
     try {
-      await copyTextWithFallback(buildInvitacionShareMessage(invitacion, invitadoShare));
+      const whatsappUrl = buildWhatsappUrl(invitacion, invitadoShare, paisesTelefonoMap);
+      await copyTextWithFallback(whatsappUrl || buildInvitacionShareMessage(invitacion, invitadoShare));
       showSuccess('Invitacion copiada al portapapeles.');
       onCloseMenu?.();
     } catch (error) {
@@ -274,7 +304,7 @@ export default function InvitacionCard({
       <div className={styles.memberListPreview}>
         {integrantes.length ? integrantes.slice(0, 4).map((item) => {
           const estado = getEstadoAsistenciaMeta(item?.confirmado);
-          const whatsappUrl = buildWhatsappUrl(invitacion, item);
+          const whatsappUrl = buildWhatsappUrl(invitacion, item, paisesTelefonoMap);
 
           return (
             <div key={item.id} className={styles.memberPreviewRow}>
