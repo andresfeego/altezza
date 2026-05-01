@@ -7,10 +7,9 @@ const TERRACOTA_HERO_BACKGROUND = (
     : terracotaHeroBackgroundAsset?.src || ''
 );
 
-export default function HeroImage1Module({ module, evento, invitacion }) {
-  const isTerracotaTemplate = String(evento?.templateKey || '').trim() === 'wedding_terracota';
+export default function HeroImage1TerracotaModule({ module, evento, invitacion }) {
   const backgroundImage = String(
-    (isTerracotaTemplate ? TERRACOTA_HERO_BACKGROUND : '') ||
+    TERRACOTA_HERO_BACKGROUND ||
       module?.config?.backgroundImage ||
       evento?.seo?.image ||
       evento?.imagenPrincipal ||

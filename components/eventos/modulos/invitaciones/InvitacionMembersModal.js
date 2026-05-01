@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { FiChevronDown, FiChevronUp, FiPhone, FiPlus, FiStar, FiTrash2 } from 'react-icons/fi';
+import { FiChevronDown, FiChevronUp, FiEdit2, FiPhone, FiPlus, FiStar, FiTrash2 } from 'react-icons/fi';
 import Button from '@/components/ui/actions/Button';
 import ModalShell from '@/components/ui/layout/ModalShell';
 import styles from './invitaciones.module.scss';
@@ -27,6 +27,8 @@ export default function InvitacionMembersModal({
   invitacion,
   invitadosEvento = [],
   saving = false,
+  onCreateGuest,
+  onEditGuest,
   onClose,
   onAssign,
   onRemove,
@@ -38,8 +40,8 @@ export default function InvitacionMembersModal({
   const integrantes = Array.isArray(invitacion?.listaInvitados) ? invitacion.listaInvitados : [];
 
   const invitadosDisponibles = useMemo(
-    () => filterInvitados(invitadosEvento, searchValue).filter((item) => Number(item?.idInvitacion) !== Number(invitacion?.id)),
-    [invitacion?.id, invitadosEvento, searchValue]
+    () => filterInvitados(invitadosEvento, searchValue).filter((item) => !item?.idInvitacion),
+    [invitadosEvento, searchValue]
   );
 
   if (!open || !invitacion) return null;
@@ -63,7 +65,15 @@ export default function InvitacionMembersModal({
               {integrantes.map((item) => (
                 <article key={item.id} className={styles.memberRow}>
                   <div className={styles.memberIdentity}>
-                    <strong>{item?.nombre || 'Invitado sin nombre'}</strong>
+                    <button
+                      type="button"
+                      className={styles.memberNameEditButton}
+                      onClick={() => onEditGuest?.(item)}
+                      disabled={saving}
+                    >
+                      <strong>{item?.nombre || 'Invitado sin nombre'}</strong>
+                      <FiEdit2 aria-hidden="true" />
+                    </button>
                     <div className={styles.memberSupport}>
                       {item?.telefono ? (
                         <span className={styles.supportLine}>
@@ -134,10 +144,21 @@ export default function InvitacionMembersModal({
           <div className={`${styles.accordionPanel} ${isPickerOpen ? styles.accordionPanelOpen : ''}`} aria-hidden={!isPickerOpen}>
             {isPickerOpen ? (
               <>
+                <div className={styles.memberPickerCreateRow}>
+                  <Button
+                    variant="secondary"
+                    onClick={() => onCreateGuest?.()}
+                    disabled={saving}
+                    iconLeading={<FiPlus />}
+                  >
+                    Crear nuevo invitado
+                  </Button>
+                </div>
+
                 <input
                   type="search"
                   className={styles.searchField}
-                  placeholder="Buscar por nombre, telefono o invitacion actual"
+                  placeholder="Buscar por nombre o telefono"
                   value={searchValue}
                   onChange={(event) => setSearchValue(event.target.value)}
                   disabled={saving}
@@ -146,8 +167,6 @@ export default function InvitacionMembersModal({
                 {invitadosDisponibles.length ? (
                   <div className={styles.membersListScrollable}>
                     {invitadosDisponibles.map((item) => {
-                      const movingFromOtherInvitation = Boolean(item?.idInvitacion && Number(item?.idInvitacion) !== Number(invitacion?.id));
-
                       return (
                         <article key={item.id} className={styles.memberRow}>
                           <div className={styles.memberIdentity}>
@@ -161,16 +180,11 @@ export default function InvitacionMembersModal({
                               ) : (
                                 <span className={styles.supportMuted}>Sin telefono</span>
                               )}
-                              {movingFromOtherInvitation ? (
-                                <span className={`${styles.metaPill} ${styles.metaMuted}`}>
-                                  En {item?.labelInvitacion || 'otra invitacion'}
-                                </span>
-                              ) : null}
                             </div>
                           </div>
 
                           <Button
-                            variant={movingFromOtherInvitation ? 'secondary' : 'primary'}
+                            variant="primary"
                             className={styles.assignButton}
                             onClick={() => onAssign(item, integrantes.length === 0)}
                             disabled={saving}
@@ -184,7 +198,7 @@ export default function InvitacionMembersModal({
                   </div>
                 ) : (
                   <div className={styles.emptyInnerState}>
-                    <p>No hay invitados disponibles con ese criterio.</p>
+                    <p>No hay invitados sin invitacion asignada para esta busqueda.</p>
                   </div>
                 )}
               </>

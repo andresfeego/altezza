@@ -1,4 +1,4 @@
-export default function HeroImage2View({ data, styles }) {
+export default function HeroImage2ClassicView({ data, styles }) {
   const renderCoupleNames = (value) => {
     const raw = String(value || '');
     if (!raw.includes('&')) return raw;

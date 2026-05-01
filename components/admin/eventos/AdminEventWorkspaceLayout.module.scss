@@ -3,6 +3,14 @@
   background: var(--ag-surface-page);
 }
 
+.mobileToggle {
+  display: none;
+}
+
+.mobileBackdrop {
+  display: none;
+}
+
 .primaryRail {
   position: fixed;
   top: 0;
@@ -167,5 +175,60 @@
   .eventIdentity {
     justify-items: start;
     text-align: left;
+  }
+}
+
+@media (max-width: 450px) {
+  .content {
+    margin-left: 0;
+    padding: 56px var(--ag-space-2) var(--ag-space-2);
+  }
+
+  .homeBackButton {
+    display: none;
+  }
+
+  .mobileToggle {
+    position: fixed;
+    left: 24px;
+    bottom: 16px;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: var(--ag-nav-primary-bg);
+    color: var(--ag-surface-card);
+    display: grid;
+    place-items: center;
+    z-index: 1510;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  .mobileBackdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--ag-nav-backdrop);
+    z-index: 1180;
+    display: block;
+  }
+
+  .primaryRailMobile {
+    transform: translateX(-150%);
+    transition: transform 0.25s ease;
+    z-index: 1410;
+  }
+
+  .primaryRailMobileOpen {
+    transform: translateX(0);
+  }
+
+  .contextRailMenuMobile {
+    transform: translateX(-150%) !important;
+    transition: transform 0.25s ease !important;
+  }
+
+  .contextRailMenuMobileOpen {
+    transform: translateX(0) !important;
   }
 }

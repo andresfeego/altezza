@@ -1,16 +1,6 @@
-import terracotaHeroBackgroundAsset from '../templates/wedding-terracota/assets/images/fondo_hero.webp';
-
-const TERRACOTA_HERO_BACKGROUND = (
-  typeof terracotaHeroBackgroundAsset === 'string'
-    ? terracotaHeroBackgroundAsset
-    : terracotaHeroBackgroundAsset?.src || ''
-);
-
-export default function HeroImage2Module({ module, evento, invitacion }) {
-  const isTerracotaTemplate = String(evento?.templateKey || '').trim() === 'wedding_terracota';
+export default function HeroImage2ClassicModule({ module, evento, invitacion }) {
   const backgroundImage = String(
-    (isTerracotaTemplate ? TERRACOTA_HERO_BACKGROUND : '') ||
-      module?.config?.backgroundImage ||
+    module?.config?.backgroundImage ||
       evento?.seo?.image ||
       evento?.imagenPrincipal ||
       invitacion?.imagenPrincipal ||

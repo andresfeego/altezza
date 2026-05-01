@@ -11,6 +11,7 @@
 .modal {
   position: relative;
   width: min(100%, 680px);
+  box-sizing: border-box;
   max-height: calc(100vh - 48px);
   overflow: auto;
   padding: var(--ag-space-3);
@@ -98,11 +99,11 @@
 
 @media (max-width: 640px) {
   .overlay {
-    padding: var(--ag-space-2);
+    padding: 16px;
   }
 
   .modal {
-    width: 100%;
+    width: min(680px, calc(100vw - 32px));
     max-height: calc(100vh - 32px);
     padding: var(--ag-space-2);
     border-radius: 16px;

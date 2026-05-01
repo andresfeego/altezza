@@ -6,6 +6,11 @@ export default function AttendanceConfirmModule({ module, invitacion, listaInvit
   return {
     title: String(module?.config?.title || 'Confirma tu asistencia').trim(),
     helperText: String(module?.config?.helperText || 'Selecciona la respuesta de cada integrante de esta invitacion.').trim(),
+    personalizedMessage: String(
+      invitacion?.mensaje_personalizado
+      || invitacion?.mensajePersonalizado
+      || ''
+    ).trim(),
     deadlineMode: String(module?.config?.deadlineMode || 'fechaHoraLimiteConfirmar').trim(),
     deadline: invitacion?.fechaHoraLimiteConfirmar || null,
     useCustomMessages: Boolean(module?.config?.useCustomMessages),

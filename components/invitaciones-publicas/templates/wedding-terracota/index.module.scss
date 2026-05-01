@@ -1956,6 +1956,22 @@
   padding: 16px 0;
 }
 
+.attendancePersonalMessage {
+  margin: 0;
+  padding: 22px 18px;
+  background: rgba(var(--inv-color-primary-rgb), 0.07);
+  border: 0;
+  text-align: center;
+}
+
+.attendancePersonalMessage p {
+  margin: 0;
+  color: var(--inv-text-on-dark);
+  font-family: var(--inv-font-tertiary);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
 .attendanceForm {
   display: grid;
   font-family: var(--inv-font-tertiary);

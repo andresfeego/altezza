@@ -3,10 +3,11 @@ import Button from '@/components/ui/actions/Button';
 import ModalShell from '@/components/ui/layout/ModalShell';
 import styles from './invitados.module.scss';
 
-function getInitialForm(invitado = null) {
+function getInitialForm(invitado = null, defaultPaisTelefonoId = '') {
   return {
     nombre: invitado?.nombre || '',
     telefono: invitado?.telefono || '',
+    idPaisTelefono: invitado?.idPaisTelefono || defaultPaisTelefonoId,
     whatsapp: invitado ? Boolean(invitado?.wp) : true,
     parentescoId: invitado?.parentesco || '',
     grupoEdadId: invitado?.grupoEdad || '',
@@ -18,18 +19,26 @@ export default function InvitadoFormModal({
   invitado = null,
   parentescos = [],
   gruposEdad = [],
+  paisesTelefono = [],
   saving = false,
   onClose,
   onSubmit,
 }) {
-  const [form, setForm] = useState(getInitialForm(invitado));
+  const defaultPaisTelefonoId = useMemo(() => {
+    const colombia = Array.isArray(paisesTelefono)
+      ? paisesTelefono.find((item) => String(item?.iso2 || '').toUpperCase() === 'CO')
+      : null;
+    return colombia?.id ? String(colombia.id) : '';
+  }, [paisesTelefono]);
+
+  const [form, setForm] = useState(getInitialForm(invitado, defaultPaisTelefonoId));
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (!open) return;
-    setForm(getInitialForm(invitado));
+    setForm(getInitialForm(invitado, defaultPaisTelefonoId));
     setErrors({});
-  }, [invitado, open]);
+  }, [invitado, open, defaultPaisTelefonoId]);
 
   const title = useMemo(() => (invitado ? 'Editar invitado' : 'Nuevo invitado'), [invitado]);
 
@@ -44,6 +53,7 @@ export default function InvitadoFormModal({
     const nextErrors = {};
 
     if (!form.nombre.trim()) nextErrors.nombre = 'Ingresa el nombre del invitado.';
+    if (!form.idPaisTelefono) nextErrors.idPaisTelefono = 'Selecciona un codigo de pais.';
     if (!form.parentescoId) nextErrors.parentescoId = 'Selecciona un parentesco.';
     if (!form.grupoEdadId) nextErrors.grupoEdadId = 'Selecciona un grupo de edad.';
 
@@ -55,6 +65,7 @@ export default function InvitadoFormModal({
     onSubmit({
       nombre: form.nombre.trim(),
       telefono: form.telefono.trim(),
+      idPaisTelefono: Number(form.idPaisTelefono),
       whatsapp: form.whatsapp,
       parentescoId: Number(form.parentescoId),
       grupoEdadId: Number(form.grupoEdadId),
@@ -91,15 +102,34 @@ export default function InvitadoFormModal({
           {errors.nombre ? <small className={styles.fieldError}>{errors.nombre}</small> : null}
         </label>
 
-        <label className={styles.formField}>
-          <span>Telefono</span>
-          <input
-            type="text"
-            value={form.telefono}
-            onChange={(event) => updateField('telefono', event.target.value)}
-            disabled={saving}
-          />
-        </label>
+        <div className={styles.formRow}>
+          <label className={`${styles.formField} ${styles.formFieldCountry}`}>
+            <span>Codigo pais</span>
+            <select
+              value={form.idPaisTelefono}
+              onChange={(event) => updateField('idPaisTelefono', event.target.value)}
+              disabled={saving}
+            >
+              <option value="">Selecciona una opcion</option>
+              {paisesTelefono.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {`${item.emojiBandera} ${item.codigoTelefono} ${item.nombre}`}
+                </option>
+              ))}
+            </select>
+            {errors.idPaisTelefono ? <small className={styles.fieldError}>{errors.idPaisTelefono}</small> : null}
+          </label>
+
+          <label className={`${styles.formField} ${styles.formFieldPhone}`}>
+            <span>Telefono</span>
+            <input
+              type="text"
+              value={form.telefono}
+              onChange={(event) => updateField('telefono', event.target.value)}
+              disabled={saving}
+            />
+          </label>
+        </div>
 
         <label className={styles.switchField}>
           <span className={styles.switchLabel}>Disponible por WhatsApp</span>

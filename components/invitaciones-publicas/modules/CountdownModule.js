@@ -8,24 +8,17 @@ function getTargetDate(module, invitacion) {
 
 export default function CountdownModule({ module, invitacion }) {
   const targetDate = getTargetDate(module, invitacion);
-  const now = new Date();
-  const remaining = targetDate ? targetDate.getTime() - now.getTime() : null;
-  const safeRemaining = remaining && remaining > 0 ? remaining : 0;
-
-  const days = Math.floor(safeRemaining / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((safeRemaining / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((safeRemaining / (1000 * 60)) % 60);
-  const seconds = Math.floor((safeRemaining / 1000) % 60);
+  const targetDateIso = targetDate ? targetDate.toISOString() : null;
 
   return {
     title: String(module?.config?.title || 'Cuenta regresiva').trim(),
-    completed: Boolean(targetDate && remaining <= 0),
-    targetDate,
+    completed: false,
+    targetDate: targetDateIso,
     items: [
-      { label: 'Dias', value: days },
-      { label: 'Horas', value: hours },
-      { label: 'Minutos', value: minutes },
-      { label: 'Segundos', value: seconds },
+      { label: 'Dias', value: 0 },
+      { label: 'Horas', value: 0 },
+      { label: 'Minutos', value: 0 },
+      { label: 'Segundos', value: 0 },
     ],
   };
 }

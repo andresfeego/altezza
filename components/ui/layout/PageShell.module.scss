@@ -1,7 +1,8 @@
 .shell {
-  width: 100%;
+  width: calc(100% - 38px);
   margin-left: 38px;
   padding: 0 var(--ag-space-4) var(--ag-space-4);
+  box-sizing: border-box;
 }
 
 .content {
@@ -35,6 +36,7 @@
 
 @media (max-width: 1024px) {
   .shell {
+    width: 100%;
     margin-left: 0;
     padding: 56px var(--ag-space-2) var(--ag-space-2);
   }

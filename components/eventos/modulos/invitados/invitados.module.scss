@@ -85,6 +85,10 @@
   box-sizing: border-box;
 }
 
+.formField select {
+  padding-right: 50px;
+}
+
 .filterRow {
   display: flex;
   flex-wrap: wrap;
@@ -230,9 +234,24 @@
   gap: var(--ag-space-2);
 }
 
+.formRow {
+  display: grid;
+  gap: var(--ag-space-2);
+  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+  align-items: start;
+}
+
 .formField {
   display: grid;
   gap: var(--ag-space-1);
+}
+
+.formFieldCountry {
+  max-width: 220px;
+}
+
+.formFieldPhone {
+  width: 100%;
 }
 
 .formField span {
@@ -463,6 +482,14 @@
   .invitedTop,
   .switchField {
     grid-template-columns: 1fr;
+  }
+
+  .formRow {
+    grid-template-columns: minmax(132px, 170px) minmax(0, 1fr);
+  }
+
+  .formFieldCountry {
+    max-width: none;
   }
 
   .summaryCard {
