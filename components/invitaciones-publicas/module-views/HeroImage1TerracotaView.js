@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-export default function HeroImage1View({ data, styles }) {
+export default function HeroImage1TerracotaView({ data, styles }) {
   const leaves = Array.from({ length: 21 }, (_, index) => index);
   const textSequence = useMemo(
     () => [

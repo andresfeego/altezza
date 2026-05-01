@@ -26,7 +26,7 @@ export default function DressCodeModule({ module, evento }) {
   const attireLabel = String(module?.config?.attireLabel || '').trim();
   const imageSrc = String(
     (templateKey === 'wedding_terracota' ? TERRACOTA_DRESSCODE_IMAGE : '') ||
-    (templateKey === 'wedding-classic' ? CLASSIC_DRESSCODE_IMAGE : '') ||
+    (templateKey === 'wedding_classic' ? CLASSIC_DRESSCODE_IMAGE : '') ||
     module?.config?.imageSrc ||
     ''
   ).trim();

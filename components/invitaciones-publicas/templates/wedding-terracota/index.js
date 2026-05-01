@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import HeroImage1View from '../../module-views/HeroImage1View';
-import HeroImage2View from '../../module-views/HeroImage2View';
-import EnvelopIntroView from '../../module-views/EnvelopIntroView';
+import HeroImage1TerracotaView from '../../module-views/HeroImage1TerracotaView';
+import HeroImage2TerracotaView from '../../module-views/HeroImage2TerracotaView';
+import EnvelopIntroTerracotaView from '../../module-views/EnvelopIntroTerracotaView';
 import SimpleImageView from '../../module-views/SimpleImageView';
 import BiblicalQuoteView from '../../module-views/BiblicalQuoteView';
 import CountdownImageView from '../../module-views/CountdownImageView';
@@ -23,9 +23,9 @@ import styles from './index.module.scss';
 const TEMPLATE_DEBUG = false;
 
 const MODULE_COMPONENTS = {
-  envelop_intro: EnvelopIntroView,
-  hero_image_1: HeroImage1View,
-  hero_image_2: HeroImage2View,
+  envelop_intro: EnvelopIntroTerracotaView,
+  hero_image_1: HeroImage1TerracotaView,
+  hero_image_2: HeroImage2TerracotaView,
   simple_image: SimpleImageView,
   biblical_quote: BiblicalQuoteView,
   countdown_image: CountdownImageView,

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import envelopTopAsset from '../templates/wedding-classic/assets/images/envelop_top.png';
 import envelopBottomAsset from '../templates/wedding-classic/assets/images/envelop_bottom.png';
 
-export default function EnvelopIntroView({ data, styles }) {
+export default function EnvelopIntroClassicView({ data, styles }) {
   const envelopTopSrc = typeof envelopTopAsset === 'string' ? envelopTopAsset : envelopTopAsset?.src || '';
   const envelopBottomSrc = typeof envelopBottomAsset === 'string' ? envelopBottomAsset : envelopBottomAsset?.src || '';
   const [buttonFading, setButtonFading] = useState(false);
@@ -72,7 +72,6 @@ export default function EnvelopIntroView({ data, styles }) {
       const section = sectionRef.current;
       if (!section) return;
 
-      // Remove both the section and its flowBlock wrapper from layout/pointer flow.
       section.style.display = 'none';
       const flowBlock = section.parentElement;
       if (flowBlock) {

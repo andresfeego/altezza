@@ -1,5 +1,7 @@
-import HeroImage1Module from './modules/HeroImage1Module';
-import HeroImage2Module from './modules/HeroImage2Module';
+import HeroImage1ClassicModule from './modules/HeroImage1ClassicModule';
+import HeroImage1TerracotaModule from './modules/HeroImage1TerracotaModule';
+import HeroImage2ClassicModule from './modules/HeroImage2ClassicModule';
+import HeroImage2TerracotaModule from './modules/HeroImage2TerracotaModule';
 import EnvelopIntroModule from './modules/EnvelopIntroModule';
 import SaveTheDateCalendarModule from './modules/SaveTheDateCalendarModule';
 import SimpleImageModule from './modules/SimpleImageModule';
@@ -25,9 +27,13 @@ function resolveModuleData(module, payload) {
     case 'envelop_intro':
       return EnvelopIntroModule({ module, ...payload });
     case 'hero_image_1':
-      return HeroImage1Module({ module, ...payload });
+      return payload?.evento?.templateKey === 'wedding_terracota'
+        ? HeroImage1TerracotaModule({ module, ...payload })
+        : HeroImage1ClassicModule({ module, ...payload });
     case 'hero_image_2':
-      return HeroImage2Module({ module, ...payload });
+      return payload?.evento?.templateKey === 'wedding_terracota'
+        ? HeroImage2TerracotaModule({ module, ...payload })
+        : HeroImage2ClassicModule({ module, ...payload });
     case 'save_the_date_calendar':
       return SaveTheDateCalendarModule({ module, ...payload });
     case 'simple_image':
