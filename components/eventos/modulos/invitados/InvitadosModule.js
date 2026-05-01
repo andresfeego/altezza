@@ -8,7 +8,7 @@ import {
   getParentescos,
 } from '@/components/initialized/data/helpersGetDB';
 import { actualizarInvitadoEvento, crearInvitadoEvento, eliminarInvitadoEvento } from '@/components/initialized/data/helpersSetDB';
-import { showError, showSuccess } from '@/components/initialized/Toast';
+import { confirmToast, showError, showSuccess } from '@/components/initialized/Toast';
 import InvitadoFormModal from './InvitadoFormModal';
 import InvitacionDetailModal from './InvitacionDetailModal';
 import InvitadosList from './InvitadosList';
@@ -142,7 +142,13 @@ export default function InvitadosModule({ idEvento, embedded = false }) {
   async function handleDeleteInvitado(invitado) {
     if (!invitado?.id) return;
 
-    const confirmed = window.confirm(`Deseas eliminar a ${invitado.nombre}?`);
+    const confirmed = await confirmToast({
+      title: 'Eliminar invitado',
+      message: `Deseas eliminar a ${invitado.nombre}?`,
+      confirmLabel: 'Eliminar',
+      cancelLabel: 'Cancelar',
+      confirmVariant: 'danger',
+    });
     if (!confirmed) return;
 
     try {

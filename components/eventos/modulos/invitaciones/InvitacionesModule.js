@@ -10,6 +10,7 @@ import {
 } from '@/components/initialized/data/helpersGetDB';
 import {
   actualizarInvitacionEvento,
+  actualizarInvitadoEvento,
   asignarInvitadoAInvitacion,
   crearInvitadoEvento,
   crearInvitacionEvento,
@@ -17,8 +18,9 @@ import {
   eliminarInvitacionEvento,
   quitarInvitadoDeInvitacion,
 } from '@/components/initialized/data/helpersSetDB';
-import { showError, showSuccess } from '@/components/initialized/Toast';
+import { confirmToast, showError, showSuccess } from '@/components/initialized/Toast';
 import Button from '@/components/ui/actions/Button';
+import InvitadoFormModal from '@/components/eventos/modulos/invitados/InvitadoFormModal';
 import InvitacionCard from './InvitacionCard';
 import InvitacionFormModal from './InvitacionFormModal';
 import InvitacionesImportModal from './InvitacionesImportModal';
@@ -58,6 +60,8 @@ function memberMatchesAttendanceFilter(member, filterId) {
 
 function invitationMatchesAttendanceFilter(invitacion, filterId) {
   if (filterId === 'all') return true;
+  if (filterId === 'enviada') return Boolean(invitacion?.enviada);
+  if (filterId === 'noEnviada') return !Boolean(invitacion?.enviada);
 
   const members = Array.isArray(invitacion?.listaInvitados) ? invitacion.listaInvitados : [];
   if (!members.length) return false;
@@ -67,12 +71,13 @@ function invitationMatchesAttendanceFilter(invitacion, filterId) {
 
 function filterInvitaciones(invitaciones, searchValue, selectedFilter) {
   const term = searchValue.trim().toLowerCase();
+  const isAttendanceFilter = ['sinConfirmar', 'quiza', 'asistire', 'noAsistire'].includes(selectedFilter);
   const filteredByAttendance = invitaciones
     .filter((item) => invitationMatchesAttendanceFilter(item, selectedFilter))
     .map((item) => ({
       ...item,
       listaInvitadosOriginal: item.listaInvitados,
-      listaInvitados: selectedFilter === 'all'
+      listaInvitados: !isAttendanceFilter
         ? item.listaInvitados
         : item.listaInvitados.filter((member) => memberMatchesAttendanceFilter(member, selectedFilter)),
     }));
@@ -101,8 +106,11 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isImportOpen, setIsImportOpen] = useState(false);
+  const [isCreateGuestOpen, setIsCreateGuestOpen] = useState(false);
+  const [editingGuest, setEditingGuest] = useState(null);
   const [editingInvitacion, setEditingInvitacion] = useState(null);
   const [managingInvitacion, setManagingInvitacion] = useState(null);
+  const [createGuestTargetInvitationId, setCreateGuestTargetInvitationId] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
 
   useEffect(() => {
@@ -254,7 +262,13 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
   async function handleRemoveInvitado(invitado) {
     if (!managingInvitacion?.id || !invitado?.id) return;
 
-    const confirmed = window.confirm(`Deseas quitar a ${invitado.nombre} de esta invitacion?`);
+    const confirmed = await confirmToast({
+      title: 'Quitar invitado',
+      message: `Deseas quitar a ${invitado.nombre} de esta invitacion?`,
+      confirmLabel: 'Quitar',
+      cancelLabel: 'Cancelar',
+      confirmVariant: 'danger',
+    });
     if (!confirmed) return;
 
     try {
@@ -295,7 +309,13 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
   async function handleDeleteInvitacion(invitacion) {
     if (!invitacion?.id) return;
 
-    const confirmed = window.confirm('Deseas eliminar esta invitacion? Los invitados seguiran existiendo en el evento.');
+    const confirmed = await confirmToast({
+      title: 'Eliminar invitacion',
+      message: 'Deseas eliminar esta invitacion? Los invitados seguiran existiendo en el evento.',
+      confirmLabel: 'Eliminar',
+      cancelLabel: 'Cancelar',
+      confirmVariant: 'danger',
+    });
     if (!confirmed) return;
 
     try {
@@ -389,6 +409,78 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
     } finally {
       setSaving(false);
     }
+  }
+
+  async function handleCreateGuestAndAssign(payload) {
+    const targetInvitationId = createGuestTargetInvitationId || managingInvitacion?.id || null;
+
+    try {
+      setSaving(true);
+
+      if (editingGuest?.id) {
+        await actualizarInvitadoEvento({
+          idEvento,
+          idInvitado: editingGuest.id,
+          ...payload,
+          estadoAsistenciaId: editingGuest?.estadoAsistenciaId,
+        });
+        showSuccess('Invitado actualizado.');
+        await reloadModule();
+        setIsCreateGuestOpen(false);
+        setEditingGuest(null);
+        setCreateGuestTargetInvitationId(null);
+        return;
+      }
+
+      if (!targetInvitationId) return;
+
+      const createdGuest = await crearInvitadoEvento({
+        idEvento,
+        ...payload,
+      });
+
+      if (!createdGuest?.id) {
+        throw new Error('No fue posible crear el invitado.');
+      }
+
+      const currentInvitation = invitaciones.find((item) => String(item?.id) === String(targetInvitationId));
+      const integrantesActuales = Array.isArray(currentInvitation?.listaInvitados) ? currentInvitation.listaInvitados : [];
+
+      await asignarInvitadoAInvitacion({
+        idEvento,
+        idInvitacion: targetInvitationId,
+        idInvitado: createdGuest.id,
+        principal: integrantesActuales.length === 0,
+      });
+
+      showSuccess('Invitado creado y agregado a la invitacion.');
+      await reloadModule();
+      setIsCreateGuestOpen(false);
+      setEditingGuest(null);
+      setCreateGuestTargetInvitationId(null);
+    } catch (error) {
+      showError(
+        error?.data?.message
+          || error?.message
+          || (editingGuest?.id ? 'No fue posible actualizar el invitado.' : 'No fue posible crear y agregar el invitado.')
+      );
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function handleOpenCreateGuestFromMembers() {
+    if (!managingInvitacion?.id) return;
+    setCreateGuestTargetInvitationId(managingInvitacion.id);
+    setEditingGuest(null);
+    setIsCreateGuestOpen(true);
+  }
+
+  function handleOpenEditGuestFromMembers(invitado) {
+    if (!invitado?.id) return;
+    setEditingGuest(invitado);
+    setCreateGuestTargetInvitationId(managingInvitacion?.id || null);
+    setIsCreateGuestOpen(true);
   }
 
   const content = (
@@ -490,10 +582,28 @@ export default function InvitacionesModule({ idEvento, embedded = false }) {
         invitacion={invitaciones.find((item) => item.id === managingInvitacion?.id) || managingInvitacion}
         invitadosEvento={invitados}
         saving={saving}
+        onCreateGuest={handleOpenCreateGuestFromMembers}
+        onEditGuest={handleOpenEditGuestFromMembers}
         onClose={() => setManagingInvitacion(null)}
         onAssign={handleAssignInvitado}
         onRemove={handleRemoveInvitado}
         onSetPrincipal={handleSetPrincipal}
+      />
+
+      <InvitadoFormModal
+        open={isCreateGuestOpen}
+        invitado={editingGuest}
+        parentescos={parentescos}
+        gruposEdad={gruposEdad}
+        paisesTelefono={paisesTelefono}
+        saving={saving}
+        onClose={() => {
+          if (saving) return;
+          setIsCreateGuestOpen(false);
+          setEditingGuest(null);
+          setCreateGuestTargetInvitationId(null);
+        }}
+        onSubmit={handleCreateGuestAndAssign}
       />
 
       <InvitacionesImportModal

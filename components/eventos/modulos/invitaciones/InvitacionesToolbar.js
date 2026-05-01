@@ -7,6 +7,8 @@ const FILTERS = [
   { id: 'quiza', label: 'Quiza' },
   { id: 'asistire', label: 'Asistire' },
   { id: 'noAsistire', label: 'No asistire' },
+  { id: 'enviada', label: 'Enviada' },
+  { id: 'noEnviada', label: 'No enviada' },
 ];
 
 export default function InvitacionesToolbar({

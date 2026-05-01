@@ -1554,6 +1554,23 @@
   padding: 24px 0;
 }
 
+.attendancePersonalMessage {
+  margin: 0;
+  padding: 22px 18px;
+  border-radius: 0;
+  background: rgba(var(--inv-color-primary-rgb), 0.92);
+  border: 0;
+  text-align: center;
+}
+
+.attendancePersonalMessage p {
+  margin: 0;
+  color: var(--inv-text);
+  font-family: var(--inv-font-secondary);
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
 .attendanceForm {
   display: grid;
   gap: 16px;

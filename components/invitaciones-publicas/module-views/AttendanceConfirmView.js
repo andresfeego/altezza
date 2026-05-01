@@ -8,6 +8,11 @@ export default function AttendanceConfirmView({ data, styles, attendanceState })
         <p className={styles.attendanceLead}>{data.helperText}</p>
       </div>
       <div className={styles.attendanceForm}>
+        {data.personalizedMessage ? (
+          <div className={styles.attendancePersonalMessage}>
+            <p>{data.personalizedMessage}</p>
+          </div>
+        ) : null}
         {attendanceState.guests.map((guest) => (
           <div key={guest.id} className={styles.attendanceRow}>
             <div className={styles.attendanceRowHeader}>

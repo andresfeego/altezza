@@ -297,6 +297,7 @@
 }
 
 .switchTrack {
+  position: relative;
   display: inline-flex;
   align-items: center;
   width: 56px;
@@ -311,13 +312,17 @@
 }
 
 .switchThumb {
+  position: absolute;
+  left: 4px;
+  top: calc(50% - 11px);
+  display: block;
   width: 22px;
   height: 22px;
   border-radius: 999px;
   background: var(--ag-text-muted);
   box-shadow: var(--ag-shadow-soft);
   transition:
-    transform var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
+    left var(--ag-motion-duration-fast) var(--ag-motion-ease-out),
     background-color var(--ag-motion-duration-fast) var(--ag-motion-ease-out);
 }
 
@@ -327,7 +332,7 @@
 }
 
 .switchControl input:checked + .switchTrack .switchThumb {
-  transform: translateX(24px);
+  left: calc(100% - 26px);
   background: var(--ag-success);
 }
 
@@ -381,6 +386,28 @@
   font-weight: var(--ag-font-weight-semibold);
 }
 
+.memberNameEditButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.memberNameEditButton:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.memberNameEditButton svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
 .memberPreviewActions {
   display: inline-flex;
   align-items: center;
@@ -392,6 +419,8 @@
 .memberIdentity {
   display: grid;
   gap: var(--ag-space-1);
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .memberMetaRow,
@@ -401,6 +430,12 @@
   flex-wrap: wrap;
   gap: var(--ag-space-1);
   align-items: center;
+}
+
+.memberActions {
+  flex: 0 0 auto;
+  width: auto;
+  justify-content: flex-end;
 }
 
 .supportLine {
@@ -621,6 +656,11 @@
   padding-right: 4px;
 }
 
+.memberPickerCreateRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .emptyInnerState {
   display: grid;
   gap: var(--ag-space-1);
@@ -706,6 +746,6 @@
 
   .memberActions,
   .assignButton {
-    width: 100%;
+    width: auto;
   }
 }
