@@ -142,7 +142,7 @@ export default function CountdownImageView({ data, styles }) {
       />
       <div className={styles.countdownImageOverlay} />
       <div className={styles.countdownImageContent}>
-        <p className={styles.countdownImageDate}>{data.displayDate}</p>
+        <p className={styles.countdownImageDate}>Nos casamos en...</p>
         <div className={styles.countdownImageGrid}>
           {items.map((item) => (
             <div key={item.label} className={styles.countdownImageItem}>

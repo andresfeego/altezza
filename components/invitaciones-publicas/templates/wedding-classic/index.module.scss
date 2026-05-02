@@ -159,7 +159,7 @@
 .envelopIntroInvitationLabel {
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -500%);
+  transform: translate(-50%, -366%);
   max-width: min(88vw, 520px);
   padding: 0 12px;
   text-align: center;
@@ -1148,7 +1148,7 @@
 
 .moduleCardRsvp {
   padding: 120px 24px;
-  background: rgba(var(--inv-color-secondary-rgb), 0.7);
+  background: rgba(var(--inv-color-secondary-rgb), 0.1);
 }
 
 .sectionHeading {
@@ -1312,7 +1312,7 @@
   margin: 16px 0;
   color: var(--inv-text);
   font-family: var(--inv-font-secondary);
-  font-size: clamp(1rem, 6vw, 2.4rem);
+  font-size: clamp(1rem, 5vw, 2.4rem);
   line-height: 1.5;
   text-align: center;
 }
@@ -1532,7 +1532,7 @@
 
 .attendanceTitle {
   margin: 0;
-  color: var(--inv-color-primary);
+  color: var(--inv-text);
   font-family: var(--inv-font-primary);
   font-size: clamp(2.3rem, 12vw, 3.2rem);
   line-height: 0.98;
@@ -1548,7 +1548,7 @@
 
 .attendanceLead {
   margin: 0;
-  color: rgba(var(--inv-color-primary-rgb), 0.88);
+  color: var(--inv-text-soft);
   font-size: 1.3rem;
   line-height: 1.2;
   padding: 24px 0;
