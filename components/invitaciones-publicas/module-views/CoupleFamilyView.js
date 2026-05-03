@@ -1,4 +1,6 @@
 export default function CoupleFamilyView({ data, styles }) {
+  const leaves = Array.from({ length: 21 }, (_, index) => index);
+
   function renderFamilyItem(item) {
     return (
       <li key={item.name}>
@@ -14,6 +16,11 @@ export default function CoupleFamilyView({ data, styles }) {
         className={styles.coupleFamilyBackground}
         aria-hidden="true"
       />
+      <div className={styles.heroImageLeaves} aria-hidden="true">
+        {leaves.map((leaf) => (
+          <span key={leaf} className={styles.heroImageLeaf} />
+        ))}
+      </div>
       <div className={styles.familyGroup}>
         <p className={styles.familyLead}>{data.coupleLabel || 'Nuestra celebracion'}</p>
         <div className={styles.familyColumns}>

@@ -1867,7 +1867,7 @@
   position: relative;
   overflow: hidden;
   padding: 100px 24px 112px;
-  background: rgba(var(--inv-color-primary-rgb), 0.07);
+  background: var(--inv-bg-base) url('./assets/images/fondo_hero.webp') center / cover no-repeat;
   isolation: isolate;
 }
 
@@ -1876,7 +1876,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: transparent;
+  background: rgba(var(--inv-color-dark-rgb), 0.28);
   pointer-events: none;
 }
 
@@ -1934,7 +1934,7 @@
 
 .attendanceTitle {
   margin: 0;
-  color: var(--inv-text);
+  color: var(--inv-text-on-dark);
   font-family: var(--inv-font-tertiary);
   font-size: clamp(1.4rem, 8vw, 2.8rem);
   line-height: 0.94;
@@ -1950,7 +1950,7 @@
 
 .attendanceLead {
   margin: 0;
-  color: var(--inv-text-soft);
+  color: var(--inv-text-on-dark-soft);
   font-size: 3.15rem;
   line-height: 1.35;
   padding: 16px 0;
