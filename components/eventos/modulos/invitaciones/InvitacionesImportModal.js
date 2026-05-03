@@ -192,6 +192,7 @@ function buildImportPreview(rows, parentescos = [], gruposEdad = []) {
     current.integrantes.push({
       nombre,
       telefono: rowData.telefono || '',
+      codigoPais: rowData.codigo_pais || '',
       whatsapp: normalizeBoolean(rowData.whatsapp),
       parentescoId: parentescoId || null,
       grupoEdadId: grupoEdadId || null,

@@ -94,7 +94,7 @@
   transform: translate(6px, -50%);
 }
 
-@media (max-width: 450px) {
+@media (max-width: 1024px) {
   .menu {
     transform: translateX(-110%);
     pointer-events: none;
@@ -112,7 +112,7 @@
   .mobileToggle {
     position: fixed;
     bottom: 16px;
-    left: 16px;
+    left: 8px;
     width: 48px;
     height: 48px;
     padding: 0;

@@ -145,7 +145,7 @@ export default function SideMenu({ onSelect }) {
 
   useEffect(() => {
     const handleResize = () => {
-      const mobile = typeof window !== 'undefined' ? window.innerWidth <= 450 : false;
+      const mobile = typeof window !== 'undefined' ? window.innerWidth <= 1024 : false;
       setIsMobile(mobile);
       if (!mobile) setOpenMobile(false);
     };

@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+const EMPTY_COUNTDOWN_ITEMS = [
+  { label: 'Dias', value: 0 },
+  { label: 'Horas', value: 0 },
+  { label: 'Minutos', value: 0 },
+  { label: 'Segundos', value: 0 },
+];
 
 function buildCountdownItems(targetDateValue) {
   const targetDate = targetDateValue ? new Date(targetDateValue) : null;
@@ -16,18 +23,17 @@ function buildCountdownItems(targetDateValue) {
 }
 
 export default function CountdownImageView({ data, styles }) {
-  const [items, setItems] = useState(() => buildCountdownItems(data?.targetDate));
+  const enableConfetti = data?.enableConfetti !== false;
+  const [items, setItems] = useState(EMPTY_COUNTDOWN_ITEMS);
+  const [isCompleted, setIsCompleted] = useState(false);
   const [isConfettiReady, setIsConfettiReady] = useState(false);
   const canvasRef = useRef(null);
   const confettiRef = useRef(null);
   const triggerRef = useRef(null);
   const hasFiredRef = useRef(false);
-  const isCompleted = useMemo(() => {
-    if (!data?.targetDate) return true;
-    return new Date(data.targetDate).getTime() <= Date.now();
-  }, [data?.targetDate, items]);
-
   useEffect(() => {
+    if (!enableConfetti) return undefined;
+
     let isMounted = true;
 
     if (!canvasRef.current) return undefined;
@@ -48,21 +54,28 @@ export default function CountdownImageView({ data, styles }) {
       confettiRef.current = null;
       setIsConfettiReady(false);
     };
-  }, []);
+  }, [enableConfetti]);
 
   useEffect(() => {
     if (!data?.targetDate) return undefined;
 
-    setItems(buildCountdownItems(data.targetDate));
+    const updateCountdown = () => {
+      const nextItems = buildCountdownItems(data.targetDate);
+      setItems(nextItems);
+      setIsCompleted(nextItems.every((item) => item.value === 0));
+    };
+
+    updateCountdown();
 
     const intervalId = window.setInterval(() => {
-      setItems(buildCountdownItems(data.targetDate));
+      updateCountdown();
     }, 1000);
 
     return () => window.clearInterval(intervalId);
   }, [data?.targetDate]);
 
   useEffect(() => {
+    if (!enableConfetti) return undefined;
     if (!triggerRef.current || !isConfettiReady) return undefined;
 
     const observer = new window.IntersectionObserver(
@@ -108,17 +121,19 @@ export default function CountdownImageView({ data, styles }) {
     observer.observe(triggerRef.current);
 
     return () => observer.disconnect();
-  }, [isConfettiReady]);
+  }, [enableConfetti, isConfettiReady]);
 
   if (!data?.backgroundImage || !data?.targetDate) return null;
 
   return (
     <section className={`${styles.moduleCard} ${styles.countdownImageModule}`}>
-      <canvas
-        ref={canvasRef}
-        className={styles.countdownImageConfettiCanvas}
-        aria-hidden="true"
-      />
+      {enableConfetti ? (
+        <canvas
+          ref={canvasRef}
+          className={styles.countdownImageConfettiCanvas}
+          aria-hidden="true"
+        />
+      ) : null}
       <img
         className={styles.countdownImageBackground}
         src={data.backgroundImage}
@@ -127,7 +142,7 @@ export default function CountdownImageView({ data, styles }) {
       />
       <div className={styles.countdownImageOverlay} />
       <div className={styles.countdownImageContent}>
-        <p className={styles.countdownImageDate}>{data.displayDate}</p>
+        <p className={styles.countdownImageDate}>Nos casamos en...</p>
         <div className={styles.countdownImageGrid}>
           {items.map((item) => (
             <div key={item.label} className={styles.countdownImageItem}>

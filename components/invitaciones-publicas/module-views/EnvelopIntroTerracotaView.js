@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import flowerCord1Asset from '../templates/wedding-terracota/assets/images/flower_cord1.png';
 
-export default function EnvelopIntroView({ data, styles }) {
+export default function EnvelopIntroTerracotaView({ data, styles }) {
   const flowerCord1Src = typeof flowerCord1Asset === 'string' ? flowerCord1Asset : flowerCord1Asset?.src || '';
   const fullCord2Path1 =
     'M21725.56 612.69c-6338.74,1149.93 -12120.78,1851.91 -16414.12,1717.6 1395.84,22.84 2309.69,-1108.22 3045.73,-1443.42 362.45,-165.07 987.17,218.25 1148.43,690.52 291.29,853.01 -1096.77,1177.02 -4194.15,752.9 1738.85,158.53 2500.57,966.39 2285.12,2423.61 -169.65,1116.76 72.7,1855.39 727.08,2215.88 1109.31,793.06 1220.17,3116.29 -303.99,3755.17 -302.98,180.12 24.11,-20.41 -180.74,122.62 -762.38,557.54 -785.45,1169.22 -69.25,1835.02 998.83,848.65 1252.74,1344.93 761.7,1488.8';
@@ -54,20 +54,13 @@ export default function EnvelopIntroView({ data, styles }) {
 
   function handleOpenIntro() {
     if (started) return;
-    // Debug temporal de interacción del botón de apertura.
-    // eslint-disable-next-line no-console
-    console.debug('[envelopIntro] Abrir clicked');
     setButtonFading(true);
     setStarted(true);
 
     if (typeof window !== 'undefined') {
       if (typeof window.__invMusicControls?.playUnmute === 'function') {
-        // eslint-disable-next-line no-console
-        console.debug('[envelopIntro] calling musicControls.playUnmute');
         window.__invMusicControls.playUnmute();
       } else {
-        // eslint-disable-next-line no-console
-        console.debug('[envelopIntro] musicControls missing, dispatching envelopIntro:open');
         window.dispatchEvent(new CustomEvent('envelopIntro:open'));
       }
     }
@@ -89,7 +82,6 @@ export default function EnvelopIntroView({ data, styles }) {
       const section = sectionRef.current;
       if (!section) return;
 
-      // Remove both the section and its flowBlock wrapper from layout/pointer flow.
       section.style.display = 'none';
       const flowBlock = section.parentElement;
       if (flowBlock) {

@@ -1,9 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import shellStyles from '@/components/home/AdminHome.module.scss';
 import EventClientModuleShell from '@/components/eventos/shared/EventClientModuleShell';
-import { getGruposEdad, getInvitadosEvento, getParentescos } from '@/components/initialized/data/helpersGetDB';
+import {
+  getGruposEdad,
+  getInvitadosEvento,
+  getPaisesTelefono,
+  getParentescos,
+} from '@/components/initialized/data/helpersGetDB';
 import { actualizarInvitadoEvento, crearInvitadoEvento, eliminarInvitadoEvento } from '@/components/initialized/data/helpersSetDB';
-import { showError, showSuccess } from '@/components/initialized/Toast';
+import { confirmToast, showError, showSuccess } from '@/components/initialized/Toast';
 import InvitadoFormModal from './InvitadoFormModal';
 import InvitacionDetailModal from './InvitacionDetailModal';
 import InvitadosList from './InvitadosList';
@@ -38,6 +43,7 @@ export default function InvitadosModule({ idEvento, embedded = false }) {
   const [invitados, setInvitados] = useState([]);
   const [parentescos, setParentescos] = useState([]);
   const [gruposEdad, setGruposEdad] = useState([]);
+  const [paisesTelefono, setPaisesTelefono] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -59,10 +65,11 @@ export default function InvitadosModule({ idEvento, embedded = false }) {
     async function loadModule() {
       try {
         setLoading(true);
-        const [listaInvitados, listaParentescos, listaGruposEdad] = await Promise.all([
+        const [listaInvitados, listaParentescos, listaGruposEdad, listaPaisesTelefono] = await Promise.all([
           getInvitadosEvento(idEvento),
           getParentescos(),
           getGruposEdad(),
+          getPaisesTelefono(),
         ]);
 
         if (cancelled) return;
@@ -70,6 +77,7 @@ export default function InvitadosModule({ idEvento, embedded = false }) {
         setInvitados(Array.isArray(listaInvitados) ? listaInvitados : []);
         setParentescos(Array.isArray(listaParentescos) ? listaParentescos : []);
         setGruposEdad(Array.isArray(listaGruposEdad) ? listaGruposEdad : []);
+        setPaisesTelefono(Array.isArray(listaPaisesTelefono) ? listaPaisesTelefono : []);
       } catch (error) {
         if (cancelled) return;
         setInvitados([]);
@@ -134,7 +142,13 @@ export default function InvitadosModule({ idEvento, embedded = false }) {
   async function handleDeleteInvitado(invitado) {
     if (!invitado?.id) return;
 
-    const confirmed = window.confirm(`Deseas eliminar a ${invitado.nombre}?`);
+    const confirmed = await confirmToast({
+      title: 'Eliminar invitado',
+      message: `Deseas eliminar a ${invitado.nombre}?`,
+      confirmLabel: 'Eliminar',
+      cancelLabel: 'Cancelar',
+      confirmVariant: 'danger',
+    });
     if (!confirmed) return;
 
     try {
@@ -213,6 +227,7 @@ export default function InvitadosModule({ idEvento, embedded = false }) {
         invitado={editingInvitado}
         parentescos={parentescos}
         gruposEdad={gruposEdad}
+        paisesTelefono={paisesTelefono}
         saving={saving}
         onClose={() => {
           if (saving) return;

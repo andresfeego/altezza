@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
+import { FiMenu, FiX } from 'react-icons/fi';
+import { useRouter } from 'next/router';
 import EventContextRail from '@/components/navigation/EventContextRail';
 import { buildClientModuleState } from '@/components/constants/clientModules';
 import useEventoStore from '@/components/initialized/stored/useEventoStore';
@@ -8,11 +10,18 @@ import { getDetalleEvento, getModulosClientePorEvento } from '@/components/initi
 import { showError } from '@/components/initialized/Toast';
 import styles from './AdminEventWorkspaceLayout.module.scss';
 
+function joinClasses(...values) {
+  return values.filter(Boolean).join(' ');
+}
+
 export default function AdminEventWorkspaceLayout({ idEvento, children }) {
+  const router = useRouter();
   const [evento, setEvento] = useState(null);
   const [loadingEvento, setLoadingEvento] = useState(true);
   const [loadingModules, setLoadingModules] = useState(true);
   const [moduleState, setModuleState] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const setEventoActivo = useEventoStore((state) => state.setEventoActivo);
 
   function syncModuleState(nextModules = []) {
@@ -74,6 +83,24 @@ export default function AdminEventWorkspaceLayout({ idEvento, children }) {
     };
   }, [idEvento, setEventoActivo]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = typeof window !== 'undefined' ? window.innerWidth <= 450 : false;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [router.asPath]);
+
   const loading = loadingEvento || loadingModules;
   const eventLabel = useMemo(() => {
     if (!evento) return idEvento || 'Evento';
@@ -82,7 +109,29 @@ export default function AdminEventWorkspaceLayout({ idEvento, children }) {
 
   return (
     <div className={styles.workspace}>
-      <aside className={styles.primaryRail} aria-label="Retorno al admin">
+      {isMobile ? (
+        <button
+          type="button"
+          className={styles.mobileToggle}
+          aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+        >
+          {mobileMenuOpen ? <FiX /> : <FiMenu />}
+        </button>
+      ) : null}
+
+      {isMobile && mobileMenuOpen ? (
+        <div className={styles.mobileBackdrop} onClick={() => setMobileMenuOpen(false)} />
+      ) : null}
+
+      <aside
+        className={joinClasses(
+          styles.primaryRail,
+          isMobile ? styles.primaryRailMobile : '',
+          isMobile && mobileMenuOpen ? styles.primaryRailMobileOpen : ''
+        )}
+        aria-label="Retorno al admin"
+      >
         <Link href="/home/admin" className={styles.homeBackButton} aria-label="Volver al home admin">
           <FiArrowLeft size={18} />
         </Link>
@@ -92,7 +141,11 @@ export default function AdminEventWorkspaceLayout({ idEvento, children }) {
         <EventContextRail
           idEvento={idEvento}
           moduleState={moduleState}
-          className={styles.contextRailMenu}
+          className={joinClasses(
+            styles.contextRailMenu,
+            isMobile ? styles.contextRailMenuMobile : '',
+            isMobile && mobileMenuOpen ? styles.contextRailMenuMobileOpen : ''
+          )}
         />
       </div>
 

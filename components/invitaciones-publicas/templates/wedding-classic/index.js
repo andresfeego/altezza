@@ -1,11 +1,12 @@
-import HeroImage1View from '../../module-views/HeroImage1View';
-import EnvelopIntroView from '../../module-views/EnvelopIntroView';
+import HeroImage1ClassicView from '../../module-views/HeroImage1ClassicView';
+import EnvelopIntroClassicView from '../../module-views/EnvelopIntroClassicView';
 import SimpleImageView from '../../module-views/SimpleImageView';
 import BiblicalQuoteView from '../../module-views/BiblicalQuoteView';
 import CountdownImageView from '../../module-views/CountdownImageView';
 import ParallaxImageDateView from '../../module-views/ParallaxImageDateView';
 import DressCodeView from '../../module-views/DressCodeView';
 import GiftEnvelopesView from '../../module-views/GiftEnvelopesView';
+import AdultsOnlyNoticeView from '../../module-views/AdultsOnlyNoticeView';
 import ClosingMessageView from '../../module-views/ClosingMessageView';
 import WelcomeMessageView from '../../module-views/WelcomeMessageView';
 import MusicPlayerView from '../../module-views/MusicPlayerView';
@@ -20,14 +21,15 @@ import styles from './index.module.scss';
 const TEMPLATE_DEBUG = false;
 
 const MODULE_COMPONENTS = {
-  envelop_intro: EnvelopIntroView,
-  hero_image_1: HeroImage1View,
+  envelop_intro: EnvelopIntroClassicView,
+  hero_image_1: HeroImage1ClassicView,
   simple_image: SimpleImageView,
   biblical_quote: BiblicalQuoteView,
   countdown_image: CountdownImageView,
   parallax_image_date: ParallaxImageDateView,
   dresscode: DressCodeView,
   gift_envelopes: GiftEnvelopesView,
+  adults_only_notice: AdultsOnlyNoticeView,
   closing_message: ClosingMessageView,
   welcome_message: WelcomeMessageView,
   music_player: MusicPlayerView,

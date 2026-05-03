@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react';
-import HeroImage1View from '../../module-views/HeroImage1View';
-import HeroImage2View from '../../module-views/HeroImage2View';
-import EnvelopIntroView from '../../module-views/EnvelopIntroView';
+import HeroImage1TerracotaView from '../../module-views/HeroImage1TerracotaView';
+import HeroImage2TerracotaView from '../../module-views/HeroImage2TerracotaView';
+import EnvelopIntroTerracotaView from '../../module-views/EnvelopIntroTerracotaView';
 import SimpleImageView from '../../module-views/SimpleImageView';
 import BiblicalQuoteView from '../../module-views/BiblicalQuoteView';
 import CountdownImageView from '../../module-views/CountdownImageView';
 import ParallaxImageDateView from '../../module-views/ParallaxImageDateView';
 import DressCodeView from '../../module-views/DressCodeView';
 import GiftEnvelopesView from '../../module-views/GiftEnvelopesView';
+import AdultsOnlyNoticeView from '../../module-views/AdultsOnlyNoticeView';
 import ClosingMessageView from '../../module-views/ClosingMessageView';
 import WelcomeMessageView from '../../module-views/WelcomeMessageView';
 import MusicPlayerView from '../../module-views/MusicPlayerView';
@@ -23,15 +24,16 @@ import styles from './index.module.scss';
 const TEMPLATE_DEBUG = false;
 
 const MODULE_COMPONENTS = {
-  envelop_intro: EnvelopIntroView,
-  hero_image_1: HeroImage1View,
-  hero_image_2: HeroImage2View,
+  envelop_intro: EnvelopIntroTerracotaView,
+  hero_image_1: HeroImage1TerracotaView,
+  hero_image_2: HeroImage2TerracotaView,
   simple_image: SimpleImageView,
   biblical_quote: BiblicalQuoteView,
   countdown_image: CountdownImageView,
   parallax_image_date: ParallaxImageDateView,
   dresscode: DressCodeView,
   gift_envelopes: GiftEnvelopesView,
+  adults_only_notice: AdultsOnlyNoticeView,
   closing_message: ClosingMessageView,
   welcome_message: WelcomeMessageView,
   music_player: MusicPlayerView,

@@ -8,5 +8,6 @@ export default function GiftEnvelopesModule({ module }) {
   return {
     imageSrc,
     imageAlt: String(module?.config?.imageAlt || 'Lluvia de sobres').trim(),
+    leadText: String(module?.config?.leadText || '').trim(),
   };
 }

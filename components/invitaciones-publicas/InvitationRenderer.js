@@ -1,69 +1,6 @@
-import HeroImage1Module from './modules/HeroImage1Module';
-import HeroImage2Module from './modules/HeroImage2Module';
-import EnvelopIntroModule from './modules/EnvelopIntroModule';
-import SaveTheDateCalendarModule from './modules/SaveTheDateCalendarModule';
-import SimpleImageModule from './modules/SimpleImageModule';
-import BiblicalQuoteModule from './modules/BiblicalQuoteModule';
-import CountdownImageModule from './modules/CountdownImageModule';
-import ParallaxImageDateModule from './modules/ParallaxImageDateModule';
-import DressCodeModule from './modules/DressCodeModule';
-import GiftEnvelopesModule from './modules/GiftEnvelopesModule';
-import ClosingMessageModule from './modules/ClosingMessageModule';
-import WelcomeMessageModule from './modules/WelcomeMessageModule';
-import PhotoSliderModule from './modules/PhotoSliderModule';
-import ImageSliderSepiaModule from './modules/ImageSliderSepiaModule';
-import MusicPlayerModule from './modules/MusicPlayerModule';
-import CountdownModule from './modules/CountdownModule';
-import CoupleFamilyModule from './modules/CoupleFamilyModule';
-import EventDetailsModule from './modules/EventDetailsModule';
-import AttendanceConfirmModule from './modules/AttendanceConfirmModule';
-import WeddingClassicTemplate from './templates/wedding-classic';
-import WeddingTerracotaTemplate from './templates/wedding-terracota';
-
-function resolveModuleData(module, payload) {
-  switch (module.type) {
-    case 'envelop_intro':
-      return EnvelopIntroModule({ module, ...payload });
-    case 'hero_image_1':
-      return HeroImage1Module({ module, ...payload });
-    case 'hero_image_2':
-      return HeroImage2Module({ module, ...payload });
-    case 'save_the_date_calendar':
-      return SaveTheDateCalendarModule({ module, ...payload });
-    case 'simple_image':
-      return SimpleImageModule({ module, ...payload });
-    case 'biblical_quote':
-      return BiblicalQuoteModule({ module, ...payload });
-    case 'countdown_image':
-      return CountdownImageModule({ module, ...payload });
-    case 'parallax_image_date':
-      return ParallaxImageDateModule({ module, ...payload });
-    case 'dresscode':
-      return DressCodeModule({ module, ...payload });
-    case 'gift_envelopes':
-      return GiftEnvelopesModule({ module, ...payload });
-    case 'closing_message':
-      return ClosingMessageModule({ module, ...payload });
-    case 'welcome_message':
-      return WelcomeMessageModule({ module, ...payload });
-    case 'photo_slider':
-      return PhotoSliderModule({ module, ...payload });
-    case 'image_slider_sepia':
-      return ImageSliderSepiaModule({ module, ...payload });
-    case 'music_player':
-      return MusicPlayerModule({ module, ...payload });
-    case 'countdown':
-      return CountdownModule({ module, ...payload });
-    case 'couple_family':
-      return CoupleFamilyModule({ module, ...payload });
-    case 'event_details':
-      return EventDetailsModule({ module, ...payload });
-    case 'attendance_confirm':
-      return AttendanceConfirmModule({ module, ...payload });
-    default:
-      return null;
-  }
-}
+import { buildResolvedModules } from './registry/moduleDataResolvers';
+import { normalizeTemplateKey } from './registry/templateKey';
+import { resolveTemplateComponent } from './registry/templateRegistry';
 
 export default function InvitationRenderer({
   evento,
@@ -73,6 +10,7 @@ export default function InvitationRenderer({
   modules,
   attendanceState,
 }) {
+  const templateKey = normalizeTemplateKey(evento?.templateKey);
   const payload = {
     evento,
     invitacion,
@@ -80,18 +18,8 @@ export default function InvitationRenderer({
     listaInvitados,
   };
 
-  const resolvedModules = (Array.isArray(modules) ? modules : [])
-    .filter((module) => module?.enabled !== false)
-    .sort((a, b) => Number(a?.order || 0) - Number(b?.order || 0))
-    .map((module) => ({
-      ...module,
-      data: resolveModuleData(module, payload),
-    }))
-    .filter((module) => module.data);
-
-  const TemplateComponent = evento?.templateKey === 'wedding_terracota'
-    ? WeddingTerracotaTemplate
-    : WeddingClassicTemplate;
+  const resolvedModules = buildResolvedModules(modules, payload, templateKey);
+  const TemplateComponent = resolveTemplateComponent(templateKey);
 
   return (
     <TemplateComponent

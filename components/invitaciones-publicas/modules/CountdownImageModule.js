@@ -23,5 +23,6 @@ export default function CountdownImageModule({ module, invitacion }) {
       options: { year: 'numeric', month: 'long', day: 'numeric' },
     }),
     backgroundImage,
+    enableConfetti: module?.config?.enableConfetti !== false,
   };
 }

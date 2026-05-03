@@ -1,5 +1,6 @@
 import terracotaDresscodeAsset from '../templates/wedding-terracota/assets/images/dresscode.png';
 import classicDresscodeAsset from '../templates/wedding-classic/assets/images/dresscode.png';
+import { normalizeTemplateKey } from '../registry/templateKey';
 
 const TERRACOTA_DRESSCODE_IMAGE = (
   typeof terracotaDresscodeAsset === 'string'
@@ -22,11 +23,11 @@ function normalizeColorList(value) {
 }
 
 export default function DressCodeModule({ module, evento }) {
-  const templateKey = String(evento?.templateKey || '').trim();
+  const templateKey = normalizeTemplateKey(evento?.templateKey);
   const attireLabel = String(module?.config?.attireLabel || '').trim();
   const imageSrc = String(
     (templateKey === 'wedding_terracota' ? TERRACOTA_DRESSCODE_IMAGE : '') ||
-    (templateKey === 'wedding-classic' ? CLASSIC_DRESSCODE_IMAGE : '') ||
+    (templateKey === 'wedding_classic' ? CLASSIC_DRESSCODE_IMAGE : '') ||
     module?.config?.imageSrc ||
     ''
   ).trim();
