@@ -6,6 +6,7 @@ import CountdownImageModule from '../modules/CountdownImageModule';
 import ParallaxImageDateModule from '../modules/ParallaxImageDateModule';
 import DressCodeModule from '../modules/DressCodeModule';
 import GiftEnvelopesModule from '../modules/GiftEnvelopesModule';
+import AdultsOnlyNoticeModule from '../modules/AdultsOnlyNoticeModule';
 import ClosingMessageModule from '../modules/ClosingMessageModule';
 import WelcomeMessageModule from '../modules/WelcomeMessageModule';
 import PhotoSliderModule from '../modules/PhotoSliderModule';
@@ -30,6 +31,7 @@ const COMMON_RESOLVERS = {
   parallax_image_date: ParallaxImageDateModule,
   dresscode: DressCodeModule,
   gift_envelopes: GiftEnvelopesModule,
+  adults_only_notice: AdultsOnlyNoticeModule,
   closing_message: ClosingMessageModule,
   welcome_message: WelcomeMessageModule,
   photo_slider: PhotoSliderModule,

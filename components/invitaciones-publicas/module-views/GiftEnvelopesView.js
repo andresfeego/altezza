@@ -8,9 +8,11 @@ export default function GiftEnvelopesView({ data, styles }) {
         aria-hidden="true"
       />
       <div className={styles.giftEnvelopesContent}>
-        <p className={styles.giftEnvelopesLead}>
-          Tu presencia es nuestro mejor regalo, pero si esta dentro de tus posibilidades y deseas hacernos un presente te dejamos esta opcion.
-        </p>
+        {data.leadText ? (
+          <p className={styles.giftEnvelopesLead}>
+            {data.leadText}
+          </p>
+        ) : null}
         <img className={styles.giftEnvelopesImage} src={data.imageSrc} alt={data.imageAlt} />
         <p className={styles.giftEnvelopesSubtitle}>Lluvia de sobres</p>
       </div>

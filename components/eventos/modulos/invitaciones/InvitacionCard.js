@@ -188,8 +188,7 @@ export default function InvitacionCard({
     }
 
     try {
-      const whatsappUrl = buildWhatsappUrl(invitacion, invitadoShare, paisesTelefonoMap);
-      await copyTextWithFallback(whatsappUrl || buildInvitacionShareMessage(invitacion, invitadoShare));
+      await copyTextWithFallback(buildInvitacionShareMessage(invitacion, invitadoShare));
       showSuccess('Invitacion copiada al portapapeles.');
       onCloseMenu?.();
     } catch (error) {
