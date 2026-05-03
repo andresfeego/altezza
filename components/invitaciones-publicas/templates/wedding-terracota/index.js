@@ -8,6 +8,7 @@ import CountdownImageView from '../../module-views/CountdownImageView';
 import ParallaxImageDateView from '../../module-views/ParallaxImageDateView';
 import DressCodeView from '../../module-views/DressCodeView';
 import GiftEnvelopesView from '../../module-views/GiftEnvelopesView';
+import AdultsOnlyNoticeView from '../../module-views/AdultsOnlyNoticeView';
 import ClosingMessageView from '../../module-views/ClosingMessageView';
 import WelcomeMessageView from '../../module-views/WelcomeMessageView';
 import MusicPlayerView from '../../module-views/MusicPlayerView';
@@ -32,6 +33,7 @@ const MODULE_COMPONENTS = {
   parallax_image_date: ParallaxImageDateView,
   dresscode: DressCodeView,
   gift_envelopes: GiftEnvelopesView,
+  adults_only_notice: AdultsOnlyNoticeView,
   closing_message: ClosingMessageView,
   welcome_message: WelcomeMessageView,
   music_player: MusicPlayerView,
