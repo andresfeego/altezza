@@ -50,6 +50,17 @@
   padding: 0 0 120px;
 }
 
+@media (min-width: 768px) {
+  .page {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .shell {
+    width: 100%;
+  }
+}
+
 .heroModules {
   position: relative;
   display: grid;
@@ -122,6 +133,17 @@
   background: #f4f1ea;
   isolation: isolate;
   z-index: 1000;
+}
+
+@media (min-width: 768px) {
+  .envelopIntroModule {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(100vw, 480px);
+  }
 }
 
 .envelopIntroHidden {
@@ -1820,6 +1842,16 @@
   .heroImageBackground,
   .heroImageLeaf {
     animation: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .biblicalQuoteText {
+    font-size: 1.2rem;
+  }
+
+  .familyLead {
+    font-size: 1.2rem;
   }
 }
 
