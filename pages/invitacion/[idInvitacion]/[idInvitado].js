@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
 import InvitationRenderer from '@/components/invitaciones-publicas/InvitationRenderer';
+import AnimatedDesktopBackground from '@/components/invitaciones-publicas/AnimatedDesktopBackground';
 import { confirmarInvitacionPublica } from '@/components/initialized/data/helpersPublicInvitacion';
 import terracotaToastStyles from '@/components/invitaciones-publicas/templates/wedding-terracota/toast.module.scss';
 import classicToastStyles from '@/components/invitaciones-publicas/templates/wedding-classic/toast.module.scss';
@@ -232,16 +233,18 @@ export default function InvitationPublicRoute({
         {absoluteImage ? <meta name="twitter:image:alt" content={imageAlt} /> : null}
       </Head>
 
-      <div ref={invitationRootRef}>
-        <InvitationRenderer
-          evento={evento}
-          invitacion={invitacion}
-          invitadoActual={invitadoActual}
-          listaInvitados={guests}
-          modules={modules}
-          attendanceState={attendanceState}
-        />
-      </div>
+      <AnimatedDesktopBackground>
+        <div ref={invitationRootRef}>
+          <InvitationRenderer
+            evento={evento}
+            invitacion={invitacion}
+            invitadoActual={invitadoActual}
+            listaInvitados={guests}
+            modules={modules}
+            attendanceState={attendanceState}
+          />
+        </div>
+      </AnimatedDesktopBackground>
       {!cardReady ? (
         <div
           style={{

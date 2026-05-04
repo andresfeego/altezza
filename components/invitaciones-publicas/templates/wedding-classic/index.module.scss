@@ -1845,6 +1845,16 @@
   }
 }
 
+@media (min-width: 768px) {
+  .biblicalQuoteText {
+    font-size: 1.2rem;
+  }
+
+  .familyLead {
+    font-size: 1.2rem;
+  }
+}
+
 @media (max-width: 767px) {
   .shell {
     width: 100svw;
