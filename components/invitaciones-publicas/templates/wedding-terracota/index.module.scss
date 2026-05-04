@@ -89,6 +89,17 @@
   padding: 0;
 }
 
+@media (min-width: 768px) {
+  .page {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .shell {
+    width: 100%;
+  }
+}
+
 .heroModules {
   position: relative;
   display: grid;
@@ -506,6 +517,68 @@
 
 .envelopCordD {
   stroke: rgba(var(--inv-color-primary-rgb), 0.5);
+}
+
+@media (min-width: 768px) {
+  .envelopIntroModule {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100vw, 480px);
+    height: 100vh;
+    min-height: 100vh;
+  }
+
+  .envelopIntroFlapLeftDecoration {
+    width: 125%;
+    left: -22%;
+    top: 32%;
+    opacity: 0.52;
+  }
+
+  .envelopIntroContentWrap {
+    top: 16px;
+    right: 16px;
+    width: 64%;
+    height: 34%;
+  }
+
+  .envelopIntroTextBlock {
+    margin-top: 20%;
+    gap: 8px;
+  }
+
+  .envelopIntroInitials {
+    font-size: clamp(10rem, 24vw, 12rem);
+  }
+
+  .envelopIntroBrideName,
+  .envelopIntroGroomName {
+    font-size: clamp(2.9rem, 7vw, 4rem);
+  }
+
+  .envelopIntroAmpersand {
+    font-size: clamp(1.9rem, 5vw, 2.7rem);
+  }
+
+  .envelopIntroDate {
+    font-size: clamp(1.1rem, 2.8vw, 1.6rem);
+    letter-spacing: 0.18em;
+  }
+
+  .envelopIntroInvitationLabel {
+    top: 68%;
+    right: 0;
+    width: 64%;
+    padding: 0 12px;
+    font-size: clamp(0.95rem, 1.9vw, 1.08rem);
+  }
+
+  .envelopIntroCanvas {
+    width: 122%;
+  }
 }
 
 @keyframes envelopCordUnwrapForward {
