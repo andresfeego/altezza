@@ -5,19 +5,22 @@
   display: grid;
   place-items: center;
   padding: var(--ag-space-3);
-  background: rgba(10, 10, 10, 0.58);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--ag-gray-9) 58%, transparent);
 }
 
 .modal {
   position: relative;
   width: min(100%, 680px);
   box-sizing: border-box;
-  max-height: calc(100vh - 48px);
-  overflow: auto;
+  max-height: calc(100dvh - var(--ag-space-6));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: var(--ag-space-3);
-  border-radius: 22px;
+  border-radius: var(--ag-radius-lg);
   border: 1px solid var(--ag-border-soft);
-  background: linear-gradient(180deg, rgba(255, 252, 249, 0.98) 0%, rgba(255, 255, 255, 1) 100%);
+  background: var(--ag-surface-card);
   box-shadow: var(--ag-shadow-lifted);
 }
 
@@ -27,9 +30,9 @@
 
 .header {
   display: block;
-  margin-bottom: var(--ag-space-7);
+  padding-bottom: var(--ag-space-4);
   padding-top: var(--ag-space-2);
-  padding-right: calc(40px + var(--ag-space-2));
+  padding-right: calc(var(--ag-space-5) + var(--ag-space-2));
 }
 
 .headerCopy {
@@ -64,21 +67,23 @@
 }
 
 .closeButton {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+  position: sticky;
+  z-index: 2;
+  top: var(--ag-space-1);
+  float: right;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: var(--ag-space-5);
+  height: var(--ag-space-5);
   padding: 0;
-  border-radius: 999px;
+  border-radius: var(--ag-radius-pill);
   border: 1px solid var(--ag-border-soft);
   background: var(--ag-surface-card);
   color: var(--ag-text-base);
   cursor: pointer;
   box-shadow: var(--ag-shadow-soft);
+  margin-bottom: calc(var(--ag-space-5) * -1);
 }
 
 .body {
@@ -90,7 +95,7 @@
   display: flex;
   gap: var(--ag-space-2);
   margin-top: var(--ag-space-7);
-  margin-bottom: var(--ag-space-4);
+  padding-bottom: var(--ag-space-4);
 }
 
 .footer > * {
@@ -99,14 +104,14 @@
 
 @media (max-width: 640px) {
   .overlay {
-    padding: 16px;
+    padding: var(--ag-space-2);
   }
 
   .modal {
-    width: min(680px, calc(100vw - 32px));
-    max-height: calc(100vh - 32px);
+    width: min(680px, calc(100vw - var(--ag-space-4)));
+    max-height: calc(100dvh - var(--ag-space-4));
     padding: var(--ag-space-2);
-    border-radius: 16px;
+    border-radius: var(--ag-radius-lg);
   }
 
   .footer {

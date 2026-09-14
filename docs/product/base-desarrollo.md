@@ -880,14 +880,23 @@ Acción requerida:
 
 Código actual:
 
-- página placeholder
+- módulo funcional de inventario propio en `/admin/mobiliario`
+- alta mínima de producto con nombre, categoría, color y dos imágenes obligatorias
+- presentaciones internas simples o por tamaño, cada una con SKU e inventario independiente
+- dos imágenes tipadas y reemplazables en R2 (`producto` y `decoracion`), y movimientos auditables
+- URL global y catálogo público editorial responsive en `/catalogo-mobiliario/[publicCode]`
+- banner con edición por fecha del enlace, filtros por categoría/nombre/color/código, fondos alternados configurables y listado máximo de 1024 px
+- códigos automáticos por categoría (1001…1099, 10100), independientes de los SKU
+- estado funcional: rediseño implementado y verificado localmente
+- estado UX/UI: revisado en desktop/móvil; pendiente de aceptación visual del usuario
+- publicación controlada sin exponer precios, stock ni valores internos
+- sin precios ni condiciones comerciales en Mobiliario; se definirán en la futura cotización
 
-Acción requerida:
+Fuera de esta fase:
 
-- CRUD de inventario
-- categorías
-- fotos
-- origen propio o proveedor
+- reservas y disponibilidad por fechas
+- alquileres, cotizaciones y pagos
+- mobiliario de proveedores
 
 ### Admin Alquiler
 

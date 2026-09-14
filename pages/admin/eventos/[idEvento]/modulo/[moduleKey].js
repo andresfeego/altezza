@@ -4,6 +4,7 @@ import AdminEventClientModulePlaceholder from '@/components/admin/eventos/AdminE
 import { CLIENT_MODULE_DEFINITIONS } from '@/components/constants/clientModules';
 import InvitadosModule from '@/components/eventos/modulos/invitados/InvitadosModule';
 import InvitacionesModule from '@/components/eventos/modulos/invitaciones/InvitacionesModule';
+import FotosCompartidasModule from '@/components/eventos/modulos/fotos_compartidas/FotosCompartidasModule';
 import styles from '@/components/admin/eventos/AdminEventWorkspaceLayout.module.scss';
 
 export default function AdminEventClientModulePage() {
@@ -52,6 +53,17 @@ export default function AdminEventClientModulePage() {
             <InvitacionesModule
               idEvento={idEvento}
               eventName={evento?.nombre || idEvento}
+              embedded
+            />
+          );
+        }
+
+        if (moduleKey === 'fotos_compartidas') {
+          return (
+            <FotosCompartidasModule
+              idEvento={idEvento}
+              eventName={evento?.nombre || idEvento}
+              canCreateAlbums
               embedded
             />
           );

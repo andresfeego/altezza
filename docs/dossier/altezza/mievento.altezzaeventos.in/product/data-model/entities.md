@@ -80,3 +80,13 @@ Relación:
 
 Relación:
 - `evento_has_mesa(idEvento, idMesa)`
+
+## Mobiliario
+
+- `mobiliario_categoria`: navegación, clasificación administrable y prefijo permanente único (10–99).
+- `mobiliario_producto`: nombre, categoría, color, orden, estado editorial, consecutivo y código público único; no duplica inventario ni contiene precios.
+- `mobiliario_variante`: presentación técnica con SKU, medidas e inventario independiente.
+- `mobiliario_movimiento`: historial inmutable de cambios de inventario.
+- `mobiliario_imagen`: una imagen `producto` y una `decoracion` por ficha, con metadatos y claves privadas R2.
+- `mobiliario_catalogo_publico`: URL pública activa, colorPrimario/colorSecundario y edición YYYY-MM.
+- `mobiliario_secuencia`: contadores persistentes para prefijos y consecutivos por categoría; no se eliminan al retirar productos/categorías.

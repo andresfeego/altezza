@@ -47,11 +47,13 @@ function MyApp({ Component, pageProps }) {
 
     const rutasPublicas = ['/_api/Login/login', '/_api/Login/cambiar-password', '/_api/registro/registro', '/ui-governance-lab'];
     const isPublicInvitation = router.pathname === '/invitacion/[idInvitacion]/[idInvitado]';
+    const isPublicShareGallery = router.pathname === '/share-gallery/[albumPublicCode]';
+    const isPublicMobiliario = router.pathname === '/catalogo-mobiliario/[publicCode]';
 
     const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
     const isGovernanceLab = router.pathname === '/ui-governance-lab';
 
-    if (rutasPublicas.includes(router.pathname) || isManual || isGovernanceLab || isPublicInvitation) {
+    if (rutasPublicas.includes(router.pathname) || isManual || isGovernanceLab || isPublicInvitation || isPublicShareGallery || isPublicMobiliario) {
       setLoading(false);
       return;
     }
@@ -257,6 +259,8 @@ function MyApp({ Component, pageProps }) {
   const isGovernanceLab = router.pathname === '/ui-governance-lab';
   const isAdminEventWorkspaceRoute = router.pathname.startsWith('/admin/eventos/[idEvento]');
   const isPublicInvitation = router.pathname === '/invitacion/[idInvitacion]/[idInvitado]';
+  const isPublicShareGallery = router.pathname === '/share-gallery/[albumPublicCode]';
+  const isPublicMobiliario = router.pathname === '/catalogo-mobiliario/[publicCode]';
 
   if (isPublicInvitation) {
     return (
@@ -346,8 +350,8 @@ function MyApp({ Component, pageProps }) {
       },
     }}
   />
-  {usuario && !isManual && !isGovernanceLab && !isAdminEventWorkspaceRoute && !isPublicInvitation && <SideMenu />}
-  {usuario && !isManual && !isGovernanceLab && !isPublicInvitation && <UserMenuButton />}
+  {usuario && !isManual && !isGovernanceLab && !isAdminEventWorkspaceRoute && !isPublicInvitation && !isPublicShareGallery && !isPublicMobiliario && <SideMenu />}
+  {usuario && !isManual && !isGovernanceLab && !isPublicInvitation && !isPublicShareGallery && !isPublicMobiliario && <UserMenuButton />}
   <Component {...pageProps} />
   </>
   );
