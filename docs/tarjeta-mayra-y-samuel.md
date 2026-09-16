@@ -209,4 +209,4 @@ No necesitas llenar datos técnicos para estas tareas.
 - [ ] Probar personalización y confirmación con una invitación de prueba.
 - [ ] Revisar presentación en móvil y vista previa al compartir.
 
-**Estado:** esta ficha recopila información; el evento y la tarjeta todavía no se han creado con estos datos.
+**Estado (14 de septiembre de 2026):** evento `bodmys` y plantilla Oliva creados en local. [Abrir invitación de prueba](http://localhost:3002/invitacion/mysprueba/910171). Los pendientes de esta ficha se completarán durante el diseño; no se ha enviado la invitación. Ver [implementación y observaciones de ortografía](oliva-implementacion.md).

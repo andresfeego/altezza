@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 const EMPTY_ITEMS = [
-  { label: 'Dias', value: 0 },
+  { label: 'Días', value: 0 },
   { label: 'Horas', value: 0 },
   { label: 'Minutos', value: 0 },
   { label: 'Segundos', value: 0 },
@@ -15,7 +15,7 @@ function buildCountdownItems(targetDateValue) {
   const safeRemaining = remaining > 0 ? remaining : 0;
 
   return [
-    { label: 'Dias', value: Math.floor(safeRemaining / (1000 * 60 * 60 * 24)) },
+    { label: 'Días', value: Math.floor(safeRemaining / (1000 * 60 * 60 * 24)) },
     { label: 'Horas', value: Math.floor((safeRemaining / (1000 * 60 * 60)) % 24) },
     { label: 'Minutos', value: Math.floor((safeRemaining / (1000 * 60)) % 60) },
     { label: 'Segundos', value: Math.floor((safeRemaining / 1000) % 60) },
@@ -23,7 +23,6 @@ function buildCountdownItems(targetDateValue) {
 }
 
 export default function CountdownView({ data, styles }) {
-  if (!data.targetDate) return null;
   const [items, setItems] = useState(EMPTY_ITEMS);
   const [completed, setCompleted] = useState(Boolean(data.completed));
 
@@ -45,6 +44,8 @@ export default function CountdownView({ data, styles }) {
     return () => window.clearInterval(intervalId);
   }, [data?.targetDate]);
 
+  if (!data.targetDate) return null;
+
   return (
     <section className={`${styles.moduleCard} ${styles.moduleCardAccent}`}>
       <div className={styles.sectionHeading}>
@@ -53,8 +54,8 @@ export default function CountdownView({ data, styles }) {
       </div>
       <p className={styles.moduleText}>
         {completed
-          ? 'El momento esperado ya llego.'
-          : 'Cada instante nos acerca a compartir este dia contigo.'}
+          ? 'El momento esperado ya llegó.'
+          : 'Cada instante nos acerca a compartir este día contigo.'}
       </p>
       <div className={styles.countdownGrid}>
         {items.map((item) => (

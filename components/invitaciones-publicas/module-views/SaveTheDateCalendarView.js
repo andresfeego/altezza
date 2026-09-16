@@ -49,15 +49,11 @@ export default function SaveTheDateCalendarView({ data, styles }) {
   const isValidDate = eventDate instanceof Date && !Number.isNaN(eventDate?.getTime?.());
   const [animatedValues, setAnimatedValues] = useState(null);
 
-  if (!isValidDate) {
-    return null;
-  }
-
-  const calendar = buildCalendarModel(eventDate);
-  if (!calendar) return null;
+  const calendar = isValidDate ? buildCalendarModel(eventDate) : null;
+  const daysInMonth = calendar?.daysInMonth || 0;
   const dayList = useMemo(
-    () => Array.from({ length: calendar.daysInMonth }, (_, index) => index + 1),
-    [calendar.daysInMonth]
+    () => Array.from({ length: daysInMonth }, (_, index) => index + 1),
+    [daysInMonth]
   );
 
   useEffect(() => {
@@ -125,6 +121,8 @@ export default function SaveTheDateCalendarView({ data, styles }) {
       }
     };
   }, [dayList]);
+
+  if (!calendar) return null;
 
   return (
     <section ref={moduleRef} className={`${styles.moduleCard} ${styles.saveTheDateCalendarModule}`}>

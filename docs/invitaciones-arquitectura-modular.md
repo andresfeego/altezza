@@ -67,3 +67,9 @@ Antes de cambios grandes:
 2. aplicar migracion modulo por modulo
 3. validar en classic y terracota
 4. dejar trazabilidad en este documento
+
+## Oliva (septiembre de 2026)
+
+Se añadió `wedding_oliva`, con portada tipográfica, botánica vectorial, vistas propias para familia y detalles, y módulos compartidos de cuenta regresiva y confirmación. La primera configuración corresponde al evento local `bodmys`.
+
+Contratos, recursos pendientes y pruebas: [Oliva — implementación](oliva-implementacion.md).

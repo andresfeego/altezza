@@ -4,6 +4,7 @@ export default function AttendanceConfirmModule({ module, invitacion, listaInvit
     : {};
 
   return {
+    introMessage: String(module?.config?.introMessage || '').trim(),
     title: String(module?.config?.title || 'Confirma tu asistencia').trim(),
     helperText: String(module?.config?.helperText || 'Selecciona la respuesta de cada integrante de esta invitacion.').trim(),
     personalizedMessage: String(

@@ -6,12 +6,14 @@ import AnimatedDesktopBackground from '@/components/invitaciones-publicas/Animat
 import { confirmarInvitacionPublica } from '@/components/initialized/data/helpersPublicInvitacion';
 import terracotaToastStyles from '@/components/invitaciones-publicas/templates/wedding-terracota/toast.module.scss';
 import classicToastStyles from '@/components/invitaciones-publicas/templates/wedding-classic/toast.module.scss';
+import olivaToastStyles from '@/components/invitaciones-publicas/templates/wedding-oliva/toast.module.scss';
+import { normalizeTemplateKey } from '@/components/invitaciones-publicas/registry/templateKey';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 
 const ATTENDANCE_OPTIONS = [
-  { value: 1, label: 'Asistire' },
-  { value: 2, label: 'Quizas' },
-  { value: 3, label: 'No asistire' },
+  { value: 1, label: 'Asistiré' },
+  { value: 2, label: 'Quizá' },
+  { value: 3, label: 'No asistiré' },
 ];
 
 function normalizeGuests(listaInvitados = []) {
@@ -24,7 +26,8 @@ function normalizeGuests(listaInvitados = []) {
 }
 
 function getToastStylesByTemplate(templateKey) {
-  if (String(templateKey || '').trim() === 'wedding_terracota') {
+  if (normalizeTemplateKey(templateKey) === 'wedding_oliva') return olivaToastStyles;
+  if (normalizeTemplateKey(templateKey) === 'wedding_terracota') {
     return terracotaToastStyles;
   }
 
@@ -58,6 +61,21 @@ export default function InvitationPublicRoute({
   const [guests, setGuests] = useState(() => normalizeGuests(listaInvitados));
   const [savingGuestIds, setSavingGuestIds] = useState([]);
   const [cardReady, setCardReady] = useState(false);
+  const [confirmationClosed, setConfirmationClosed] = useState(Boolean(invitacion?.confirmationClosed));
+  const [feedback, setFeedback] = useState({});
+  const isOliva = normalizeTemplateKey(evento?.templateKey) === 'wedding_oliva';
+  const PageBackground = isOliva ? 'div' : AnimatedDesktopBackground;
+
+  useEffect(() => {
+    const deadline = new Date(invitacion?.fechaHoraLimiteConfirmar || '').getTime();
+    if (!Number.isFinite(deadline)) return undefined;
+    const check = () => {
+      if (Date.now() >= deadline) setConfirmationClosed(true);
+    };
+    check();
+    const timer = window.setInterval(check, 1000);
+    return () => window.clearInterval(timer);
+  }, [invitacion?.fechaHoraLimiteConfirmar]);
   const invitationRootRef = useRef(null);
 
   const seo = evento?.seo || {};
@@ -70,6 +88,7 @@ export default function InvitationPublicRoute({
   const imageAlt = `${invitacion?.nombre || evento?.nombre || 'Invitacion'} | portada`;
   const ogImageType = (() => {
     const normalized = String(absoluteImage || '').toLowerCase();
+    if (normalized.endsWith('.svg')) return 'image/svg+xml';
     if (normalized.endsWith('.png')) return 'image/png';
     if (normalized.endsWith('.webp')) return 'image/webp';
     if (normalized.endsWith('.jpg') || normalized.endsWith('.jpeg')) return 'image/jpeg';
@@ -109,16 +128,15 @@ export default function InvitationPublicRoute({
   async function handleChangeGuest(event, idInvitado, confirmado) {
     event.preventDefault();
     event.stopPropagation();
-    if (savingGuestIds.includes(Number(idInvitado))) return;
+    if (confirmationClosed || savingGuestIds.includes(Number(idInvitado))) return;
 
-    const previousGuests = guests;
-    const nextGuests = guests.map((item) => (
+    const previousGuest = guests.find((item) => Number(item.id) === Number(idInvitado));
+    setFeedback((current) => ({ ...current, [idInvitado]: null }));
+    setGuests((current) => current.map((item) => (
       Number(item.id) === Number(idInvitado)
         ? { ...item, confirmado }
         : item
-    ));
-
-    setGuests(nextGuests);
+    )));
     setSavingGuestIds((current) => [...current, Number(idInvitado)]);
 
     try {
@@ -130,9 +148,16 @@ export default function InvitationPublicRoute({
         }],
       });
 
+      setFeedback((current) => ({ ...current, [idInvitado]: { error: false, message: 'Respuesta guardada.' } }));
       renderAttendanceToast('Actualizado', resolveAttendanceMessage(confirmado), evento?.templateKey);
     } catch (error) {
-      setGuests(previousGuests);
+      setGuests((current) => current.map((guest) => Number(guest.id) === Number(idInvitado)
+        ? { ...guest, confirmado: previousGuest?.confirmado || 0 } : guest));
+      if (error?.status === 409) setConfirmationClosed(true);
+      setFeedback((current) => ({ ...current, [idInvitado]: {
+        error: true,
+        message: error?.data?.message || 'No fue posible guardar la respuesta. Inténtalo de nuevo.',
+      } }));
       renderAttendanceToast(
         'No actualizado',
         error?.data?.message || error?.message || 'No fue posible guardar la confirmacion.',
@@ -145,10 +170,12 @@ export default function InvitationPublicRoute({
 
   const attendanceState = useMemo(() => ({
     guests,
+    closed: confirmationClosed,
+    feedback,
     options: ATTENDANCE_OPTIONS,
     isSavingGuest: (idInvitado) => savingGuestIds.includes(Number(idInvitado)),
     onChange: handleChangeGuest,
-  }), [guests, savingGuestIds]);
+  }), [guests, savingGuestIds, confirmationClosed, feedback]);
 
   useEffect(() => {
     let cancelled = false;
@@ -233,7 +260,7 @@ export default function InvitationPublicRoute({
         {absoluteImage ? <meta name="twitter:image:alt" content={imageAlt} /> : null}
       </Head>
 
-      <AnimatedDesktopBackground>
+      <PageBackground>
         <div ref={invitationRootRef}>
           <InvitationRenderer
             evento={evento}
@@ -244,7 +271,7 @@ export default function InvitationPublicRoute({
             attendanceState={attendanceState}
           />
         </div>
-      </AnimatedDesktopBackground>
+      </PageBackground>
       {!cardReady ? (
         <div
           style={{

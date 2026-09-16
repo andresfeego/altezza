@@ -68,3 +68,21 @@ export function getDatePartsInColombia(value) {
     shortYearLabel: String(year).slice(-2),
   };
 }
+
+// Build punctuation ourselves: Safari and Node can use different day-period
+// strings ("p.m." versus "p. m."), which breaks server/client hydration.
+export function formatTimeInColombiaStable(value, fallback = '') {
+  const parsed = toDate(value);
+  if (!parsed) return fallback;
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: COLOMBIA_TIMEZONE,
+    numberingSystem: 'latn',
+    hourCycle: 'h23',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).formatToParts(parsed);
+  const hour = Number(parts.find((part) => part.type === 'hour')?.value) % 24;
+  const minute = parts.find((part) => part.type === 'minute')?.value;
+  if (!Number.isFinite(hour) || minute === undefined) return fallback;
+  return `${hour % 12 || 12}:${minute.padStart(2, '0')} ${hour >= 12 ? 'p. m.' : 'a. m.'}`;
+}

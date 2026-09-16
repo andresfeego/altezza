@@ -1,3 +1,4 @@
+import HeroImage1OlivaModule from '../modules/HeroImage1OlivaModule';
 import EnvelopIntroModule from '../modules/EnvelopIntroModule';
 import SaveTheDateCalendarModule from '../modules/SaveTheDateCalendarModule';
 import SimpleImageModule from '../modules/SimpleImageModule';
@@ -44,6 +45,7 @@ const COMMON_RESOLVERS = {
 };
 
 const TEMPLATE_RESOLVER_OVERRIDES = {
+  wedding_oliva: { hero_image_1: HeroImage1OlivaModule },
   wedding_classic: {
     hero_image_1: HeroImage1ClassicModule,
     hero_image_2: HeroImage2ClassicModule,

@@ -1,8 +1,10 @@
+import WeddingOlivaTemplate from '../templates/wedding-oliva';
 import WeddingClassicTemplate from '../templates/wedding-classic';
 import { normalizeTemplateKey } from './templateKey';
 import WeddingTerracotaTemplate from '../templates/wedding-terracota';
 
 export const TEMPLATE_COMPONENTS = {
+  wedding_oliva: WeddingOlivaTemplate,
   wedding_classic: WeddingClassicTemplate,
   wedding_terracota: WeddingTerracotaTemplate,
 };
