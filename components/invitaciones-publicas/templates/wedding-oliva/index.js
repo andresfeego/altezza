@@ -4,20 +4,20 @@ import { PiCheersThin } from 'react-icons/pi';
 import { BsCalendarHeart } from 'react-icons/bs';
 import { FiArrowUpRight, FiHeart } from 'react-icons/fi';
 import AttendanceConfirmView from '../../module-views/AttendanceConfirmView';
-import CountdownView from '../../module-views/CountdownView';
 import MusicPlayerView from '../../module-views/MusicPlayerView';
-import PhotoSliderView from '../../module-views/PhotoSliderView';
-import SimpleImageView from '../../module-views/SimpleImageView';
-import WelcomeMessageView from '../../module-views/WelcomeMessageView';
-import { formatDateInColombia, formatTimeInColombiaStable, getDatePartsInColombia } from '@/components/utils/datetimeColombia';
+import { formatDateInColombia, formatTimeInColombiaStable } from '@/components/utils/datetimeColombia';
 import BotanicalArt from './BotanicalArt';
 import EnvelopeOliva from './EnvelopeOliva';
+import HeroOliva from './HeroOliva';
 import templateStyles from './index.module.scss';
 import interiorStyles from './interior.module.scss';
+import { COMMON_MODULE_VIEWS } from '../../registry/commonModuleViews';
+import HeroImage2ClassicView from '../../module-views/HeroImage2ClassicView';
+import portableStyles from '../../module-views/portable.module.scss';
 import debugStyles from './debug.module.scss';
 
 // Keep the finished envelope's root palette and styles independent of the interior.
-const styles = { ...templateStyles, ...interiorStyles };
+const styles = { ...portableStyles, ...templateStyles, ...interiorStyles };
 
 // Set to false to hide module names and boundaries, as in Classic and Terracota.
 const TEMPLATE_DEBUG = true;
@@ -35,39 +35,6 @@ const dateLabel = (value) => formatDateInColombia(value, {
   options: { day: 'numeric', month: 'long', year: 'numeric' }, fallback: '',
 });
 const timeLabel = formatTimeInColombiaStable;
-const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-
-function EditorialDate({ value }) {
-  const date = getDatePartsInColombia(value);
-  if (!date) return null;
-
-  return (
-    <time className={styles.heroDate} dateTime={value} aria-label={dateLabel(value)}>
-      <span className={styles.dateMonth}>{MONTHS[date.month - 1]}</span>
-      <span className={styles.dateDay}>{date.dayLabel}</span>
-      <span className={styles.dateYear}>{date.year}</span>
-    </time>
-  );
-}
-
-function Hero({ data }) {
-  return (
-    <header className={styles.hero}>
-      <BotanicalArt className={styles.heroFlorals} eager />
-      <p className={styles.eyebrow}>Nos casamos</p>
-      <h1 tabIndex={-1} data-oliva-title className={styles.coupleNames}>
-        {data.brideName && data.groomName ? <>{data.brideName}<em>&</em>{data.groomName}</> : data.coupleNames}
-      </h1>
-      <EditorialDate value={data.date} />
-      <span className={styles.rule} aria-hidden="true" />
-      {data.message ? <p className={styles.heroMessage}>{data.message}</p> : null}
-      {data.imageSrc ? <img className={styles.heroPhoto} src={data.imageSrc} alt={data.imageAlt} /> : null}
-      <p className={styles.smallLabel}>Una vida en común</p>
-      <BotanicalArt className={styles.heroBottomFlorals} />
-    </header>
-  );
-}
-
 function Family({ data }) {
   const groups = [
     ['Padres de la novia', data.parentsBride],
@@ -76,8 +43,8 @@ function Family({ data }) {
   ].filter(([, people]) => people.length);
   return (
     <section className={styles.family} aria-label="Nuestra familia">
-      <p className={styles.eyebrow}>Con quienes nos han acompañado</p>
-      <h2 className={styles.sectionTitle}>Nuestras raíces</h2>
+      {data.coupleLabel ? <p className={styles.familyLead}>{data.coupleLabel}</p> : null}
+      {data.title ? <h2 className={styles.sectionTitle}>{data.title}</h2> : null}
       <div className={styles.familyGroups}>
         {groups.map(([label, people]) => (
           <div className={styles.familyGroup} key={label}>
@@ -86,7 +53,6 @@ function Family({ data }) {
           </div>
         ))}
       </div>
-      {data.message ? <p className={styles.familyMessage}>{data.message}</p> : null}
       <FiHeart className={styles.familyHeart} aria-hidden="true" />
     </section>
   );
@@ -95,17 +61,18 @@ function Family({ data }) {
 function Details({ data }) {
   const invitation = data.invitacion || {};
   const events = [
-    data.showCeremony && { name: 'Ceremonia', Icon: GiLinkedRings, date: invitation.fechaHoraCeremonia, place: invitation.lugarCeremonia, address: data.ceremonyAddress, map: data.ceremonyMapUrl || invitation.ceremonyMapUrl, message: data.ceremonyMessage },
-    data.showReception && { name: 'Recepción', Icon: PiCheersThin, date: invitation.fechaHoraRecepcion, place: invitation.lugarRecepcion, address: data.receptionAddress, map: data.receptionMapUrl || invitation.receptionMapUrl, message: data.receptionMessage },
+    data.showCeremony && { name: 'Ceremonia', Icon: GiLinkedRings, date: invitation.fechaHoraCeremonia, place: invitation.lugarCeremonia, address: data.ceremonyAddress, map: data.ceremonyMapUrl, message: data.ceremonyMessage },
+    data.showReception && { name: 'Recepción', Icon: PiCheersThin, date: invitation.fechaHoraRecepcion, place: invitation.lugarRecepcion, address: data.receptionAddress, map: data.receptionMapUrl, message: data.receptionMessage },
   ].filter(Boolean);
   return (
     <section className={styles.details} aria-label="Lugares y horarios">
+      {data.backgroundVideo ? <video className={styles.detailsVideo} src={data.backgroundVideo} autoPlay muted loop playsInline aria-hidden="true" /> : null}
       <BotanicalArt variant="sprig" className={styles.detailsSprig} />
-      <p className={styles.eyebrow}>El día que soñamos</p>
+      {data.title ? <p className={styles.eyebrow}>{data.title}</p> : null}
       {events.map((event) => (
         <article className={styles.event} key={event.name}>
           <event.Icon className={styles.eventIcon} aria-hidden="true" />
-          {event.date ? <time className={styles.eventTime} dateTime={event.date}>{timeLabel(event.date)}</time> : null}
+          {event.date ? <time className={styles.eventTime} dateTime={event.date}>{timeLabel(event.date)}<span className={styles.eventDate}>{dateLabel(event.date)}</span></time> : null}
           <h2 className={styles.eventTitle}>{event.name}</h2>
           <h3 className={styles.place}>{event.place}</h3>
           {event.address ? <p className={styles.address}>{event.address}</p> : null}
@@ -123,26 +90,33 @@ function Attendance({ data, attendanceState }) {
   return (
     <section className={styles.rsvp}>
       <BsCalendarHeart className={styles.rsvpIcon} aria-hidden="true" />
-      <p className={styles.eyebrow}>Nos encantará verte</p>
-      {data.introMessage ? <p className={styles.rsvpMessage}>{data.introMessage}</p> : null}
       {lastDay ? <p className={styles.deadline}>Confirma hasta el {lastDay}</p> : null}
       <AttendanceConfirmView data={data} styles={styles} attendanceState={attendanceState} />
     </section>
   );
 }
 
-const MODULE_COMPONENTS = {
-  hero_image_1: Hero,
+function Closing({ data }) {
+  return (
+    <footer className={styles.footer}>
+      {data.frameImage ? <img className={styles.footerFlorals} src={data.frameImage} alt={data.frameImageAlt} /> : <BotanicalArt className={styles.footerFlorals} />}
+      <p className={styles.closingText}>{data.message}</p>
+    </footer>
+  );
+}
+
+export const MODULE_COMPONENTS = {
+  ...COMMON_MODULE_VIEWS,
+  envelop_intro: EnvelopeOliva,
+  hero_image_1: HeroOliva,
+  hero_image_2: HeroImage2ClassicView,
   couple_family: Family,
   event_details: Details,
-  countdown: CountdownView,
   attendance_confirm: Attendance,
-  photo_slider: PhotoSliderView,
-  simple_image: SimpleImageView,
-  welcome_message: WelcomeMessageView,
+  closing_message: Closing,
 };
 
-export default function WeddingOlivaTemplate({ resolvedModules, attendanceState, evento }) {
+export default function WeddingOlivaTemplate({ resolvedModules, attendanceState }) {
   const envelope = resolvedModules.find((module) => module.type === 'envelop_intro');
   const music = resolvedModules.find((module) => module.type === 'music_player');
   const [opened, setOpened] = useState(!envelope);
@@ -176,14 +150,6 @@ export default function WeddingOlivaTemplate({ resolvedModules, attendanceState,
             </ModuleFrame>
           );
         })}
-        <ModuleFrame name="footer">
-          <footer className={styles.footer}>
-            <BotanicalArt className={styles.footerFlorals} />
-            <p className={styles.eyebrow}>Con mucho cariño</p>
-            <p className={styles.footerNames}>{evento?.nombre}</p>
-            <span className={styles.smallLabel}>Altezza · Eventos inolvidables</span>
-          </footer>
-        </ModuleFrame>
       </div>
     </main>
   );

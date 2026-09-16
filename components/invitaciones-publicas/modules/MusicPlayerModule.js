@@ -6,7 +6,7 @@ export default function MusicPlayerModule({ module }) {
   }
 
   return {
-    title: String(module?.config?.title || 'Nuestra cancion').trim(),
+    title: String(module?.config?.title || '').trim(),
     trackLabel: String(module?.config?.trackLabel || '').trim(),
     audioSrc,
     autoplay: Boolean(module?.config?.autoplay),

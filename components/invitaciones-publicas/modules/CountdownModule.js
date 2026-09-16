@@ -11,7 +11,9 @@ export default function CountdownModule({ module, invitacion }) {
   const targetDateIso = targetDate ? targetDate.toISOString() : null;
 
   return {
-    title: String(module?.config?.title || 'Cuenta regresiva').trim(),
+    message: String(module?.config?.message || '').trim(),
+    completedMessage: String(module?.config?.completedMessage || '').trim(),
+    title: String(module?.config?.title || '').trim(),
     completed: false,
     targetDate: targetDateIso,
     items: [

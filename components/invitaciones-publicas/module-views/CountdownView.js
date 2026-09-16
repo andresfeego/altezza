@@ -48,15 +48,10 @@ export default function CountdownView({ data, styles }) {
 
   return (
     <section className={`${styles.moduleCard} ${styles.moduleCardAccent}`}>
-      <div className={styles.sectionHeading}>
-        <span className={styles.sectionEyebrow}>Cuenta regresiva</span>
-        <h2 className={styles.moduleTitle}>{data.title}</h2>
-      </div>
-      <p className={styles.moduleText}>
-        {completed
-          ? 'El momento esperado ya llegó.'
-          : 'Cada instante nos acerca a compartir este día contigo.'}
-      </p>
+      {data.title ? <h2 className={styles.moduleTitle}>{data.title}</h2> : null}
+      {(completed ? data.completedMessage : data.message) ? (
+        <p className={styles.moduleText}>{completed ? data.completedMessage : data.message}</p>
+      ) : null}
       <div className={styles.countdownGrid}>
         {items.map((item) => (
           <div key={item.label} className={styles.countdownItem}>

@@ -5,10 +5,7 @@ export default function PhotoSliderView({ data, styles }) {
 
   return (
     <section className={`${styles.moduleCard} ${styles.moduleCardMedia}`}>
-      <div className={styles.sectionHeading}>
-        <span className={styles.sectionEyebrow}>Momentos</span>
-        <h2 className={styles.moduleTitle}>Nuestra historia en imagenes</h2>
-      </div>
+      {data.title ? <h2 className={styles.moduleTitle}>{data.title}</h2> : null}
       <div className={styles.gallery}>
         <div className={styles.galleryLead}>
           <img src={lead} alt="Foto principal de la invitacion" />

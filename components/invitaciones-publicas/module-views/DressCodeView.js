@@ -3,11 +3,9 @@ export default function DressCodeView({ data, styles }) {
 
   return (
     <section className={`${styles.moduleCard} ${styles.dressCodeModule}`}>
-      <h2 className={styles.dressCodeTitle}>Dress code</h2>
+      {data.title ? <h2 className={styles.dressCodeTitle}>{data.title}</h2> : null}
       {data.attireLabel ? <p className={styles.dressCodeData}>{data.attireLabel}</p> : null}
-      <p className={styles.dressCodeSubtitle}>
-        Queremos que cada uno de ustedes se sienta especial y luzca espectacular en nuestro dia
-      </p>
+      {data.message ? <p className={styles.dressCodeSubtitle}>{data.message}</p> : null}
       {data.imageSrc ? (
         <div className={styles.dressCodeIllustrationFrame}>
           <img className={styles.dressCodeIllustration} src={data.imageSrc} alt={data.imageAlt} />

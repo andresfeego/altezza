@@ -26,9 +26,9 @@ export default function DressCodeModule({ module, evento }) {
   const templateKey = normalizeTemplateKey(evento?.templateKey);
   const attireLabel = String(module?.config?.attireLabel || '').trim();
   const imageSrc = String(
+    module?.config?.imageSrc ||
     (templateKey === 'wedding_terracota' ? TERRACOTA_DRESSCODE_IMAGE : '') ||
     (templateKey === 'wedding_classic' ? CLASSIC_DRESSCODE_IMAGE : '') ||
-    module?.config?.imageSrc ||
     ''
   ).trim();
   const imageAlt = String(module?.config?.imageAlt || 'Referencia de dress code').trim();
@@ -40,6 +40,8 @@ export default function DressCodeModule({ module, evento }) {
   }
 
   return {
+    title: String(module?.config?.title || '').trim(),
+    message: String(module?.config?.message || '').trim(),
     attireLabel,
     imageSrc,
     imageAlt,

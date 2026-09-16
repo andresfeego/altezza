@@ -17,7 +17,8 @@ export default function CountdownImageModule({ module, invitacion }) {
   }
 
   return {
-    title: String(module?.config?.title || 'Cuenta regresiva').trim(),
+    completedMessage: String(module?.config?.completedMessage || '').trim(),
+    title: String(module?.config?.title || '').trim(),
     targetDate: targetDate.toISOString(),
     displayDate: formatDateInColombia(targetDate, {
       options: { year: 'numeric', month: 'long', day: 'numeric' },

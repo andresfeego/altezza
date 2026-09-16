@@ -126,7 +126,7 @@ export default function SaveTheDateCalendarView({ data, styles }) {
 
   return (
     <section ref={moduleRef} className={`${styles.moduleCard} ${styles.saveTheDateCalendarModule}`}>
-      <p className={styles.saveTheDateCalendarMessage}>{data.message}</p>
+      {data.message ? <p className={styles.saveTheDateCalendarMessage}>{data.message}</p> : null}
       <div className={styles.saveTheDateCalendarSurface}>
         <div className={styles.saveTheDateCalendarHeading}>
           <h3 className={styles.saveTheDateCalendarYear}>{calendar.yearLabel}</h3>

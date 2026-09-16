@@ -2,10 +2,10 @@ export default function AttendanceConfirmView({ data, styles, attendanceState })
   return (
     <section className={`${styles.moduleCard} ${styles.moduleCardRsvp}`}>
       <div className={styles.attendanceHeading}>
-        <h2 className={styles.attendanceTitle}>{data.title}</h2>
+        {data.title ? <h2 className={styles.attendanceTitle}>{data.title}</h2> : null}
       </div>
       <div className={styles.attendanceIntro}>
-        <p className={styles.attendanceLead}>{data.helperText}</p>
+        {data.helperText ? <p className={styles.attendanceLead} style={{ whiteSpace: 'pre-line' }}>{data.helperText}</p> : null}
       </div>
       {attendanceState?.closed ? <p className={styles.attendanceClosed} role="status">El plazo para confirmar asistencia ha finalizado.</p> : null}
       <div className={styles.attendanceForm}>

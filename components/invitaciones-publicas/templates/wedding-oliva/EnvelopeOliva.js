@@ -1,17 +1,13 @@
 import sealSrc from './assets/images/sello-lacre-abrir-v1.png';
 import styles from './EnvelopeOliva.module.scss';
+import EnvelopeBackground from '../../module-views/EnvelopeBackground';
 
 export default function EnvelopeOliva({ data, onOpen }) {
   const names = [data.brideName, data.groomName].filter(Boolean).join(' y ');
 
   return (
     <section className={styles.scene} aria-label="Sobre de la invitación">
-      {data.backgroundSrc ? (
-        <picture className={styles.backdrop}>
-          {data.backgroundDesktopSrc ? <source media="(min-width: 1024px)" srcSet={data.backgroundDesktopSrc} /> : null}
-          <img className={styles.backdropImage} src={data.backgroundSrc} alt="" aria-hidden="true" />
-        </picture>
-      ) : null}
+      <EnvelopeBackground data={data} className={styles.backdrop} />
       <button
         type="button"
         className={styles.envelope}

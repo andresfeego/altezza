@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import EnvelopeBackground from './EnvelopeBackground';
 import envelopTopAsset from '../templates/wedding-classic/assets/images/envelop_top.png';
 import envelopBottomAsset from '../templates/wedding-classic/assets/images/envelop_bottom.png';
 
@@ -86,12 +87,14 @@ export default function EnvelopIntroClassicView({ data, styles }) {
       className={[
         styles.moduleCard,
         styles.envelopIntroModule || '',
+        data?.backgroundSrc || data?.backgroundDesktopSrc || data?.backgroundVideoSrc ? styles.envelopIntroWithBackground : '',
         opening ? styles.envelopIntroOpening : '',
         moduleFading ? styles.envelopIntroModuleFading : '',
         buttonFading ? styles.envelopIntroButtonFading : '',
         hidden ? styles.envelopIntroHidden : '',
       ].join(' ')}
     >
+      <EnvelopeBackground data={data} active={!hidden} />
       <div className={styles.envelopIntroEnvelope}>
         <div className={styles.envelopIntroTop}>
           <div className={styles.envelopIntroTopPanel}>

@@ -74,8 +74,11 @@ export default function EventDetailsView({ data, styles }) {
 
   const samePlace = Boolean(ceremonyLocation) && ceremonyLocation === receptionLocation;
   const sameDate = Boolean(ceremonia?.dateKey) && ceremonia?.dateKey === recepcion?.dateKey;
-  const sharedMapUrl = data.invitacion?.ceremonyMapUrl || data.invitacion?.receptionMapUrl || null;
-  const useSplitByEvent = !samePlace;
+  const sharedMapUrl = data.ceremonyMapUrl || data.receptionMapUrl || null;
+  const useSplitByEvent = !samePlace
+    || data.ceremonyMapUrl !== data.receptionMapUrl
+    || data.ceremonyAddress !== data.receptionAddress
+    || Boolean(data.ceremonyMessage || data.receptionMessage);
 
   return (
     <section className={`${styles.moduleCard} ${styles.eventDetailsModule}`}>
@@ -93,6 +96,7 @@ export default function EventDetailsView({ data, styles }) {
         </video>
       ) : null}
       <div className={styles.eventDetailsContent}>
+        {data.title ? <h2 className={styles.moduleTitle}>{data.title}</h2> : null}
         <div className={styles.detailsGrid}>
           {useSplitByEvent ? (
             <>
@@ -134,10 +138,10 @@ export default function EventDetailsView({ data, styles }) {
                         </span>
                       </dt>
                       <dd className={styles.detailValueWithAction}>
-                        {data.invitacion?.ceremonyMapUrl ? (
+                        {data.ceremonyMapUrl ? (
                           <a
                             className={styles.detailAction}
-                            href={data.invitacion.ceremonyMapUrl}
+                            href={data.ceremonyMapUrl}
                             target="_blank"
                             rel="noreferrer"
                           >
@@ -147,6 +151,8 @@ export default function EventDetailsView({ data, styles }) {
                       </dd>
                     </div>
                   </dl>
+                  {data.ceremonyAddress ? <p className={styles.eventDetailsAddress}>{data.ceremonyAddress}</p> : null}
+                  {data.ceremonyMessage ? <p className={styles.eventDetailsMessage}>{data.ceremonyMessage}</p> : null}
                 </article>
               ) : null}
 
@@ -188,10 +194,10 @@ export default function EventDetailsView({ data, styles }) {
                         </span>
                       </dt>
                       <dd className={styles.detailValueWithAction}>
-                        {data.invitacion?.receptionMapUrl ? (
+                        {data.receptionMapUrl ? (
                           <a
                             className={styles.detailAction}
-                            href={data.invitacion.receptionMapUrl}
+                            href={data.receptionMapUrl}
                             target="_blank"
                             rel="noreferrer"
                           >
@@ -201,6 +207,8 @@ export default function EventDetailsView({ data, styles }) {
                       </dd>
                     </div>
                   </dl>
+                  {data.receptionAddress ? <p className={styles.eventDetailsAddress}>{data.receptionAddress}</p> : null}
+                  {data.receptionMessage ? <p className={styles.eventDetailsMessage}>{data.receptionMessage}</p> : null}
                 </article>
               ) : null}
             </>
@@ -272,6 +280,7 @@ export default function EventDetailsView({ data, styles }) {
                   </dd>
                 </div>
               </dl>
+              {data.ceremonyAddress ? <p className={styles.eventDetailsAddress}>{data.ceremonyAddress}</p> : null}
             </article>
           )}
         </div>

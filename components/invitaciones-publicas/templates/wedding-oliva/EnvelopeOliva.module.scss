@@ -1,8 +1,8 @@
 .scene {
   --envelope-width: var(--oliva-width);
-  --envelope-blur: calc(var(--ag-space-1, 8px) * .75);
+  --envelope-blur: calc(var(--ag-space-1, 8px) * .5);
   --envelope-bleed: var(--ag-space-3, 24px);
-  --envelope-label-size: clamp(calc(var(--ag-font-size-14) * 1.2), 4.56vw, calc(var(--ag-font-size-24) * 1.2));
+  --envelope-label-size: clamp(calc(var(--ag-font-size-14) * 1.2), 4.56cqw, calc(var(--ag-font-size-24) * 1.2));
   --envelope-date-weight: 300;
   --envelope-seal-width: 18%;
   --envelope-seal-scale: 1.08675;
@@ -35,7 +35,7 @@
   background: var(--oliva-paper);
 }
 
-.backdrop {
+.scene .backdrop {
   position: absolute;
   z-index: -1;
   top: calc(-1 * var(--envelope-bleed));
@@ -46,13 +46,6 @@
   filter: blur(var(--envelope-blur));
   pointer-events: none;
   user-select: none;
-}
-
-.backdropImage {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .scene .envelope {
@@ -169,14 +162,14 @@
   font: var(--envelope-date-weight) var(--ag-text-caption-size)/1.4 var(--oliva-sans);
   letter-spacing: var(--oliva-letterspace);
 }
-@media (max-width: 767px) {
+@container oliva-card (max-width: 767px) {
   .invitationLabel { transform: translateY(calc(var(--envelope-label-size) * .3)); }
 }
-@media (max-width: 374px) {
+@container oliva-card (max-width: 374px) {
   .scene { --envelope-seal-width: 16%; }
   .details { gap: 0; }
 }
-@media (min-width: 768px) {
+@container oliva-card (min-width: 768px) {
   .scene { --envelope-seal-scale: 1.2075; --envelope-seal-top: 67%; --monogram-depth: calc(var(--oliva-border) * 1.2); padding: var(--ag-space-7) var(--ag-space-6); }
   .date { font-size: var(--ag-text-label-size); }
 }

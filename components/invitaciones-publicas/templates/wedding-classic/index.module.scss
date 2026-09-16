@@ -161,6 +161,13 @@
   isolation: isolate;
 }
 
+// A configured scene needs visible space around the envelope artwork.
+.envelopIntroWithBackground .envelopIntroEnvelope {
+  inset: var(--ag-space-2);
+  width: auto;
+  height: auto;
+}
+
 .envelopIntroTop,
 .envelopIntroBottom {
   position: absolute;

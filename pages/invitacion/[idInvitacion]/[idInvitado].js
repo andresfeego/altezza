@@ -63,8 +63,6 @@ export default function InvitationPublicRoute({
   const [cardReady, setCardReady] = useState(false);
   const [confirmationClosed, setConfirmationClosed] = useState(Boolean(invitacion?.confirmationClosed));
   const [feedback, setFeedback] = useState({});
-  const isOliva = normalizeTemplateKey(evento?.templateKey) === 'wedding_oliva';
-  const PageBackground = isOliva ? 'div' : AnimatedDesktopBackground;
 
   useEffect(() => {
     const deadline = new Date(invitacion?.fechaHoraLimiteConfirmar || '').getTime();
@@ -260,7 +258,7 @@ export default function InvitationPublicRoute({
         {absoluteImage ? <meta name="twitter:image:alt" content={imageAlt} /> : null}
       </Head>
 
-      <PageBackground>
+      <AnimatedDesktopBackground>
         <div ref={invitationRootRef}>
           <InvitationRenderer
             evento={evento}
@@ -271,7 +269,7 @@ export default function InvitationPublicRoute({
             attendanceState={attendanceState}
           />
         </div>
-      </PageBackground>
+      </AnimatedDesktopBackground>
       {!cardReady ? (
         <div
           style={{

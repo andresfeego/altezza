@@ -6,6 +6,7 @@ export default function GiftEnvelopesModule({ module }) {
   }
 
   return {
+    title: String(module?.config?.title || '').trim(),
     imageSrc,
     imageAlt: String(module?.config?.imageAlt || 'Lluvia de sobres').trim(),
     leadText: String(module?.config?.leadText || '').trim(),

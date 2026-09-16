@@ -1,0 +1,156 @@
+.hero {
+  // Paper material: separate tone, broad lighting, fibers and surface grain.
+  --hero-paper-base: var(--oliva-envelope-paper);
+  --hero-paper-light: color-mix(in srgb, var(--oliva-envelope-paper-light) 94%, var(--oliva-paper));
+  --hero-paper-shade: color-mix(in srgb, var(--oliva-envelope-paper-shade) 92%, var(--oliva-shadow-ink));
+  --hero-paper-fibers-opacity: .28;
+  --hero-paper-grain-opacity: .24;
+  --hero-paper-grain-size: calc(var(--ag-space-9) * .5);
+  --hero-paper-fibers-size: calc(var(--ag-space-9) * .75);
+  --hero-paper-lighting:
+    linear-gradient(135deg, var(--hero-paper-light), var(--hero-paper-base) 50%, var(--hero-paper-shade));
+  --hero-monogram-optical-x: -2%;
+  --hero-monogram-optical-y: 4%;
+  --hero-monogram-shadow: color-mix(in srgb, var(--oliva-shadow-ink) 45%, transparent);
+  --hero-height: clamp(calc(var(--ag-space-9) * 5), 150vw, calc(var(--ag-space-9) * 6));
+  --hero-relief-depth: calc(var(--oliva-border) * 1.1);
+  --hero-relief-blur: calc(var(--hero-relief-depth) * .3);
+  --hero-relief-shadow: color-mix(in srgb, var(--oliva-shadow-ink) 55%, transparent);
+  --hero-relief-light: color-mix(in srgb, var(--oliva-paper) 48%, transparent);
+  --hero-relief-face: color-mix(in srgb, var(--hero-paper-base) 94%, var(--oliva-paper));
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: var(--hero-height);
+  padding: var(--ag-space-7) var(--ag-space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ag-space-4);
+  background-color: var(--hero-paper-base);
+  background-image: var(--hero-paper-lighting);
+  color: var(--oliva-paper);
+  text-align: center;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    user-select: none;
+    background-repeat: repeat;
+  }
+  // Low-frequency fibers sit below the floral relief. The SVG is procedural,
+  // monochrome filter output; the paper's hue always comes from template tokens.
+  &::before {
+    z-index: -2;
+    background-image: url('./assets/images/paper-fibers.svg');
+    background-size: var(--hero-paper-fibers-size);
+    mix-blend-mode: soft-light;
+    opacity: var(--hero-paper-fibers-opacity);
+  }
+  // The same fine grain crosses the raised flowers so they share the material.
+  // Text and the monogram remain above it, without blur or color filtering.
+  &::after {
+    z-index: 0;
+    background-image: url('./assets/images/paper-grain.svg');
+    background-size: var(--hero-paper-grain-size);
+    mix-blend-mode: soft-light;
+    opacity: var(--hero-paper-grain-opacity);
+  }
+}
+
+.relief, .artworkShadow, .artworkLight, .artworkMask, .artworkFallback {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.relief { z-index: -1; }
+.artworkFallback { width: 100%; height: 100%; object-fit: cover; opacity: .12; }
+.artworkShadow, .artworkLight, .artworkFace { display: none; }
+
+@supports (mask-image: url('')) or (-webkit-mask-image: url('')) {
+  .artworkFallback { visibility: hidden; }
+  .artworkShadow, .artworkLight, .artworkFace { display: block; }
+  .artworkMask {
+    -webkit-mask-image: var(--hero-artwork);
+    mask-image: var(--hero-artwork);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    -webkit-mask-position: center;
+    mask-position: center;
+    mask-mode: alpha;
+  }
+  .artworkShadow {
+    transform: translate(var(--hero-relief-depth), calc(var(--hero-relief-depth) * 1.25));
+    filter: blur(var(--hero-relief-blur));
+    .artworkMask { background: var(--hero-relief-shadow); }
+  }
+  .artworkLight {
+    transform: translate(calc(var(--hero-relief-depth) * -.75), calc(var(--hero-relief-depth) * -1));
+    filter: blur(var(--hero-relief-blur));
+    .artworkMask { background: var(--hero-relief-light); }
+  }
+  .artworkFace {
+    background-color: var(--hero-relief-face);
+    background-image: var(--hero-paper-lighting);
+  }
+}
+
+.eyebrow, .identity, .date { position: relative; z-index: 1; }
+.eyebrow {
+  margin: 0;
+  max-width: 100%;
+  font: 500 var(--ag-font-size-20)/1.6 var(--oliva-serif);
+  letter-spacing: .18em;
+  text-indent: .18em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.identity {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  outline: none;
+  color: inherit !important;
+}
+.monogram {
+  display: block;
+  width: clamp(calc(var(--ag-space-5) * 4), 54vw, calc(var(--ag-space-8) * 3));
+  max-width: 100%;
+  height: auto;
+  // Balance the asymmetric artwork optically, without rotating or distorting it.
+  transform: translate(var(--hero-monogram-optical-x), var(--hero-monogram-optical-y));
+  filter: drop-shadow(calc(var(--oliva-border) * 3) calc(var(--oliva-border) * 4) calc(var(--oliva-border) * 3) var(--hero-monogram-shadow));
+}
+.names {
+  display: grid;
+  max-width: 100%;
+  font: 400 var(--ag-heading-h1-size)/1.1 var(--oliva-script);
+  overflow-wrap: anywhere;
+  em { font: 400 var(--ag-font-size-32)/1 var(--oliva-script); margin-block: var(--ag-space-1); }
+}
+.date {
+  margin: 0;
+  max-width: 100%;
+  color: inherit;
+  font: 500 var(--ag-font-size-24)/1.5 var(--oliva-serif);
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .hero { padding-inline: var(--ag-space-5); gap: var(--ag-space-5); --hero-relief-depth: calc(var(--oliva-border) * 1.4); }
+  .eyebrow { font-size: var(--ag-font-size-24); }
+}
+@media (prefers-contrast: more), (forced-colors: active) {
+  .hero { background-image: none; }
+  .hero::before, .hero::after { display: none; }
+  .relief { display: none; }
+  .monogram { filter: none; }
+}

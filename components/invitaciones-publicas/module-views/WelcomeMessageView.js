@@ -1,8 +1,7 @@
 export default function WelcomeMessageView({ data, styles }) {
   return (
     <section className={`${styles.moduleCard} ${styles.moduleCardSoft}`}>
-      <span className={styles.sectionEyebrow}>Una invitacion para ti</span>
-      <h2 className={styles.moduleTitle}>{data.title}</h2>
+      {data.title ? <h2 className={styles.moduleTitle}>{data.title}</h2> : null}
       {data.inviteeName ? <p className={styles.moduleLead}>Para {data.inviteeName}</p> : null}
       {data.personalizedMessage ? (
         <p className={styles.moduleText}>{data.personalizedMessage}</p>

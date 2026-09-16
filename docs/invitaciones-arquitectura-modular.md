@@ -19,6 +19,11 @@ El sistema de invitaciones debe soportar:
 
 3. Eliminacion de vistas compartidas con acoplamiento de assets cruzados.
 
+4. Fondo exterior común en la ruta pública:
+- `AnimatedDesktopBackground` envuelve todas las plantillas sin excepciones por `templateKey`.
+- Classic, Terracota y Oliva mantienen la tarjeta centrada con máximo de 480 px en escritorio.
+- Los fondos propios de cada módulo llegan al borde de esa tarjeta; el fondo exterior compartido permanece fuera del contenedor.
+
 ## Regla de oro
 - Ningun `module-view` compartido debe importar assets de un template especifico.
 - Si un modulo depende de assets/estructura visual propios, debe tener:
@@ -73,3 +78,14 @@ Antes de cambios grandes:
 Se añadió `wedding_oliva`, con portada tipográfica, botánica vectorial, vistas propias para familia y detalles, y módulos compartidos de cuenta regresiva y confirmación. La primera configuración corresponde al evento local `bodmys`.
 
 Contratos, recursos pendientes y pruebas: [Oliva — implementación](oliva-implementacion.md).
+
+### Alineación de datos (16 de septiembre de 2026)
+
+Los heroes comparten resolvers. Classic, Terracota y Oliva incorporan el catálogo
+común de vistas, conservando sus vistas propias de sobre/hero y su presentación.
+La introducción y el cierre son módulos configurables; las ubicaciones y frases
+de actividades se consumen igual en las tres plantillas.
+
+Contrato y límites: [Contratos compartidos](invitaciones-contratos-compartidos.md).
+Pruebas: `node --test tests/invitation-contracts.test.cjs`.
+La validación exhaustiva por schema del backend sigue pendiente.

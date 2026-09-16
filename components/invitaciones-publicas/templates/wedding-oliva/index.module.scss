@@ -41,6 +41,10 @@
   --oliva-ink: #354135;
   --oliva-shadow-ink: #111911;
   --oliva-green: #556445;
+  // Paper tones sampled from the envelope: flap, lit upper area and lower shadow.
+  --oliva-envelope-paper: #5b6531;
+  --oliva-envelope-paper-light: #606b33;
+  --oliva-envelope-paper-shade: #515a2b;
   --oliva-muted: #65705c;
   --oliva-soft: #e9edde;
   --oliva-edge: #d1d5c5;
@@ -49,7 +53,7 @@
   --oliva-serif: 'Oliva Cormorant', Georgia, serif;
   --oliva-sans: 'Oliva Montserrat', sans-serif;
   --oliva-script: 'Oliva Allura', cursive;
-  --oliva-width: 720px;
+  --oliva-width: calc(var(--ag-space-5) * 12);
   --oliva-border: 1px;
   --oliva-letterspace: .18em;
   --oliva-hero-size: clamp(40px, 9vw, 64px);
@@ -78,6 +82,9 @@
   --ag-heading-h3-line: 1.6;
   --ag-heading-h3-weight: 400;
   min-height: 100svh;
+  container: oliva-card / inline-size;
+  margin: 0;
+  padding: 0;
   background: var(--oliva-surround);
   color: var(--oliva-ink);
   font: 400 var(--ag-text-body-size, 16px)/var(--oliva-body-line) var(--oliva-serif);
@@ -212,7 +219,7 @@
   }
 }
 @media (min-width: 768px) {
-  .page { padding: var(--ag-space-6, 48px) var(--ag-space-3, 24px); }
+  .page { max-width: var(--oliva-width); margin-inline: auto; }
   .hero { padding-top: var(--ag-space-9, 128px); padding-bottom: var(--ag-space-8, 96px); }
   .family, .details, .rsvp { padding: var(--ag-space-8, 96px) var(--ag-space-7, 64px); }
   .familyGroups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ag-space-5, 40px) var(--ag-space-3, 24px); }

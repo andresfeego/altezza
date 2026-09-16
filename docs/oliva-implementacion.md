@@ -10,31 +10,142 @@ Plantilla `wedding_oliva` conectada al evento `bodmys` (Mayra & Samuel).
 
 ## Composición
 
-Sobre → portada y frase 1 → familia y frase 3 → ceremonia/recepción y frase 4 → cuenta regresiva → frase 2 y confirmación.
+Sobre → hero → frase 1 (`biblical_quote`, sin referencia) → familia → ceremonia y frase 3 / recepción y frase 4 → cuenta regresiva → frase 2 y confirmación → cierre configurable.
 
-Oliva usa su propio componente, estilos, fuentes locales y botánica vectorial. Los datos personales viven en la configuración. Reutiliza los preparadores de familia, detalles, cuenta regresiva y confirmación; las vistas de familia y celebración pertenecen a Oliva. El fondo de escritorio también pertenece a esta plantilla.
+Oliva usa sus propios componentes, estilos, fuentes locales y adornos botánicos. Los datos personales y los recursos personalizados viven en la configuración guardada. Reutiliza los preparadores de familia, detalles, cuenta regresiva y confirmación; las vistas de familia y celebración pertenecen a Oliva. Las imágenes del sobre y el PNG de fondo del hero se configuran por evento.
+
+### Video de fondo del sobre (16 de septiembre de 2026)
+
+El archivo recibido `Quiero_un_video_de_segundos.mp4` se renombró y movió a
+`backend-altezza/_local_storage/invitations/bodmys/cover/fondo-sobre-loop.mp4`.
+Conserva el archivo original: 720 × 1280, duración 10,005 s, 6,6 MB. La ruta pública
+`/scrAppaltezza/invitations/bodmys/cover/fondo-sobre-loop.mp4` se guarda en
+`envelop_intro.config.backgroundVideoSrc`, mediante la migración repetible
+`seeds/invitation_projects/bodmys/configure-envelope-video.js`.
+
+Oliva consume el nuevo componente transversal `EnvelopeBackground` con blur de
+4 px (token `--envelope-blur`), recorte `cover` y sangrado exterior para evitar
+bordes vacíos. La imagen portrait y la wide se conservan como respaldo. El sobre,
+monograma, sello, fecha y etiqueta no cambian.
+
+Validación: 17 pruebas de frontend y 6 de backend; reproducción real en navegador
+a 440 × 956 y escritorio, sin desbordamiento. Video silenciado en bucle, retirada
+del reproductor al abrir; respuestas HTTP 206 para solicitudes parciales. Las
+configuraciones completas de Natalia/Andrés y Catalina/Andrés se compararon antes
+y después y permanecen idénticas.
+
+Prueba manual: recargar la tarjeta, observar el fondo en movimiento y el sobre
+nítido, abrir pulsando el sobre y comprobar que continúa al hero. Con movimiento
+reducido debe verse la imagen de respaldo. Un `backgroundVideoSrc` vacío vuelve
+al fondo fotográfico sin cambiar la plantilla.
+
+### Hero verde con repuje (16 de septiembre de 2026)
+
+`HeroOliva.js` consume el contrato existente de `hero_image_1`. El PNG de
+`backgroundImage` se utiliza como máscara alfa con superficie verde, luz arriba
+a la izquierda y sombra abajo a la derecha. La composición floral se genera como
+recurso de esta tarjeta y su ruta se guarda en DB; no se importa desde la plantilla.
+Se conserva el relieve elevado original, con la luz clara reducida de 52 % a 48 %.
+
+El fondo aproxima el papel mate del sobre con capas independientes en
+`HeroOliva.module.scss`: tono oliva, iluminación suave mediante degradados,
+fibras y grano fino. `--hero-paper-*` controla color, intensidad y escala.
+Los dos SVG de `assets/images/paper-{fibers,grain}.svg` generan ruido monocromo
+con `feTurbulence`; son decoración de la plantilla, sin datos del evento.
+Las fibras se mezclan al 28 % y el grano al 24 % mediante `soft-light`.
+El color usa muestras medias de zonas del PNG del sobre: base `#5b6531`,
+luz `#606b33` y sombra `#515a2b`, declaradas como tokens `--oliva-envelope-paper*`.
+Reemplazan la mezcla inicial del verde del interior con luz beige, que resultó
+demasiado clara y grisácea. Los filtros SVG trabajan en `sRGB` para que su ruido
+neutral no aclare el papel por la conversión desde el espacio lineal predeterminado.
+El grano también cubre las flores para unificar el material; texto y monograma
+quedan por encima, nítidos. En alto contraste se omiten las capas decorativas.
+
+Validación de esta textura: Sass compilado, revisión visual a 440 px en el
+navegador integrado y a 1920 px en Chrome por el túnel, sin desbordamiento.
+Ambos SVG responden HTTP 200 localmente y por el enlace público. Este ajuste
+no modifica datos, contratos, orden ni el módulo del sobre.
+
+`text1` sigue mostrando la frase configurada, a 20 px en móvil y 24 px desde
+768 px mediante tokens, en beige. `logoImage` ocupa el lugar de los nombres visibles, conservando el nombre
+del evento como texto alternativo del encabezado. Sin logo, los nombres siguen
+disponibles como texto visible. La fecha conserva su formato y Cormorant, a 24 px en beige.
+Se quitaron las guirnaldas superiores e inferiores de esta vista. El sobre no cambió.
+
+La tarjeta conserva un ancho máximo de 480 px, centrado desde 768 px, como
+Classic y Terracota. `paper` llena ese contenedor sin padding ni margen: los
+fondos de los módulos llegan a los bordes de la tarjeta, no a los de la pantalla
+de escritorio. En móvil ocupa el ancho disponible. La ruta pública siempre
+envuelve todas las plantillas en `AnimatedDesktopBackground`; se retiró la
+excepción que lo omitía para Oliva. El fondo animado compartido queda visible
+fuera de la tarjeta en escritorio.
+
+El sobre responde al ancho del contenedor `oliva-card` mediante container
+queries y `cqw`, evitando que los tamaños de escritorio superpongan su etiqueta
+y sello dentro de la tarjeta estrecha. Conserva recursos, paleta y apertura.
+
+El hero agrupa frase, monograma y fecha con alineación central y separaciones
+de 32 px (40 px desde 768 px). El monograma crece hasta 288 px; una compensación
+óptica de -2 % en horizontal y +4 % en vertical equilibra la distribución del
+dibujo sin girarlo. Su sombra cae 3 px a la derecha y 4 px abajo, con 3 px de
+desenfoque y verde casi negro al 45 %, derivada del token de borde. El fondo
+usa un degradado diagonal de 135° entre el tono claro del sobre, el medio y el
+oscuro, coherente con esa dirección de luz. El grano conserva su escala reducida
+al 50 %: mosaicos de 64 px y 96 px para grano y fibras.
+
+Validación del encuadre: revisión visual a 320, 440, 1280 y 1920 px, sin
+desbordamiento horizontal. Límites de los siete módulos coincidentes con los
+bordes de la tarjeta; sin padding exterior superior o inferior. Comprobar
+manualmente la tarjeta centrada de 480 px en escritorio, el fondo común a ambos
+lados, la apertura del sobre y la continuidad de las secciones sin borde beige.
+
+El archivo del evento es `bodmys/hero/floral-relief-v1.png`, PNG RGBA 1024 × 1536.
+La migración local repetible es `seeds/invitation_projects/bodmys/configure-hero.js`
+en backend; actualiza únicamente las rutas `backgroundImage` y `logoImage` y guarda
+un respaldo del JSON anterior. El prompt y la ruta completa del recurso están en
+`seeds/invitation_projects/bodmys/HERO-ASSETS.md`.
+
+Verificación: 14 pruebas de contratos aprobadas, ESLint de las vistas modificadas
+sin errores y recursos HTTP 200. Revisión visual a 320 px, 440 px y escritorio:
+PNG con repuje, monograma sin nombres duplicados, fecha legible, sin imágenes rotas
+ni desbordamiento horizontal. La apertura mantiene el foco en el encabezado.
 
 La fecha límite es exclusiva: `2026-11-19T00:00:00-05:00`. Se muestra el último día permitido, 18 de noviembre. Las horas de ceremonia y recepción son respectivamente `2026-11-28T15:00:00-05:00` y `2026-11-28T16:30:00-05:00`.
 
 ## Contratos compatibles
 
-Se mantienen las rutas existentes de configuración y lectura pública. Campos nuevos opcionales en `modules[].config`:
+Se mantienen las rutas existentes de configuración y lectura pública. La auditoría
+identificó campos exclusivos de Oliva que no eran compatibles con las otras
+plantillas. Se corrigieron y documentaron en [Contratos compartidos](invitaciones-contratos-compartidos.md).
 
-- `hero_image_1` de Oliva: `brideName`, `groomName`, `message`, `imageSrc`, `imageAlt`. No requiere foto para renderizar. Los nombres completos se conservan en la configuración del proyecto.
-- `couple_family`: `message`, presentado por Oliva después de los familiares.
-- `event_details`: `ceremonyMessage`, `receptionMessage`, `ceremonyAddress`, `receptionAddress`, `ceremonyMapUrl`, `receptionMapUrl`. Los enlaces explícitos tienen prioridad en Oliva sobre las coordenadas del catálogo.
-- `attendance_confirm`: `introMessage`.
-- `envelop_intro`: `backgroundSrc`, `backgroundDesktopSrc`, `envelopeSrc` y `monogramSrc`, rutas opcionales de las imágenes que utiliza el sobre de Oliva. `backgroundDesktopSrc` sustituye el fondo desde 1024 px; si falta, se mantiene `backgroundSrc`. `invitationLabel` conserva su prioridad sobre el label de la invitación.
-
-Las vistas de clásica y terracota no cambian su composición por estos campos opcionales.
+- `hero_image_1` usa `text1`, `backgroundImage` y `logoImage`, con nombre y fecha del evento. No incluye introducción ni foto editorial. Los nombres completos se conservan en el documento de contenido.
+- La frase 1 está en `biblical_quote.passageText`, con `passageReference: ""`; reemplaza a `welcome_message` en la posición 3. La frase 2 está en `attendance_confirm.helperText`, junto con las instrucciones.
+- `couple_family` utiliza `coupleLabel` y las listas existentes; la frase 3 pasó a `event_details.ceremonyMessage`.
+- `event_details` comparte direcciones, enlaces y frases opcionales con Classic y Terracota. Las coordenadas del lugar tienen prioridad; los enlaces del config son respaldo cuando faltan coordenadas. Cada actividad muestra fecha y hora.
+- `closing_message` controla el cierre mediante `enabled` y `order`; su marco es opcional en todas las plantillas.
+- `envelop_intro` conserva sus recursos visuales y sus datos básicos sin cambios. Las rutas de imágenes siguen en config; `invitationLabel` conserva su prioridad sobre el label de la invitación.
 
 La respuesta pública añade `invitacion.confirmationClosed`. La confirmación devuelve HTTP 409 si el plazo ya venció; 400 si la respuesta está vacía, tiene opciones inválidas o integrantes repetidos; 404 si hay integrantes ajenos. Valida todo el lote antes de escribir y guarda en transacción. Eventos sin fecha límite siguen abiertos. El reloj del servidor es la autoridad; el navegador también desactiva los controles al vencer el plazo y ante un 409.
 
-La conexión MySQL sincroniza su zona de sesión con el decodificador mysql2 (`ALTEZZA_DB_TIMEZONE`, por defecto `-05:00`). Esto evita interpretar TIMESTAMP con cinco horas adicionales respecto de DATETIME. Los lugares sin coordenadas devuelven enlace nulo, en lugar de apuntar a 0,0.
+La conexión MySQL sincroniza su zona de sesión con el decodificador mysql2 (`ALTEZZA_DB_TIMEZONE`, por defecto `-05:00`). Esto evita interpretar TIMESTAMP con cinco horas adicionales respecto de DATETIME. Los lugares sin coordenadas usan el enlace de respaldo del módulo si existe; si no hay coordenadas ni enlace, devuelven null, sin inventar un punto 0,0.
+
+### Sustitución de bienvenida por frase
+
+`seeds/invitation_projects/bodmys/replace-welcome-with-quote.js` traslada la frase
+guardada de la bienvenida al módulo `biblical_quote`, conservando su posición y
+activación. La referencia queda vacía y la vista compartida ya la omite; no se
+modifican los resolvers ni las vistas de ninguna plantilla. La migración local
+respalda el JSON y actualiza únicamente la configuración de este evento.
+
+Verificación: 15 pruebas frontend y 5 backend aprobadas, incluida referencia vacía
+en las tres plantillas, referencia presente conservada y migración repetible.
+API y seed coinciden; otras tarjetas, módulos, datos del evento e invitados y
+respuestas comparados antes/después sin diferencias. Revisar debajo del hero que
+aparezca únicamente la frase y no un título, destinatario o referencia.
 
 ## Recursos pendientes
 
-Música y galería están desactivadas. Para incorporarlas se completan sus recursos y configuración; no necesitan otro evento. Foto principal opcional en `hero_image_1.config.imageSrc`. Vestuario, regalos, solo adultos y otros módulos todavía no están registrados en Oliva: incorporarlos al registro visual cuando se defina su contenido. No habilitarlos antes.
+Música y galería están desactivadas. Para incorporarlas se completan sus recursos y configuración; no necesitan otro evento. La foto editorial se configura en `simple_image` o `hero_image_2`. Vestuario, regalos, solo adultos y los demás módulos del catálogo ya tienen vista en Oliva; permanecen fuera de esta tarjeta hasta contar con contenido.
 
 La vista previa para compartir usa `public/invitations/oliva/mayra-samuel-cover.png` (1200 × 630). No se envió ninguna invitación ni se desplegó a LAB/producción. El campo `published` permanece falso; la ruta pública existente no aplica ese campo como control de acceso. La prueba está limitada al entorno local.
 
@@ -153,3 +264,34 @@ El PNG transparente original sirve como máscara alfa de tres capas: sombra infe
 El monograma ocupa el 22 % del ancho del sobre (antes 18 %), conserva su posición superior del 8 % y usa profundidad de 1 px en móvil y 1.2 px desde 768 px. Los parámetros `--monogram-*` son independientes del repujado del hero. Se incluyen las propiedades `-webkit-mask-*`; el PNG blanco queda como alternativa si faltan las máscaras o la textura, y en modos de mayor contraste o colores forzados.
 
 Validación: lint del componente aprobada; revisión visual en Chrome a 1440, 440 y 320 px; imágenes cargadas, ausencia de desbordamiento a 320 px y apertura con Enter desde el botón enfocado. En Safari de macOS, una ventana nueva mostró el relieve y permitió abrir el sobre con foco posterior en el hero; algunas pestañas anteriores permanecieron en blanco al recargar. La textura y la máscara usan los recursos existentes, sin modificar archivos de imagen ni la configuración del evento.
+
+## Verificación de la alineación (16 de septiembre de 2026)
+
+- Checkpoint previo: frontend `aa84754`, backend `c280f70`.
+- Configuración local migrada con `align-data.js`; se respaldó el JSON previo en una carpeta temporal. Se compararon antes/después el sobre, el evento, los invitados y sus respuestas: sin diferencias.
+- 11 pruebas de contratos/render SSR del frontend y 2 pruebas del backend aprobadas. Cubren campos de heroes, catálogo de módulos, contenido, mapas, fechas diferentes, cierre desactivado/reordenado y migración idempotente.
+- Lint y compilación Sass aprobados. API y página responden 200, invitación inexistente 404. Los enlaces de Maps llegan en los campos canónicos y el payload coincide con `modules.json`.
+- Revisión de Oliva en navegador a 320, 440 y 1440 px, sin desbordamiento horizontal. Apertura del sobre, frases en sus módulos, fechas y cierre verificados. Sin modificaciones al componente, estilos ni recursos del sobre. Permanece el aviso anterior de `fetchPriority` en `LoadingScreen`.
+
+Comprobación manual: abrir el sobre, revisar la separación entre hero y bienvenida,
+comprobar ambas ubicaciones y sus frases, y revisar el cierre. Las pruebas de
+compatibilidad renderizan la misma configuración con Classic, Terracota y Oliva;
+no cambian la plantilla de ningún evento guardado.
+
+## Corrección de fondo y textos fijos
+
+La captura de textos superpuestos coincidía con la imagen SEO que ya contiene
+los nombres y la fecha dibujados. Se eliminó el respaldo automático desde esa
+imagen en ambos heroes. La invitación actual usa su fondo limpio explícito.
+
+Los títulos de familia/lugares y los mensajes de cuenta regresiva ahora están
+guardados en la configuración de `bodmys`. Se retiró el encabezado fijo
+«Nos encantará verte»; el título e instrucciones de asistencia ya vienen de DB.
+Los textos editoriales de las otras vistas compartidas también son opcionales,
+con el mismo contrato para las tres plantillas. Ver contratos compartidos.
+
+Validación: 13 pruebas frontend y 4 backend aprobadas, incluyendo ausencia de
+respaldo SEO, fondos vacíos, textos personalizados/vacíos y migración idempotente.
+Lint sin errores; permanecen dos advertencias anteriores en cleanup del sobre de
+Classic/Terracota. La migración preservó evento, invitados, respuestas, hero,
+confirmación y sobre; solo agregó cuatro campos de texto ausentes.

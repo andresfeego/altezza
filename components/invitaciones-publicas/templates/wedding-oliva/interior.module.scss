@@ -8,16 +8,15 @@
   --oliva-green: var(--invitation-olive, #767c5a);
   --oliva-muted: color-mix(in srgb, var(--oliva-ink) 85%, var(--oliva-paper));
   --oliva-edge: color-mix(in srgb, var(--oliva-green) 30%, var(--oliva-paper));
-  --interior-gutter: var(--ag-space-2);
   --interior-script-size: var(--ag-font-size-48);
   --interior-icon-size: var(--ag-font-size-40);
   --interior-floral-width: calc(var(--ag-space-9) * 4);
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
-  width: min(100%, var(--oliva-width));
-  margin: 0 auto;
-  padding: 0 var(--interior-gutter);
+  width: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   color: var(--oliva-ink);
   background: var(--oliva-paper);
@@ -60,11 +59,19 @@
 
 .hero {
   position: relative;
+  isolation: isolate;
   padding: var(--ag-space-4) var(--ag-space-2) 0;
   text-align: center;
   .eyebrow { margin: var(--ag-space-3) 0; }
   .smallLabel { margin: var(--ag-space-4) 0 var(--ag-space-3); }
 }
+.heroBackground { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: .2; }
+.heroLogo { display: block; width: var(--ag-space-8); height: auto; margin: var(--ag-space-3) auto; }
+.heroDateText { color: var(--oliva-green); font-size: var(--ag-font-size-20); margin: var(--ag-space-5) auto 0 !important; }
+.familyLead { max-width: 38ch; margin: 0 auto var(--ag-space-3) !important; }
+.eventDate { display: block; font-size: var(--ag-font-size-14); }
+.detailsVideo { display: block; width: 100%; height: auto; margin-bottom: var(--ag-space-3); }
+.closingText { white-space: pre-line; font: 400 var(--interior-script-size)/1.25 var(--oliva-script); color: var(--oliva-green); }
 .heroFlorals, .heroBottomFlorals, .detailsFlorals, .footerFlorals {
   display: block;
   width: min(100%, var(--interior-floral-width));
@@ -222,6 +229,12 @@
 .simpleImageModule { padding: var(--ag-space-3); }
 .galleryLead img, .heroPhoto { border: var(--oliva-border) solid var(--oliva-edge); }
 
+// Section backgrounds reach the card edges; reading and form groups stay contained.
+.familyGroups, .event, .countdownGrid, .attendanceRow {
+  max-width: var(--oliva-width);
+  margin-inline: auto;
+}
+
 @media (max-width: 374px) {
   .paper { --interior-script-size: var(--ag-font-size-40); }
   .heroDate { grid-template-columns: 1fr var(--ag-space-7) 1fr; }
@@ -229,7 +242,6 @@
   .moduleText { padding-inline: var(--ag-space-2); }
 }
 @media (min-width: 768px) {
-  .paper { --interior-gutter: var(--ag-space-3); }
   .hero { padding: var(--ag-space-4) var(--ag-space-5) 0; }
   .heroFlorals { max-width: calc(var(--ag-space-9) * 3); }
   .family, .moduleCardAccent { padding: var(--ag-space-7) var(--ag-space-6); }

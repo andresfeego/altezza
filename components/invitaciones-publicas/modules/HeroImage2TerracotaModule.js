@@ -1,35 +1,15 @@
-import terracotaHeroBackgroundAsset from '../templates/wedding-terracota/assets/images/fondo_hero.webp';
+import background from '../templates/wedding-terracota/assets/images/fondo_hero.webp';
+import HeroImage2Module from './HeroImage2Module';
 
-const TERRACOTA_HERO_BACKGROUND = (
-  typeof terracotaHeroBackgroundAsset === 'string'
-    ? terracotaHeroBackgroundAsset
-    : terracotaHeroBackgroundAsset?.src || ''
-);
-
-export default function HeroImage2TerracotaModule({ module, evento, invitacion }) {
-  const backgroundImage = String(
-    TERRACOTA_HERO_BACKGROUND ||
-      module?.config?.backgroundImage ||
-      evento?.seo?.image ||
-      evento?.imagenPrincipal ||
-      invitacion?.imagenPrincipal ||
-      ''
-  ).trim();
-
-  if (!backgroundImage) {
-    return null;
-  }
-
-  return {
-    backgroundImage,
-    logoImage: String(module?.config?.logoImage || '').trim(),
-    imageSrc: String(module?.config?.imageSrc || '').trim(),
-    imageAlt: String(module?.config?.imageAlt || 'Imagen principal de la invitacion').trim(),
-    coupleNames: String(
-      module?.config?.coupleNames ||
-      evento?.nombre ||
-      invitacion?.nombreEvento ||
-      ''
-    ).trim(),
-  };
+export default function HeroImage2TerracotaModule(payload) {
+  const config = payload.module?.config || {};
+  return HeroImage2Module({
+    ...payload,
+    module: { ...payload.module, config: {
+      ...config,
+      backgroundImage: Object.prototype.hasOwnProperty.call(config, 'backgroundImage')
+        ? config.backgroundImage
+        : (typeof background === 'string' ? background : background?.src),
+    } },
+  });
 }

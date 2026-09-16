@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import EnvelopeBackground from './EnvelopeBackground';
 
 import flowerCord1Asset from '../templates/wedding-terracota/assets/images/flower_cord1.png';
 
@@ -96,6 +97,7 @@ export default function EnvelopIntroTerracotaView({ data, styles }) {
       className={[
         styles.moduleCard,
         styles.envelopIntroModule || '',
+        data?.backgroundSrc || data?.backgroundDesktopSrc || data?.backgroundVideoSrc ? styles.envelopIntroWithBackground : '',
         started ? styles.envelopIntroAnimating : '',
         buttonFading ? styles.envelopIntroButtonFading : '',
         cordsFading ? styles.envelopIntroCordsFading : '',
@@ -103,6 +105,7 @@ export default function EnvelopIntroTerracotaView({ data, styles }) {
         hidden ? styles.envelopIntroHidden : '',
       ].join(' ')}
     >
+      <EnvelopeBackground data={data} active={!hidden} />
       <div className={styles.envelopIntroSplit}>
         <div className={styles.envelopIntroFlapRight}>
           <div className={styles.envelopIntroContentWrap}>
