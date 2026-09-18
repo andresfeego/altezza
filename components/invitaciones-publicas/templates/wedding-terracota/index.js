@@ -1,4 +1,5 @@
 import MusicPlayerView from '../../module-views/MusicPlayerView';
+import ModuleSurface from '../../ModuleSurface';
 import { useEffect, useRef } from 'react';
 import HeroImage1TerracotaView from '../../module-views/HeroImage1TerracotaView';
 import HeroImage2TerracotaView from '../../module-views/HeroImage2TerracotaView';
@@ -90,10 +91,9 @@ export default function WeddingTerracotaTemplate({
   return (
     <main ref={rootRef} className={styles.page}>
       {musicModule ? (
-        <MusicPlayerView
-          data={musicModule.data}
-          styles={styles}
-        />
+        <ModuleSurface background={musicModule.config?.sectionBackground}>
+          <MusicPlayerView data={musicModule.data} styles={styles} />
+        </ModuleSurface>
       ) : null}
       <div className={styles.shell}>
         <div className={styles.heroModules}>
@@ -107,11 +107,13 @@ export default function WeddingTerracotaTemplate({
                 className={`${styles.flowBlock} ${styles[`moduleBlock${module.type}`] || ''} ${TEMPLATE_DEBUG ? styles.flowBlockDebug : ''}`}
               >
                 {TEMPLATE_DEBUG ? <span className={styles.debugModuleLabel}>{module.type}</span> : null}
-                <ModuleView
-                  data={module.data}
-                  styles={styles}
-                  attendanceState={module.type === 'attendance_confirm' ? attendanceState : undefined}
-                />
+                <ModuleSurface background={module.config?.sectionBackground}>
+                  <ModuleView
+                    data={module.data}
+                    styles={styles}
+                    attendanceState={module.type === 'attendance_confirm' ? attendanceState : undefined}
+                  />
+                </ModuleSurface>
               </div>
             );
           })}

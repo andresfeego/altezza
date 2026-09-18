@@ -2,16 +2,22 @@ import sealSrc from './assets/images/sello-lacre-abrir-v1.png';
 import styles from './EnvelopeOliva.module.scss';
 import EnvelopeBackground from '../../module-views/EnvelopeBackground';
 
-export default function EnvelopeOliva({ data, onOpen }) {
+export default function EnvelopeOliva({ data, onOpen, opening = false, openingVariant = 'light', openingDuration }) {
   const names = [data.brideName, data.groomName].filter(Boolean).join(' y ');
 
   return (
-    <section className={styles.scene} aria-label="Sobre de la invitación">
+    <section
+      className={`${styles.scene} ${opening ? (openingVariant === 'lift' ? styles.sceneLifting : styles.sceneOpening) : ''}`}
+      style={openingDuration ? { '--envelope-opening-duration': `${openingDuration}ms` } : undefined}
+      aria-label="Sobre de la invitación"
+    >
       <EnvelopeBackground data={data} className={styles.backdrop} />
       <button
         type="button"
         className={styles.envelope}
         onClick={onOpen}
+        disabled={opening}
+        aria-busy={opening || undefined}
         aria-label={names ? `Abrir invitación de ${names}` : 'Abrir invitación'}
       >
         <span className={styles.artwork} aria-hidden="true">

@@ -2,7 +2,7 @@ export default function GiftEnvelopesView({ data, styles }) {
   if (!data?.imageSrc) return null;
 
   return (
-    <section className={`${styles.moduleCard} ${styles.giftEnvelopesModule}`}>
+    <section className={`${styles.moduleCard} ${styles.giftEnvelopesModule}`} data-gift-envelopes>
       <div
         className={styles.giftEnvelopesBackground}
         aria-hidden="true"

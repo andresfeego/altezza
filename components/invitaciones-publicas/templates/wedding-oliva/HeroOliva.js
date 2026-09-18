@@ -17,6 +17,7 @@ export default function HeroOliva({ data }) {
           <span className={`${styles.artworkFace} ${styles.artworkMask}`} />
         </div>
       ) : null}
+      <span className={styles.movingLight} aria-hidden="true" />
       {data.text1 ? <p className={styles.eyebrow}>{data.text1}</p> : null}
       <h1 tabIndex={-1} data-oliva-title className={styles.identity}>
         {data.logoImage ? (

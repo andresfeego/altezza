@@ -7,6 +7,9 @@
   --hero-paper-grain-opacity: .24;
   --hero-paper-grain-size: calc(var(--ag-space-9) * .5);
   --hero-paper-fibers-size: calc(var(--ag-space-9) * .75);
+  --hero-light-travel: 12s;
+  --hero-moving-light-opacity: .7;
+  --hero-moving-light-color: var(--oliva-envelope-paper-light);
   --hero-paper-lighting:
     linear-gradient(135deg, var(--hero-paper-light), var(--hero-paper-base) 50%, var(--hero-paper-shade));
   --hero-monogram-optical-x: -2%;
@@ -60,6 +63,53 @@
     mix-blend-mode: soft-light;
     opacity: var(--hero-paper-grain-opacity);
   }
+}
+
+.movingLight {
+  position: absolute;
+  z-index: 0;
+  left: -50%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  background: radial-gradient(ellipse at center,
+    var(--hero-moving-light-color) 0%,
+    color-mix(in srgb, var(--hero-moving-light-color) 80%, transparent) 18%,
+    color-mix(in srgb, var(--hero-moving-light-color) 45%, transparent) 36%,
+    transparent 66%);
+  mix-blend-mode: screen;
+  opacity: var(--hero-moving-light-opacity);
+  // Warm only the light, preserving the paper, lettering and floral colors.
+  filter: sepia(.45) saturate(1.2);
+  // Resting position for reduced motion: a soft light near the upper-left corner.
+  transform: translate(14.645%, -35.355%);
+}
+
+// Coordinates follow a quarter ellipse: midpoint of the left edge to midpoint
+// of the top edge. The halo matches the hero's dimensions for a visible local glow.
+@keyframes heroLightDrift {
+  0% { transform: translate(0, 0); animation-timing-function: ease-in; }
+  25% { transform: translate(3.806%, -19.134%); animation-timing-function: linear; }
+  50% { transform: translate(14.645%, -35.355%); }
+  75% { transform: translate(30.866%, -46.194%); animation-timing-function: ease-out; }
+  100% { transform: translate(50%, -50%); }
+}
+
+@keyframes heroReliefShadowDrift {
+  from { transform: translate(calc(var(--hero-relief-depth) * 1.3), calc(var(--hero-relief-depth) * .15)); }
+  to { transform: translate(calc(var(--hero-relief-depth) * .15), calc(var(--hero-relief-depth) * 1.3)); }
+}
+
+@keyframes heroReliefHighlightDrift {
+  from { transform: translate(calc(var(--hero-relief-depth) * -1), calc(var(--hero-relief-depth) * -.15)); }
+  to { transform: translate(calc(var(--hero-relief-depth) * -.15), calc(var(--hero-relief-depth) * -1)); }
+}
+
+@keyframes heroMonogramShadowDrift {
+  from { filter: drop-shadow(calc(var(--oliva-border) * 4) calc(var(--oliva-border) * .5) calc(var(--oliva-border) * 3) var(--hero-monogram-shadow)); }
+  to { filter: drop-shadow(calc(var(--oliva-border) * .5) calc(var(--oliva-border) * 4) calc(var(--oliva-border) * 3) var(--hero-monogram-shadow)); }
 }
 
 .relief, .artworkShadow, .artworkLight, .artworkMask, .artworkFallback {
@@ -148,9 +198,18 @@
   .hero { padding-inline: var(--ag-space-5); gap: var(--ag-space-5); --hero-relief-depth: calc(var(--oliva-border) * 1.4); }
   .eyebrow { font-size: var(--ag-font-size-24); }
 }
+@media (prefers-reduced-motion: no-preference) {
+  .movingLight {
+    animation: heroLightDrift var(--hero-light-travel) linear infinite alternate;
+    will-change: transform;
+  }
+  .artworkShadow { animation: heroReliefShadowDrift var(--hero-light-travel) ease-in-out infinite alternate; }
+  .artworkLight { animation: heroReliefHighlightDrift var(--hero-light-travel) ease-in-out infinite alternate; }
+  .monogram { animation: heroMonogramShadowDrift var(--hero-light-travel) ease-in-out infinite alternate; }
+}
 @media (prefers-contrast: more), (forced-colors: active) {
   .hero { background-image: none; }
   .hero::before, .hero::after { display: none; }
-  .relief { display: none; }
-  .monogram { filter: none; }
+  .relief, .movingLight { display: none; }
+  .monogram { animation: none; filter: none; }
 }

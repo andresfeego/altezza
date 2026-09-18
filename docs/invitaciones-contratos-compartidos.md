@@ -14,6 +14,9 @@ datos antes de pasarlos a las vistas.
 | `hero_image_2` | `backgroundImage`, `logoImage`, `imageSrc`, `imageAlt`, `coupleNames` opcional | Esos mismos campos; nombre del evento como respaldo |
 | `welcome_message` | `title`, `subtitle`; invitado y mensaje personalizado | `title`, `subtitle`, `inviteeName`, `personalizedMessage` |
 | `couple_family` | `title`, `coupleLabel`, `parentsBride`, `parentsGroom`, `godparents` | Mismos campos; cada persona tiene `name` e `isDeceased` |
+| `couple_names` | `brideName`, `groomName` en `config` | Dos nombres recortados de espacios; `&` solo cuando ambos están presentes. Sin respaldo automático ni texto adicional |
+| `countdown` | `title`, `message`, `completedMessage`, `target`, `showDate` opcional | Fecha de ceremonia o recepción; `showDate === true` muestra la fecha del mismo objetivo. Ausente o falso conserva el contador sin fecha |
+| `save_the_date_calendar` | `message`; fecha de ceremonia del evento | Mes, año, cuadrícula y día marcado derivados de la fecha en Colombia |
 | `event_details` | `title` opcional, flags existentes, `backgroundVideo`, frases opcionales `ceremonyMessage` / `receptionMessage`; lugares y fechas de `invitacion` | Fechas/lugares en `invitacion`; enlaces, direcciones y frases resueltos en campos comunes del módulo |
 | `attendance_confirm` | `title`, `helperText`, opciones existentes y datos de invitación | Contrato compartido de confirmación; sin `introMessage` exclusivo de Oliva |
 | `closing_message` | `message`, `frameImage` y `frameImageAlt` opcionales | Los mismos campos. Un cierre de texto no requiere un marco |
@@ -47,6 +50,13 @@ pero una imagen explícita del config tiene prioridad.
 El cierre se controla con `enabled` y `order`, como los demás módulos. No hay
 footer de contenido agregado fuera de `resolvedModules` en Oliva.
 Flores, sello, fuentes y texturas siguen siendo recursos visuales de plantilla.
+
+`couple_names` es un módulo independiente, registrado en el catálogo backend y
+en las tres plantillas. No se añade a sus configuraciones por defecto. Se oculta
+si ambos nombres están vacíos o `enabled` es falso; con un único nombre no muestra
+un `&` suelto. Oliva compone la misma vista compartida con WindSong y dos adornos
+botánicos propios. No consume fecha, frase, logo ni imagen desde el evento. En
+`bodmys` se activa después de `couple_family` mediante `configure-couple-names.js`.
 
 Esta alineación no añade validación exhaustiva por schema al backend. Esa
 validación sigue pendiente; las pruebas de compatibilidad verifican los
@@ -91,7 +101,7 @@ en Classic, Terracota y Oliva:
 | `countdown` | `title`, `message`, `completedMessage` |
 | `countdown_image` | `title`, `completedMessage` |
 | `photo_slider` | `title` |
-| `dresscode` | `title`, `message` |
+| `dresscode` | `title`, `message`, `suggestedColorsTitle`, `avoidedColorsTitle` |
 | `gift_envelopes` | `title` (además del `leadText` existente) |
 
 Se eliminaron frases automáticas de bienvenida, familia, asistencia, calendario,
@@ -113,3 +123,34 @@ Para conservar las frases que se veían en Mayra y Samuel, `configure-copy.js`
 las incorpora a su configuración local tomando los valores de `modules.json`.
 Solo añade campos ausentes de `bodmys`; conserva textos personalizados y vacíos
 explícitos. No asigna esas frases a otros eventos ni modifica el sobre.
+
+## Paletas de vestimenta: colores o imágenes
+
+`dresscode.config.suggestedColors` y `avoidedColors` conservan compatibilidad
+con las listas de códigos de color existentes. Cada elemento admite:
+
+```json
+[
+  "#767C5A",
+  "https://ejemplo.com/tela.png",
+  { "color": "#FFFFFF", "label": "Blanco" },
+  { "imageSrc": "/scrAppaltezza/invitations/evento/tela.png", "label": "Salvia" },
+  {
+    "imageSrc": "/scrAppaltezza/invitations/evento/paleta.png",
+    "label": "Terracota",
+    "crop": { "x": 20, "y": 70, "width": 10, "height": 20 }
+  }
+]
+```
+
+Las URL se muestran dentro del mismo círculo mediante un `img` recortado por
+CSS. `crop` es opcional: sus cuatro números son porcentajes de la imagen
+original, dentro del intervalo 0–100; un recorte inválido se omite. Sin recorte,
+se usa `object-fit: cover`. El campo `label` da nombre accesible a cada muestra.
+Las imágenes son contenido del evento y sus rutas pertenecen a DB, no a CSS.
+
+Los dos títulos de paleta son configurables; si faltan se conservan las
+etiquetas anteriores por compatibilidad, y una cadena vacía oculta el título.
+Una lista vacía oculta también su título. Un módulo con solo `title`/`message`
+ya puede mostrarse. Se conserva el respaldo de ilustración de Classic y
+Terracota para tarjetas anteriores. Las tres plantillas comparten esta lógica.

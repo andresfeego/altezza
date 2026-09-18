@@ -1,0 +1,17 @@
+.page {
+  position: relative;
+}
+
+.stage {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 3;
+  width: 100%;
+}
+
+.blocker {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  touch-action: none;
+}

@@ -1,4 +1,5 @@
 import MusicPlayerView from '../../module-views/MusicPlayerView';
+import ModuleSurface from '../../ModuleSurface';
 import HeroImage2ClassicView from '../../module-views/HeroImage2ClassicView';
 import HeroImage1ClassicView from '../../module-views/HeroImage1ClassicView';
 import EnvelopIntroClassicView from '../../module-views/EnvelopIntroClassicView';
@@ -27,10 +28,9 @@ export default function WeddingClassicTemplate({
   return (
     <main className={styles.page}>
       {musicModule ? (
-        <MusicPlayerView
-          data={musicModule.data}
-          styles={styles}
-        />
+        <ModuleSurface background={musicModule.config?.sectionBackground}>
+          <MusicPlayerView data={musicModule.data} styles={styles} />
+        </ModuleSurface>
       ) : null}
       <div className={styles.shell}>
         <div className={styles.heroModules}>
@@ -44,11 +44,13 @@ export default function WeddingClassicTemplate({
                 className={`${styles.flowBlock} ${styles[`moduleBlock${module.type}`] || ''} ${TEMPLATE_DEBUG ? styles.flowBlockDebug : ''}`}
               >
                 {TEMPLATE_DEBUG ? <span className={styles.debugModuleLabel}>{module.type}</span> : null}
-                <ModuleView
-                  data={module.data}
-                  styles={styles}
-                  attendanceState={module.type === 'attendance_confirm' ? attendanceState : undefined}
-                />
+                <ModuleSurface background={module.config?.sectionBackground}>
+                  <ModuleView
+                    data={module.data}
+                    styles={styles}
+                    attendanceState={module.type === 'attendance_confirm' ? attendanceState : undefined}
+                  />
+                </ModuleSurface>
               </div>
             );
           })}

@@ -1,14 +1,20 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { GiLinkedRings } from 'react-icons/gi';
 import { PiCheersThin } from 'react-icons/pi';
-import { BsCalendarHeart } from 'react-icons/bs';
 import { FiArrowUpRight, FiHeart } from 'react-icons/fi';
 import AttendanceConfirmView from '../../module-views/AttendanceConfirmView';
 import MusicPlayerView from '../../module-views/MusicPlayerView';
+import ModuleSurface from '../../ModuleSurface';
 import { formatDateInColombia, formatTimeInColombiaStable } from '@/components/utils/datetimeColombia';
 import BotanicalArt from './BotanicalArt';
+import AttendanceFlowerOliva from './AttendanceFlowerOliva';
 import EnvelopeOliva from './EnvelopeOliva';
+import EnvelopeLightTrial, { LIGHT_TRIAL_DURATION_MS } from './EnvelopeLightTrial';
+import EnvelopeLiftTrial, { LIFT_TRIAL_DURATION_MS } from './EnvelopeLiftTrial';
+import liftTrialStyles from './EnvelopeLiftTrial.module.scss';
 import HeroOliva from './HeroOliva';
+import CoupleNamesOliva from './CoupleNamesOliva';
+import { CalendarOliva, CountdownOliva } from './DateModulesOliva';
 import templateStyles from './index.module.scss';
 import interiorStyles from './interior.module.scss';
 import { COMMON_MODULE_VIEWS } from '../../registry/commonModuleViews';
@@ -20,7 +26,10 @@ import debugStyles from './debug.module.scss';
 const styles = { ...portableStyles, ...templateStyles, ...interiorStyles };
 
 // Set to false to hide module names and boundaries, as in Classic and Terracota.
-const TEMPLATE_DEBUG = true;
+const TEMPLATE_DEBUG = false;
+
+// Temporary trials: 'lift', 'light', or false for the checkpoint's instant opening.
+const ENVELOPE_EXIT_TRIAL = 'lift';
 
 function ModuleFrame({ name, children }) {
   return (
@@ -67,7 +76,6 @@ function Details({ data }) {
   return (
     <section className={styles.details} aria-label="Lugares y horarios">
       {data.backgroundVideo ? <video className={styles.detailsVideo} src={data.backgroundVideo} autoPlay muted loop playsInline aria-hidden="true" /> : null}
-      <BotanicalArt variant="sprig" className={styles.detailsSprig} />
       {data.title ? <p className={styles.eyebrow}>{data.title}</p> : null}
       {events.map((event) => (
         <article className={styles.event} key={event.name}>
@@ -80,7 +88,6 @@ function Details({ data }) {
           {event.map ? <a className={styles.mapLink} href={event.map} target="_blank" rel="noreferrer">Ver ubicación <FiArrowUpRight aria-hidden="true" /><span className={styles.srOnly}> de {event.name.toLowerCase()}</span></a> : null}
         </article>
       ))}
-      <BotanicalArt className={styles.detailsFlorals} />
     </section>
   );
 }
@@ -88,10 +95,14 @@ function Details({ data }) {
 function Attendance({ data, attendanceState }) {
   const lastDay = data.deadline ? dateLabel(new Date(new Date(data.deadline).getTime() - 1)) : '';
   return (
-    <section className={styles.rsvp}>
-      <BsCalendarHeart className={styles.rsvpIcon} aria-hidden="true" />
-      {lastDay ? <p className={styles.deadline}>Confirma hasta el {lastDay}</p> : null}
-      <AttendanceConfirmView data={data} styles={styles} attendanceState={attendanceState} />
+    <section className={styles.rsvp} aria-label="Confirmar asistencia">
+      <AttendanceFlowerOliva />
+      <AttendanceConfirmView
+        data={data}
+        styles={styles}
+        attendanceState={attendanceState}
+        introFooter={lastDay ? <p className={styles.deadline}>Confirma hasta el <span>{lastDay}</span></p> : null}
+      />
     </section>
   );
 }
@@ -111,6 +122,9 @@ export const MODULE_COMPONENTS = {
   hero_image_1: HeroOliva,
   hero_image_2: HeroImage2ClassicView,
   couple_family: Family,
+  couple_names: CoupleNamesOliva,
+  countdown: CountdownOliva,
+  save_the_date_calendar: CalendarOliva,
   event_details: Details,
   attendance_confirm: Attendance,
   closing_message: Closing,
@@ -120,37 +134,76 @@ export default function WeddingOlivaTemplate({ resolvedModules, attendanceState 
   const envelope = resolvedModules.find((module) => module.type === 'envelop_intro');
   const music = resolvedModules.find((module) => module.type === 'music_player');
   const [opened, setOpened] = useState(!envelope);
+  const [lightOrigin, setLightOrigin] = useState(null);
+  const [lifting, setLifting] = useState(false);
+  const openingRef = useRef(false);
   const contentRef = useRef(null);
   const envelopeData = envelope?.data || {};
 
-  function openInvitation() {
+  const openInvitation = useCallback(() => {
     setOpened(true);
-    window.dispatchEvent(new Event('envelopIntro:open'));
     requestAnimationFrame(() => {
       contentRef.current?.querySelector('[data-oliva-title]')?.focus({ preventScroll: true });
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
+  }, []);
+
+  const finishLightTrial = useCallback(() => setLightOrigin(null), []);
+  const finishLiftTrial = useCallback(() => {
+    setLifting(false);
+    openInvitation();
+  }, [openInvitation]);
+
+  function startOpening(event) {
+    if (openingRef.current) return;
+    openingRef.current = true;
+    // Keep music activation in the user's gesture, before any animation timer.
+    window.dispatchEvent(new Event('envelopIntro:open'));
+    if (!ENVELOPE_EXIT_TRIAL || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      openInvitation();
+      return;
+    }
+    if (ENVELOPE_EXIT_TRIAL === 'lift') {
+      setLifting(true);
+      return;
+    }
+    const button = event.currentTarget;
+    const { left: x, top: y } = button.getBoundingClientRect();
+    setLightOrigin({
+      x,
+      y,
+      diameter: Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y)) * 3.4,
+      color: window.getComputedStyle(button).getPropertyValue('--oliva-paper').trim(),
+    });
   }
 
   return (
-    <main className={`${styles.page} ${!opened ? styles.pageEnvelope : styles.pageOpen}`}>
-      {music ? <MusicPlayerView data={music.data} styles={styles} /> : null}
+    <main className={`${styles.page} ${!opened ? styles.pageEnvelope : styles.pageOpen} ${lifting ? liftTrialStyles.page : ''}`}>
+      {music ? <ModuleSurface background={music.config?.sectionBackground}><MusicPlayerView data={music.data} styles={styles} /></ModuleSurface> : null}
       {!opened ? (
-        <ModuleFrame name="envelop_intro">
-          <EnvelopeOliva data={envelopeData} onOpen={openInvitation} />
-        </ModuleFrame>
+        <div className={lifting ? liftTrialStyles.stage : undefined}>
+          <ModuleFrame name="envelop_intro">
+            <ModuleSurface background={envelope?.config?.sectionBackground}>
+              <EnvelopeOliva data={envelopeData} onOpen={startOpening} opening={lifting || Boolean(lightOrigin)} openingVariant={ENVELOPE_EXIT_TRIAL} openingDuration={lifting ? LIFT_TRIAL_DURATION_MS : LIGHT_TRIAL_DURATION_MS} />
+            </ModuleSurface>
+          </ModuleFrame>
+        </div>
       ) : null}
-      <div ref={contentRef} hidden={!opened} className={styles.paper}>
+      <div ref={contentRef} hidden={!opened && !lifting} inert={lifting ? '' : undefined} aria-hidden={lifting || undefined} className={styles.paper}>
         {resolvedModules.filter((module) => !['envelop_intro', 'music_player'].includes(module.type)).map((module) => {
           const View = MODULE_COMPONENTS[module.type];
           if (!View) return null;
           return (
             <ModuleFrame key={`${module.type}-${module.order}`} name={module.type}>
-              <View data={module.data} styles={styles} attendanceState={attendanceState} />
+              <ModuleSurface background={module.config?.sectionBackground}>
+                <View data={module.data} styles={styles} attendanceState={attendanceState} />
+              </ModuleSurface>
             </ModuleFrame>
           );
         })}
       </div>
+      {lightOrigin ? <EnvelopeLightTrial origin={lightOrigin} onCovered={openInvitation} onComplete={finishLightTrial} /> : null}
+      {lifting ? <EnvelopeLiftTrial onComplete={finishLiftTrial} /> : null}
     </main>
   );
 }

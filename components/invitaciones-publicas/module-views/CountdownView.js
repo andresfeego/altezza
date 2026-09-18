@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import CountdownDate from './CountdownDate';
 
 const EMPTY_ITEMS = [
   { label: 'Días', value: 0 },
@@ -22,7 +23,7 @@ function buildCountdownItems(targetDateValue) {
   ];
 }
 
-export default function CountdownView({ data, styles }) {
+export default function CountdownView({ data, styles, formatValue = (value) => value }) {
   const [items, setItems] = useState(EMPTY_ITEMS);
   const [completed, setCompleted] = useState(Boolean(data.completed));
 
@@ -32,7 +33,7 @@ export default function CountdownView({ data, styles }) {
     const updateCountdown = () => {
       const nextItems = buildCountdownItems(data.targetDate);
       setItems(nextItems);
-      setCompleted(nextItems.every((item) => item.value === 0));
+      setCompleted(new Date(data.targetDate).getTime() <= Date.now());
     };
 
     updateCountdown();
@@ -47,7 +48,8 @@ export default function CountdownView({ data, styles }) {
   if (!data.targetDate) return null;
 
   return (
-    <section className={`${styles.moduleCard} ${styles.moduleCardAccent}`}>
+    <section className={[styles.moduleCard, styles.moduleCardAccent, styles.countdownModule].filter(Boolean).join(' ')} data-countdown="true">
+      {data.showDate ? <CountdownDate value={data.targetDate} styles={styles} /> : null}
       {data.title ? <h2 className={styles.moduleTitle}>{data.title}</h2> : null}
       {(completed ? data.completedMessage : data.message) ? (
         <p className={styles.moduleText}>{completed ? data.completedMessage : data.message}</p>
@@ -55,7 +57,7 @@ export default function CountdownView({ data, styles }) {
       <div className={styles.countdownGrid}>
         {items.map((item) => (
           <div key={item.label} className={styles.countdownItem}>
-            <strong>{item.value}</strong>
+            <strong>{formatValue(item.value)}</strong>
             <span>{item.label}</span>
           </div>
         ))}

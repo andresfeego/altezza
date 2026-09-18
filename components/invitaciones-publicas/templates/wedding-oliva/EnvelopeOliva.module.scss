@@ -72,6 +72,58 @@
   outline-offset: var(--ag-space-1);
 }
 
+// Temporary light trial: the paper brightens and dissolves beneath the bloom.
+.sceneOpening .envelope {
+  pointer-events: none;
+  animation: envelopeLightDissolve var(--envelope-opening-duration) ease-in both;
+}
+
+@keyframes envelopeLightDissolve {
+  0%, 12% { opacity: 1; filter: brightness(1); }
+  30% { opacity: .85; filter: brightness(1.3); }
+  50%, 100% { opacity: 0; filter: brightness(1.6); }
+}
+
+// Lift continuously while the hero emerges; opacity has its own timing track.
+.sceneLifting {
+  background: transparent;
+  perspective: calc(var(--ag-space-9) * 10);
+}
+
+.sceneLifting .backdrop {
+  animation: envelopeBackdropWithdraw var(--envelope-opening-duration) ease-in-out both;
+}
+
+.sceneLifting .envelope {
+  --envelope-lift-shadow: var(--ag-space-3) var(--ag-space-7) var(--ag-space-6) calc(-1 * var(--ag-space-1)) color-mix(in srgb, var(--oliva-shadow-ink) 48%, transparent);
+  transform-origin: 50% 65%;
+  pointer-events: none;
+  transition: none;
+  will-change: transform, opacity;
+  animation:
+    envelopeLiftWithdraw var(--envelope-opening-duration) cubic-bezier(.55, .02, .75, .35) both,
+    envelopeLiftFade var(--envelope-opening-duration) ease-in both;
+}
+
+@keyframes envelopeLiftWithdraw {
+  from { transform: translateY(0) rotateX(0) rotateZ(0) scale(1); box-shadow: var(--envelope-shadow); }
+  to { transform: translateY(-100svh) rotateX(9deg) rotateZ(-3deg) scale(1.02); box-shadow: var(--envelope-lift-shadow); }
+}
+
+@keyframes envelopeLiftFade {
+  0%, 40% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes envelopeBackdropWithdraw {
+  0%, 20% { opacity: 1; }
+  72%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sceneLifting .envelope, .sceneLifting .backdrop { animation: none; }
+}
+
 .artwork { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .envelopeImage {
   position: absolute;

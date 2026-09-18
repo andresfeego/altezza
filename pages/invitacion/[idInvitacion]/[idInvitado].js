@@ -292,7 +292,11 @@ export async function getServerSideProps({ params, req }) {
   const proto = String(rawProto || 'https').split(',')[0].trim() || 'https';
   const origin = host ? `${proto}://${host}` : '';
   const baseInternal = process.env.HOST_NAME_INTERNAL;
-  const endpoint = host
+  // Local previews should fetch directly instead of looping through a temporary tunnel.
+  const useLocalBackend = process.env.NODE_ENV !== 'production' && baseInternal;
+  const endpoint = useLocalBackend
+    ? `${baseInternal}/public/invitaciones/${idInvitacion}/${idInvitado}`
+    : host
     ? `${origin}/api/responseAltezza/public/invitaciones/${idInvitacion}/${idInvitado}`
     : `${baseInternal}/public/invitaciones/${idInvitacion}/${idInvitado}`;
 

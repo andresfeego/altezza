@@ -63,6 +63,7 @@ const configs = {
   image_slider_sepia: { title: 'Galería configurada', images: ['/sepia.webp'] },
   countdown: { title: 'Contador configurado' },
   couple_family: { coupleLabel: 'Presentación de familia configurada', parentsBride: ['Madre de prueba'], godparents: [{ name: 'Padrino de prueba', isDeceased: true }] },
+  couple_names: { brideName: 'Novia configurada', groomName: 'Novio configurado' },
   save_the_date_calendar: { message: 'Reserva configurada' },
   event_details: { ceremonyAddress: 'Dirección de ceremonia', receptionAddress: 'Dirección de recepción', ceremonyMessage: 'Frase de ceremonia', receptionMessage: 'Frase de recepción', ceremonyMapUrl: 'https://maps.example/legacy' },
   attendance_confirm: { title: 'Asistencia configurada', helperText: 'Frase de asistencia\nInstrucciones configuradas' },
@@ -72,6 +73,223 @@ const attendanceState = { guests: [], options: [], closed: false };
 const render = (key, input) => renderToStaticMarkup(React.createElement(templates[key].default, {
   resolvedModules: buildResolvedModules(input, { ...payload, evento: { ...payload.evento, templateKey: key } }, key), attendanceState,
 }));
+
+test('optional section backgrounds render for every module in all templates without changing resolved content', () => {
+  const { JSDOM } = require('jsdom');
+  for (const key of Object.keys(templates)) {
+    for (const module of modules) {
+      const withBackground = { ...module, config: { ...module.config, sectionBackground: { imageSrc: '/event-garden.png', overlayOpacity: .78 } } };
+      assert.deepEqual(resolveModuleDataByTemplate(withBackground, payload, key), resolveModuleDataByTemplate(module, payload, key));
+      const dom = new JSDOM(render(key, [withBackground]));
+      const surface = dom.window.document.querySelector('[data-section-background]');
+      assert.ok(surface, `${key}/${module.type} supports the common background`);
+      assert.equal(surface.dataset.sectionBackground, '/event-garden.png');
+      assert.equal(surface.style.getPropertyValue('--module-background-opacity'), '0.78');
+      assert.ok(!render(key, [module]).includes('data-section-background'));
+      assert.ok(!render(key, [{ ...withBackground, enabled: false }]).includes('data-section-background'));
+      dom.window.close();
+    }
+    const names = modules.find(m => m.type === 'couple_names');
+    const legacy = render(key, [names]);
+    assert.equal(render(key, [{ ...names, config: { ...names.config, sectionBackground: { imageSrc: '' } } }]), legacy);
+    assert.equal(render(key, [{ ...names, config: { ...names.config, sectionBackground: { imageSrc: 'javascript:alert(1)' } } }]), legacy);
+    assert.equal(render(key, [{ ...names, config: { ...names.config, backgroundImage: '/legacy.png' } }]), legacy);
+  }
+});
+
+test('section backgrounds validate sources and preserve zero/full overlay opacity', () => {
+  const { normalizeSectionBackground: normalize } = require('../components/invitaciones-publicas/ModuleSurface');
+  for (const value of [null, [], {}, { imageSrc: '//example.com/a.png' }, { imageSrc: 'data:text/html,bad' }, { imageSrc: 'file:///a.png' }, { imageSrc: '/a\\b.png' }]) assert.equal(normalize(value), null);
+  assert.deepEqual(normalize({ imageSrc: ' /garden.png ', overlayOpacity: 0 }), { imageSrc: '/garden.png', overlayOpacity: 0 });
+  assert.equal(normalize({ imageSrc: 'https://example.com/a.png', overlayOpacity: 1 }).overlayOpacity, 1);
+  assert.equal(normalize({ imageSrc: '/a.png', overlayOpacity: -2 }).overlayOpacity, 0);
+  assert.equal(normalize({ imageSrc: '/a.png', overlayOpacity: 2 }).overlayOpacity, 1);
+  assert.equal(normalize({ imageSrc: '/a.png', overlayOpacity: 'bad' }).overlayOpacity, .8);
+});
+
+test('dresscode mixes legacy color codes and image URLs in every template with labels and optional crops', () => {
+  const input = { type: 'dresscode', config: {
+    title: 'Vestuario elegido', imageSrc: '/group.png',
+    suggestedColorsTitle: 'Paleta del evento', avoidedColorsTitle: 'Reservado',
+    suggestedColors: ['#123456', 'https://example.com/fabric.jpg', { imageSrc: '/swatches.png', label: 'Canela', crop: { x: 50, y: 70, width: 10, height: 20 } }],
+    avoidedColors: [{ color: '#FFFFFF', label: 'Blanco' }],
+  } };
+  const { JSDOM } = require('jsdom');
+  for (const key of Object.keys(templates)) {
+    const data = resolveModuleDataByTemplate(input, { ...payload, evento: { ...payload.evento, templateKey: key } }, key);
+    assert.deepEqual(data.suggestedColors, input.config.suggestedColors);
+    const dom = new JSDOM(render(key, [input]));
+    const section = dom.window.document.querySelector('[data-dresscode]');
+    assert.equal(section.querySelectorAll('[data-dresscode-palette="suggested"] [role="img"]').length, 3);
+    assert.equal(section.querySelectorAll('[data-dresscode-palette="suggested"] img').length, 2);
+    assert.equal(section.querySelector('[aria-label="Canela"]').style.getPropertyValue('--swatch-image-x'), '-500%');
+    assert.equal(section.querySelector('[aria-label="Blanco"]').textContent, '×');
+    assert.match(section.textContent, /Paleta del evento/);
+    assert.match(section.textContent, /Reservado/);
+    const empty = render(key, [{ type: 'dresscode', config: { title: 'Solo título', suggestedColors: [], avoidedColors: [] } }]);
+    assert.match(empty, /Solo título/);
+    assert.ok(!empty.includes('Paleta de colores sugerida'));
+    assert.ok(!empty.includes('Evita estos colores'));
+    const legacy = render(key, [{ type: 'dresscode', config: { suggestedColors: ['#123456'], avoidedColors: ['#FFFFFF'] } }]);
+    assert.match(legacy, /background:#123456/);
+    assert.match(legacy, /Paleta de colores sugerida/);
+    assert.match(legacy, /Evita estos colores/);
+    const hiddenTitles = render(key, [{ ...input, config: { ...input.config, suggestedColorsTitle: '', avoidedColorsTitle: '' } }]);
+    assert.ok(!hiddenTitles.includes('Paleta de colores sugerida'));
+    assert.ok(!hiddenTitles.includes('Evita estos colores'));
+    dom.window.close();
+  }
+});
+
+test('dresscode normalizes optional swatch metadata and refuses unsafe image schemes or invalid crop geometry', () => {
+  const { normalizeDressCodePalette } = require('../components/invitaciones-publicas/modules/dressCodePalette');
+  assert.deepEqual(normalizeDressCodePalette(null), []);
+  assert.deepEqual(normalizeDressCodePalette([' #ABC ', null, 42, {}, 'javascript:alert(1)', { imageSrc: 'data:text/html,bad' }]), ['#ABC']);
+  for (const crop of [{ x: -1, y: 0, width: 10, height: 10 }, { x: 95, y: 0, width: 10, height: 10 }, { x: 0, y: 0, width: 0, height: 10 }]) {
+    assert.deepEqual(normalizeDressCodePalette([{ imageSrc: '/fabric.png', label: ' Tela ', crop }]), [{ imageSrc: '/fabric.png', label: 'Tela' }]);
+  }
+});
+
+test('attendance preserves guest selections, callbacks, pending/closed states and feedback across templates', async () => {
+  const { JSDOM } = require('jsdom');
+  const dom = new JSDOM('<div id="attendance-test"></div>');
+  const saved = Object.fromEntries(['window', 'document', 'IS_REACT_ACT_ENVIRONMENT'].map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  globalThis.window = dom.window;
+  globalThis.document = dom.window.document;
+  globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+  const { createRoot } = require('react-dom/client');
+  const element = document.getElementById('attendance-test');
+  const root = createRoot(element);
+  try {
+    for (const key of Object.keys(templates)) {
+      const calls = [];
+      const state = {
+        guests: [{ id: 42, nombre: 'Invitada con nombre configurado', principal: true, confirmado: 2 }],
+        options: [{ value: 1, label: 'Asistiré' }, { value: 2, label: 'Quizá' }, { value: 3, label: 'No asistiré' }],
+        closed: false, isSavingGuest: () => false,
+        onChange: (_event, id, value) => calls.push([id, value]),
+      };
+      const data = { title: 'Confirmación elegida', helperText: 'Instrucciones desde datos', deadline: '2030-11-19T05:00:00Z' };
+      const draw = async (nextState) => React.act(async () => root.render(React.createElement(templates[key].MODULE_COMPONENTS.attendance_confirm, { data, styles: {}, attendanceState: nextState })));
+      await draw(state);
+      assert.ok(element.textContent.includes(state.guests[0].nombre));
+      assert.ok(element.textContent.includes(data.helperText));
+      assert.equal(element.querySelector('input:checked').id, 'attendance-42-2');
+      assert.equal(element.querySelectorAll('input:disabled').length, 0);
+      await React.act(async () => element.querySelector('#attendance-42-1').click());
+      assert.deepEqual(calls, [[42, 1]]);
+      await draw({ ...state, isSavingGuest: () => true });
+      assert.equal(element.querySelectorAll('input:disabled').length, 3);
+      await draw({ ...state, closed: true, feedback: { 42: { error: true, message: 'No fue posible guardar' } } });
+      assert.equal(element.querySelectorAll('input:disabled').length, 3);
+      assert.match(element.querySelector('[role="status"]').textContent, /plazo/);
+      assert.equal(element.querySelector('[role="alert"]').textContent, 'No fue posible guardar');
+      if (key === 'wedding_oliva') assert.match(element.textContent, /Confirma hasta el 18 de noviembre de 2030/);
+    }
+  } finally {
+    await React.act(async () => root.unmount());
+    dom.window.close();
+    for (const [key, descriptor] of Object.entries(saved)) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor); else delete globalThis[key];
+    }
+  }
+});
+
+test('countdown date is opt-in across templates, follows its target and handles invalid dates safely', () => {
+  for (const key of Object.keys(templates)) {
+    const input = { type: 'countdown', config: { title: 'Título elegido' } };
+    for (const showDate of [undefined, false, 'false']) {
+      const module = { ...input, config: { ...input.config, showDate } };
+      assert.equal(resolveModuleDataByTemplate(module, payload, key).showDate, false);
+      assert.ok(!render(key, [module]).includes('data-countdown-date'));
+    }
+    const module = { ...input, config: { ...input.config, showDate: true, target: 'fechaHoraRecepcion' } };
+    assert.match(render(key, [module]), /data-countdown-date="true"/);
+    assert.match(render(key, [module]), /aria-label="viernes, 29 de noviembre de 2030"/);
+    for (const date of [null, 'invalid-date']) {
+      const data = resolveModuleDataByTemplate(input, { invitacion: { fechaHoraCeremonia: date } }, key);
+      assert.equal(data.targetDate, null);
+      assert.equal(renderToStaticMarkup(React.createElement(templates[key].MODULE_COMPONENTS.countdown, { data, styles: {} })), '');
+    }
+  }
+  const { default: CountdownDate } = require('../components/invitaciones-publicas/module-views/CountdownDate');
+  const html = renderToStaticMarkup(React.createElement(CountdownDate, { value: '2027-01-01T02:00:00Z', styles: {} }));
+  assert.match(html, /jueves, 31 de diciembre de 2026/);
+});
+
+test('calendar uses the event date and configured message; Oliva uses an outlined event-day marker', () => {
+  const event = { invitacion: { fechaHoraCeremonia: '2026-11-28T20:00:00Z' } };
+  for (const key of Object.keys(templates)) {
+    const data = resolveModuleDataByTemplate({ type: 'save_the_date_calendar', config: { message: 'Día elegido' } }, event, key);
+    const html = renderToStaticMarkup(React.createElement(templates[key].MODULE_COMPONENTS.save_the_date_calendar, { data, styles: {} }));
+    assert.match(html, /Día elegido/);
+    assert.match(html, /28 de noviembre de 2026, fecha del evento/);
+    assert.equal((html.match(/data-event-day="true"/g) || []).length, 1);
+    assert.ok(!html.includes('El gran día'));
+    if (key === 'wedding_oliva') {
+      assert.match(html, />SÁB<\/span>/);
+      assert.match(html, /fill="none"/);
+    }
+  }
+});
+
+test('countdown completes at the actual target time and releases its interval', async () => {
+  const { JSDOM } = require('jsdom');
+  const dom = new JSDOM('<div id="countdown-test"></div>');
+  const saved = Object.fromEntries(['window', 'document', 'IS_REACT_ACT_ENVIRONMENT'].map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  const originalNow = Date.now;
+  let now = Date.parse('2030-01-01T00:00:00Z') - 500;
+  let tick;
+  let cleared = false;
+  globalThis.window = dom.window;
+  globalThis.document = dom.window.document;
+  globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+  Date.now = () => now;
+  window.setInterval = (callback) => { tick = callback; return 123; };
+  window.clearInterval = (id) => { cleared = id === 123; };
+  const { createRoot } = require('react-dom/client');
+  const { default: CountdownView } = require('../components/invitaciones-publicas/module-views/CountdownView');
+  const element = document.getElementById('countdown-test');
+  const root = createRoot(element);
+  try {
+    await React.act(async () => root.render(React.createElement(CountdownView, { styles: {}, data: { targetDate: '2030-01-01T00:00:00Z', message: 'Esperando', completedMessage: 'Llegó' } })));
+    assert.ok(element.textContent.includes('Esperando'));
+    assert.ok(!element.textContent.includes('Llegó'));
+    now += 500;
+    await React.act(async () => tick());
+    assert.ok(element.textContent.includes('Llegó'));
+    assert.ok(!element.textContent.includes('Esperando'));
+  } finally {
+    await React.act(async () => root.unmount());
+    Date.now = originalNow;
+    dom.window.close();
+    for (const [key, descriptor] of Object.entries(saved)) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor); else delete globalThis[key];
+    }
+  }
+  assert.ok(cleared);
+});
+
+test('names-only module preserves configured names across templates, stays empty without data and never adds copy', () => {
+  for (const key of Object.keys(templates)) {
+    const module = { type: 'couple_names', order: 6, config: { brideName: ' Ana María ', groomName: 'José Luis' } };
+    assert.deepEqual(resolveModuleDataByTemplate(module, payload, key), { brideName: 'Ana María', groomName: 'José Luis' });
+    const html = render(key, [module]);
+    assert.match(html, /aria-label="Ana María &amp; José Luis"/);
+    assert.match(html, />Ana María<\/span>/);
+    assert.match(html, />José Luis<\/span>/);
+    assert.match(html, />&amp;<\/span>/);
+    for (const copy of ['Mayra', 'Samuel', 'Pareja de prueba', 'Nos casamos', 'noviembre']) assert.ok(!html.includes(copy));
+    assert.equal(buildResolvedModules([{ ...module, config: {} }], payload, key).length, 0);
+    assert.equal(buildResolvedModules([{ ...module, config: { brideName: ' ', groomName: '' } }], payload, key).length, 0);
+    assert.equal(buildResolvedModules([{ ...module, enabled: false }], payload, key).length, 0);
+    const single = render(key, [{ ...module, config: { brideName: 'Ana' } }]);
+    assert.match(single, /aria-label="Ana"/);
+    assert.ok(!single.includes('&amp;'));
+    const escaped = render(key, [{ ...module, config: { brideName: '<script>prueba</script>', groomName: 'José' } }]);
+    assert.ok(!escaped.includes('<script>'));
+  }
+});
 
 test('envelope image and video fields are shared; legacy cards keep their original covers', () => {
   const config = { ...configs.envelop_intro, backgroundSrc: '/portrait.jpg', backgroundDesktopSrc: '/wide.jpg', backgroundVideoSrc: ' /loop.mp4 ' };
@@ -137,6 +355,66 @@ test('all envelope views play muted inline video, retain image on error, and hon
     for (const [key, descriptor] of Object.entries(saved)) {
       if (descriptor) Object.defineProperty(globalThis, key, descriptor);
       else delete globalThis[key];
+    }
+  }
+});
+
+test('temporary Oliva lift reveals the hero below, opens once, restores scrolling and skips reduced motion', async () => {
+  const { JSDOM } = require('jsdom');
+  const dom = new JSDOM('<div id="trial-test"></div>', { url: 'http://localhost' });
+  const globals = ['window', 'document', 'Event', 'requestAnimationFrame', 'IS_REACT_ACT_ENVIRONMENT'];
+  const saved = Object.fromEntries(globals.map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  globalThis.window = dom.window; globalThis.document = dom.window.document;
+  globalThis.Event = window.Event; globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+  const frames = [], timers = new Map(); let nextTimer = 0, reduce = false, opens = 0;
+  globalThis.requestAnimationFrame = (fn) => frames.push(fn);
+  window.scrollTo = () => {};
+  window.setTimeout = (fn, delay) => { const id = ++nextTimer; timers.set(id, { fn, delay }); return id; };
+  window.clearTimeout = (id) => timers.delete(id);
+  window.matchMedia = () => ({ matches: reduce, addEventListener() {}, removeEventListener() {} });
+  window.addEventListener('envelopIntro:open', () => { opens += 1; });
+  const testRoot = require('react-dom/client').createRoot(document.getElementById('trial-test'));
+  const fixture = [{ type: 'envelop_intro', config: configs.envelop_intro }, { type: 'hero_image_1', config: configs.hero_image_1 }];
+  const mount = (key) => testRoot.render(React.createElement(templates.wedding_oliva.default, { key, resolvedModules: buildResolvedModules(fixture, payload, 'wedding_oliva'), attendanceState }));
+  const tick = async (delay) => React.act(async () => { for (const [id, timer] of [...timers]) if (timer.delay === delay) { timers.delete(id); timer.fn(); } });
+  try {
+    document.body.style.overflow = 'clip';
+    await React.act(async () => mount('normal'));
+    const button = document.querySelector('button[aria-label^="Abrir invitación"]');
+    button.getBoundingClientRect = () => ({ left: 16, top: 320 });
+    button.style.setProperty('--oliva-paper', '#f8f5ed');
+    await React.act(async () => { button.click(); button.click(); });
+    assert.equal(opens, 1, 'music receives the original user gesture exactly once');
+    assert.equal(button.disabled, true);
+    assert.ok(document.querySelector('[data-envelope-lift-trial]'));
+    assert.equal(document.querySelector('[data-envelope-light-trial]'), null);
+    assert.equal(document.body.style.overflow, 'hidden');
+    assert.equal(document.querySelector('.paper').hidden, false);
+    assert.ok(document.querySelector('.paper').hasAttribute('inert'));
+    await tick(2000);
+    assert.equal(document.querySelector('.paper').hidden, false);
+    assert.equal(document.querySelector('button[aria-label^="Abrir invitación"]'), null);
+    frames.splice(0).forEach((fn) => fn());
+    assert.ok(document.activeElement.hasAttribute('data-oliva-title'));
+    assert.equal(document.querySelector('[data-envelope-lift-trial]'), null);
+    assert.equal(document.querySelector('.paper').hasAttribute('inert'), false);
+    assert.equal(document.body.style.overflow, 'clip');
+    reduce = true;
+    await React.act(async () => mount('reduced'));
+    await React.act(async () => document.querySelector('button[aria-label^="Abrir invitación"]').click());
+    assert.equal(document.querySelector('[data-envelope-lift-trial]'), null);
+    assert.equal(document.querySelector('.paper').hidden, false);
+    assert.equal(opens, 2);
+    reduce = false;
+    await React.act(async () => mount('cancelled'));
+    await React.act(async () => document.querySelector('button[aria-label^="Abrir invitación"]').click());
+    await React.act(async () => testRoot.render(null));
+    assert.equal(timers.size, 0);
+    assert.equal(document.body.style.overflow, 'clip');
+  } finally {
+    await React.act(async () => testRoot.unmount()); dom.window.close();
+    for (const [key, descriptor] of Object.entries(saved)) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor); else delete globalThis[key];
     }
   }
 });

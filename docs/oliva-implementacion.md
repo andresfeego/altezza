@@ -10,6 +10,50 @@ Plantilla `wedding_oliva` conectada al evento `bodmys` (Mayra & Samuel).
 
 ## Composición
 
+### Salida elegida: elevar y retirar el sobre
+
+La idea 1 fue elegida y está seleccionada con `ENVELOPE_EXIT_TRIAL = 'lift'` en `index.js`.
+El sobre crece un 3,5 %, se eleva, gira suavemente y proyecta una sombra más larga;
+después sube y se desvanece. El video de fondo desaparece gradualmente mientras
+el hero se revela por debajo. Duración total: 2000 ms. Se conserva el mismo sobre
+durante la transición, sin duplicar el video ni sus recursos.
+
+El contenido del hero se pinta debajo pero permanece `inert` hasta terminar;
+se conserva la activación de música en el gesto original, se evitan aperturas
+duplicadas y se restaura el foco y scroll. Movimiento reducido abre directamente.
+`EnvelopeLiftTrial` solo controla duración y bloqueo temporal de entrada; la
+animación vive en el SCSS del sobre. No modifica la DB ni las otras plantillas.
+
+La variante anterior sigue disponible como `'light'`. `false` restaura la
+apertura inmediata. Todo sigue sin commit, posterior al respaldo indicado abajo.
+
+Prueba manual: recargar, abrir el sobre y observar elevación, sombra y retirada;
+al terminar debe quedar el hero enfocado, sin capas que bloqueen la tarjeta.
+
+### Variante anterior: salida del sobre por luz
+
+Respaldo previo a esta prueba: frontend `498f9a6`, backend `07d8f99`. La prueba
+queda sin commit y solo afecta a Oliva. `ENVELOPE_EXIT_TRIAL = 'light'` en su
+`index.js` permite volver a esta variante.
+
+Al pulsar el sobre, una luz del tono `--oliva-paper` nace en su esquina superior
+izquierda real y se expande a toda la ventana, incluyendo el exterior de la
+tarjeta en escritorio. La capa usa un portal para evitar el recorte del
+contenedor. El sobre se aclara y desaparece; a los 600 ms aparece el hero bajo
+la luz opaca, y esta se desvanece hasta retirarse a los 1200 ms.
+
+La señal de música conserva el gesto original del usuario. Se bloquean clicks
+repetidos, se restaura el scroll al terminar o desmontar la transición y el foco
+pasa al hero. Con movimiento reducido se abre directamente. No hay cambios en
+DB, campos de módulos ni otras plantillas.
+
+Validación: 18 pruebas de frontend aprobadas, incluidas apertura única, señal
+de música, punto de cambio, limpieza al desmontar y movimiento reducido.
+Prueba manual: recargar, tocar el sobre, observar la luz y verificar que al final
+el hero queda visible y se puede desplazar la tarjeta; repetir con teclado.
+
+### Secuencia de módulos
+
 Sobre → hero → frase 1 (`biblical_quote`, sin referencia) → familia → ceremonia y frase 3 / recepción y frase 4 → cuenta regresiva → frase 2 y confirmación → cierre configurable.
 
 Oliva usa sus propios componentes, estilos, fuentes locales y adornos botánicos. Los datos personales y los recursos personalizados viven en la configuración guardada. Reutiliza los preparadores de familia, detalles, cuenta regresiva y confirmación; las vistas de familia y celebración pertenecen a Oliva. Las imágenes del sobre y el PNG de fondo del hero se configuran por evento.
@@ -40,6 +84,23 @@ reducido debe verse la imagen de respaldo. Un `backgroundVideoSrc` vacío vuelve
 al fondo fotográfico sin cambiar la plantilla.
 
 ### Hero verde con repuje (16 de septiembre de 2026)
+
+La iluminación ahora incluye un halo cálido derivado de `--oliva-envelope-paper-light`,
+sin la mezcla beige del degradado base. Solo el halo recibe `sepia(.45) saturate(1.2)`.
+Recorre un arco entre (0 %, 50 %) y (50 %, 0 %) del hero: mitad del borde izquierdo
+y mitad del borde superior. Tarda 12 s en cada sentido (24 s por ciclo), con
+cambios de dirección suaves. Una capa radial localizada al 70 % en modo `screen`
+ilumina papel y flores, por debajo del grano, texto y monograma. No cambia el
+color base ni reemplaza la textura. Se redujo la capa de 160 × 140 % a 100 × 100 %
+del hero y se intensificó su núcleo: la primera versión al 34 % se confundía con
+el degradado fijo. Las sombras del relieve y del monograma
+cambian suavemente de derecha a abajo para acompañar el recorrido.
+
+El movimiento solo se activa con `prefers-reduced-motion: no-preference`.
+Con movimiento reducido el brillo queda fijo arriba a la izquierda; en alto
+contraste se omite. Es presentación de Oliva, sin campos nuevos ni cambios de DB.
+Prueba manual: abrir, observar el brillo al menos 12 segundos y comprobar su
+retorno; textos nítidos, flores visibles y ningún desbordamiento en móvil.
 
 `HeroOliva.js` consume el contrato existente de `hero_image_1`. El PNG de
 `backgroundImage` se utiliza como máscara alfa con superficie verde, luz arriba
@@ -130,6 +191,10 @@ La respuesta pública añade `invitacion.confirmationClosed`. La confirmación d
 La conexión MySQL sincroniza su zona de sesión con el decodificador mysql2 (`ALTEZZA_DB_TIMEZONE`, por defecto `-05:00`). Esto evita interpretar TIMESTAMP con cinco horas adicionales respecto de DATETIME. Los lugares sin coordenadas usan el enlace de respaldo del módulo si existe; si no hay coordenadas ni enlace, devuelven null, sin inventar un punto 0,0.
 
 ### Sustitución de bienvenida por frase
+
+El texto de la frase se aumentó un 20 % solo en Oliva: 16 → 19,2 px, mediante
+`interior.module.scss`. Se conservan los márgenes y el ancho del estilo común
+usando composición de clases. Los textos del hero mantienen su tamaño original.
 
 `seeds/invitation_projects/bodmys/replace-welcome-with-quote.js` traslada la frase
 guardada de la bienvenida al módulo `biblical_quote`, conservando su posición y
@@ -295,3 +360,210 @@ respaldo SEO, fondos vacíos, textos personalizados/vacíos y migración idempot
 Lint sin errores; permanecen dos advertencias anteriores en cleanup del sobre de
 Classic/Terracota. La migración preservó evento, invitados, respuestas, hero,
 confirmación y sobre; solo agregó cuatro campos de texto ausentes.
+
+## Foto vertical entre el hero y la frase
+
+La foto aprobada usa `simple_image`, con su ruta y descripción en la configuración
+de `bodmys`, ordenada después del hero y antes de la frase bíblica. En Oliva se
+presenta sin margen ni padding, ocupando todo el ancho
+del contenedor de la tarjeta y con encuadre vertical 4:5. El recorte centrado usa
+`object-fit: cover` en CSS; conserva el archivo de 6000 × 4000 y no modifica los
+datos del módulo ni las otras plantillas. El ancho máximo de la tarjeta en
+escritorio se conserva.
+
+Comprobación manual: abrir el sobre y verificar la secuencia hero, foto y frase;
+comprobar
+que ambos rostros estén completos, que la foto llegue a los bordes de la tarjeta
+y que no haya desbordamiento horizontal en móvil y escritorio.
+
+## Jerarquía visual de la familia
+
+Los títulos de grupo usan Montserrat de 12 px y peso 600, en mayúsculas; los
+nombres usan Cormorant de 24 px y peso 400. Se separan por 16 px, con 8 px entre
+personas y 48 px entre grupos. Los tamaños y espacios utilizan tokens del
+proyecto. Los grupos conservan una columna también en escritorio, porque el
+ancho de la tarjeta es estrecho y dividirlo cortaba los nombres en demasiadas
+líneas. Allura mantiene el título principal de la sección.
+
+Es una mejora visual exclusiva de Oliva, sin cambios en campos, textos guardados
+ni comportamiento del módulo. Comprobación manual: revisar los tres grupos en
+móvil y escritorio, con nombres legibles y sin desbordamiento horizontal.
+
+## Módulo independiente de nombres
+
+`couple_names` aparece después de la familia y antes de `countdown`, con los nombres en `config.brideName`
+y `config.groomName` de la base de datos. Solo presenta los dos nombres y `&`;
+no incorpora frases o fechas de la referencia. Comparte contrato y vista base
+con Classic y Terracota. Oliva añade la caligrafía WindSong local, texto blanco y
+el paisaje fotográfico de `config.sectionBackground`. El velo beige con textura
+es `coupleNamesModule::before` y recibe `overlayOpacity` mediante
+`--module-background-opacity` (valor actual de `bodmys`: `0.1`). Este módulo
+desactiva el velo adicional de `ModuleSurface` para que la opacidad se aplique
+una sola vez. Sin fondo configurado, la textura conserva su opacidad original
+de `0.35`. Las dos ramas se retiraron de este módulo; sus archivos se conservan.
+
+Fuente y licencia: `assets/fonts/WindSong/`. Recursos y prompts completos:
+`assets/images/COUPLE-NAMES-GENERACION.md`. Se generaron con `image_gen` integrado
+y sus PNG finales viven junto a los otros recursos de la plantilla.
+
+Validación manual: abrir el sobre, revisar el orden familia → nombres → lugares,
+la carga de la fuente y el fondo, y que los nombres se lean completos en móvil
+y escritorio. Las pruebas de contrato cubren las tres plantillas, nombres vacíos,
+un solo nombre, desactivación, escape de HTML y migración idempotente.
+
+## Fecha opcional y calendario después de los nombres
+
+El orden de `bodmys` es `couple_names` → `countdown` → `save_the_date_calendar`
+→ `event_details`. La fecha se muestra con `countdown.config.showDate: true`;
+si falta o es falso, desaparece solo la composición de fecha. La cuenta sigue
+funcionando. Es una opción compartida por Classic, Terracota y Oliva; las
+configuraciones anteriores mantienen su aspecto sin activarla.
+
+La fecha del contador usa su `target` (ceremonia o recepción). El calendario
+existente usa la ceremonia. Ambos coinciden en esta tarjeta. Día, mes, año y
+día de la semana se derivan en `America/Bogota`, sin fechas duplicadas en config.
+`Faltan` es el título guardado en DB; `El gran día` es el `message` del calendario.
+El mensaje del contador y su mensaje final conservan el contenido configurado.
+
+Oliva compone los dos módulos sobre papel verde continuo con grano fino, texto
+beige, Cormorant y el número del día en Allura. El calendario conserva la vista
+compartida; Oliva selecciona abreviaturas de tres letras, corazón de contorno y
+números estáticos. Classic/Terracota conservan su animación y sus etiquetas.
+El estilo específico está en `DateModulesOliva.module.scss`.
+
+Validación: activar/desactivar `showDate` en las tres plantillas; fecha inválida
+sin error de render; fecha próxima a medianoche respetando Colombia; cambio al
+mensaje final solo cuando llega la hora real; calendario con el 28/11/2026 en
+sábado; orden desde API y conservación del JSON de otras tarjetas; lectura sin
+desbordamiento en móvil y escritorio.
+
+## Jerarquía visual de lugares y horarios
+
+El módulo `event_details` conserva datos, orden y enlaces. Su título editorial
+usa Allura; las categorías Ceremonia/Recepción usan Montserrat 12/600 en
+mayúsculas, y los lugares Cormorant 24/400. La hora queda en 20/500, la fecha en
+Montserrat 12/400, la dirección en cursiva 14 y los mensajes en 16 con mayor
+interlineado. Los botones usan Montserrat 12/500. Los cambios viven únicamente
+en `interior.module.scss`, con selectores propios de Oliva.
+
+Validación manual: revisar la jerarquía de ambos lugares en escritorio y móvil,
+comprobar ausencia de desbordamiento a 320 px y conservar los dos enlaces de
+Google Maps. Sass compila sin errores.
+
+## Apertura del sobre sin frenadas intermedias
+
+La salida mantiene 2000 ms. El movimiento usa una sola interpolación de inicio
+a fin con `cubic-bezier(.55, .02, .75, .35)`, en lugar de reiniciar la curva en
+los pasos del 24 % y 40 %. El desvanecimiento tiene una animación independiente;
+no introduce puntos de frenado en la transformación. Durante la apertura se
+anula la transición del hover. Se conservan la sombra, la inclinación, el
+bloqueo temporal de interacción y la apertura inmediata con movimiento reducido.
+
+Verificación: Sass, prueba existente de apertura única/limpieza de temporizadores,
+apertura completa en escritorio y móvil, duración computada de 2 s y recuperación
+del scroll al mostrar el hero.
+
+## Detalles sin flores y asistencia con relieve botánico
+
+Se retiraron las dos decoraciones florales de `event_details`; se conserva la
+jerarquía de ceremonia, recepción, lugares y enlaces. Su espacio inferior pasa
+a ser relleno de sección, sin una imagen vacía.
+
+En asistencia, `AttendanceFlowerOliva` sustituye al calendario con corazón.
+Usa `rsvp-flower-mask-v1.png`, blanco con alfa real de 1254 × 1254, como máscara
+decorativa. Las capas CSS producen luz superior izquierda, sombra inferior
+derecha y una cara verde ligeramente aclarada. Mide 96 px y no contiene texto
+ni datos del evento. El prompt y las referencias están en
+`assets/images/RSVP-FLOWER-GENERACION.md`.
+
+El título usa Allura 48 px (40 px en pantallas menores de 375 px), los nombres
+Cormorant 24 px y las opciones Montserrat 12/500. Los controles tienen un alto
+mínimo visible de 32 px con `border-box` y relleno de 4 px; el área táctil se
+extiende hasta 48 px mediante un pseudo-elemento transparente. El grupo tiene
+un ancho máximo de 288 px, distribuido en tres columnas, con foco
+visible y estado seleccionado beige. Se elimina el relleno duplicado de la
+vista compartida dentro de esta sección. La fecha límite aparece después de
+las instrucciones mediante el slot visual opcional `introFooter`; las otras
+plantillas conservan su disposición. El título, instrucciones, fecha, nombres
+y respuestas conservan sus fuentes de datos anteriores.
+
+Validación: 23 pruebas de contrato e interacción pasan, incluidas selección,
+callback, guardado pendiente, plazo cerrado y error en las tres plantillas.
+Sass y ESLint de los archivos modificados pasan. Revisión visual en escritorio,
+440 px y 320 px: sin desbordamiento, PNG cargado y nombres completos. No se
+modificaron confirmaciones reales durante la comprobación.
+
+## Vestimenta con ilustración y muestras de tela
+
+`bodmys` incluye `dresscode` después de `event_details` y antes de asistencia.
+Su configuración completa está en DB: título, vestimenta formal, ilustración,
+texto alternativo, títulos de paleta y muestras. Se muestran ocho telas de la
+referencia aportada y solamente el blanco en la lista a evitar. Los recortes
+circulares se hacen al presentar la imagen original, sin modificar sus píxeles.
+
+La ilustración representa nueve mujeres con ramos en acuarela y fondo
+transparente, con la novia blanca al centro. Se generó con `image_gen` integrado.
+Ambos PNG son recursos del evento en
+`backend-altezza/_local_storage/invitations/bodmys/dresscode/`; el prompt, las
+rutas y las instrucciones de traslado están en
+`backend-altezza/seeds/invitation_projects/bodmys/DRESSCODE-ASSETS.md`.
+
+Oliva aplica papel beige, título Allura, categoría Montserrat y subtítulos
+Cormorant. La imagen ocupa el ancho interior y las muestras se distribuyen en
+dos filas de cuatro círculos; el blanco se muestra aparte con una cruz. Los
+círculos miden entre 48 y 64 px según la pantalla.
+
+La migración `configure-dresscode.js` agrega el módulo una vez, respalda el JSON
+previo y respeta las configuraciones posteriores. Classic y Terracota conservan
+sus configuraciones guardadas y sus muestras sólidas. Comprobar en móvil y
+escritorio la carga de las diez imágenes (ilustración y nueve muestras), que
+las muestras no incluyan bordes blancos de la foto, que la cruz quede encima
+del blanco y que no haya desplazamiento horizontal.
+
+El túnel público pasa por `scripts/oliva-preview-gateway.cjs` en el puerto 3003,
+que permite únicamente la invitación de prueba, su API y recursos autorizados.
+Los dos PNG de dresscode están incluidos explícitamente. El script se conserva
+en el repositorio para que el permiso de estos recursos no dependa de una copia
+temporal. Al incorporar nuevos archivos del evento, comprobar tanto localhost
+como el enlace del túnel: que un recurso responda 200 en 3002 no garantiza que
+esté permitido en el proxy público.
+
+## Lluvia de sobres antes de vestimenta
+
+`gift_envelopes` queda entre `event_details` y `dresscode`, con título
+`Lluvia de sobres` y texto adicional en `leadText`. La imagen y su texto alternativo
+provienen de su configuración en DB. Se usa la vista compartida existente;
+Oliva define un fondo verde, título beige en Cormorant de 32 px y un icono de 128 px de ancho.
+
+El PNG muestra un sobre beige con sello botánico verde y transparencia real.
+Se generó mediante `image_gen` integrado y está en
+`backend-altezza/_local_storage/invitations/bodmys/gift_envelopes/sobre-botanico-v1.png`.
+El prompt y las instrucciones de traslado están en
+`backend-altezza/seeds/invitation_projects/bodmys/GIFT-ENVELOPES-ASSET.md`.
+
+`configure-gift-envelopes.js` inserta el módulo una vez, conserva los demás datos
+y hace respaldo antes de actualizar. La ruta del icono está autorizada en el
+proxy público. Verificar el orden Detalles → Lluvia de sobres → Dresscode,
+fondo verde, icono transparente, título completo en móvil y carga del PNG tanto
+en localhost como desde el túnel.
+
+## Ajustes de texto y lectura (17 de septiembre de 2026)
+
+La frase bíblica usa el verde primario `--oliva-green` del interior (`#767c5a`),
+en lugar del verde oscuro de texto. Las direcciones de detalles pasan de 14 a
+28 px, conservando Cormorant italic. El título de familia acepta la frase larga
+configurada en DB, con Cormorant de 20 px, saltos de línea y 80 px de separación
+antes de los grupos familiares (el doble de los 40 px previos); `coupleLabel` queda
+vacío para ocultar «Con quienes nos han acompañado». El título de lluvia
+de sobres usa Cormorant y su campo existente `leadText` contiene el mensaje del
+regalo. No se añadieron campos ni textos de evento a la plantilla.
+
+Los títulos de padres y padrinos usan Allura 42/400, con caja y espaciado naturales y
+bajo relieve suave: cara verde ligeramente oscurecida, profundidad de 0.65 px,
+sombra verde al 95% arriba a la izquierda y luz beige al 30% abajo a la derecha,
+con bordes difuminados para evitar el contorno duro. En contraste aumentado
+se restaura el texto beige sin sombras. Los nombres conservan Cormorant 24 px.
+
+Aplicar el texto local con `node seeds/invitation_projects/bodmys/update-family-gift-copy.js`
+desde el backend. Verificar color, direcciones, ambos textos completos y ausencia
+de desbordamiento en móvil y escritorio; recargar tras actualizar datos.

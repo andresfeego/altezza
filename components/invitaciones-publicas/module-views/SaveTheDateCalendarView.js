@@ -41,7 +41,7 @@ function buildCalendarModel(date) {
   };
 }
 
-export default function SaveTheDateCalendarView({ data, styles }) {
+export default function SaveTheDateCalendarView({ data, styles, weekdayLabels, HeartIcon = FaHeart, animateNumbers = true }) {
   const moduleRef = useRef(null);
   const hasAnimatedRef = useRef(false);
   const animationFrameRef = useRef(null);
@@ -57,6 +57,7 @@ export default function SaveTheDateCalendarView({ data, styles }) {
   );
 
   useEffect(() => {
+    if (!animateNumbers) return undefined;
     if (typeof window === 'undefined') return undefined;
     if (!moduleRef.current) return undefined;
     if (hasAnimatedRef.current) return undefined;
@@ -120,12 +121,12 @@ export default function SaveTheDateCalendarView({ data, styles }) {
         window.cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [dayList]);
+  }, [dayList, animateNumbers]);
 
   if (!calendar) return null;
 
   return (
-    <section ref={moduleRef} className={`${styles.moduleCard} ${styles.saveTheDateCalendarModule}`}>
+    <section ref={moduleRef} className={[styles.moduleCard, styles.saveTheDateCalendarModule].filter(Boolean).join(' ')} data-save-the-date-calendar="true">
       {data.message ? <p className={styles.saveTheDateCalendarMessage}>{data.message}</p> : null}
       <div className={styles.saveTheDateCalendarSurface}>
         <div className={styles.saveTheDateCalendarHeading}>
@@ -133,7 +134,7 @@ export default function SaveTheDateCalendarView({ data, styles }) {
           <p className={styles.saveTheDateCalendarMonth}>{calendar.monthLabel}</p>
         </div>
         <div className={styles.saveTheDateCalendarWeekdays}>
-          {calendar.weekdayLabels.map((label, index) => (
+          {(weekdayLabels || calendar.weekdayLabels).map((label, index) => (
             <span key={`${label}-${index}`}>{label}</span>
           ))}
         </div>
@@ -149,10 +150,12 @@ export default function SaveTheDateCalendarView({ data, styles }) {
               <span
                 key={`day-${day}`}
                 className={`${styles.saveTheDateCalendarCell} ${isSelected ? styles.saveTheDateCalendarCellSelected : ''}`}
+                data-event-day={isSelected || undefined}
+                aria-label={isSelected ? `${day} de ${calendar.monthLabel.toLowerCase()} de ${calendar.yearLabel}, fecha del evento` : undefined}
               >
                 {isSelected ? (
                   <span className={styles.saveTheDateCalendarHeart} aria-hidden="true">
-                    <FaHeart />
+                    <HeartIcon />
                   </span>
                 ) : null}
                 <span key={`day-${day}-value-${animatedValues?.[day] ?? day}`} className={styles.saveTheDateCalendarCellNumber}>

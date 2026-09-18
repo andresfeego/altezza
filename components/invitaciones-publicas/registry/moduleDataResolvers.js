@@ -15,6 +15,7 @@ import ImageSliderSepiaModule from '../modules/ImageSliderSepiaModule';
 import MusicPlayerModule from '../modules/MusicPlayerModule';
 import CountdownModule from '../modules/CountdownModule';
 import CoupleFamilyModule from '../modules/CoupleFamilyModule';
+import CoupleNamesModule from '../modules/CoupleNamesModule';
 import EventDetailsModule from '../modules/EventDetailsModule';
 import AttendanceConfirmModule from '../modules/AttendanceConfirmModule';
 import HeroImage1ClassicModule from '../modules/HeroImage1ClassicModule';
@@ -40,6 +41,7 @@ const COMMON_RESOLVERS = {
   music_player: MusicPlayerModule,
   countdown: CountdownModule,
   couple_family: CoupleFamilyModule,
+  couple_names: CoupleNamesModule,
   event_details: EventDetailsModule,
   attendance_confirm: AttendanceConfirmModule,
 };

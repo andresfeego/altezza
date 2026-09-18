@@ -1,0 +1,172 @@
+// Two independent modules share one uninterrupted olive paper surface.
+.countdownModule, .saveTheDateCalendarModule {
+  --module-background-overlay-color: var(--oliva-green);
+  --date-panel-width: calc(var(--ag-space-9) * 3);
+  --date-rule-color: color-mix(in srgb, var(--oliva-paper) 65%, transparent);
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  margin: 0;
+  padding-inline: var(--ag-space-4);
+  background: var(--oliva-green);
+  color: var(--oliva-paper);
+  text-align: center;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: url('./assets/images/paper-grain.svg') repeat;
+    background-size: var(--ag-space-7);
+    mix-blend-mode: soft-light;
+    opacity: .16;
+  }
+}
+
+.countdownModule {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-block: var(--ag-space-7) var(--ag-space-4);
+}
+.countdownModule .moduleText {
+  order: 0;
+  max-width: 32ch;
+  margin: 0 auto var(--ag-space-6);
+  font: italic 400 var(--ag-font-size-16)/1.5 var(--oliva-serif);
+  text-wrap: balance;
+}
+.countdownDate {
+  order: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) .85fr minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--ag-space-2);
+  width: 100%;
+  max-width: var(--date-panel-width);
+  margin: 0 auto var(--ag-space-6);
+  font: 400 var(--ag-font-size-16)/1.5 var(--oliva-serif);
+  text-transform: uppercase;
+}
+.countdownDateMonth { grid-column: 1 / -1; letter-spacing: .1em; }
+.countdownDateWeekday, .countdownDateYear {
+  padding-block: var(--ag-space-1);
+  border-block: var(--oliva-border) solid var(--date-rule-color);
+  font-size: var(--ag-font-size-14);
+  letter-spacing: .04em;
+}
+.countdownDateDay {
+  padding-top: var(--ag-space-1);
+  font: 400 var(--ag-space-8)/.9 var(--oliva-script);
+  font-variant-numeric: lining-nums;
+}
+.countdownModule .moduleTitle {
+  --ag-heading-h2-size: var(--ag-font-size-20);
+  --ag-heading-h2-line: 1.4;
+  --ag-heading-h2-weight: 600;
+  order: 2;
+  margin: 0 0 var(--ag-space-2);
+  font: var(--ag-heading-h2-weight) var(--ag-heading-h2-size)/var(--ag-heading-h2-line) var(--oliva-serif);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: inherit;
+}
+.countdownGrid {
+  order: 3;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: 100%;
+  max-width: var(--date-panel-width);
+  margin: 0 auto;
+}
+.countdownItem {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--ag-space-1);
+  strong {
+    font: 400 clamp(var(--ag-font-size-32), 12cqi, var(--ag-font-size-48))/1.1 var(--oliva-serif);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  span { font: 400 var(--ag-font-size-12)/1.5 var(--oliva-serif); }
+  &:not(:last-child)::after {
+    content: ':';
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateX(50%);
+    font: 400 clamp(var(--ag-font-size-24), 10cqi, var(--ag-font-size-40))/1.1 var(--oliva-serif);
+  }
+}
+
+.saveTheDateCalendarModule { padding-block: var(--ag-space-4) var(--ag-space-7); }
+.saveTheDateCalendarModule .saveTheDateCalendarMessage {
+  margin: 0 auto var(--ag-space-2);
+  font: 600 var(--ag-font-size-20)/1.4 var(--oliva-serif);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  white-space: pre-line;
+}
+.saveTheDateCalendarSurface { max-width: var(--date-panel-width); margin: 0 auto; }
+.saveTheDateCalendarHeading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: var(--ag-space-1);
+  margin-bottom: var(--ag-space-4);
+}
+.saveTheDateCalendarModule .saveTheDateCalendarYear,
+.saveTheDateCalendarModule .saveTheDateCalendarMonth {
+  --ag-heading-h3-size: var(--ag-font-size-16);
+  --ag-heading-h3-weight: 400;
+  --ag-heading-h3-line: 1.5;
+  margin: 0;
+  font: var(--ag-heading-h3-weight) var(--ag-heading-h3-size)/var(--ag-heading-h3-line) var(--oliva-serif);
+  letter-spacing: .04em;
+  color: inherit;
+}
+.saveTheDateCalendarMonth { order: 0; }
+.saveTheDateCalendarYear { order: 1; }
+.saveTheDateCalendarWeekdays, .saveTheDateCalendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--ag-space-1);
+}
+.saveTheDateCalendarWeekdays {
+  margin-bottom: var(--ag-space-2);
+  font: 400 var(--ag-font-size-12)/1.5 var(--oliva-serif);
+  letter-spacing: .04em;
+}
+.saveTheDateCalendarCell, .saveTheDateCalendarCellEmpty {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  min-width: 0;
+  font: 400 var(--ag-font-size-16)/1 var(--oliva-serif);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.saveTheDateCalendarCellSelected { font-weight: 600; }
+.saveTheDateCalendarHeart {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--oliva-paper);
+  svg { width: var(--ag-font-size-40); height: var(--ag-font-size-40); stroke-width: 1; transform: rotate(-8deg); }
+}
+.saveTheDateCalendarCellNumber { position: relative; }
+
+@media (max-width: 374px) {
+  .countdownModule, .saveTheDateCalendarModule { padding-inline: var(--ag-space-2); }
+}
+@media (min-width: 768px) {
+  .countdownModule, .saveTheDateCalendarModule { padding-inline: var(--ag-space-5); }
+}
+@media (forced-colors: active) {
+  .countdownModule::before, .saveTheDateCalendarModule::before { display: none; }
+}

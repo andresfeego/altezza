@@ -12,6 +12,7 @@ import PhotoSliderView from '../module-views/PhotoSliderView';
 import ImageSliderSepiaView from '../module-views/ImageSliderSepiaView';
 import CountdownView from '../module-views/CountdownView';
 import CoupleFamilyView from '../module-views/CoupleFamilyView';
+import CoupleNamesView from '../module-views/CoupleNamesView';
 import SaveTheDateCalendarView from '../module-views/SaveTheDateCalendarView';
 import EventDetailsView from '../module-views/EventDetailsView';
 import AttendanceConfirmView from '../module-views/AttendanceConfirmView';
@@ -31,6 +32,7 @@ export const COMMON_MODULE_VIEWS = {
   image_slider_sepia: ImageSliderSepiaView,
   countdown: CountdownView,
   couple_family: CoupleFamilyView,
+  couple_names: CoupleNamesView,
   save_the_date_calendar: SaveTheDateCalendarView,
   event_details: EventDetailsView,
   attendance_confirm: AttendanceConfirmView,

@@ -1,0 +1,52 @@
+.light {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  overflow: hidden;
+  pointer-events: auto;
+  isolation: isolate;
+}
+
+.bloom {
+  position: absolute;
+  left: var(--light-x);
+  top: var(--light-y);
+  width: var(--light-diameter);
+  height: var(--light-diameter);
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    var(--light-color) 0%,
+    color-mix(in srgb, var(--light-color) 96%, transparent) 32%,
+    color-mix(in srgb, var(--light-color) 55%, transparent) 48%,
+    color-mix(in srgb, var(--light-color) 12%, transparent) 63%,
+    transparent 72%);
+  transform: translate(-50%, -50%) scale(.006);
+  animation: lightBloom var(--light-duration) cubic-bezier(.22, .61, .36, 1) both;
+  will-change: transform, opacity;
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  background: var(--light-color);
+  animation: lightWash var(--light-duration) ease-in-out both;
+  will-change: opacity;
+}
+
+@keyframes lightBloom {
+  0% { transform: translate(-50%, -50%) scale(.006); opacity: 0; }
+  10% { opacity: 1; }
+  48% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  60% { transform: translate(-50%, -50%) scale(1.04); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.08); opacity: 0; }
+}
+
+@keyframes lightWash {
+  0%, 24% { opacity: 0; }
+  48%, 55% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light { display: none; }
+}
