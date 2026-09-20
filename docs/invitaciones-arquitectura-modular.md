@@ -20,7 +20,8 @@ El sistema de invitaciones debe soportar:
 3. Eliminacion de vistas compartidas con acoplamiento de assets cruzados.
 
 4. Fondo exterior común en la ruta pública:
-- `AnimatedDesktopBackground` envuelve todas las plantillas sin excepciones por `templateKey`.
+- `AnimatedDesktopBackground` envuelve Classic, Terracota y Oliva. Lemoncello usa
+  un fondo plano propio, excepción de presentación solicitada para su lienzo.
 - Classic, Terracota y Oliva mantienen la tarjeta centrada con máximo de 480 px en escritorio.
 - Los fondos propios de cada módulo llegan al borde de esa tarjeta; el fondo exterior compartido permanece fuera del contenedor.
 
@@ -89,3 +90,11 @@ de actividades se consumen igual en las tres plantillas.
 Contrato y límites: [Contratos compartidos](invitaciones-contratos-compartidos.md).
 Pruebas: `node --test tests/invitation-contracts.test.cjs`.
 La validación exhaustiva por schema del backend sigue pendiente.
+
+### Lemoncello (septiembre de 2026)
+
+`wedding_lemoncello` usa los contratos comunes, todos los módulos del catálogo y
+un sobre por capas con recorrido automático de ocho segundos. Al abrir, revela
+un lienzo cuyo primer módulo está arriba a la izquierda; las flechas desplazan
+la cámara horizontalmente y los módulos altos conservan su lectura interna. Recursos,
+procedencia y validación: [Lemoncello](lemoncello-estructura.md).

@@ -1,5 +1,13 @@
 # Alineación de contratos de invitaciones
 
+Actualización Lemoncello: `wedding_lemoncello` incorpora el catálogo común y ambos
+heroes con los mismos contratos. El sobre animado consume `invitationLabel` y
+`eventDate` del resolver compartido; sus cinco capas ilustradas son recursos de
+plantilla. `presentationReady` es una señal opcional de presentación que sincroniza
+el inicio de sus ocho segundos con el cierre del loader, sin campos nuevos en DB.
+Su recorrido interior conserva `order`, `enabled` y los datos de las vistas.
+Detalle y validación: [Lemoncello](lemoncello-estructura.md).
+
 Una plantilla puede cambiar composición, tipografía y recursos decorativos. No
 puede cambiar el significado de los campos de un mismo `type`, ni descartar un
 módulo habilitado que pertenece al catálogo común. Los resolvers normalizan los

@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }) {
     if (!hydrated) return;
 
     const rutasPublicas = ['/_api/Login/login', '/_api/Login/cambiar-password', '/_api/registro/registro', '/ui-governance-lab'];
-    const isPublicInvitation = router.pathname === '/invitacion/[idInvitacion]/[idInvitado]';
+    const isPublicInvitation = router.pathname === '/invitacion/[idInvitacion]/[idInvitado]' || router.pathname === '/invitacion/preview/lemoncello';
     const isPublicShareGallery = router.pathname === '/share-gallery/[albumPublicCode]';
     const isPublicMobiliario = router.pathname === '/catalogo-mobiliario/[publicCode]';
 
@@ -258,7 +258,7 @@ function MyApp({ Component, pageProps }) {
   const isManual = router.pathname === '/manual' || router.pathname.startsWith('/manual/');
   const isGovernanceLab = router.pathname === '/ui-governance-lab';
   const isAdminEventWorkspaceRoute = router.pathname.startsWith('/admin/eventos/[idEvento]');
-  const isPublicInvitation = router.pathname === '/invitacion/[idInvitacion]/[idInvitado]';
+  const isPublicInvitation = router.pathname === '/invitacion/[idInvitacion]/[idInvitado]' || router.pathname === '/invitacion/preview/lemoncello';
   const isPublicShareGallery = router.pathname === '/share-gallery/[albumPublicCode]';
   const isPublicMobiliario = router.pathname === '/catalogo-mobiliario/[publicCode]';
 

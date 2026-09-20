@@ -47,6 +47,7 @@ const COMMON_RESOLVERS = {
 };
 
 const TEMPLATE_RESOLVER_OVERRIDES = {
+  wedding_lemoncello: { hero_image_1: HeroImage1ClassicModule, hero_image_2: HeroImage2ClassicModule },
   wedding_oliva: { hero_image_1: HeroImage1OlivaModule, hero_image_2: HeroImage2ClassicModule },
   wedding_classic: {
     hero_image_1: HeroImage1ClassicModule,

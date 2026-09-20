@@ -1,0 +1,155 @@
+.scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  height: 100svh;
+  z-index: 5;
+  background: transparent;
+  color: var(--lemoncello-navy);
+  --opening-x: 51%;
+  --opening-y: 45%;
+  --scene-unit: calc(100svh / 724);
+}
+
+.zoom { position: absolute; inset: 0; transform-origin: var(--opening-x) var(--opening-y); }
+.world { position: absolute; inset: 0 auto 0 0; width: var(--world-width, 300svh); transform: translateX(var(--travel-start-x, 0px)); }
+.landscape { width: 100%; height: auto; max-width: none; display: block; }
+.doorway {
+  position: absolute;
+  left: calc(1455 * var(--scene-unit)); top: calc(138 * var(--scene-unit));
+  width: calc(174 * var(--scene-unit)); height: calc(354 * var(--scene-unit));
+  perspective: 80svh;
+  border-radius: var(--door-radius) var(--door-radius) 0 0;
+  transform-style: preserve-3d;
+  // Expand the complete pair uniformly about its center to cover the alpha edge.
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+.leaf {
+  position: absolute; inset: 0 auto 0 0; width: 50%; height: 100%;
+  transform-origin: left center; transform-style: preserve-3d;
+  overflow: hidden;
+  border-top-left-radius: var(--door-radius);
+  img { position: absolute; left: -18.18%; top: -.56%; width: 137.12%; height: auto; max-width: none; }
+}
+.right {
+  left: 50%; transform-origin: right center;
+  border-top-left-radius: 0; border-top-right-radius: var(--door-radius);
+  img { left: -17.99%; top: -.47%; }
+}
+.sign {
+  position: absolute;
+  left: var(--sign-left); top: calc(184 * var(--scene-unit));
+  width: var(--sign-width); aspect-ratio: 808 / 1634;
+  color: var(--lemoncello-navy);
+}
+.signArt {
+  // Account for the sprite's transparent margins without stretching its ceramic pattern.
+  position: absolute; left: -4.9505%; top: -3.978%; width: 109.7772%; height: auto; max-width: none;
+}
+.signCopy {
+  position: absolute; inset: 22% 18%;
+  display: flex; flex-direction: column; justify-content: center; gap: var(--ag-space-2);
+  text-align: center; font-family: Georgia, serif;
+  font-size: clamp(calc(var(--ag-text-caption-size) * .75), calc(var(--sign-width) * .1), var(--ag-text-caption-size));
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  span { text-wrap: balance; }
+  time { font: inherit; white-space: nowrap; }
+}
+.dog {
+  position: absolute; left: calc(1570 * var(--scene-unit)); bottom: calc(88 * var(--scene-unit));
+  width: calc(120 * var(--scene-unit)); height: auto; max-width: none;
+}
+.vespa {
+  position: absolute; left: var(--vespa-start, 10%); bottom: 1%;
+  width: calc(312 * var(--scene-unit)); height: auto; max-width: none;
+}
+.vespaBody {
+  position: relative; z-index: 1;
+  display: block; width: 100%; height: auto; max-width: none;
+  -webkit-mask: var(--vespa-body-mask) center / 100% 100% no-repeat;
+  mask: var(--vespa-body-mask) center / 100% 100% no-repeat;
+}
+.maskPreload { position: absolute; inset: 0; width: 100%; height: auto; opacity: 0; pointer-events: none; }
+.wheel { position: absolute; z-index: 0; height: auto; max-width: none; transform-origin: 50% 50%; }
+// Coordinates preserve the original 1536×1024 drawing; transparent sprite margins
+// are included so the painted diameter is 330 source pixels for both wheels.
+.frontWheel { left: calc((1302 - 369.48 / 2) / 1536 * 100%); top: calc((827 - 369.48 / 2) / 1024 * 100%); width: calc(369.48 / 1536 * 100%); }
+.rearWheel { left: calc((272 - 380.9 / 2) / 1536 * 100%); top: calc((817 - 380.9 / 2) / 1024 * 100%); width: calc(380.9 / 1536 * 100%); }
+.basket {
+  // 10% smaller (30% × .9); 15% of the scooter width toward the rear (15% → 0%).
+  // The lower contact point follows the rear luggage rack instead of the pilot seat.
+  position: absolute; z-index: 2; left: 0%; bottom: 56.5%; width: 27%; height: auto; max-width: none;
+}
+.open {
+  // Anchor to the door's center in the moving artwork, keeping the final framing.
+  position: absolute; top: calc(185 * var(--scene-unit)); left: calc(1542 * var(--scene-unit)); transform: translateX(-50%);
+  width: calc(110 * var(--scene-unit)); min-height: var(--ag-space-6); padding: 0;
+  border: 0; border-radius: 0; appearance: none;
+  background: transparent; color: var(--lemoncello-navy);
+  cursor: pointer; opacity: 1; visibility: visible;
+  &:disabled { cursor: default; }
+  img { display: block; width: 100%; height: auto; pointer-events: none; }
+  &:focus-visible { outline: 2px solid var(--lemoncello-butter); outline-offset: 4px; }
+}
+.openFallback {
+  display: block; padding: var(--ag-space-1);
+  font-family: Georgia, serif; font-style: italic;
+  font-size: var(--ag-text-card-title-size); line-height: var(--ag-text-card-title-line);
+  background: var(--lemoncello-paper);
+}
+.fallback {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: var(--ag-space-2);
+  padding: var(--ag-space-4); text-align: center;
+  > img { width: 70%; max-height: 45%; object-fit: contain; }
+  > .monogram { width: 20%; max-height: 15%; }
+  p { margin: 0; background: var(--lemoncello-paper); padding: var(--ag-space-1); }
+}
+.status { position: absolute; left: 0; right: 0; bottom: var(--ag-space-4); text-align: center; }
+
+.scene[data-envelope-phase='travel'] {
+  .world { animation: travel var(--travel-duration) cubic-bezier(.35,0,.65,1) both; }
+  .vespa { animation: ride var(--travel-duration) cubic-bezier(.35,0,.65,1) both; }
+  .wheel { animation: wheelRoll var(--travel-duration) cubic-bezier(.35,0,.65,1) both; }
+}
+.scene:not([data-presentation-ready]) { .world, .vespa, .wheel { animation-play-state: paused; } }
+.scene[data-envelope-phase='arrived'], .scene[data-envelope-phase='opening'] {
+  .world { transform: translateX(var(--travel-x)); }
+  .vespa { left: var(--vespa-end); }
+  .wheel { transform: rotate(var(--wheel-turn)); }
+}
+.scene[data-envelope-phase='opening'] {
+  .zoom { animation: enter var(--opening-duration) cubic-bezier(.55,0,.35,1) forwards; }
+  .left { animation: openLeft var(--opening-duration) ease-in-out forwards; }
+  .right { animation: openRight var(--opening-duration) ease-in-out forwards; }
+  .open { opacity: 0; pointer-events: none; }
+}
+.scene[data-envelope-phase='loading'], .scene[data-custom-media], .scene[data-failed] {
+  background-color: var(--lemoncello-sky);
+}
+.scene[data-custom-media], .scene[data-failed] { .open { top: 82%; left: 50%; } }
+.scene[data-envelope-phase='opening'] {
+  // The real, already mounted next module must show through the bitmap alpha hole.
+  background: transparent !important;
+}
+
+@keyframes travel { from { transform: translateX(var(--travel-start-x)); } to { transform: translateX(var(--travel-x)); } }
+@keyframes ride {
+  from { left: var(--vespa-start); }
+  to { left: var(--vespa-end); }
+}
+@keyframes wheelRoll { from { transform: rotate(0deg); } to { transform: rotate(var(--wheel-turn)); } }
+@keyframes openLeft { 0% { transform: rotateY(0); } 65%,100% { transform: rotateY(-112deg); } }
+@keyframes openRight { 0% { transform: rotateY(0); } 65%,100% { transform: rotateY(112deg); } }
+@keyframes enter {
+  0%, 20% { transform: scale(1); opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: scale(5.5); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene .world { animation: none; transform: translateX(var(--travel-x)); }
+  .scene .vespa { animation: none; left: var(--vespa-end); }
+  .scene .zoom, .scene .leaf, .scene .wheel { animation: none; }
+}

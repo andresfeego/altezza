@@ -32,7 +32,7 @@ for (const ext of ['.png', '.jpg', '.jpeg', '.webp', '.svg']) Module._extensions
 const React = require('react');
 const { renderToStaticMarkup } = require('react-dom/server');
 const { buildResolvedModules, resolveModuleDataByTemplate } = require('../components/invitaciones-publicas/registry/moduleDataResolvers');
-const templates = Object.fromEntries(['classic', 'terracota', 'oliva'].map((key) => [
+const templates = Object.fromEntries(['classic', 'terracota', 'oliva', 'lemoncello'].map((key) => [
   `wedding_${key}`, require(`../components/invitaciones-publicas/templates/wedding-${key}`),
 ]));
 const payload = {
@@ -447,6 +447,19 @@ test('quotes omit empty references and retain configured references across all t
   }
 });
 
+test('Lemoncello hero preserves event identity, configured copy and custom media', () => {
+  const input = [{ type: 'hero_image_1', config: configs.hero_image_1, order: 1 }];
+  const html = render('wedding_lemoncello', input);
+  assert.match(html, /<img[^>]*src="\/logo.png"[^>]*alt="Pareja de prueba"/);
+  assert.ok(html.includes('/background.webp'));
+  assert.ok(html.includes('Hero configurado'));
+  assert.ok(html.includes('28 de noviembre de 2030'));
+  const withoutLogo = render('wedding_lemoncello', [{ ...input[0], config: { text1: '' } }]);
+  assert.match(withoutLogo, /<span class="names">Pareja de prueba<\/span>/);
+  assert.ok(!withoutLogo.includes('Nos casamos'));
+  assert.ok(!withoutLogo.includes('Laura'));
+});
+
 test('the same hero config resolves to the same contract in every template', () => {
   for (const type of ['hero_image_1', 'hero_image_2']) {
     const data = Object.keys(templates).map((key) => resolveModuleDataByTemplate({ type, config: configs[type] }, payload, key));
@@ -523,5 +536,180 @@ test('custom editorial fields survive switching templates and empty fields do no
     for (const fields of Object.values(copy)) for (const value of Object.values(fields)) assert.ok(!clearedHtml.includes(value));
     const data = resolveModuleDataByTemplate({ type: 'save_the_date_calendar', config: { message: '' } }, payload, key);
     assert.equal(data.message, '');
+  }
+});
+
+test('Lemoncello retains canonical envelope identity and hero/quote data when switching templates', () => {
+  const fixture = require('../components/invitaciones-publicas/templates/wedding-lemoncello/preview.json');
+  const source = { ...fixture, invitacion: { ...fixture.invitacion, label: 'Familia de prueba con etiqueta dinámica' } };
+  const results = Object.keys(templates).map(key => buildResolvedModules(fixture.modules, source, key));
+  // Templates may supply different default decorative backgrounds when none is configured.
+  const content = result => result.map(({ type, data }) => ({ type, data: type === 'hero_image_1' ? { text1: data.text1, text2: data.text2, text3: data.text3, logoImage: data.logoImage } : data }));
+  for (const result of results) assert.deepEqual(content(result), content(results[0]));
+  assert.equal(results[0][0].data.invitationLabel, source.invitacion.label);
+  assert.equal(results[0][0].data.eventDate, '19.12.26');
+  assert.equal(results[0][1].data.text1, 'Nos casamos');
+  assert.equal(results[0][1].data.logoImage, '/images/invitaciones/bodlauser/laura-sergio-monogram.png');
+  const welcome = results[0].find(module => module.type === 'welcome_message');
+  const quote = results[0].find(module => module.type === 'biblical_quote');
+  assert.equal(welcome.data.subtitle, 'Celebramos nuestro amor y queremos compartirlo con nuestras personas favoritas.');
+  assert.equal(quote.data.passageReference, '');
+  assert.equal(quote.data.passageText, 'Celebramos nuestro amor y queremos compartirlo con nuestras personas favoritas.');
+  const { sceneCell } = require('../components/invitaciones-publicas/templates/wedding-lemoncello/SceneCanvas');
+  const cells = Array.from({ length: 10 }, (_, i) => sceneCell(i));
+  assert.deepEqual(cells[0], { column: 0, row: 0 });
+  assert.equal(new Set(cells.map(cell => `${cell.column},${cell.row}`)).size, 10);
+  assert.ok(cells.every(cell => cell.row === 0), 'all scene transitions stay horizontal');
+  assert.equal(cells[1].column, 2, 'the welcome follows the connecting promenade');
+  for (let i = 2; i < cells.length; i++) assert.equal(cells[i].column - cells[i-1].column, 1);
+});
+
+test('Lemoncello waits eight seconds, opens once, cleans up timers and supports reduced motion and failed art', async () => {
+  const { JSDOM } = require('jsdom');
+  const dom = new JSDOM('<div id="test-root"></div>', { url: 'http://localhost' });
+  const keys = ['window', 'document', 'IS_REACT_ACT_ENVIRONMENT', 'setTimeout', 'clearTimeout'];
+  const saved = Object.fromEntries(keys.map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  globalThis.window = dom.window;
+  globalThis.document = dom.window.document;
+  globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+  let reduce = false, failed = false, stalled = false, now = 0, serial = 0, opens = 0, music = 0;
+  const lateImages = [];
+  const listeners = new Set(), timers = new Map();
+  window.matchMedia = () => ({ get matches() { return reduce; }, addEventListener: (_, fn) => listeners.add(fn), removeEventListener: (_, fn) => listeners.delete(fn) });
+  window.Image = class { set src(value) {
+    if (stalled) lateImages.push(this);
+    else queueMicrotask(() => failed ? this.onerror?.() : this.onload?.());
+  } };
+  window.ResizeObserver = class { observe() {} disconnect() {} };
+  window.addEventListener('envelopIntro:open', () => music++);
+  globalThis.setTimeout = (fn, ms) => { const id = ++serial; timers.set(id, { fn, at: now + ms }); return id; };
+  globalThis.clearTimeout = id => timers.delete(id);
+  const tick = async ms => {
+    now += ms;
+    await React.act(async () => { for (const [id, timer] of [...timers]) if (timer.at <= now) { timers.delete(id); timer.fn(); } });
+  };
+  const { createRoot } = require('react-dom/client');
+  const root = createRoot(document.getElementById('test-root'));
+  const Envelope = templates.wedding_lemoncello.MODULE_COMPONENTS.envelop_intro;
+  const mount = (key, presentationReady = true) => root.render(React.createElement(Envelope, { key, presentationReady, data: { invitationLabel: 'FAMILIA DINÁMICA', eventDate: '19.12.26' }, onOpen: () => opens++ }));
+  const phase = () => document.querySelector('[data-envelope-phase]').dataset.envelopePhase;
+  try {
+    await React.act(async () => mount('normal', false));
+    await tick(10000);
+    assert.equal(phase(), 'travel', 'the global loader must not consume any of the eight visible seconds');
+    await React.act(async () => mount('normal', true));
+    assert.equal(phase(), 'travel');
+    assert.equal(document.querySelector('button').disabled, true);
+    await tick(7999);
+    assert.equal(phase(), 'travel');
+    await tick(1);
+    assert.equal(phase(), 'arrived');
+    assert.ok(document.body.textContent.includes('FAMILIA DINÁMICA'));
+    assert.ok(document.body.textContent.includes('19.12.26'));
+    await React.act(async () => { document.querySelector('button').click(); document.querySelector('button').click(); });
+    assert.equal(music, 1);
+    assert.equal(opens, 0);
+    await tick(1800);
+    assert.equal(opens, 0, 'the previous opening duration must only reach the midpoint');
+    await tick(1799);
+    assert.equal(opens, 0);
+    await tick(1);
+    assert.equal(opens, 1);
+    reduce = true;
+    await React.act(async () => mount('reduced'));
+    assert.equal(phase(), 'arrived');
+    await React.act(async () => document.querySelector('button').click());
+    assert.equal(opens, 2);
+    reduce = false; failed = true;
+    await React.act(async () => mount('failed'));
+    assert.equal(phase(), 'arrived');
+    await React.act(async () => document.querySelector('button').click());
+    assert.equal(opens, 3);
+    failed = false; stalled = true;
+    await React.act(async () => mount('stalled'));
+    await tick(10000);
+    assert.equal(phase(), 'arrived');
+    assert.equal(document.querySelector('[data-envelope-phase]').dataset.failed, 'true');
+    await React.act(async () => lateImages.forEach(image => image.onload?.()));
+    assert.equal(phase(), 'arrived', 'late downloads must not restart the scene after its deadline');
+    assert.equal(document.querySelector('[data-envelope-phase]').dataset.failed, 'true');
+    stalled = false;
+    await React.act(async () => mount('unmount-during-travel'));
+    assert.equal(phase(), 'travel');
+  } finally {
+    await React.act(async () => root.unmount());
+    assert.equal(timers.size, 0);
+    assert.equal(listeners.size, 0);
+    dom.window.close();
+    for (const [key, descriptor] of Object.entries(saved)) descriptor ? Object.defineProperty(globalThis, key, descriptor) : delete globalThis[key];
+  }
+});
+
+test('Lemoncello horizontal journey locks repeated input, focuses arrival, supports return and reduced motion', async () => {
+  const { JSDOM } = require('jsdom');
+  const dom = new JSDOM('<div id="scene-test"></div>', { url: 'http://localhost' });
+  const keys = ['window', 'document', 'IS_REACT_ACT_ENVIRONMENT', 'requestAnimationFrame', 'cancelAnimationFrame'];
+  const saved = Object.fromEntries(keys.map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  globalThis.window = dom.window;
+  globalThis.document = dom.window.document;
+  globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+  globalThis.requestAnimationFrame = callback => { callback(); return 1; };
+  globalThis.cancelAnimationFrame = () => {};
+  let reduced = false, now = 0, serial = 0;
+  const listeners = new Set(), timers = new Map();
+  window.matchMedia = () => ({ get matches() { return reduced; }, addEventListener: (_, fn) => listeners.add(fn), removeEventListener: (_, fn) => listeners.delete(fn) });
+  window.setTimeout = (fn, delay) => { const id = ++serial; timers.set(id, { fn, at: now + delay }); return id; };
+  window.clearTimeout = id => timers.delete(id);
+  const tick = async ms => {
+    now += ms;
+    await React.act(async () => { for (const [id, timer] of [...timers]) if (timer.at <= now) { timers.delete(id); timer.fn(); } });
+  };
+  const { default: Scene, ESCORT_MS } = require('../components/invitaciones-publicas/templates/wedding-lemoncello/SceneCanvas');
+  const { createRoot } = require('react-dom/client');
+  const root = createRoot(document.getElementById('scene-test'));
+  const fixture = require('../components/invitaciones-publicas/templates/wedding-lemoncello/preview.json');
+  const modules = buildResolvedModules(fixture.modules, fixture, 'wedding_lemoncello').filter(m => m.type !== 'envelop_intro');
+  const props = { modules, views: templates.wedding_lemoncello.MODULE_COMPONENTS, viewStyles: {}, attendanceState, focusRef: { current: null } };
+  const viewport = () => document.querySelector('[data-scene-index]');
+  const next = () => document.querySelector('button[aria-label="Ir al mensaje de bienvenida"]');
+  const click = element => element.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
+  try {
+    await React.act(async () => root.render(React.createElement(Scene, { ...props, opened: false })));
+    assert.equal(next().disabled, true);
+    await React.act(async () => click(next()));
+    assert.equal(viewport().dataset.sceneMoving, 'false');
+    await React.act(async () => root.render(React.createElement(Scene, { ...props, opened: true })));
+    await React.act(async () => { click(next()); click(next()); });
+    assert.equal(viewport().dataset.sceneIndex, '0');
+    assert.equal(viewport().dataset.sceneMoving, 'true');
+    assert.equal(next().disabled, true);
+    assert.equal(timers.size, 1);
+    await React.act(async () => document.querySelector('.waiterFrames').dispatchEvent(new window.Event('animationend', { bubbles: true })));
+    assert.equal(viewport().dataset.sceneMoving, 'true', 'child animation events cannot finish the camera');
+    await tick(ESCORT_MS - 10);
+    assert.equal(viewport().dataset.sceneIndex, '0');
+    await tick(160);
+    assert.equal(viewport().dataset.sceneIndex, '1');
+    assert.equal(document.activeElement.closest('[data-module]').dataset.module, 'welcome_message');
+    assert.equal(document.querySelector('[data-module="hero_image_1"]').hasAttribute('inert'), true);
+    await React.act(async () => click(document.querySelector('button[aria-label="Volver a la escena anterior"]')));
+    await tick(1050);
+    assert.equal(viewport().dataset.sceneIndex, '0');
+    await React.act(async () => { reduced = true; listeners.forEach(fn => fn()); });
+    await React.act(async () => click(next()));
+    assert.equal(viewport().dataset.sceneIndex, '1');
+    assert.equal(viewport().dataset.sceneMoving, 'false');
+    assert.equal(timers.size, 0);
+    await React.act(async () => click(document.querySelector('button[aria-label="Volver a la escena anterior"]')));
+    await React.act(async () => { reduced = false; listeners.forEach(fn => fn()); });
+    await React.act(async () => click(next()));
+    assert.equal(timers.size, 1);
+    await React.act(async () => root.unmount());
+    assert.equal(timers.size, 0);
+    assert.equal(listeners.size, 0);
+  } finally {
+    if (document.getElementById('scene-test').hasChildNodes()) await React.act(async () => root.unmount());
+    dom.window.close();
+    for (const key of keys) { if (saved[key]) Object.defineProperty(globalThis, key, saved[key]); else delete globalThis[key]; }
   }
 });

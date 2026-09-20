@@ -1,0 +1,115 @@
+.page {
+  --lemoncello-sky: #bcdced;
+  --lemoncello-navy: #183451;
+  --lemoncello-butter: #f3e6aa;
+  --lemoncello-paper: #f6f3e4;
+  --lemoncello-width: 480px;
+  --inv-bg-base: var(--lemoncello-paper);
+  --inv-font-secondary: sans-serif;
+  background: var(--lemoncello-sky);
+  color: var(--lemoncello-navy);
+  font-family: sans-serif;
+  min-height: 100svh;
+}
+
+.shell { position: relative; width: min(100%, var(--lemoncello-width)); margin: 0 auto; }
+
+.viewport {
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  background: var(--lemoncello-paper);
+  width: min(100%, var(--lemoncello-width));
+  height: 100svh;
+  margin: 0 auto;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+  &:focus-visible { outline: 2px solid var(--lemoncello-navy); outline-offset: -2px; }
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+  box-sizing: border-box;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: var(--ag-space-4);
+  h2 {
+    margin: 0;
+    font-family: inherit;
+    font-size: var(--ag-heading-h2-size);
+    line-height: var(--ag-heading-h2-line);
+    font-weight: var(--ag-heading-h2-weight);
+    color: inherit;
+    text-align: center;
+  }
+}
+
+.envelop_intro { background: var(--lemoncello-butter); }
+.hero_image_1 { display: block; padding: 0; background: transparent; overflow: visible; }
+.welcome_message { display: block; padding: 0; background: transparent; }
+.biblical_quote { background: var(--lemoncello-navy); color: var(--lemoncello-butter); }
+
+.moduleContent { width: 100%; outline: none; }
+.biblicalQuoteText, .biblicalQuoteReference { font: inherit; }
+.basicContent {
+  display: grid; gap: var(--ag-space-2); text-align: center;
+  font-size: var(--ag-text-body-size); line-height: var(--ag-text-body-line);
+  h1 { font-size: var(--ag-heading-h1-size); line-height: var(--ag-heading-h1-line); font-weight: var(--ag-heading-h1-weight); }
+  h1, h2, p { margin: 0; color: inherit; }
+  img { max-width: 100%; height: auto; }
+}
+
+.canvas { position: relative; width: 100%; height: 100svh; transform: translate3d(var(--camera-from), 0, 0); }
+.scenery {
+  position: absolute; inset: 0 auto 0 0; width: 300%; pointer-events: none;
+  // Blend the approved balcony's transparent edge into the continuous promenade.
+  -webkit-mask-image: linear-gradient(to right, transparent 25%, black 35%);
+  mask-image: linear-gradient(to right, transparent 25%, black 35%);
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+}
+.escorted { animation: cameraEscort var(--journey-duration) linear both; will-change: transform; }
+.sliding { animation: cameraSlide var(--journey-duration) ease-in-out both; will-change: transform; }
+@keyframes cameraEscort {
+  0%, 16% { transform: translate3d(var(--camera-from), 0, 0); }
+  86%, 100% { transform: translate3d(var(--camera-to), 0, 0); }
+}
+@keyframes cameraSlide {
+  from { transform: translate3d(var(--camera-from), 0, 0); }
+  to { transform: translate3d(var(--camera-to), 0, 0); }
+}
+.waiterTrack { position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none; transform: translateX(-75%); }
+.waiterWindow { position: absolute; bottom: 2svh; left: 0; height: 57svh; aspect-ratio: 2 / 3; overflow: hidden; }
+.waiterFrames { display: block; width: 600%; height: auto; max-width: none; }
+.waiterTravel {
+  opacity: 1;
+  animation: waiterEscort var(--journey-duration) linear both;
+  .waiterFrames { animation: waiterWalk .9s steps(6, end) infinite; }
+}
+@keyframes waiterWalk { to { transform: translateX(-100%); } }
+@keyframes waiterEscort {
+  0% { transform: translateX(-75%); }
+  18% { transform: translateX(-4%); }
+  84% { transform: translateX(20%); }
+  100% { transform: translateX(110%); }
+}
+.sceneNavigation { position: absolute; inset: auto 0 max(var(--ag-space-2), env(safe-area-inset-bottom)) 0; z-index: 6; pointer-events: none; }
+.sceneArrow {
+  position: absolute; bottom: 0; width: var(--ag-space-8); height: var(--ag-space-6);
+  display: grid; place-items: center; padding: 0; border: 0; background: transparent;
+  cursor: pointer; pointer-events: auto;
+  img { display: block; width: 100%; height: auto; }
+  &:disabled { opacity: 0; pointer-events: none; }
+  &:focus-visible { outline: 2px solid var(--lemoncello-navy); outline-offset: var(--ag-space-1); }
+}
+.nextArrow { right: var(--ag-space-2); }
+.previousArrow { left: var(--ag-space-2); img { transform: scaleX(-1); } }
