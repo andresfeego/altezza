@@ -14,6 +14,7 @@ import EnvelopeLiftTrial, { LIFT_TRIAL_DURATION_MS } from './EnvelopeLiftTrial';
 import liftTrialStyles from './EnvelopeLiftTrial.module.scss';
 import HeroOliva from './HeroOliva';
 import CoupleNamesOliva from './CoupleNamesOliva';
+import BiblicalQuoteOliva from './BiblicalQuoteOliva';
 import InstantPhotosOliva from './InstantPhotosOliva';
 import useTextRevealOliva from './useTextRevealOliva';
 import revealStyles from './TextRevealOliva.module.scss';
@@ -124,6 +125,7 @@ export const MODULE_COMPONENTS = {
   envelop_intro: EnvelopeOliva,
   hero_image_1: HeroOliva,
   hero_image_2: HeroImage2ClassicView,
+  biblical_quote: BiblicalQuoteOliva,
   couple_family: Family,
   couple_names: CoupleNamesOliva,
   countdown: CountdownOliva,

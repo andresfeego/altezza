@@ -1,5 +1,7 @@
 const http = require('node:http');
-const upstreamPort = Number(process.env.OLIVA_PREVIEW_UPSTREAM_PORT || 3002);
+// Public previews use the optimized build, avoiding development's large icon
+// bundles and Fast Refresh reloads. Port 3002 remains an explicit editing opt-in.
+const upstreamPort = Number(process.env.OLIVA_PREVIEW_UPSTREAM_PORT || 3004);
 const invitation = '/invitacion/mysprueba/910171';
 const api = '/api/responseAltezza/public/invitaciones/mysprueba';
 const coverAssets = new Set([
@@ -62,4 +64,4 @@ server.on('upgrade', (req, socket, head) => {
   upstream.on('error', () => socket.destroy());
   upstream.end();
 });
-server.listen(3003, '127.0.0.1', () => console.log('Oliva preview gateway listening on 127.0.0.1:3003'));
+server.listen(3003, '127.0.0.1', () => console.log(`Oliva preview gateway listening on 127.0.0.1:3003 -> 127.0.0.1:${upstreamPort}`));

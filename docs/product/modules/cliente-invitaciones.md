@@ -115,6 +115,27 @@ sello, verificar un único mensaje dentro del módulo y relieve solo en ese fond
 repetir a 320, 390 y 480 px y en escritorio, comprobando que no se cortan fotos ni
 texto. Revisar movimiento reducido y las imágenes por túnel.
 
+## Esquinas florales de la frase en Oliva
+
+`biblical_quote` conserva `passageText` y `passageReference`, centrados y con su
+animación de entrada. `BiblicalQuoteOliva` añade dos pequeñas esquinas florales:
+un único PNG blanco plano y transparente en forma de «┌», arriba a la izquierda,
+y la misma imagen rotada 180° abajo a la derecha. Usa el mismo relieve y papel
+beige de las fotos finales. El color, las luces y las sombras se aplican en CSS.
+Los adornos miden entre 96 y 128 px y tienen 16 px de separación del contenedor.
+Reemplazan las pruebas de marco completo y quedan limitados a esta sección;
+la altura crece con el texto para evitar solapamientos en móvil. El texto tiene
+64 px de padding horizontal por lado, reducido a 48 px bajo 360 px de ancho,
+para separarlo de las esquinas sin cambiar el tamaño de letra ni su centrado.
+No requiere configuración nueva ni cambios de datos; las otras plantillas
+conservan su presentación. El recurso y su prompt están en los assets de Oliva.
+
+Validación manual: abrir el sobre, revisar la frase a 320, 390, 480 y 1440 px,
+comprobar texto centrado y separado de las dos esquinas, misma imagen girada y ausencia de
+desbordamiento. Revisar referencia opcional y texto largo, movimiento reducido
+(relieve estático), contraste aumentado (sin ornamento) y dimensiones sin cambios
+en los demás módulos. Cerrar las pestañas de inspección al finalizar.
+
 ## Fondo opcional común de las secciones
 
 Todos los módulos pueden guardar `config.sectionBackground` en su configuración:
