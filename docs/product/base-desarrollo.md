@@ -1040,6 +1040,23 @@ Tarjeta pública modular (actualización 2026-09-19):
 - Estado UX/UI: composición Polaroid con mensaje integrado y relieve botánico sobre el beige original de Oliva. Fotos y sello comparten la sombra del monograma; sello centrado en el cruce del borde inferior de la foto posterior y el izquierdo de la frontal. Revisada en Chrome y WebKit a 320, 390, 480 y 1440 px, sin recortes ni desbordamiento; anclaje comprobado con error inferior a 0.2 px. Efecto limitado a la sección, movimiento reducido y contraste aumentado comprobados. Aprobación visual del cliente pendiente.
 - Contrato y validación: [módulo de invitaciones](modules/cliente-invitaciones.md#fotografías-instantáneas-y-cierre).
 
+Oliva — aparición de textos (2026-09-21):
+
+- Estado funcional: entrada única al llegar a cada texto desde la frase hasta el
+  cierre; nombres escalonados, contador y calendario completos. Incluye imágenes
+  de vestuario, paletas, sobre, Polaroids y sello, esperando su carga sin bloquear
+  otros elementos. La entrada conserva las rotaciones y sombras existentes. Sin cambios de
+  datos ni de confirmación. Fallback visible, foco de teclado inmediato y
+  movimiento reducido inicial o activado durante la visita.
+- Estado UX/UI: propuesta aprobada de 700 ms, recorrido de 12 px y secuencia de
+  100 ms. En los fondos claros, cada bloque de texto alterna izquierda/derecha;
+  fondos verdes y nombres conservan el ascenso. Conserva geometría, colores y
+  tipografía. Textos e imágenes revisados en Chrome y WebKit: entrada única,
+  contador activo, foco inmediato y movimiento reducido. Sombras y rotaciones
+  de las Polaroid conservadas durante la entrada. Sin desbordamiento a 320, 390,
+  480 y 1440 px ni cambios de geometría. 47 pruebas aprobadas. Revisión final
+  del usuario pendiente; pasos manuales en el módulo de invitaciones.
+
 Manual:
 
 - módulo cliente documentado

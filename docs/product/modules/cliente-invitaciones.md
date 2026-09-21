@@ -28,6 +28,41 @@ Este módulo se alimenta de la información base del módulo **👥 Invitados** 
 
 ## Fotografías instantáneas y cierre
 
+### Aparición de textos e imágenes en Oliva
+
+Desde la frase (`biblical_quote`, o nombres/fecha si no hay frase), Oliva revela
+los textos al entrar en pantalla: opacidad y desplazamiento de 12 px en
+700 ms, con separación de 100 ms entre partes. En las secciones claras (frase,
+detalles, vestuario y mensaje de fotos/cierre), los bloques alternan izquierda y
+derecha, comenzando por la izquierda en cada módulo. Cada texto de detalles
+cuenta como un bloque; no se alternan sus líneas. Los fondos verdes y nombres
+conservan la entrada desde abajo. Este ritmo editorial fue aprobado
+por el usuario para la tarjeta. Mayra, «&» y Samuel comparten una entrada
+escalonada; contador y calendario entran como bloques, sin animar cada cambio
+de cifra ni cada celda. Incluye familia, lugares, sobres, vestuario, introducción
+de asistencia y mensaje bajo las fotos. Fondos, controles de respuesta y mensajes
+de estado mantienen su funcionamiento.
+
+También aparecen la ilustración y paletas de vestuario, el sobre de regalos,
+las dos Polaroid y su sello. Vestuario/fotos alternan los laterales; el sobre
+asciende sobre su fondo verde. Cada imagen se activa al entrar en pantalla y
+espera su propia carga, sin bloquear textos ni el resto de la tarjeta. Las
+fotos conservan marcos, rotaciones, sombras animadas y posición final del sello:
+su entrada usa transiciones independientes de la animación de sombra.
+
+Cada texto aparece una sola vez por visita. El efecto pertenece a la plantilla:
+no modifica contratos, contenido, orden ni otras plantillas. Se prepara únicamente
+al abrir la invitación. Sin soporte de observación o con movimiento reducido,
+el texto permanece visible. Activar movimiento reducido durante la visita o
+enfocar un enlace con teclado elimina la espera; imprimir muestra todo el texto.
+
+Validación manual: abrir y recorrer la tarjeta en móvil/escritorio, comprobar
+la secuencia de nombres y fecha y los laterales alternados de detalles/vestuario;
+verificar la entrada de ilustración, paletas, sobre, fotos y sello sin repetirla;
+volver hacia arriba sin nuevas entradas, revisar
+movimiento reducido y acceder a los enlaces por teclado. El contador debe seguir
+actualizándose y el mensaje final quedar visible al llegar al pie.
+
 `instant_photos` presenta dos fotos estáticas superpuestas en marcos Polaroid y un
 sello opcional. Comparte contrato y vista entre Classic, Terracota y Oliva:
 

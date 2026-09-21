@@ -15,6 +15,8 @@ import liftTrialStyles from './EnvelopeLiftTrial.module.scss';
 import HeroOliva from './HeroOliva';
 import CoupleNamesOliva from './CoupleNamesOliva';
 import InstantPhotosOliva from './InstantPhotosOliva';
+import useTextRevealOliva from './useTextRevealOliva';
+import revealStyles from './TextRevealOliva.module.scss';
 import { CalendarOliva, CountdownOliva } from './DateModulesOliva';
 import templateStyles from './index.module.scss';
 import interiorStyles from './interior.module.scss';
@@ -34,7 +36,7 @@ const ENVELOPE_EXIT_TRIAL = 'lift';
 
 function ModuleFrame({ name, children }) {
   return (
-    <div className={debugStyles.moduleFrame} data-debug-module={TEMPLATE_DEBUG ? name : undefined}>
+    <div className={debugStyles.moduleFrame} data-oliva-module={name} data-debug-module={TEMPLATE_DEBUG ? name : undefined}>
       {TEMPLATE_DEBUG ? <span className={debugStyles.debugModuleLabel} aria-hidden="true">{name}</span> : null}
       {children}
     </div>
@@ -141,6 +143,7 @@ export default function WeddingOlivaTemplate({ resolvedModules, attendanceState 
   const openingRef = useRef(false);
   const contentRef = useRef(null);
   const envelopeData = envelope?.data || {};
+  useTextRevealOliva(contentRef, opened);
 
   const openInvitation = useCallback(() => {
     setOpened(true);
@@ -191,7 +194,7 @@ export default function WeddingOlivaTemplate({ resolvedModules, attendanceState 
           </ModuleFrame>
         </div>
       ) : null}
-      <div ref={contentRef} hidden={!opened && !lifting} inert={lifting ? '' : undefined} aria-hidden={lifting || undefined} className={styles.paper}>
+      <div ref={contentRef} hidden={!opened && !lifting} inert={lifting ? '' : undefined} aria-hidden={lifting || undefined} className={`${styles.paper} ${revealStyles.scope}`}>
         {resolvedModules.filter((module) => !['envelop_intro', 'music_player'].includes(module.type)).map((module) => {
           const View = MODULE_COMPONENTS[module.type];
           if (!View) return null;
