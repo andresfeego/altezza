@@ -1034,6 +1034,12 @@ Acción requerida:
 
 ### Invitaciones
 
+Tarjeta pública modular (actualización 2026-09-19):
+
+- Estado funcional: `instant_photos` implementado con dos fotos, sello, texto opcional y carga diferida; migración local de `bodmys` después de asistencia. El texto del cierre pertenece ahora a las fotos y el cierre independiente queda desactivado. Oliva admite relieve botánico en el fondo beige de esta sección.
+- Estado UX/UI: composición Polaroid con mensaje integrado y relieve botánico sobre el beige original de Oliva. Fotos y sello comparten la sombra del monograma; sello centrado en el cruce del borde inferior de la foto posterior y el izquierdo de la frontal. Revisada en Chrome y WebKit a 320, 390, 480 y 1440 px, sin recortes ni desbordamiento; anclaje comprobado con error inferior a 0.2 px. Efecto limitado a la sección, movimiento reducido y contraste aumentado comprobados. Aprobación visual del cliente pendiente.
+- Contrato y validación: [módulo de invitaciones](modules/cliente-invitaciones.md#fotografías-instantáneas-y-cierre).
+
 Manual:
 
 - módulo cliente documentado

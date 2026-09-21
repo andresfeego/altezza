@@ -60,6 +60,7 @@ const configs = {
   welcome_message: { title: 'Bienvenida configurada', subtitle: 'Introducción configurada' },
   music_player: { audioSrc: '/music.mp3', title: 'Canción configurada' },
   photo_slider: { images: ['/photo.webp'] },
+  instant_photos: { images: [{ imageSrc: '/003.jpeg', imageAlt: 'Foto uno' }, { imageSrc: '/004.jpeg', imageAlt: 'Foto dos' }], sealImageSrc: '/seal.webp', sealImageAlt: 'Monograma MS' },
   image_slider_sepia: { title: 'Galería configurada', images: ['/sepia.webp'] },
   countdown: { title: 'Contador configurado' },
   couple_family: { coupleLabel: 'Presentación de familia configurada', parentsBride: ['Madre de prueba'], godparents: [{ name: 'Padrino de prueba', isDeceased: true }] },
@@ -73,6 +74,60 @@ const attendanceState = { guests: [], options: [], closed: false };
 const render = (key, input) => renderToStaticMarkup(React.createElement(templates[key].default, {
   resolvedModules: buildResolvedModules(input, { ...payload, evento: { ...payload.evento, templateKey: key } }, key), attendanceState,
 }));
+
+test('instant photos preserve the selected pair and seal across templates without inventing missing photos', () => {
+  const { JSDOM } = require('jsdom');
+  for (const key of Object.keys(templates)) {
+    const input = [{ type: 'instant_photos', config: configs.instant_photos }];
+    const dom = new JSDOM(render(key, input));
+    const section = dom.window.document.querySelector('[data-instant-photos]');
+    assert.deepEqual([...section.querySelectorAll('figure img')].map((img) => [img.getAttribute('src'), img.alt]), [['/003.jpeg', 'Foto uno'], ['/004.jpeg', 'Foto dos']]);
+    assert.equal(section.querySelector('img[alt="Monograma MS"]').getAttribute('src'), '/seal.webp');
+    for (const image of section.querySelectorAll('img')) assert.equal(image.getAttribute('loading'), 'lazy');
+    dom.window.close();
+    for (const images of [[], [configs.instant_photos.images[0]], [{ imageSrc: '' }, configs.instant_photos.images[1]]]) {
+      assert.equal(buildResolvedModules([{ ...input[0], config: { images } }], payload, key).length, 0);
+    }
+    assert.ok(!render(key, [{ ...input[0], enabled: false }]).includes('data-instant-photos'));
+    assert.ok(!render(key, [{ ...input[0], config: { ...configs.instant_photos, sealImageSrc: '' } }]).includes('/seal.webp'));
+  }
+});
+
+test('closing can omit custom or default ornaments while keeping the message in every template', () => {
+  const { JSDOM } = require('jsdom');
+  for (const key of Object.keys(templates)) {
+    for (const frameImage of ['', '/custom-floral.webp']) {
+      const input = [{ type: 'closing_message', config: { ...configs.closing_message, frameImage, showFrame: false } }];
+      const dom = new JSDOM(render(key, input));
+      assert.ok(dom.window.document.body.textContent.includes('CIERRE_CONFIGURADO'));
+      assert.equal(dom.window.document.querySelectorAll('img, svg').length, 0);
+      dom.window.close();
+      if (frameImage) assert.ok(render(key, [{ ...input[0], config: { ...input[0].config, showFrame: true } }]).includes(frameImage));
+    }
+  }
+});
+
+test('instant photos support optional multiline copy and keep Oliva relief inside their section', () => {
+  const { JSDOM } = require('jsdom');
+  for (const key of Object.keys(templates)) {
+    const config = { ...configs.instant_photos, message: 'Con mucho cariño,\nMayra & Samuel', reliefImageSrc: '/relief.png' };
+    const input = [{ type: 'instant_photos', config, order: 1 }, { type: 'closing_message', enabled: false, config: { message: config.message }, order: 2 }];
+    const dom = new JSDOM(render(key, input));
+    const section = dom.window.document.querySelector('[data-instant-photos]');
+    assert.equal(section.querySelector('[data-instant-photos-message]').textContent, config.message);
+    assert.equal(dom.window.document.querySelectorAll('[data-instant-photos-message]').length, 1);
+    assert.equal(dom.window.document.querySelectorAll('footer').length, 0);
+    if (key === 'wedding_oliva') {
+      assert.equal(section.querySelectorAll('[data-floral-relief]').length, 1);
+      assert.equal(section.querySelector('[data-floral-relief]').getAttribute('aria-hidden'), 'true');
+      assert.ok(section.querySelector('[data-floral-relief]').getAttribute('style').includes('/relief.png'));
+    } else assert.equal(section.querySelectorAll('[data-floral-relief]').length, 0);
+    dom.window.close();
+    const empty = render(key, [{ type: 'instant_photos', config: { ...config, message: '', reliefImageSrc: '' } }]);
+    assert.ok(!empty.includes('data-instant-photos-message'));
+    assert.ok(!empty.includes('data-floral-relief'));
+  }
+});
 
 test('optional section backgrounds render for every module in all templates without changing resolved content', () => {
   const { JSDOM } = require('jsdom');

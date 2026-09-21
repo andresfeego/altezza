@@ -1,5 +1,66 @@
 // Structural defaults for shared views. Templates override these classes and
 // supply the typography/palette; this file contains no template assets.
+.instantPhotosModule {
+  padding: var(--ag-space-5) var(--ag-space-2) var(--ag-space-2);
+}
+.instantPhotosWithMessage { padding-bottom: var(--ag-space-5); }
+.instantPhotosMessage {
+  position: relative;
+  z-index: 1;
+  margin: var(--ag-space-2) 0 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  text-align: center;
+  font: 400 var(--ag-font-size-32)/1.25 var(--inv-font-secondary, serif);
+}
+.instantPhotosComposition {
+  // Art coordinates reproduce the two overlapping prints in the supplied sketch.
+  --instant-photo-width: 54%;
+  --instant-photo-tilt: 10deg;
+  // Intersection of the rear print's bottom edge and front print's left edge:
+  // 54% wide, 245/270 ratio, positions (7%,5%)/(41%,34%), rotations -10/+10.
+  --instant-seal-center-x: 40.995991%;
+  --instant-seal-center-y: 59.384854%;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: calc(var(--ag-space-5) * 12);
+  aspect-ratio: 1 / 1.08;
+  margin: 0 auto;
+  isolation: isolate;
+}
+.instantPhoto {
+  position: absolute;
+  box-sizing: border-box;
+  width: var(--instant-photo-width);
+  aspect-ratio: 245 / 270;
+  margin: 0 !important;
+  background: var(--instant-photo-paper, var(--ag-surface-card));
+  box-shadow: var(--ag-shadow-card);
+  &:first-child { left: 7%; top: 5%; transform: rotate(calc(-1 * var(--instant-photo-tilt))); }
+  &:nth-child(2) { left: 41%; top: 34%; transform: rotate(var(--instant-photo-tilt)); }
+}
+.instantPhotoImage {
+  // Absolute inset keeps intrinsic image height from enlarging the print in WebKit.
+  position: absolute;
+  top: var(--ag-space-1);
+  left: var(--ag-space-1);
+  display: block;
+  width: calc(100% - var(--ag-space-1) * 2);
+  height: calc(100% - var(--ag-space-1) - var(--ag-space-4));
+  object-fit: cover;
+}
+.instantPhotosSeal {
+  position: absolute;
+  z-index: 1;
+  left: var(--instant-seal-center-x);
+  top: var(--instant-seal-center-y);
+  width: 22%;
+  height: auto;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  pointer-events: none;
+}
+
 .moduleCard { position: relative; padding: var(--ag-space-6) var(--ag-space-2); text-align: center; }
 .sectionHeading { margin-bottom: var(--ag-space-3); }
 .moduleTitle, .dressCodeTitle, .adultsOnlyNoticeTitle, .heroImage2Title {

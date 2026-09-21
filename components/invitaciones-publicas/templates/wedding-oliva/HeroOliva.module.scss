@@ -14,7 +14,6 @@
     linear-gradient(135deg, var(--hero-paper-light), var(--hero-paper-base) 50%, var(--hero-paper-shade));
   --hero-monogram-optical-x: -2%;
   --hero-monogram-optical-y: 4%;
-  --hero-monogram-shadow: color-mix(in srgb, var(--oliva-shadow-ink) 45%, transparent);
   --hero-height: clamp(calc(var(--ag-space-9) * 5), 150vw, calc(var(--ag-space-9) * 6));
   --hero-relief-depth: calc(var(--oliva-border) * 1.1);
   --hero-relief-blur: calc(var(--hero-relief-depth) * .3);
@@ -107,11 +106,6 @@
   to { transform: translate(calc(var(--hero-relief-depth) * -.15), calc(var(--hero-relief-depth) * -1)); }
 }
 
-@keyframes heroMonogramShadowDrift {
-  from { filter: drop-shadow(calc(var(--oliva-border) * 4) calc(var(--oliva-border) * .5) calc(var(--oliva-border) * 3) var(--hero-monogram-shadow)); }
-  to { filter: drop-shadow(calc(var(--oliva-border) * .5) calc(var(--oliva-border) * 4) calc(var(--oliva-border) * 3) var(--hero-monogram-shadow)); }
-}
-
 .relief, .artworkShadow, .artworkLight, .artworkMask, .artworkFallback {
   position: absolute;
   inset: 0;
@@ -171,13 +165,13 @@
   color: inherit !important;
 }
 .monogram {
+  composes: raisedShadow from './RaisedShadowOliva.module.scss';
   display: block;
   width: clamp(calc(var(--ag-space-5) * 4), 54vw, calc(var(--ag-space-8) * 3));
   max-width: 100%;
   height: auto;
   // Balance the asymmetric artwork optically, without rotating or distorting it.
   transform: translate(var(--hero-monogram-optical-x), var(--hero-monogram-optical-y));
-  filter: drop-shadow(calc(var(--oliva-border) * 3) calc(var(--oliva-border) * 4) calc(var(--oliva-border) * 3) var(--hero-monogram-shadow));
 }
 .names {
   display: grid;
@@ -205,11 +199,9 @@
   }
   .artworkShadow { animation: heroReliefShadowDrift var(--hero-light-travel) ease-in-out infinite alternate; }
   .artworkLight { animation: heroReliefHighlightDrift var(--hero-light-travel) ease-in-out infinite alternate; }
-  .monogram { animation: heroMonogramShadowDrift var(--hero-light-travel) ease-in-out infinite alternate; }
 }
 @media (prefers-contrast: more), (forced-colors: active) {
   .hero { background-image: none; }
   .hero::before, .hero::after { display: none; }
   .relief, .movingLight { display: none; }
-  .monogram { animation: none; filter: none; }
 }

@@ -1,0 +1,15 @@
+// Shared material shadow for the hero monogram, Polaroid prints and wax seal.
+.raisedShadow {
+  --oliva-raised-shadow-color: color-mix(in srgb, var(--oliva-shadow-ink) 45%, transparent);
+  filter: drop-shadow(calc(var(--oliva-border) * 3) calc(var(--oliva-border) * 4) calc(var(--oliva-border) * 3) var(--oliva-raised-shadow-color));
+}
+@keyframes raisedShadowDrift {
+  from { filter: drop-shadow(calc(var(--oliva-border) * 4) calc(var(--oliva-border) * .5) calc(var(--oliva-border) * 3) var(--oliva-raised-shadow-color)); }
+  to { filter: drop-shadow(calc(var(--oliva-border) * .5) calc(var(--oliva-border) * 4) calc(var(--oliva-border) * 3) var(--oliva-raised-shadow-color)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .raisedShadow { animation: raisedShadowDrift var(--hero-light-travel) ease-in-out infinite alternate; }
+}
+@media (prefers-contrast: more), (forced-colors: active) {
+  .raisedShadow { animation: none; filter: none; }
+}

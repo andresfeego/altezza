@@ -1,4 +1,5 @@
 const http = require('node:http');
+const upstreamPort = Number(process.env.OLIVA_PREVIEW_UPSTREAM_PORT || 3002);
 const invitation = '/invitacion/mysprueba/910171';
 const api = '/api/responseAltezza/public/invitaciones/mysprueba';
 const coverAssets = new Set([
@@ -8,8 +9,12 @@ const coverAssets = new Set([
   '/scrAppaltezza/invitations/bodmys/cover/fondo01portrait.png',
   '/scrAppaltezza/invitations/bodmys/cover/sobre-cerrado-sin-fondo.png',
   '/scrAppaltezza/invitations/bodmys/cover/monograma-MS-transparente.png',
+  '/scrAppaltezza/invitations/bodmys/audio/ELENA%20ROSE%20%26%20Rawayana%20-%20Luna%20de%20Miel%20-%20ELENA%20ROSE.mp3',
   '/scrAppaltezza/invitations/bodmys/hero/floral-relief-v1.png',
   '/scrAppaltezza/invitations/bodmys/photos/mayra-samuel-fondo-desenfocado.webp',
+  '/scrAppaltezza/invitations/bodmys/photos/003.jpeg',
+  '/scrAppaltezza/invitations/bodmys/photos/004.jpeg',
+  '/scrAppaltezza/invitations/bodmys/instant_photos/sello-lacre-MS-v1.webp',
   '/scrAppaltezza/invitations/bodmys/dresscode/grupo-vestidos-acuarela-v1.png',
   '/scrAppaltezza/invitations/bodmys/dresscode/paleta-telas-referencia-v1.png',
   '/scrAppaltezza/invitations/bodmys/dresscode/tela-marfil-v1.webp',
@@ -34,7 +39,7 @@ const server = http.createServer((req, res) => {
   for (const name of Object.keys(headers)) {
     if (name.startsWith('x-middleware-') || name.startsWith('x-nextjs-')) delete headers[name];
   }
-  const upstream = http.request({ hostname: '127.0.0.1', port: 3002, method: req.method, path: pathname + url.search, headers }, response => {
+  const upstream = http.request({ hostname: '127.0.0.1', port: upstreamPort, method: req.method, path: pathname + url.search, headers }, response => {
     res.writeHead(response.statusCode, { ...response.headers, 'x-robots-tag': 'noindex, nofollow' });
     response.pipe(res);
   });
@@ -43,7 +48,7 @@ const server = http.createServer((req, res) => {
 });
 server.on('upgrade', (req, socket, head) => {
   if (req.url !== '/_next/webpack-hmr') { socket.destroy(); return; }
-  const upstream = http.request({ hostname: '127.0.0.1', port: 3002, path: req.url, headers: req.headers });
+  const upstream = http.request({ hostname: '127.0.0.1', port: upstreamPort, path: req.url, headers: req.headers });
   upstream.on('upgrade', (response, peer, peerHead) => {
     const lines = [`HTTP/1.1 ${response.statusCode} ${response.statusMessage}`];
     for (const [name, value] of Object.entries(response.headers)) lines.push(`${name}: ${value}`);

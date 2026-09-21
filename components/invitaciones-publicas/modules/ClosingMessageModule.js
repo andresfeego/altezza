@@ -9,6 +9,7 @@ export default function ClosingMessageModule({ module }) {
   return {
     message,
     frameImage,
+    showFrame: module?.config?.showFrame !== false,
     frameImageAlt: String(module?.config?.frameImageAlt || 'Marco ornamental').trim(),
   };
 }

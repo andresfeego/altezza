@@ -14,6 +14,7 @@ import EnvelopeLiftTrial, { LIFT_TRIAL_DURATION_MS } from './EnvelopeLiftTrial';
 import liftTrialStyles from './EnvelopeLiftTrial.module.scss';
 import HeroOliva from './HeroOliva';
 import CoupleNamesOliva from './CoupleNamesOliva';
+import InstantPhotosOliva from './InstantPhotosOliva';
 import { CalendarOliva, CountdownOliva } from './DateModulesOliva';
 import templateStyles from './index.module.scss';
 import interiorStyles from './interior.module.scss';
@@ -110,7 +111,7 @@ function Attendance({ data, attendanceState }) {
 function Closing({ data }) {
   return (
     <footer className={styles.footer}>
-      {data.frameImage ? <img className={styles.footerFlorals} src={data.frameImage} alt={data.frameImageAlt} /> : <BotanicalArt className={styles.footerFlorals} />}
+      {data.showFrame !== false ? (data.frameImage ? <img className={styles.footerFlorals} src={data.frameImage} alt={data.frameImageAlt} /> : <BotanicalArt className={styles.footerFlorals} />) : null}
       <p className={styles.closingText}>{data.message}</p>
     </footer>
   );
@@ -128,6 +129,7 @@ export const MODULE_COMPONENTS = {
   event_details: Details,
   attendance_confirm: Attendance,
   closing_message: Closing,
+  instant_photos: InstantPhotosOliva,
 };
 
 export default function WeddingOlivaTemplate({ resolvedModules, attendanceState }) {

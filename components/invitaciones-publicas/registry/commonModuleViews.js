@@ -9,6 +9,7 @@ import ClosingMessageView from '../module-views/ClosingMessageView';
 import WelcomeMessageView from '../module-views/WelcomeMessageView';
 import MusicPlayerView from '../module-views/MusicPlayerView';
 import PhotoSliderView from '../module-views/PhotoSliderView';
+import InstantPhotosView from '../module-views/InstantPhotosView';
 import ImageSliderSepiaView from '../module-views/ImageSliderSepiaView';
 import CountdownView from '../module-views/CountdownView';
 import CoupleFamilyView from '../module-views/CoupleFamilyView';
@@ -29,6 +30,7 @@ export const COMMON_MODULE_VIEWS = {
   welcome_message: WelcomeMessageView,
   music_player: MusicPlayerView,
   photo_slider: PhotoSliderView,
+  instant_photos: InstantPhotosView,
   image_slider_sepia: ImageSliderSepiaView,
   countdown: CountdownView,
   couple_family: CoupleFamilyView,

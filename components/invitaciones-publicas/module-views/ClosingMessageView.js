@@ -3,7 +3,7 @@ export default function ClosingMessageView({ data, styles }) {
 
   return (
     <section className={`${styles.moduleCard} ${styles.closingMessageModule}`}>
-      {data.frameImage ? <img
+      {data.showFrame !== false && data.frameImage ? <img
         className={styles.closingMessageFrame}
         src={data.frameImage}
         alt=""

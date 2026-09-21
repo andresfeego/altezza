@@ -63,6 +63,10 @@
   font-size: calc(var(--ag-font-size-16) * 1.2);
   color: var(--oliva-green);
 }
+.paper .biblicalQuoteText {
+  // Preserve centering regardless of when the template paragraph reset is loaded.
+  margin-inline: auto;
+}
 
 .hero {
   position: relative;
@@ -382,6 +386,7 @@
 }
 
 .footer { padding: 0 var(--ag-space-2) var(--ag-space-5); text-align: center; }
+.footer .closingText { margin: 0; }
 .footerFlorals { transform: rotate(180deg); margin-bottom: var(--ag-space-5); }
 .footerNames { font: 400 var(--interior-script-size)/1.25 var(--oliva-script); color: var(--oliva-green); margin: var(--ag-space-2) 0 var(--ag-space-4) !important; }
 .footer .smallLabel { font-size: var(--ag-font-size-12); letter-spacing: .08em; }

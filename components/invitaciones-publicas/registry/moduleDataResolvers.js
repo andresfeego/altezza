@@ -11,6 +11,7 @@ import AdultsOnlyNoticeModule from '../modules/AdultsOnlyNoticeModule';
 import ClosingMessageModule from '../modules/ClosingMessageModule';
 import WelcomeMessageModule from '../modules/WelcomeMessageModule';
 import PhotoSliderModule from '../modules/PhotoSliderModule';
+import InstantPhotosModule from '../modules/InstantPhotosModule';
 import ImageSliderSepiaModule from '../modules/ImageSliderSepiaModule';
 import MusicPlayerModule from '../modules/MusicPlayerModule';
 import CountdownModule from '../modules/CountdownModule';
@@ -37,6 +38,7 @@ const COMMON_RESOLVERS = {
   closing_message: ClosingMessageModule,
   welcome_message: WelcomeMessageModule,
   photo_slider: PhotoSliderModule,
+  instant_photos: InstantPhotosModule,
   image_slider_sepia: ImageSliderSepiaModule,
   music_player: MusicPlayerModule,
   countdown: CountdownModule,
