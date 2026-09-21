@@ -1,6 +1,6 @@
 import styles from './HeroOliva.module.scss';
 
-// The hero and photo keepsake share the same relief; their surface owns its tone.
+// Each section shares the same relief; its surface owns the paper tone.
 export default function FloralReliefOliva({ imageSrc, loading }) {
   if (!imageSrc) return null;
 

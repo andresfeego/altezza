@@ -87,3 +87,43 @@ Los tiempos se midieron desde este equipo usando su dirección LAN; no equivalen
 a una medición física desde otro teléfono o a través de Cloudflare. La prueba
 inicial de HTTP/HMR y las capturas quedaron en
 `output/playwright/loading-investigation/` (artefactos locales, fuera del commit).
+
+## Revisión del 21 de septiembre de 2026
+
+Ante un nuevo reporte de carga detenida se probó la apertura real en navegador,
+además de HTTP. No se reprodujo el bucle anterior de Fast Refresh: tres recargas
+en desarrollo local terminaron en 1,232 / 1,328 / 1,212 segundos, con exactamente
+tres peticiones de documento, hash HMR estable y ninguna recarga adicional durante
+20 segundos de observación. El backend continuó respondiendo 200.
+
+El túnel estaba apuntando otra vez al servidor de desarrollo del puerto 3002.
+La apertura por ese túnel tardó 23,641 segundos; `_app.js` transfirió 15,5 MB y
+tardó 21,1 segundos. El límite de tres segundos del cargador empieza después del
+arranque de React, por lo que no puede acortar esa descarga inicial.
+
+Se compiló la versión actual, incluidas las esquinas florales, con
+`npm run build:preview`, y se arrancó en 3004 con `npm run preview:local`.
+La prueba por LAN abrió en 0,834 segundos y transfirió 179.572 bytes de JavaScript.
+El gateway de Oliva ahora usa 3004 por defecto; 3002 solo se elige explícitamente
+con `OLIVA_PREVIEW_UPSTREAM_PORT=3002` para una prueba de desarrollo.
+
+El túnel anterior mostró variación de 3,6 a 15,3 segundos incluso con la versión
+optimizada. En una carga sin caché, cuatro scripts de 39–46 kB tardaron unos diez
+segundos en terminar de recibirse. Se creó un túnel nuevo con
+`cloudflared tunnel --url http://127.0.0.1:3003 --protocol http2 --no-autoupdate`.
+La conexión nueva se registró en `bog04`; la anterior usaba QUIC y `tpa01`.
+Estas mediciones no establecen por sí solas un fallo interno de Cloudflare.
+
+En el túnel nuevo, las aperturas sin recursos previos de ese host tardaron
+6,147 segundos en Chrome y 6,210 en WebKit móvil, con unos 180 kB de JavaScript.
+En ambos se abrió el sobre, se comprobó la presencia de las dos esquinas nuevas
+y se llegó a las fotos finales. No hubo errores JavaScript, HTTP fallidos,
+WebSocket HMR, reaparición del cargador ni recargas extra durante diez segundos
+de observación. La compilación y las 54 pruebas de carga, contratos y animaciones
+pasaron. Los tiempos son mediciones desde este equipo, no una garantía para
+cualquier conexión o teléfono.
+
+Para que el túnel muestre cambios posteriores, detener el proceso de vista
+optimizada, volver a compilar y arrancarlo antes de verificar. Guardar un archivo
+en desarrollo no actualiza la compilación de 3004. No compilar sobre el directorio
+que un proceso activo de vista optimizada está sirviendo.

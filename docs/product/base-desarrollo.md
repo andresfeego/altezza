@@ -1040,6 +1040,36 @@ Tarjeta pública modular (actualización 2026-09-19):
 - Estado UX/UI: composición Polaroid con mensaje integrado y relieve botánico sobre el beige original de Oliva. Fotos y sello comparten la sombra del monograma; sello centrado en el cruce del borde inferior de la foto posterior y el izquierdo de la frontal. Revisada en Chrome y WebKit a 320, 390, 480 y 1440 px, sin recortes ni desbordamiento; anclaje comprobado con error inferior a 0.2 px. Efecto limitado a la sección, movimiento reducido y contraste aumentado comprobados. Aprobación visual del cliente pendiente.
 - Contrato y validación: [módulo de invitaciones](modules/cliente-invitaciones.md#fotografías-instantáneas-y-cierre).
 
+Oliva — carga pública revisada (2026-09-21):
+
+- Estado funcional: compilación optimizada actual en 3004 y gateway del túnel
+  configurado para usarla por defecto. Desarrollo continúa en 3002. Backend
+  estable; compilación y 54 pruebas aprobadas. El nuevo túnel usa HTTP/2.
+- Estado UX/UI: no se reprodujo un bucle en tres recargas locales; la carga
+  pesada por túnel se redujo usando unos 180 kB de JavaScript, frente a los
+  15,5 MB del `_app.js` de desarrollo. Apertura real en Chrome y WebKit móvil
+  por el túnel nuevo en 6,1–6,2 s, sin errores ni recargas adicionales; sobre,
+  esquinas florales y fotos finales comprobados. Cada cambio posterior requiere
+  reconstruir la vista optimizada antes de compartirlo.
+- Evidencia y operación: [diagnóstico de carga](../invitaciones-diagnostico-carga.md#revisión-del-21-de-septiembre-de-2026).
+
+Oliva — esquinas de la frase bíblica (2026-09-21):
+
+- Estado funcional: `biblical_quote` reutiliza su vista y datos, con decoración
+  exclusiva de Oliva. Una máscara floral blanca y transparente en dos esquinas, y relieve compartido
+  con las fotos finales; no cambia el orden, la confirmación ni otras plantillas.
+- Estado UX/UI: pequeña «┌» floral superior izquierda y la misma imagen girada
+  180° en la esquina inferior derecha; sustituyen los marcos completos probados.
+  Tamaño de 96–128 px y separación de 16 px. Relieve CSS sobre papel beige,
+  frase centrada y altura flexible para evitar cruces entre texto y ornamento.
+  Padding horizontal aumentado a 64 px por lado (48 px bajo 360 px), conservando
+  la tipografía y el padding vertical.
+  Revisado en Chrome y WebKit a 320, 390, 480 y 1440 px; sin desbordamiento ni
+  cambios de dimensiones en los demás módulos de Oliva. Movimiento reducido y
+  contraste aumentado comprobados. 47 pruebas aprobadas y recurso accesible por
+  túnel. Integración lista para revisión visual del usuario.
+- Contrato y validación: [módulo de invitaciones](modules/cliente-invitaciones.md#esquinas-florales-de-la-frase-en-oliva).
+
 Oliva — aparición de textos (2026-09-21):
 
 - Estado funcional: entrada única al llegar a cada texto desde la frase hasta el

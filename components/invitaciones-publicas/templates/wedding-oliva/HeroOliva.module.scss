@@ -113,7 +113,7 @@
   user-select: none;
 }
 .relief { z-index: -1; }
-.artworkFallback { width: 100%; height: 100%; object-fit: cover; opacity: .12; }
+.artworkFallback { width: 100%; height: 100%; object-fit: var(--hero-artwork-fit, cover); opacity: .12; }
 .artworkShadow, .artworkLight, .artworkFace { display: none; }
 
 @supports (mask-image: url('')) or (-webkit-mask-image: url('')) {
@@ -124,8 +124,8 @@
     mask-image: var(--hero-artwork);
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    -webkit-mask-size: cover;
-    mask-size: cover;
+    -webkit-mask-size: var(--hero-artwork-size, cover);
+    mask-size: var(--hero-artwork-size, cover);
     -webkit-mask-position: center;
     mask-position: center;
     mask-mode: alpha;

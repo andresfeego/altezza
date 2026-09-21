@@ -1,0 +1,51 @@
+.biblicalQuoteModule {
+  composes: instantPhotosModule from './InstantPhotosOliva.module.scss';
+
+  // Keep the photo section's paper and relief; only the quote layout changes.
+  &.biblicalQuoteModule {
+    box-sizing: border-box;
+    display: grid;
+    align-content: center;
+    gap: var(--ag-space-2);
+    // A landscape minimum, not a fixed aspect ratio: Safari must also let
+    // longer copy grow while preserving the space inside the ornaments.
+    min-height: calc(min(100vw, var(--oliva-width)) * 2 / 3);
+    padding: var(--ag-space-7);
+  }
+
+  > p {
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
+    max-width: 100%;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+}
+
+.corner {
+  --hero-artwork-size: contain;
+  --hero-artwork-fit: contain;
+  position: absolute;
+  top: var(--ag-space-2);
+  left: var(--ag-space-2);
+  width: clamp(var(--ag-space-8), 28vw, var(--ag-space-9));
+  aspect-ratio: 1;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cornerEnd {
+  top: auto;
+  left: auto;
+  right: var(--ag-space-2);
+  bottom: var(--ag-space-2);
+  transform: rotate(180deg);
+}
+
+@media (max-width: 359px) {
+  .biblicalQuoteModule.biblicalQuoteModule {
+    padding: var(--ag-space-6);
+  }
+}
