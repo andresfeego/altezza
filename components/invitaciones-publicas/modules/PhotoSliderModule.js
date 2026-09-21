@@ -4,6 +4,7 @@ export default function PhotoSliderModule({ module, invitacion, evento }) {
   const images = [...new Set([...configImages, ...fallbackImages])];
 
   return {
+    title: String(module?.config?.title || '').trim(),
     images,
   };
 }

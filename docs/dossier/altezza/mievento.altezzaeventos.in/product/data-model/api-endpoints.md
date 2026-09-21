@@ -26,6 +26,15 @@ En local (Mac) típicamente `HOST_NAME=http://localhost:3022/api/responseAltezza
 ## Imagen
 - `POST /uploadImagenEvento` (multipart)
 
+## Mobiliario
+- Categorías: `GET/POST /mobiliario/categorias`, `PUT /mobiliario/categorias/:id`, `PUT /mobiliario/categorias/orden`
+- Productos: `GET /mobiliario/productos`, `POST /mobiliario/productos` multipart con dos imágenes, `GET/PUT /mobiliario/productos/:id`, `PATCH /mobiliario/productos/:id/estado`
+- Presentaciones internas: `POST /mobiliario/productos/:id/variantes`, `PUT /mobiliario/productos/:id/variantes/:variantId`, `PATCH /mobiliario/productos/:id/variantes/:variantId/estado`
+- Inventario: `GET/POST /mobiliario/variantes/:id/movimientos`
+- Imágenes: `PUT /mobiliario/productos/:id/imagenes/:tipo`, donde `tipo` es `producto` o `decoracion`
+- Configuración pública: `GET/POST/PATCH /mobiliario/catalogo-publico/*`
+- Público: `GET /public/mobiliario/catalogo/:publicCode`, `GET /public/mobiliario/media/:imagePublicCode`
+
 ## Invitaciones / Invitados
 - `GET /invitacionesXevento/:idEvento`
 - `GET /invitadosXinvitacion/:idInvitacion`
@@ -42,3 +51,11 @@ En local (Mac) típicamente `HOST_NAME=http://localhost:3022/api/responseAltezza
 ## Mesas
 - `GET /mesasXevento/:idEvento`
 - `POST /addMesa`
+
+### Catálogo mobiliario: estilos y códigos (2026-09-11)
+
+- `PATCH /mobiliario/catalogo-publico/estilo` (Admin): `{ colorPrimario, colorSecundario }`, HEX `#RRGGBB`; responde `{ success, item }` y errores por `fields`.
+- GET de configuración incluye colores y `edicion` (`YYYY-MM`). GET público incorpora `config` incluso vacío y `products[].codigo`; no entrega SKU ni inventario. Caché pública del JSON: `no-store`.
+- Listado/detalle administrativo incluyen `codigo` y `consecutivo`; categorías incluyen `prefijo`. La búsqueda administrativa añade código a los criterios anteriores.
+
+- Orden de productos (Admin): `GET /mobiliario/categorias/:id/productos/orden` → `{ items }` sin paginación; `PUT` misma ruta con `{ ids }` → `{ success, items }`. Lista completa sin duplicados, restringida a la categoría; posiciones guardadas transaccionalmente en `mobiliario_producto.orden`.

@@ -1,0 +1,50 @@
+{
+  "evento": {
+    "id": "bodlauser",
+    "nombre": "Laura & Sergio",
+    "templateKey": "wedding_lemoncello"
+  },
+  "invitacion": {
+    "nombreEvento": "Laura & Sergio",
+    "fechaHoraCeremonia": "2026-12-19T14:30:00-05:00",
+    "label": "TEST INVITATION TO REPLACE"
+  },
+  "modules": [
+    {
+      "type": "envelop_intro",
+      "order": 1,
+      "enabled": true,
+      "config": {
+        "brideName": "Laura",
+        "groomName": "Sergio"
+      }
+    },
+    {
+      "type": "hero_image_1",
+      "order": 2,
+      "enabled": true,
+      "config": {
+        "text1": "Nos casamos",
+        "logoImage": "/images/invitaciones/bodlauser/laura-sergio-monogram.png"
+      }
+    },
+    {
+      "type": "welcome_message",
+      "enabled": true,
+      "order": 3,
+      "config": {
+        "title": "",
+        "subtitle": "Celebramos nuestro amor y queremos compartirlo con nuestras personas favoritas."
+      }
+    },
+    {
+      "type": "biblical_quote",
+      "order": 4,
+      "enabled": true,
+      "config": {
+        "passageText": "Celebramos nuestro amor y queremos compartirlo con nuestras personas favoritas.",
+        "passageReference": ""
+      }
+    }
+  ]
+}

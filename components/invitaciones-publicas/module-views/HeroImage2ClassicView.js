@@ -20,11 +20,11 @@ export default function HeroImage2ClassicView({ data, styles }) {
 
   return (
     <section className={`${styles.moduleCard} ${styles.heroImage2Module}`}>
-      <img
+      {data.backgroundImage ? <img
         className={styles.heroImage2Background}
         src={data.backgroundImage}
         alt="Fondo del modulo principal"
-      />
+      /> : null}
       <div className={styles.heroImage2Overlay} />
       <div className={styles.heroImage2Content}>
         {data.logoImage ? (

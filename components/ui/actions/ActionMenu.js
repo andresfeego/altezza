@@ -11,6 +11,7 @@ export default function ActionMenu({
   onToggle,
   onClose,
   align = 'right',
+  contained = false,
   items = [],
   triggerLabel = 'Abrir acciones',
   className = '',
@@ -35,7 +36,7 @@ export default function ActionMenu({
   }, [onClose, open]);
 
   return (
-    <div ref={wrapRef} className={joinClasses(styles.wrap, className)}>
+    <div ref={wrapRef} className={joinClasses(styles.wrap, contained ? styles.contained : '', className)}>
       <button
         type="button"
         className={styles.trigger}
@@ -46,13 +47,16 @@ export default function ActionMenu({
       </button>
 
       {open ? (
-        <div className={joinClasses(styles.panel, alignClass)}>
+        <div className={joinClasses(styles.panel, alignClass, contained ? styles.containedPanel : '')}>
           {items.map((item) => (
             <button
               key={item.id}
               type="button"
               className={styles.item}
-              onClick={item.onClick}
+              onClick={() => {
+                item.onClick?.();
+                onClose?.();
+              }}
               disabled={item.disabled}
             >
               {item.icon ? <span className={styles.itemIcon} aria-hidden="true">{item.icon}</span> : null}

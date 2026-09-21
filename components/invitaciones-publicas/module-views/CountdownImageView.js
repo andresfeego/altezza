@@ -142,7 +142,7 @@ export default function CountdownImageView({ data, styles }) {
       />
       <div className={styles.countdownImageOverlay} />
       <div className={styles.countdownImageContent}>
-        <p className={styles.countdownImageDate}>Nos casamos en...</p>
+        {data.title ? <p className={styles.countdownImageDate}>{data.title}</p> : null}
         <div className={styles.countdownImageGrid}>
           {items.map((item) => (
             <div key={item.label} className={styles.countdownImageItem}>
@@ -151,7 +151,7 @@ export default function CountdownImageView({ data, styles }) {
             </div>
           ))}
         </div>
-        {isCompleted ? <p className={styles.countdownImageCaption}>El momento esperado ya llego.</p> : null}
+        {isCompleted && data.completedMessage ? <p className={styles.countdownImageCaption}>{data.completedMessage}</p> : null}
       </div>
       <span ref={triggerRef} className={styles.countdownImageScrollTrigger} aria-hidden="true" />
     </section>

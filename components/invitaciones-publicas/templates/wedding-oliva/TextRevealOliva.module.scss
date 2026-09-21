@@ -1,0 +1,70 @@
+.scope {
+  // Deliberately slower editorial timing approved for this invitation.
+  --oliva-reveal-duration: 700ms;
+  --oliva-reveal-stagger: 100ms;
+  --oliva-reveal-distance: calc(var(--ag-space-3) * .5);
+}
+
+.scope [data-oliva-reveal] {
+  --oliva-reveal-x: 0px;
+  --oliva-reveal-y: var(--oliva-reveal-distance);
+}
+
+// Alternate entrances on Oliva's light paper surfaces only.
+.scope :is(
+  [data-oliva-module='biblical_quote'],
+  [data-oliva-module='event_details'],
+  [data-oliva-module='dresscode'],
+  [data-oliva-module='instant_photos'],
+  [data-oliva-module='closing_message']
+) [data-oliva-reveal] {
+  --oliva-reveal-x: calc(var(--oliva-reveal-distance) * var(--oliva-reveal-side, -1));
+  --oliva-reveal-y: 0px;
+}
+
+@keyframes textEntrance {
+  from { opacity: 0; translate: var(--oliva-reveal-x) var(--oliva-reveal-y); }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  // Transitions leave the Polaroids' existing shadow animation and rotation intact.
+  .scope [data-oliva-reveal-media] {
+    transition-property: opacity, translate;
+    transition-duration: var(--oliva-reveal-duration);
+    transition-timing-function: ease-out;
+  }
+  .scope [data-oliva-reveal='pending'] {
+    opacity: 0;
+    translate: var(--oliva-reveal-x) var(--oliva-reveal-y);
+  }
+  .scope [data-oliva-reveal='shown']:not([data-oliva-reveal-media]) {
+    animation: textEntrance var(--oliva-reveal-duration) ease-out backwards;
+    animation-delay: calc(var(--oliva-reveal-order, 0) * var(--oliva-reveal-stagger));
+  }
+  .scope [data-oliva-reveal-media][data-oliva-reveal='shown'] {
+    opacity: 1;
+    translate: 0 0;
+    transition-delay: calc(var(--oliva-reveal-order, 0) * var(--oliva-reveal-stagger));
+  }
+}
+
+.scope [data-oliva-reveal-instant],
+.scope [data-oliva-reveal]:focus-within {
+  opacity: 1;
+  translate: none;
+  transition: none;
+}
+.scope [data-oliva-reveal-instant]:not([data-oliva-reveal-media]),
+.scope [data-oliva-reveal]:not([data-oliva-reveal-media]):focus-within {
+  animation: none;
+}
+
+@media print, (prefers-reduced-motion: reduce) {
+  .scope [data-oliva-reveal] {
+    opacity: 1;
+    translate: none;
+    animation: none;
+    transition: none;
+  }
+}

@@ -1,0 +1,57 @@
+.instantPhotosModule {
+  composes: instantPhotosModule from '../../module-views/portable.module.scss';
+  // Same embossed layers as the hero, cut from this section's beige paper.
+  --hero-paper-lighting: none;
+  --hero-relief-depth: calc(var(--oliva-border) * 1.1);
+  --hero-relief-blur: calc(var(--hero-relief-depth) * .3);
+  --hero-relief-shadow: color-mix(in srgb, var(--oliva-shadow-ink) 45%, transparent);
+  --hero-relief-light: color-mix(in srgb, var(--ag-surface-card) 80%, transparent);
+  --hero-relief-face: var(--oliva-paper);
+  --hero-light-travel: 12s;
+  --hero-moving-light-color: var(--oliva-paper);
+  --hero-moving-light-opacity: .24;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--oliva-paper);
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  &::before {
+    z-index: -2;
+    background: url('./assets/images/cotton-paper-v1.png') repeat;
+    background-size: calc(var(--ag-space-9) * 5) auto;
+    opacity: .35;
+  }
+  &::after {
+    z-index: 0;
+    background: url('./assets/images/paper-grain.svg') repeat;
+    background-size: calc(var(--ag-space-9) * .5);
+    mix-blend-mode: soft-light;
+    opacity: .24;
+  }
+}
+.instantPhotosMessage {
+  composes: instantPhotosMessage from '../../module-views/portable.module.scss';
+  font: 400 var(--interior-script-size)/1.25 var(--oliva-script);
+  color: var(--oliva-green);
+}
+.instantPhoto {
+  composes: instantPhoto from '../../module-views/portable.module.scss';
+  composes: raisedShadow from './RaisedShadowOliva.module.scss';
+  box-shadow: none;
+}
+.instantPhotosSeal {
+  composes: instantPhotosSeal from '../../module-views/portable.module.scss';
+  composes: raisedShadow from './RaisedShadowOliva.module.scss';
+}
+@media (min-width: 768px) {
+  .instantPhotosModule { --hero-relief-depth: calc(var(--oliva-border) * 1.4); }
+}
+@media (prefers-contrast: more), (forced-colors: active) {
+  .instantPhotosModule::before, .instantPhotosModule::after { display: none; }
+}

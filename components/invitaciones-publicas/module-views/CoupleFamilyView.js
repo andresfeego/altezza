@@ -22,7 +22,8 @@ export default function CoupleFamilyView({ data, styles }) {
         ))}
       </div>
       <div className={styles.familyGroup}>
-        <p className={styles.familyLead}>{data.coupleLabel || 'Nuestra celebracion'}</p>
+        {data.title ? <h2 className={styles.moduleTitle}>{data.title}</h2> : null}
+        {data.coupleLabel ? <p className={styles.familyLead}>{data.coupleLabel}</p> : null}
         <div className={styles.familyColumns}>
           <div className={styles.familyColumn}>
             <h3 data-heading="Padres de la novia">Padres de la novia</h3>

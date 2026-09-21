@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
 import InvitationRenderer from '@/components/invitaciones-publicas/InvitationRenderer';
@@ -6,12 +6,15 @@ import AnimatedDesktopBackground from '@/components/invitaciones-publicas/Animat
 import { confirmarInvitacionPublica } from '@/components/initialized/data/helpersPublicInvitacion';
 import terracotaToastStyles from '@/components/invitaciones-publicas/templates/wedding-terracota/toast.module.scss';
 import classicToastStyles from '@/components/invitaciones-publicas/templates/wedding-classic/toast.module.scss';
+import olivaToastStyles from '@/components/invitaciones-publicas/templates/wedding-oliva/toast.module.scss';
+import { normalizeTemplateKey } from '@/components/invitaciones-publicas/registry/templateKey';
 import LoadingScreen from '@/components/ui/LoadingScreen';
+import { waitForInitialAssets } from '@/components/invitaciones-publicas/waitForInitialAssets';
 
 const ATTENDANCE_OPTIONS = [
-  { value: 1, label: 'Asistire' },
-  { value: 2, label: 'Quizas' },
-  { value: 3, label: 'No asistire' },
+  { value: 1, label: 'Asistiré' },
+  { value: 2, label: 'Quizá' },
+  { value: 3, label: 'No asistiré' },
 ];
 
 function normalizeGuests(listaInvitados = []) {
@@ -24,7 +27,8 @@ function normalizeGuests(listaInvitados = []) {
 }
 
 function getToastStylesByTemplate(templateKey) {
-  if (String(templateKey || '').trim() === 'wedding_terracota') {
+  if (normalizeTemplateKey(templateKey) === 'wedding_oliva') return olivaToastStyles;
+  if (normalizeTemplateKey(templateKey) === 'wedding_terracota') {
     return terracotaToastStyles;
   }
 
@@ -58,6 +62,19 @@ export default function InvitationPublicRoute({
   const [guests, setGuests] = useState(() => normalizeGuests(listaInvitados));
   const [savingGuestIds, setSavingGuestIds] = useState([]);
   const [cardReady, setCardReady] = useState(false);
+  const [confirmationClosed, setConfirmationClosed] = useState(Boolean(invitacion?.confirmationClosed));
+  const [feedback, setFeedback] = useState({});
+
+  useEffect(() => {
+    const deadline = new Date(invitacion?.fechaHoraLimiteConfirmar || '').getTime();
+    if (!Number.isFinite(deadline)) return undefined;
+    const check = () => {
+      if (Date.now() >= deadline) setConfirmationClosed(true);
+    };
+    check();
+    const timer = window.setInterval(check, 1000);
+    return () => window.clearInterval(timer);
+  }, [invitacion?.fechaHoraLimiteConfirmar]);
   const invitationRootRef = useRef(null);
 
   const seo = evento?.seo || {};
@@ -70,6 +87,7 @@ export default function InvitationPublicRoute({
   const imageAlt = `${invitacion?.nombre || evento?.nombre || 'Invitacion'} | portada`;
   const ogImageType = (() => {
     const normalized = String(absoluteImage || '').toLowerCase();
+    if (normalized.endsWith('.svg')) return 'image/svg+xml';
     if (normalized.endsWith('.png')) return 'image/png';
     if (normalized.endsWith('.webp')) return 'image/webp';
     if (normalized.endsWith('.jpg') || normalized.endsWith('.jpeg')) return 'image/jpeg';
@@ -109,16 +127,15 @@ export default function InvitationPublicRoute({
   async function handleChangeGuest(event, idInvitado, confirmado) {
     event.preventDefault();
     event.stopPropagation();
-    if (savingGuestIds.includes(Number(idInvitado))) return;
+    if (confirmationClosed || savingGuestIds.includes(Number(idInvitado))) return;
 
-    const previousGuests = guests;
-    const nextGuests = guests.map((item) => (
+    const previousGuest = guests.find((item) => Number(item.id) === Number(idInvitado));
+    setFeedback((current) => ({ ...current, [idInvitado]: null }));
+    setGuests((current) => current.map((item) => (
       Number(item.id) === Number(idInvitado)
         ? { ...item, confirmado }
         : item
-    ));
-
-    setGuests(nextGuests);
+    )));
     setSavingGuestIds((current) => [...current, Number(idInvitado)]);
 
     try {
@@ -130,9 +147,16 @@ export default function InvitationPublicRoute({
         }],
       });
 
+      setFeedback((current) => ({ ...current, [idInvitado]: { error: false, message: 'Respuesta guardada.' } }));
       renderAttendanceToast('Actualizado', resolveAttendanceMessage(confirmado), evento?.templateKey);
     } catch (error) {
-      setGuests(previousGuests);
+      setGuests((current) => current.map((guest) => Number(guest.id) === Number(idInvitado)
+        ? { ...guest, confirmado: previousGuest?.confirmado || 0 } : guest));
+      if (error?.status === 409) setConfirmationClosed(true);
+      setFeedback((current) => ({ ...current, [idInvitado]: {
+        error: true,
+        message: error?.data?.message || 'No fue posible guardar la respuesta. Inténtalo de nuevo.',
+      } }));
       renderAttendanceToast(
         'No actualizado',
         error?.data?.message || error?.message || 'No fue posible guardar la confirmacion.',
@@ -145,68 +169,26 @@ export default function InvitationPublicRoute({
 
   const attendanceState = useMemo(() => ({
     guests,
+    closed: confirmationClosed,
+    feedback,
     options: ATTENDANCE_OPTIONS,
     isSavingGuest: (idInvitado) => savingGuestIds.includes(Number(idInvitado)),
     onChange: handleChangeGuest,
-  }), [guests, savingGuestIds]);
+  }), [guests, savingGuestIds, confirmationClosed, feedback]);
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
+    setCardReady(false);
+    waitForInitialAssets(invitationRootRef.current, {
+      signal: controller.signal,
+      ...(normalizeTemplateKey(evento?.templateKey) === 'wedding_lemoncello' ? { timeoutMs: 10000 } : {}),
+    }).then(() => {
+      if (!controller.signal.aborted) setCardReady(true);
+    });
+    return () => controller.abort();
+  }, [modules, evento?.id, evento?.templateKey, invitacion?.id]);
 
-    function waitForImage(img) {
-      if (!img) return Promise.resolve();
-      if (img.complete && img.naturalWidth > 0) {
-        if (typeof img.decode === 'function') {
-          return img.decode().catch(() => undefined);
-        }
-        return Promise.resolve();
-      }
-
-      return new Promise((resolve) => {
-        const done = () => {
-          img.removeEventListener('load', done);
-          img.removeEventListener('error', done);
-          resolve();
-        };
-        img.addEventListener('load', done, { once: true });
-        img.addEventListener('error', done, { once: true });
-      });
-    }
-
-    async function markReadyWhenImagesLoaded() {
-      try {
-        if (typeof document !== 'undefined' && document.fonts?.ready) {
-          await document.fonts.ready;
-        }
-      } catch (_error) {
-        // noop
-      }
-
-      requestAnimationFrame(async () => {
-        const root = invitationRootRef.current;
-        const images = root ? Array.from(root.querySelectorAll('img')) : [];
-
-        if (images.length > 0) {
-          const timeoutPromise = new Promise((resolve) => {
-            setTimeout(resolve, 12000);
-          });
-
-          await Promise.race([
-            Promise.all(images.map((img) => waitForImage(img))),
-            timeoutPromise,
-          ]);
-        }
-
-        if (!cancelled) setCardReady(true);
-      });
-    }
-
-    markReadyWhenImagesLoaded();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [modules, evento?.id, invitacion?.id]);
+  const InvitationBackground = normalizeTemplateKey(evento?.templateKey) === 'wedding_lemoncello' ? Fragment : AnimatedDesktopBackground;
 
   return (
     <>
@@ -233,7 +215,7 @@ export default function InvitationPublicRoute({
         {absoluteImage ? <meta name="twitter:image:alt" content={imageAlt} /> : null}
       </Head>
 
-      <AnimatedDesktopBackground>
+      <InvitationBackground>
         <div ref={invitationRootRef}>
           <InvitationRenderer
             evento={evento}
@@ -242,18 +224,20 @@ export default function InvitationPublicRoute({
             listaInvitados={guests}
             modules={modules}
             attendanceState={attendanceState}
+            presentationReady={cardReady}
           />
         </div>
-      </AnimatedDesktopBackground>
+      </InvitationBackground>
       {!cardReady ? (
         <div
+          role="status" aria-live="polite"
           style={{
             position: 'fixed',
             inset: 0,
             zIndex: 2147483647,
           }}
         >
-          <LoadingScreen mensaje="Cargando invitacion..." />
+          <LoadingScreen mensaje="Cargando invitación…" />
         </div>
       ) : null}
     </>
@@ -267,13 +251,18 @@ export async function getServerSideProps({ params, req }) {
   const proto = String(rawProto || 'https').split(',')[0].trim() || 'https';
   const origin = host ? `${proto}://${host}` : '';
   const baseInternal = process.env.HOST_NAME_INTERNAL;
-  const endpoint = host
+  // Local previews should fetch directly instead of looping through a temporary tunnel.
+  const useLocalBackend = (process.env.NODE_ENV !== 'production' || process.env.ALTEZZA_LOCAL_PREVIEW === '1') && baseInternal;
+  const endpoint = useLocalBackend
+    ? `${baseInternal}/public/invitaciones/${idInvitacion}/${idInvitado}`
+    : host
     ? `${origin}/api/responseAltezza/public/invitaciones/${idInvitacion}/${idInvitado}`
     : `${baseInternal}/public/invitaciones/${idInvitacion}/${idInvitado}`;
 
   try {
     const response = await fetch(endpoint, {
       method: 'GET',
+      signal: AbortSignal.timeout(10000),
       headers: {
         Accept: 'application/json',
       },

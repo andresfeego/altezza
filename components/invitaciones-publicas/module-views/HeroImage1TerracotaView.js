@@ -27,11 +27,11 @@ export default function HeroImage1TerracotaView({ data, styles }) {
 
   return (
     <section className={`${styles.moduleCard} ${styles.heroImageModule}`}>
-      <img
+      {data.backgroundImage ? <img
         className={styles.heroImageBackground}
         src={data.backgroundImage}
         alt="Imagen principal de la tarjeta"
-      />
+      /> : null}
       <div className={styles.heroImageOverlay} />
       <div className={styles.heroImageLeaves} aria-hidden="true">
         {leaves.map((leaf) => (

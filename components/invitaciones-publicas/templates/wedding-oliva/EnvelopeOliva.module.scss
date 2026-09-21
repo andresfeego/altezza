@@ -1,0 +1,233 @@
+.scene {
+  --envelope-width: var(--oliva-width);
+  --envelope-blur: calc(var(--ag-space-1, 8px) * .5);
+  --envelope-bleed: var(--ag-space-3, 24px);
+  --envelope-label-size: clamp(calc(var(--ag-font-size-14) * 1.2), 4.56cqw, calc(var(--ag-font-size-24) * 1.2));
+  --envelope-date-weight: 300;
+  --envelope-seal-width: 18%;
+  --envelope-seal-scale: 1.08675;
+  --envelope-seal-top: 64%;
+  --envelope-monogram-scale: .22;
+  --envelope-monogram-width: calc(var(--envelope-monogram-scale) * 100%);
+  --envelope-monogram-top: 8%;
+  // Mask percentages position the remaining space, so compensate for its height.
+  --envelope-monogram-height-ratio: calc(var(--envelope-monogram-scale) * 1445 / 1088 * 1188 / 781);
+  --envelope-monogram-mask-y: calc(var(--envelope-monogram-top) / (1 - var(--envelope-monogram-height-ratio)));
+  --monogram-depth: var(--oliva-border);
+  --monogram-light: color-mix(in srgb, var(--oliva-paper) 65%, transparent);
+  --monogram-shadow: color-mix(in srgb, var(--oliva-ink) 35%, var(--ag-text-strong));
+  --monogram-face-brightness: 1.09;
+  // The PNG's visible paper occupies x=174..1361, y=120..900.
+  --envelope-ratio: 1188 / 781;
+  --envelope-image-width: calc(1536 / 1188 * 100%);
+  --envelope-image-left: calc(-174 / 1188 * 100%);
+  --envelope-image-top: calc(-120 / 781 * 100%);
+  // Contract the shadow before offsetting it so it emerges only below and right.
+  --envelope-shadow: var(--ag-space-2) var(--ag-space-4) var(--ag-space-3) calc(-1 * var(--ag-space-1)) color-mix(in srgb, var(--oliva-shadow-ink) 64%, transparent);
+  position: relative;
+  box-sizing: border-box;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: var(--ag-space-6) var(--ag-space-2);
+  overflow: hidden;
+  background: var(--oliva-paper);
+}
+
+.scene .backdrop {
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * var(--envelope-bleed));
+  left: calc(-1 * var(--envelope-bleed));
+  width: calc(100% + var(--envelope-bleed) * 2);
+  height: calc(100% + var(--envelope-bleed) * 2);
+  max-width: none;
+  filter: blur(var(--envelope-blur));
+  pointer-events: none;
+  user-select: none;
+}
+
+.scene .envelope {
+  position: relative;
+  display: block;
+  width: min(100%, var(--envelope-width));
+  aspect-ratio: var(--envelope-ratio);
+  padding: 0;
+  border: 0;
+  background: var(--oliva-green);
+  color: var(--invitation-beige);
+  box-shadow: var(--envelope-shadow);
+  text-align: center;
+  font: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 200ms ease-out;
+}
+
+.envelope:focus-visible {
+  outline: calc(var(--oliva-border) * 2) solid var(--oliva-ink);
+  outline-offset: var(--ag-space-1);
+}
+
+// Temporary light trial: the paper brightens and dissolves beneath the bloom.
+.sceneOpening .envelope {
+  pointer-events: none;
+  animation: envelopeLightDissolve var(--envelope-opening-duration) ease-in both;
+}
+
+@keyframes envelopeLightDissolve {
+  0%, 12% { opacity: 1; filter: brightness(1); }
+  30% { opacity: .85; filter: brightness(1.3); }
+  50%, 100% { opacity: 0; filter: brightness(1.6); }
+}
+
+// Lift continuously while the hero emerges; opacity has its own timing track.
+.sceneLifting {
+  background: transparent;
+  perspective: calc(var(--ag-space-9) * 10);
+}
+
+.sceneLifting .backdrop {
+  animation: envelopeBackdropWithdraw var(--envelope-opening-duration) ease-in-out both;
+}
+
+.sceneLifting .envelope {
+  --envelope-lift-shadow: var(--ag-space-3) var(--ag-space-7) var(--ag-space-6) calc(-1 * var(--ag-space-1)) color-mix(in srgb, var(--oliva-shadow-ink) 48%, transparent);
+  transform-origin: 50% 65%;
+  pointer-events: none;
+  transition: none;
+  will-change: transform, opacity;
+  animation:
+    envelopeLiftWithdraw var(--envelope-opening-duration) cubic-bezier(.55, .02, .75, .35) both,
+    envelopeLiftFade var(--envelope-opening-duration) ease-in both;
+}
+
+@keyframes envelopeLiftWithdraw {
+  from { transform: translateY(0) rotateX(0) rotateZ(0) scale(1); box-shadow: var(--envelope-shadow); }
+  to { transform: translateY(-100svh) rotateX(9deg) rotateZ(-3deg) scale(1.02); box-shadow: var(--envelope-lift-shadow); }
+}
+
+@keyframes envelopeLiftFade {
+  0%, 40% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes envelopeBackdropWithdraw {
+  0%, 20% { opacity: 1; }
+  72%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sceneLifting .envelope, .sceneLifting .backdrop { animation: none; }
+}
+
+.artwork { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.envelopeImage {
+  position: absolute;
+  width: var(--envelope-image-width);
+  max-width: none;
+  height: auto;
+  left: var(--envelope-image-left);
+  top: var(--envelope-image-top);
+  user-select: none;
+}
+.monogramFallback, .initials {
+  position: absolute;
+  top: var(--envelope-monogram-top);
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--envelope-monogram-width);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+.monogram, .monogramRelief, .monogramMask, .monogramShadow, .monogramLight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.monogramRelief { display: none; }
+@supports (mask-image: url('')) or (-webkit-mask-image: url('')) {
+  .monogramEmbossed .monogramFallback { display: none; }
+  .monogramRelief { display: block; }
+  .monogramMask {
+    -webkit-mask-image: var(--monogram-mask);
+    mask-image: var(--monogram-mask);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: var(--envelope-monogram-width) auto;
+    mask-size: var(--envelope-monogram-width) auto;
+    -webkit-mask-position: center var(--envelope-monogram-mask-y);
+    mask-position: center var(--envelope-monogram-mask-y);
+    mask-mode: alpha;
+  }
+  // Blur the masked child so the edge softens without clipping the shadow.
+  .monogramShadow {
+    transform: translate(var(--monogram-depth), calc(var(--monogram-depth) * 1.25));
+    filter: blur(calc(var(--monogram-depth) * .3));
+    .monogramMask { background: var(--monogram-shadow); }
+  }
+  .monogramLight {
+    transform: translate(calc(var(--monogram-depth) * -.75), calc(var(--monogram-depth) * -1));
+    filter: blur(calc(var(--monogram-depth) * .2));
+    .monogramMask { background: var(--monogram-light); }
+  }
+  // Reuse the exact envelope coordinates to continue its grain through the letters.
+  .monogramFace .envelopeImage { filter: brightness(var(--monogram-face-brightness)); }
+}
+@media (prefers-contrast: more), (forced-colors: active) {
+  .monogram .monogramRelief { display: none; }
+  .monogram .monogramFallback { display: block; }
+}
+.initials { font: 400 var(--oliva-monogram-size)/1 var(--oliva-script); }
+.openSeal {
+  position: absolute;
+  left: 50%;
+  top: var(--envelope-seal-top);
+  width: min(calc(var(--envelope-seal-width) * var(--envelope-seal-scale)), calc(var(--ag-space-8) * var(--envelope-seal-scale)));
+  height: auto;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(calc(var(--oliva-border) * 2) calc(var(--oliva-border) * 3) calc(var(--oliva-border) * 2) color-mix(in srgb, var(--oliva-shadow-ink) 35%, transparent));
+  pointer-events: none;
+  user-select: none;
+}
+.details {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 5%;
+  display: grid;
+  justify-items: center;
+  gap: var(--ag-space-1);
+  pointer-events: none;
+}
+.invitationLabel {
+  font: 400 var(--envelope-label-size)/1.3 var(--oliva-script);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+.date {
+  font: var(--envelope-date-weight) var(--ag-text-caption-size)/1.4 var(--oliva-sans);
+  letter-spacing: var(--oliva-letterspace);
+}
+@container oliva-card (max-width: 767px) {
+  .invitationLabel { transform: translateY(calc(var(--envelope-label-size) * .3)); }
+}
+@container oliva-card (max-width: 374px) {
+  .scene { --envelope-seal-width: 16%; }
+  .details { gap: 0; }
+}
+@container oliva-card (min-width: 768px) {
+  .scene { --envelope-seal-scale: 1.2075; --envelope-seal-top: 67%; --monogram-depth: calc(var(--oliva-border) * 1.2); padding: var(--ag-space-7) var(--ag-space-6); }
+  .date { font-size: var(--ag-text-label-size); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .envelope:hover { transform: translateY(calc(-1 * var(--ag-space-1))); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene .envelope { transition: none; }
+}

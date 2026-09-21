@@ -1,0 +1,34 @@
+.welcome {
+  position: relative;
+  container-type: inline-size;
+  min-height: 100svh;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+.board {
+  position: absolute;
+  width: min(82cqw, 45svh);
+  bottom: var(--ag-space-5);
+  left: 50%;
+  transform: translateX(-50%);
+  aspect-ratio: 3 / 4;
+}
+.artwork { display: block; width: 100%; height: auto; pointer-events: none; }
+.writing {
+  position: absolute;
+  inset: 13% 17% 23%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  align-items: center;
+  gap: var(--ag-space-2);
+  text-align: center;
+  color: var(--lemoncello-paper);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  p, h2 { margin: 0; color: inherit; }
+}
+.title { font: 400 var(--ag-heading-h3-size)/var(--ag-heading-h3-line) Georgia, 'Times New Roman', serif; }
+.invitee { font-size: var(--ag-font-size-14); line-height: var(--ag-text-caption-line); }
+.message { font-size: clamp(var(--ag-font-size-16), 5cqw, var(--ag-font-size-24)); line-height: 1.45; }

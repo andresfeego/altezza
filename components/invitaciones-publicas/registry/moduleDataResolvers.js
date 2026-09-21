@@ -1,3 +1,4 @@
+import HeroImage1OlivaModule from '../modules/HeroImage1OlivaModule';
 import EnvelopIntroModule from '../modules/EnvelopIntroModule';
 import SaveTheDateCalendarModule from '../modules/SaveTheDateCalendarModule';
 import SimpleImageModule from '../modules/SimpleImageModule';
@@ -10,10 +11,12 @@ import AdultsOnlyNoticeModule from '../modules/AdultsOnlyNoticeModule';
 import ClosingMessageModule from '../modules/ClosingMessageModule';
 import WelcomeMessageModule from '../modules/WelcomeMessageModule';
 import PhotoSliderModule from '../modules/PhotoSliderModule';
+import InstantPhotosModule from '../modules/InstantPhotosModule';
 import ImageSliderSepiaModule from '../modules/ImageSliderSepiaModule';
 import MusicPlayerModule from '../modules/MusicPlayerModule';
 import CountdownModule from '../modules/CountdownModule';
 import CoupleFamilyModule from '../modules/CoupleFamilyModule';
+import CoupleNamesModule from '../modules/CoupleNamesModule';
 import EventDetailsModule from '../modules/EventDetailsModule';
 import AttendanceConfirmModule from '../modules/AttendanceConfirmModule';
 import HeroImage1ClassicModule from '../modules/HeroImage1ClassicModule';
@@ -35,15 +38,19 @@ const COMMON_RESOLVERS = {
   closing_message: ClosingMessageModule,
   welcome_message: WelcomeMessageModule,
   photo_slider: PhotoSliderModule,
+  instant_photos: InstantPhotosModule,
   image_slider_sepia: ImageSliderSepiaModule,
   music_player: MusicPlayerModule,
   countdown: CountdownModule,
   couple_family: CoupleFamilyModule,
+  couple_names: CoupleNamesModule,
   event_details: EventDetailsModule,
   attendance_confirm: AttendanceConfirmModule,
 };
 
 const TEMPLATE_RESOLVER_OVERRIDES = {
+  wedding_lemoncello: { hero_image_1: HeroImage1ClassicModule, hero_image_2: HeroImage2ClassicModule },
+  wedding_oliva: { hero_image_1: HeroImage1OlivaModule, hero_image_2: HeroImage2ClassicModule },
   wedding_classic: {
     hero_image_1: HeroImage1ClassicModule,
     hero_image_2: HeroImage2ClassicModule,

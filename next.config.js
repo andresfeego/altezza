@@ -3,6 +3,7 @@ const withImages = require('next-images');
 
 
 const isProd = process.env.NODE_ENV === 'production';
+const isLocalPreview = process.env.ALTEZZA_LOCAL_PREVIEW === '1';
 const LOCAL_BACKEND_ORIGIN = (process.env.LOCAL_BACKEND_ORIGIN || 'http://127.0.0.1:3022').replace(/\/$/, '');
 const HOST_NAME = (process.env.HOST_NAME || '/api/responseAltezza').replace(/\/$/, '');
 const HOST_NAME_INTERNAL = (process.env.HOST_NAME_INTERNAL || (
@@ -23,6 +24,8 @@ console.log("VERCEL_URL:", process.env.VERCEL_URL || 'http://localhost:3000');
 
 module.exports = {
   reactStrictMode: isProd,
+  // A build must never overwrite the runtime/chunks served by next dev.
+  distDir: isLocalPreview ? '.next-preview' : isProd ? '.next' : '.next-dev',
   ...withImages(),
   sassOptions: {
     includePaths: [path.join(__dirname, './components/initialized')],
@@ -54,7 +57,7 @@ module.exports = {
       }
     ];
 
-    if (isProd) {
+    if (isProd && !isLocalPreview) {
       return baseRewrites;
     }
 
@@ -73,6 +76,7 @@ module.exports = {
   env: {
     HOST_NAME,
     HOST_NAME_INTERNAL,
+    ALTEZZA_LOCAL_PREVIEW: isLocalPreview ? '1' : '0',
     HOST_NAME_altezza: 'https://www.altezzaeventos.in/',
     NEXT_PUBLIC_ID_ANALYTICS: "G-5JYYZXZD6J",
     DEV_ENV: true

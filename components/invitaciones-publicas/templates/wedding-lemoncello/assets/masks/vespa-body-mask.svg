@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024">
+  <!-- Visibility mask only: the approved watercolor bitmap is never repainted.
+       Open the visible tire areas; retain the fenders, exhaust, mounts and fork. -->
+  <defs>
+    <mask id="stationary" maskUnits="userSpaceOnUse" x="0" y="0" width="1536" height="1024">
+      <rect width="1536" height="1024" fill="white"/>
+      <path fill="black" d="M109 772 C180 765 320 760 420 773 C445 780 451 821 446 862 C430 938 379 990 275 989 C157 989 101 921 101 825 Z"/>
+      <path fill="black" d="M1138 798 C1204 758 1222 705 1291 694 C1365 682 1399 691 1430 686 C1472 725 1492 795 1483 851 C1466 945 1416 993 1315 990 C1210 995 1137 927 1137 843 Z"/>
+      <path fill="white" d="M205 783 C269 770 359 780 416 807 C447 823 461 847 439 861 C397 881 348 884 287 872 C236 863 206 849 203 821 C201 804 199 792 205 783 Z"/>
+      <path fill="white" d="M426 771 C456 766 473 774 487 798 L529 816 L536 843 L521 864 L454 864 L439 845 Z"/>
+      <path fill="white" d="M1229 722 L1253 711 L1290 801 C1318 798 1334 818 1324 839 C1314 858 1286 856 1272 839 L1244 779 Z"/>
+    </mask>
+  </defs>
+  <rect width="1536" height="1024" fill="white" mask="url(#stationary)"/>
+</svg>
