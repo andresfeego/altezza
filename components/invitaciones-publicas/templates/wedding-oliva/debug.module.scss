@@ -1,0 +1,28 @@
+.moduleFrame {
+  position: relative;
+  min-width: 0;
+
+  // An overlay keeps the boundary visible above positioned artwork without resizing it.
+  &[data-debug-module]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    outline: calc(var(--oliva-border) * 2) solid var(--ag-danger);
+    outline-offset: calc(var(--oliva-border) * -2);
+    pointer-events: none;
+  }
+}
+
+.debugModuleLabel {
+  position: absolute;
+  top: var(--ag-space-1);
+  left: var(--ag-space-1);
+  z-index: 2;
+  padding: var(--ag-space-1);
+  background: var(--ag-surface-card);
+  color: var(--ag-danger);
+  font: 700 var(--ag-font-size-12)/1.4 var(--oliva-sans);
+  pointer-events: none;
+  user-select: none;
+}

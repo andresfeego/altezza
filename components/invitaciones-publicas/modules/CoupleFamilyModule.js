@@ -27,7 +27,8 @@ function normalizeFamilyList(value) {
 
 export default function CoupleFamilyModule({ module, evento }) {
   return {
-    coupleLabel: String(module?.config?.coupleLabel || evento?.nombre || '').trim(),
+    title: String(module?.config?.title || '').trim(),
+    coupleLabel: String(module?.config?.coupleLabel ?? evento?.nombre ?? '').trim(),
     parentsBride: normalizeFamilyList(module?.config?.parentsBride),
     parentsGroom: normalizeFamilyList(module?.config?.parentsGroom),
     godparents: normalizeFamilyList(module?.config?.godparents),

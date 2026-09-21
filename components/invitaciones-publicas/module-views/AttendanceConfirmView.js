@@ -1,12 +1,14 @@
-export default function AttendanceConfirmView({ data, styles, attendanceState }) {
+export default function AttendanceConfirmView({ data, styles, attendanceState, introFooter = null }) {
   return (
     <section className={`${styles.moduleCard} ${styles.moduleCardRsvp}`}>
       <div className={styles.attendanceHeading}>
-        <h2 className={styles.attendanceTitle}>{data.title}</h2>
+        {data.title ? <h2 className={styles.attendanceTitle}>{data.title}</h2> : null}
       </div>
       <div className={styles.attendanceIntro}>
-        <p className={styles.attendanceLead}>{data.helperText}</p>
+        {data.helperText ? <p className={styles.attendanceLead} style={{ whiteSpace: 'pre-line' }}>{data.helperText}</p> : null}
+        {introFooter}
       </div>
+      {attendanceState?.closed ? <p className={styles.attendanceClosed} role="status">El plazo para confirmar asistencia ha finalizado.</p> : null}
       <div className={styles.attendanceForm}>
         {data.personalizedMessage ? (
           <div className={styles.attendancePersonalMessage}>
@@ -39,7 +41,7 @@ export default function AttendanceConfirmView({ data, styles, attendanceState })
                       name={`attendance-${guest.id}`}
                       checked={active}
                       onChange={(event) => attendanceState.onChange(event, guest.id, option.value)}
-                      disabled={attendanceState.isSavingGuest(guest.id)}
+                      disabled={attendanceState.closed || attendanceState.isSavingGuest(guest.id)}
                     />
                     <span className={styles.attendanceRadioMark} aria-hidden="true" />
                     <span className={styles.attendanceOptionLabel}>{option.label}</span>
@@ -47,6 +49,11 @@ export default function AttendanceConfirmView({ data, styles, attendanceState })
                 );
               })}
             </div>
+            {attendanceState.feedback?.[guest.id] ? (
+              <p className={`${styles.attendanceFeedback || ''} ${attendanceState.feedback[guest.id].error ? styles.attendanceFeedbackError || '' : ''}`} role={attendanceState.feedback[guest.id].error ? 'alert' : 'status'}>
+                {attendanceState.feedback[guest.id].message}
+              </p>
+            ) : null}
           </div>
         ))}
       </div>

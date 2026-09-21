@@ -28,24 +28,31 @@ export default function ModalShell({
     html.style.overflow = 'hidden';
     body.style.overflow = 'hidden';
 
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') onClose?.();
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
+      document.removeEventListener('keydown', handleKeyDown);
       html.style.overflow = previousHtmlOverflow;
       body.style.overflow = previousBodyOverflow;
     };
-  }, []);
+  }, [onClose]);
 
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={joinClasses(styles.modal, sizeClass, className)} onClick={(event) => event.stopPropagation()}>
+        <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Cerrar modal">
+          <FiX size={18} />
+        </button>
         <div className={styles.header}>
           <div className={styles.headerCopy}>
             {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}
             <h2 className={styles.title}>{title}</h2>
             {description ? <p className={styles.description}>{description}</p> : null}
           </div>
-          <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Cerrar modal">
-            <FiX size={18} />
-          </button>
         </div>
 
         <div className={joinClasses(styles.body, bodyClassName)}>{children}</div>

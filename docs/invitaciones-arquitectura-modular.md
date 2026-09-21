@@ -19,6 +19,12 @@ El sistema de invitaciones debe soportar:
 
 3. Eliminacion de vistas compartidas con acoplamiento de assets cruzados.
 
+4. Fondo exterior común en la ruta pública:
+- `AnimatedDesktopBackground` envuelve Classic, Terracota y Oliva. Lemoncello usa
+  un fondo plano propio, excepción de presentación solicitada para su lienzo.
+- Classic, Terracota y Oliva mantienen la tarjeta centrada con máximo de 480 px en escritorio.
+- Los fondos propios de cada módulo llegan al borde de esa tarjeta; el fondo exterior compartido permanece fuera del contenedor.
+
 ## Regla de oro
 - Ningun `module-view` compartido debe importar assets de un template especifico.
 - Si un modulo depende de assets/estructura visual propios, debe tener:
@@ -67,3 +73,28 @@ Antes de cambios grandes:
 2. aplicar migracion modulo por modulo
 3. validar en classic y terracota
 4. dejar trazabilidad en este documento
+
+## Oliva (septiembre de 2026)
+
+Se añadió `wedding_oliva`, con portada tipográfica, botánica vectorial, vistas propias para familia y detalles, y módulos compartidos de cuenta regresiva y confirmación. La primera configuración corresponde al evento local `bodmys`.
+
+Contratos, recursos pendientes y pruebas: [Oliva — implementación](oliva-implementacion.md).
+
+### Alineación de datos (16 de septiembre de 2026)
+
+Los heroes comparten resolvers. Classic, Terracota y Oliva incorporan el catálogo
+común de vistas, conservando sus vistas propias de sobre/hero y su presentación.
+La introducción y el cierre son módulos configurables; las ubicaciones y frases
+de actividades se consumen igual en las tres plantillas.
+
+Contrato y límites: [Contratos compartidos](invitaciones-contratos-compartidos.md).
+Pruebas: `node --test tests/invitation-contracts.test.cjs`.
+La validación exhaustiva por schema del backend sigue pendiente.
+
+### Lemoncello (septiembre de 2026)
+
+`wedding_lemoncello` usa los contratos comunes, todos los módulos del catálogo y
+un sobre por capas con recorrido automático de ocho segundos. Al abrir, revela
+un lienzo cuyo primer módulo está arriba a la izquierda; las flechas desplazan
+la cámara horizontalmente y los módulos altos conservan su lectura interna. Recursos,
+procedencia y validación: [Lemoncello](lemoncello-estructura.md).

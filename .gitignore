@@ -8,6 +8,8 @@
 
 # 🏗️ Producción
 /.next
+/.next-dev
+/.next-preview
 /build
 
 # ⚙️ Variables de entorno y otros archivos sensibles

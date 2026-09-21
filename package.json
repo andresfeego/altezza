@@ -50,6 +50,8 @@
     "dev": "next dev -p 3002",
     "dev:local": "bash scripts/dev-local.sh",
     "build": "next build",
+    "build:preview": "ALTEZZA_LOCAL_PREVIEW=1 next build",
+    "preview:local": "ALTEZZA_LOCAL_PREVIEW=1 next start -p 3004",
     "start": "next start"
   },
   "eslintConfig": {

@@ -1,0 +1,152 @@
+// Structural defaults for shared views. Templates override these classes and
+// supply the typography/palette; this file contains no template assets.
+.instantPhotosModule {
+  padding: var(--ag-space-5) var(--ag-space-2) var(--ag-space-2);
+}
+.instantPhotosWithMessage { padding-bottom: var(--ag-space-5); }
+.instantPhotosMessage {
+  position: relative;
+  z-index: 1;
+  margin: var(--ag-space-2) 0 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  text-align: center;
+  font: 400 var(--ag-font-size-32)/1.25 var(--inv-font-secondary, serif);
+}
+.instantPhotosComposition {
+  // Art coordinates reproduce the two overlapping prints in the supplied sketch.
+  --instant-photo-width: 54%;
+  --instant-photo-tilt: 10deg;
+  // Intersection of the rear print's bottom edge and front print's left edge:
+  // 54% wide, 245/270 ratio, positions (7%,5%)/(41%,34%), rotations -10/+10.
+  --instant-seal-center-x: 40.995991%;
+  --instant-seal-center-y: 59.384854%;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: calc(var(--ag-space-5) * 12);
+  aspect-ratio: 1 / 1.08;
+  margin: 0 auto;
+  isolation: isolate;
+}
+.instantPhoto {
+  position: absolute;
+  box-sizing: border-box;
+  width: var(--instant-photo-width);
+  aspect-ratio: 245 / 270;
+  margin: 0 !important;
+  background: var(--instant-photo-paper, var(--ag-surface-card));
+  box-shadow: var(--ag-shadow-card);
+  &:first-child { left: 7%; top: 5%; transform: rotate(calc(-1 * var(--instant-photo-tilt))); }
+  &:nth-child(2) { left: 41%; top: 34%; transform: rotate(var(--instant-photo-tilt)); }
+}
+.instantPhotoImage {
+  // Absolute inset keeps intrinsic image height from enlarging the print in WebKit.
+  position: absolute;
+  top: var(--ag-space-1);
+  left: var(--ag-space-1);
+  display: block;
+  width: calc(100% - var(--ag-space-1) * 2);
+  height: calc(100% - var(--ag-space-1) - var(--ag-space-4));
+  object-fit: cover;
+}
+.instantPhotosSeal {
+  position: absolute;
+  z-index: 1;
+  left: var(--instant-seal-center-x);
+  top: var(--instant-seal-center-y);
+  width: 22%;
+  height: auto;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  pointer-events: none;
+}
+
+.moduleCard { position: relative; padding: var(--ag-space-6) var(--ag-space-2); text-align: center; }
+.sectionHeading { margin-bottom: var(--ag-space-3); }
+.moduleTitle, .dressCodeTitle, .adultsOnlyNoticeTitle, .heroImage2Title {
+  font-size: var(--ag-heading-h2-size);
+  font-weight: var(--ag-heading-h2-weight);
+  line-height: var(--ag-heading-h2-line);
+}
+.biblicalQuoteModule, .dressCodeModule, .giftEnvelopesModule, .adultsOnlyNoticeModule,
+.saveTheDateCalendarModule, .sepiaSliderModule { padding: var(--ag-space-6) var(--ag-space-2); text-align: center; }
+.biblicalQuoteText, .giftEnvelopesLead, .adultsOnlyNoticeText, .eventDetailsMessage,
+.dressCodeSubtitle, .saveTheDateCalendarMessage { margin: var(--ag-space-3) auto; max-width: 38ch; white-space: pre-line; }
+.biblicalQuoteReference, .giftEnvelopesSubtitle, .dressCodeData, .eventDetailsAddress {
+  margin-top: var(--ag-space-2); font-size: var(--ag-text-body-size); text-align: center;
+}
+.giftEnvelopesBackground, .adultsOnlyNoticeBackground { position: absolute; inset: 0; pointer-events: none; }
+.giftEnvelopesContent, .adultsOnlyNoticeContent, .dressCodeIllustrationFrame { position: relative; }
+.giftEnvelopesImage, .adultsOnlyNoticeImage, .dressCodeIllustration {
+  display: block; width: min(100%, calc(var(--ag-space-9) * 2)); height: auto; margin: var(--ag-space-3) auto;
+}
+.dressCodePalette, .dressCodePaletteAvoided { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--ag-space-2); margin: var(--ag-space-3) auto; }
+.dressCodeChip { width: var(--ag-space-4); height: var(--ag-space-4); border-radius: 50%; border: thin solid currentColor; }
+.dressCodeChipAvoided { display: grid; place-items: center; }
+.dressCodeChipCross { color: var(--ag-text-strong); font-size: var(--ag-font-size-24); }
+.dressCodeChipWithImage { position: relative; overflow: hidden; isolation: isolate; }
+.dressCodeChipImage {
+  position: absolute;
+  // Keep the avoided-color mark above the image even when a template owns its class.
+  z-index: -1;
+  left: var(--swatch-image-x, 0%);
+  top: var(--swatch-image-y, 0%);
+  width: var(--swatch-image-width, 100%);
+  height: var(--swatch-image-height, 100%);
+  max-width: none;
+  display: block;
+  object-fit: cover;
+}
+
+.countdownImageModule, .parallaxImageDateModule, .heroImage2Module {
+  position: relative; isolation: isolate; overflow: hidden; padding: var(--ag-space-7) var(--ag-space-2); text-align: center;
+}
+.countdownImageBackground, .parallaxImageDateBackground, .heroImage2Background {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2;
+}
+.countdownImageOverlay, .heroImage2Overlay { position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--ag-surface-page) 75%, transparent); }
+.countdownImageContent, .heroImage2Content, .heroImage2Dome { position: relative; }
+.countdownImageDate, .countdownImageCaption { margin-block: var(--ag-space-3); }
+.countdownImageGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--ag-space-1); margin-block: var(--ag-space-3); }
+.countdownImageItem { display: grid; strong { font-size: var(--ag-font-size-32); } span { font-size: var(--ag-font-size-12); } }
+.countdownImageConfettiCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.countdownImageScrollTrigger { position: absolute; bottom: 0; width: 100%; height: var(--ag-space-1); }
+.parallaxImageDateBackgroundWrap { position: absolute; inset: -25% 0; z-index: -1; }
+.parallaxImageDateContent { position: relative; margin-block: var(--ag-space-7); }
+.parallaxImageDateDigits { display: flex; justify-content: center; gap: var(--ag-space-3); }
+.parallaxImageDatePair { display: flex; gap: var(--ag-space-1); padding: var(--ag-space-1); background: var(--ag-surface-page); color: var(--ag-text-strong); font-size: var(--ag-font-size-32); }
+.heroImage2Logo { width: var(--ag-space-8); margin: 0 auto var(--ag-space-3); img { width: 100%; height: auto; } }
+.heroImage2Photo { margin-bottom: var(--ag-space-3); img { display: block; width: 100%; height: auto; } }
+.heroImage2Ampersand { display: block; font-size: var(--ag-font-size-24); }
+
+.coupleNamesModule { padding: var(--ag-space-7) var(--ag-space-3); text-align: center; }
+.coupleNamesTitle {
+  --ag-heading-h2-size: var(--ag-font-size-48);
+  --ag-heading-h2-line: 1.35;
+  --ag-heading-h2-weight: 400;
+  display: grid; justify-items: center; gap: var(--ag-space-2); margin: 0;
+  font: var(--ag-heading-h2-weight) var(--ag-heading-h2-size)/var(--ag-heading-h2-line) var(--inv-font-secondary, serif);
+  color: inherit;
+}
+.coupleName { display: block; max-width: 100%; overflow-wrap: anywhere; text-wrap: balance; }
+.coupleNamesAmpersand { display: block; font-size: var(--ag-font-size-24); }
+
+.saveTheDateCalendarSurface { max-width: calc(var(--ag-space-9) * 3); margin: var(--ag-space-4) auto 0; }
+.saveTheDateCalendarHeading { margin-bottom: var(--ag-space-3); }
+.saveTheDateCalendarYear { font-size: var(--ag-heading-h3-size); }
+.saveTheDateCalendarMonth { text-transform: uppercase; }
+.saveTheDateCalendarWeekdays, .saveTheDateCalendarGrid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--ag-space-1); }
+.saveTheDateCalendarCell, .saveTheDateCalendarCellEmpty { position: relative; display: grid; place-items: center; aspect-ratio: 1; }
+.saveTheDateCalendarCellSelected { font-weight: 700; }
+.saveTheDateCalendarHeart { position: absolute; inset: 0; display: grid; place-items: center; opacity: .25; svg { width: 100%; height: 100%; } }
+.saveTheDateCalendarCellNumber { position: relative; }
+
+// Optional countdown date. Legacy modules omit showDate and keep their layout.
+.countdownDate { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; gap: var(--ag-space-1); max-width: calc(var(--ag-space-9) * 3); margin: 0 auto var(--ag-space-4); text-align: center; }
+.countdownDateMonth { grid-column: 1 / -1; text-transform: uppercase; }
+.countdownDateDay { font-size: var(--ag-font-size-48); }
+.countdownDateWeekday, .countdownDateYear { font-size: var(--ag-font-size-14); }
+.sepiaSliderFrame { position: relative; overflow: hidden; aspect-ratio: 3 / 4; }
+.sepiaSliderImage { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 300ms ease-out; }
+.sepiaSliderImageActive { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .sepiaSliderImage { transition: none; } }

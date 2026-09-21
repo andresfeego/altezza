@@ -1,0 +1,16 @@
+// Keep the existing module as the layout box and paint behind all of its content.
+.surface {
+  display: contents;
+  > * {
+    --module-background-veil: color-mix(in srgb, var(--module-background-overlay-color, var(--oliva-paper, var(--inv-bg-base))) calc(var(--module-background-opacity) * 100%), transparent);
+    // Explicit event background replaces the template's root background image.
+    // A template with its own overlay can consume the opacity there instead.
+    background-image: var(--module-background-overlay-image, linear-gradient(var(--module-background-veil), var(--module-background-veil))), var(--module-background-image) !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+}
+@media (prefers-contrast: more), (forced-colors: active) {
+  .surface > * { background-image: none !important; }
+}

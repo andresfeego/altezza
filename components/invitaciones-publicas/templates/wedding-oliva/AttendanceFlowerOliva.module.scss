@@ -1,0 +1,46 @@
+.flower {
+  --flower-depth: calc(var(--oliva-border) * 1.2);
+  --flower-face: color-mix(in srgb, var(--oliva-green) 88%, var(--oliva-paper));
+  --flower-light: color-mix(in srgb, var(--oliva-paper) 75%, var(--oliva-green));
+  --flower-shadow: color-mix(in srgb, var(--oliva-shadow-ink) 70%, var(--oliva-green));
+  display: block;
+  position: relative;
+  width: var(--ag-space-8);
+  aspect-ratio: 1;
+  margin: 0 auto var(--ag-space-3);
+  pointer-events: none;
+  user-select: none;
+}
+
+.fallback { display: block; width: 100%; height: auto; }
+.relief { display: none; }
+.relief, .mask, .shadow, .light { position: absolute; inset: 0; }
+
+@supports (mask-image: linear-gradient(black, black)) or (-webkit-mask-image: linear-gradient(black, black)) {
+  .fallback { display: none; }
+  .relief { display: block; }
+  .mask {
+    -webkit-mask-image: var(--rsvp-flower-mask);
+    mask-image: var(--rsvp-flower-mask);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    mask-mode: alpha;
+  }
+  .shadow {
+    transform: translate(var(--flower-depth), calc(var(--flower-depth) * 1.25));
+    filter: blur(calc(var(--flower-depth) * .3));
+    .mask { background: var(--flower-shadow); }
+  }
+  .light {
+    transform: translate(calc(var(--flower-depth) * -.75), calc(var(--flower-depth) * -1));
+    filter: blur(calc(var(--flower-depth) * .2));
+    .mask { background: var(--flower-light); }
+  }
+  .face { background: var(--flower-face); }
+}
+
+@media (forced-colors: active) { .flower { display: none; } }

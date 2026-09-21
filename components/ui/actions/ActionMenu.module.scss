@@ -40,6 +40,20 @@
   left: 0;
 }
 
+.contained {
+  display: grid;
+  width: 100%;
+  justify-items: end;
+}
+
+.containedPanel {
+  top: auto;
+  right: 0;
+  bottom: calc(100% + var(--ag-space-1));
+  width: 100%;
+  min-width: 0;
+}
+
 .item {
   display: inline-flex;
   align-items: center;

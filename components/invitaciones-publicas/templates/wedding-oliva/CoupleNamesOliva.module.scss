@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'Oliva WindSong';
+  src: url('./assets/fonts/WindSong/WindSong-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.coupleNamesModule {
+  --names-script: 'Oliva WindSong', var(--oliva-script);
+  --ag-heading-h2-size: calc(clamp(var(--ag-space-7), 18cqi, var(--ag-space-8)) * .9);
+  --ag-heading-h2-line: 1.35;
+  --ag-heading-h2-weight: 400;
+  --module-background-overlay-color: var(--oliva-paper);
+  // The textured ::before is this module's only veil above the event photo.
+  --module-background-overlay-image: none;
+  --names-text-halo: color-mix(in srgb, var(--oliva-paper) 90%, transparent);
+  --names-text-shadow: color-mix(in srgb, var(--oliva-ink) 28%, transparent);
+  container-type: inline-size;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: var(--ag-space-8) var(--ag-space-4);
+  text-align: center;
+  color: var(--ag-surface-card);
+  background: var(--oliva-paper);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--module-background-overlay-color) url('./assets/images/cotton-paper-v1.png') repeat;
+    background-size: calc(var(--ag-space-9) * 5) auto;
+    opacity: var(--module-background-opacity, .35);
+    pointer-events: none;
+  }
+}
+
+.coupleNamesModule .coupleNamesTitle {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: var(--ag-space-1);
+  margin: 0;
+  font: var(--ag-heading-h2-weight) var(--ag-heading-h2-size)/var(--ag-heading-h2-line) var(--names-script);
+  font-synthesis: none;
+  letter-spacing: normal;
+  text-transform: none;
+  color: inherit;
+  text-shadow:
+    0 var(--oliva-border) calc(var(--oliva-border) * 2) var(--oliva-paper),
+    0 0 var(--ag-space-1) var(--names-text-halo),
+    0 calc(var(--oliva-border) * 2) calc(var(--oliva-border) * 4) var(--names-text-shadow);
+}
+.coupleName { display: block; max-width: 100%; overflow-wrap: anywhere; text-wrap: balance; }
+.coupleNamesAmpersand { font: 400 var(--ag-font-size-40)/1.25 var(--oliva-serif); }
+
+@media (max-width: 374px) {
+  .coupleNamesModule { padding-inline: var(--ag-space-3); }
+}
+@media (prefers-contrast: more), (forced-colors: active) {
+  .coupleNamesModule::before { display: none; }
+  .coupleNamesModule { color: var(--oliva-ink); }
+  .coupleNamesModule .coupleNamesTitle { text-shadow: none; }
+}

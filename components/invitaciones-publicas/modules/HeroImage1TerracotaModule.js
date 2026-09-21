@@ -1,39 +1,15 @@
-import terracotaHeroBackgroundAsset from '../templates/wedding-terracota/assets/images/fondo_hero.webp';
-import { formatDateInColombia } from '@/components/utils/datetimeColombia';
+import background from '../templates/wedding-terracota/assets/images/fondo_hero.webp';
+import HeroImage1Module from './HeroImage1Module';
 
-const TERRACOTA_HERO_BACKGROUND = (
-  typeof terracotaHeroBackgroundAsset === 'string'
-    ? terracotaHeroBackgroundAsset
-    : terracotaHeroBackgroundAsset?.src || ''
-);
-
-export default function HeroImage1TerracotaModule({ module, evento, invitacion }) {
-  const backgroundImage = String(
-    TERRACOTA_HERO_BACKGROUND ||
-      module?.config?.backgroundImage ||
-      evento?.seo?.image ||
-      evento?.imagenPrincipal ||
-      invitacion?.imagenPrincipal ||
-      ''
-  ).trim();
-  const logoImage = String(module?.config?.logoImage || '').trim();
-
-  if (!backgroundImage) {
-    return null;
-  }
-
-  const eventDate = invitacion?.fechaHoraCeremonia
-    ? formatDateInColombia(invitacion.fechaHoraCeremonia, {
-      options: { year: 'numeric', month: 'long', day: 'numeric' },
-      fallback: '',
-    })
-    : '';
-
-  return {
-    backgroundImage,
-    logoImage,
-    text1: String(module?.config?.text1 || '').trim(),
-    text2: eventDate,
-    text3: String(evento?.nombre || invitacion?.nombreEvento || '').trim(),
-  };
+export default function HeroImage1TerracotaModule(payload) {
+  const config = payload.module?.config || {};
+  return HeroImage1Module({
+    ...payload,
+    module: { ...payload.module, config: {
+      ...config,
+      backgroundImage: Object.prototype.hasOwnProperty.call(config, 'backgroundImage')
+        ? config.backgroundImage
+        : (typeof background === 'string' ? background : background?.src),
+    } },
+  });
 }

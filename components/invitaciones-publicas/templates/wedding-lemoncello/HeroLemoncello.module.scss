@@ -1,0 +1,116 @@
+.hero {
+  --hero-monogram-color: var(--lemoncello-navy);
+  --hero-monogram-halo: color-mix(in srgb, var(--lemoncello-navy) 45%, transparent);
+  --hero-monogram-halo-radius: calc(var(--ag-space-1) * .375);
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  min-height: 100svh;
+  color: var(--lemoncello-navy);
+  font-family: Georgia, 'Times New Roman', serif;
+  text-align: center;
+  // No opaque module rectangle: painted alpha edges remain visible as the camera moves.
+  overflow: visible;
+}
+
+.painting {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: -6svh;
+  // Both 4:7 layers share one uniform scale, with painted overscan beyond the viewport.
+  width: max(112%, calc(112svh * 4 / 7));
+  aspect-ratio: 4 / 7;
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+.coast, .balcony, .branch { position: absolute; inset: 0; display: block; width: 100%; height: auto; max-width: none; }
+.coast { z-index: 0; }
+.foreground { z-index: 3; }
+// The clear gap between both painted groups lets us split the existing artwork
+// without repainting a single leaf or introducing a seam.
+.balcony { clip-path: inset(38% 0 0); }
+.branch { clip-path: inset(0 0 62%); transform-origin: 94% 3%; }
+
+.bird {
+  position: absolute;
+  z-index: 1;
+  // The transparent frame padding keeps the painted silhouette inside the sky.
+  top: calc(var(--ag-space-1) * -1);
+  left: var(--ag-space-1);
+  width: min(calc(var(--ag-space-9) * 1.1), 33cqw, 15.4svh);
+  aspect-ratio: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.birdWindow { width: 100%; height: 100%; overflow: hidden; }
+.birdFrames { display: block; width: 800%; max-width: none; height: auto; }
+
+.copy {
+  position: relative;
+  z-index: 2;
+  width: 60%;
+  left: 41%;
+  transform: translateX(-50%);
+  padding-top: 13svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ag-space-2);
+}
+.eyebrow, .date { margin: 0; color: inherit; text-wrap: balance; }
+.eyebrow {
+  font-size: clamp(var(--ag-font-size-16), 4.5cqw, var(--ag-font-size-20));
+  line-height: var(--ag-text-body-line);
+  font-weight: 400;
+  letter-spacing: .14em;
+  text-indent: .14em;
+  text-transform: uppercase;
+}
+.identity {
+  margin: 0;
+  width: 100%;
+  color: inherit !important;
+  font: 400 var(--ag-heading-h1-size)/var(--ag-heading-h1-line) Georgia, 'Times New Roman', serif;
+}
+.monogram { display: block; position: relative; width: 90%; margin-inline: auto; }
+.monogram img { display: block; width: auto; max-width: 100%; max-height: 18svh; height: auto; margin-inline: auto; }
+.monogramInk { display: none; }
+@supports ((mask-image: none) or (-webkit-mask-image: none)) {
+  .monogram {
+    // A centered halo follows the complete silhouette; there is no directional shadow.
+    filter: drop-shadow(0 0 var(--hero-monogram-halo-radius) var(--hero-monogram-halo));
+    img { opacity: 0; }
+  }
+  .monogramInk {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: var(--hero-monogram-color);
+    -webkit-mask: var(--hero-monogram-mask) center / contain no-repeat;
+    mask: var(--hero-monogram-mask) center / contain no-repeat;
+    mask-mode: alpha;
+  }
+}
+.names { display: block; overflow-wrap: anywhere; text-wrap: balance; }
+.date { font-size: clamp(var(--ag-font-size-16), 4.5cqw, var(--ag-font-size-20)); line-height: var(--ag-text-body-line); }
+@media (prefers-reduced-motion: no-preference) {
+  .branch { animation: branchSway 4.5s ease-in-out infinite; }
+  .bird { animation: birdHover 4.8s ease-in-out infinite; }
+  .birdFrames { animation: birdWingbeat .56s steps(8, end) infinite; }
+}
+@keyframes birdWingbeat { to { transform: translateX(-100%); } }
+@keyframes birdHover {
+  0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+  35% { transform: translate(var(--ag-space-1), calc(var(--ag-space-1) * -1)) rotate(1deg); }
+  70% { transform: translate(calc(var(--ag-space-1) * .5), calc(var(--ag-space-1) * -.5)) rotate(-1deg); }
+}
+@keyframes branchSway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2.5deg); }
+}
+@media (forced-colors: active) {
+  .monogram { filter: none; img { opacity: 1; } }
+  .monogramInk { display: none; }
+}

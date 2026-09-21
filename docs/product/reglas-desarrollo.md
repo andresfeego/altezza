@@ -163,6 +163,7 @@ Para este modulo el orden acordado es:
 
 ## Validacion manual
 
+- Cerrar las pestañas y sesiones de navegador creadas para inspección en cuanto termine la tarea. Reutilizar las existentes mientras se valida y no cerrar las pestañas personales del usuario.
 - Toda entrega funcional debe cerrar con una lista corta de pruebas manuales.
 - Las pruebas deben enfocarse en lo minimo que debe verse correcto en la pagina.
 - Si hay backend involucrado, incluir al menos:

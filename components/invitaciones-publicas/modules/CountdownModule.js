@@ -3,7 +3,8 @@ function getTargetDate(module, invitacion) {
     ? invitacion?.fechaHoraRecepcion
     : invitacion?.fechaHoraCeremonia;
 
-  return target ? new Date(target) : null;
+  const parsed = target ? new Date(target) : null;
+  return parsed && Number.isFinite(parsed.getTime()) ? parsed : null;
 }
 
 export default function CountdownModule({ module, invitacion }) {
@@ -11,7 +12,10 @@ export default function CountdownModule({ module, invitacion }) {
   const targetDateIso = targetDate ? targetDate.toISOString() : null;
 
   return {
-    title: String(module?.config?.title || 'Cuenta regresiva').trim(),
+    message: String(module?.config?.message || '').trim(),
+    completedMessage: String(module?.config?.completedMessage || '').trim(),
+    title: String(module?.config?.title || '').trim(),
+    showDate: module?.config?.showDate === true,
     completed: false,
     targetDate: targetDateIso,
     items: [

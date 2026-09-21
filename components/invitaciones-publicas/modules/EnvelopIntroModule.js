@@ -33,5 +33,10 @@ export default function EnvelopIntroModule({ module, evento, invitacion }) {
     initials,
     eventDate: formatEventDateShort(invitacion?.fechaHoraCeremonia),
     invitationLabel: String(module?.config?.invitationLabel || invitacion?.label || '').trim(),
+    backgroundSrc: String(module?.config?.backgroundSrc || '').trim(),
+    backgroundDesktopSrc: String(module?.config?.backgroundDesktopSrc || '').trim(),
+    backgroundVideoSrc: String(module?.config?.backgroundVideoSrc || '').trim(),
+    envelopeSrc: String(module?.config?.envelopeSrc || '').trim(),
+    monogramSrc: String(module?.config?.monogramSrc || '').trim(),
   };
 }

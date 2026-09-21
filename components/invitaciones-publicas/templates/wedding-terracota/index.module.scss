@@ -208,6 +208,12 @@
   z-index: 1;
 }
 
+.envelopIntroWithBackground .envelopIntroSplit {
+  inset: var(--ag-space-2);
+  width: auto;
+  height: auto;
+}
+
 .envelopIntroFlapRight {
   position: absolute;
   top: 0;
