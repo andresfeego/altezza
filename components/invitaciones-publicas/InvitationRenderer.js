@@ -10,6 +10,7 @@ export default function InvitationRenderer({
   modules,
   attendanceState,
   presentationReady = true,
+  prepareMedia = false,
 }) {
   const templateKey = normalizeTemplateKey(evento?.templateKey);
   const payload = {
@@ -30,6 +31,7 @@ export default function InvitationRenderer({
       resolvedModules={resolvedModules}
       attendanceState={attendanceState}
       presentationReady={presentationReady}
+      prepareMedia={prepareMedia}
     />
   );
 }
