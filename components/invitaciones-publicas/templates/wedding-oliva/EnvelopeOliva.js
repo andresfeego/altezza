@@ -1,8 +1,8 @@
-import sealSrc from './assets/images/sello-lacre-abrir-v1.png';
+import sealSrc from './assets/images/sello-lacre-abrir-v1-web-v1.webp';
 import styles from './EnvelopeOliva.module.scss';
 import EnvelopeBackground from '../../module-views/EnvelopeBackground';
 
-export default function EnvelopeOliva({ data, onOpen, opening = false, openingVariant = 'light', openingDuration }) {
+export default function EnvelopeOliva({ data, onOpen, opening = false, openingVariant = 'light', openingDuration, mediaPrepared = false }) {
   const names = [data.brideName, data.groomName].filter(Boolean).join(' y ');
 
   return (
@@ -11,7 +11,7 @@ export default function EnvelopeOliva({ data, onOpen, opening = false, openingVa
       style={openingDuration ? { '--envelope-opening-duration': `${openingDuration}ms` } : undefined}
       aria-label="Sobre de la invitación"
     >
-      <EnvelopeBackground data={data} className={styles.backdrop} />
+      <EnvelopeBackground data={data} className={styles.backdrop} prepared={mediaPrepared} />
       <button
         type="button"
         className={styles.envelope}

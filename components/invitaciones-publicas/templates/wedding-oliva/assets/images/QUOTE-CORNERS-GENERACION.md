@@ -1,6 +1,6 @@
 # Esquinas florales de la frase — Oliva
 
-- Archivo activo: `quote-floral-corner-mask-v1.png`, PNG RGBA de 1254 × 1254 px.
+- Archivo activo: `quote-floral-corner-mask-v1-web-v1.webp`, WebP sin pérdida de 1254 × 1254 px (296 630 bytes). El PNG `quote-floral-corner-mask-v1.png` se conserva intacto como original (525 549 bytes); el canal alfa del derivado se verificó idéntico. Conversión del 22 de septiembre de 2026, sin regenerar el arte.
 - Herramienta: `image_gen.imagegen` integrada.
 - Original: `/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0b168-ff2d-7f23-8aff-b5182538f4d6/exec-d4502995-819f-48f4-bf26-326e17e1c926.png`.
 - Referencia de estilo: `rsvp-flower-mask-v1.png`, flor del módulo de asistencia de la misma tarjeta.

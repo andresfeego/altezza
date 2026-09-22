@@ -119,7 +119,7 @@ texto. Revisar movimiento reducido y las imágenes por túnel.
 
 `biblical_quote` conserva `passageText` y `passageReference`, centrados y con su
 animación de entrada. `BiblicalQuoteOliva` añade dos pequeñas esquinas florales:
-un único PNG blanco plano y transparente en forma de «┌», arriba a la izquierda,
+un único WebP sin pérdida blanco plano y transparente en forma de «┌», arriba a la izquierda,
 y la misma imagen rotada 180° abajo a la derecha. Usa el mismo relieve y papel
 beige de las fotos finales. El color, las luces y las sombras se aplican en CSS.
 Los adornos miden entre 96 y 128 px y tienen 16 px de separación del contenedor.
@@ -135,6 +135,53 @@ comprobar texto centrado y separado de las dos esquinas, misma imagen girada y a
 desbordamiento. Revisar referencia opcional y texto largo, movimiento reducido
 (relieve estático), contraste aumentado (sin ornamento) y dimensiones sin cambios
 en los demás módulos. Cerrar las pestañas de inspección al finalizar.
+
+## Preparación completa de medios en Oliva
+
+La ruta pública activa `prepareMedia` en `InvitationRenderer`; solo Oliva consume
+esta opción. Las vistas aisladas del catálogo y las otras plantillas conservan
+su comportamiento anterior. La preparación no modifica contratos, orden ni datos
+del invitado. El manifiesto se obtiene de los módulos habilitados y añade máscaras,
+papel y grano propios de la plantilla. Incluye ambas variantes de fondo responsive,
+las imágenes de secciones aún ocultas y las seis caras de fuentes de Oliva.
+
+La cola deduplica URLs y prepara hasta cuatro recursos a la vez. Las imágenes
+deben cargar y resolver `decode()`. Video y canción se descargan completos con
+`fetch`, se guardan en blobs locales y se montan usando esas mismas URLs; no se
+confunde `canplaythrough` con descarga completa. Antes de retirar el cargador se
+verifican las imágenes del DOM, incluso ocultas/diferidas, y `readyState >= 2` de
+audio/video montados, más dos frames para mostrar los datos preparados. Las URLs
+de blobs se liberan al desmontar o reintentar. Cambios en RSVP no reinician la
+preparación si los recursos no cambian. La música empieza solo con la interacción
+de abrir, y el fondo sigue respetando movimiento reducido.
+
+Estados: cargando → montando → listo, o error recuperable. Mientras falta un
+recurso, una capa opaca muestra «Cargando invitación…» y una barra proporcional
+a los recursos preparados, sin cantidad de archivos ni porcentajes visibles;
+la tarjeta permanece `inert` y oculta para tecnologías asistivas. Un fallo de
+descarga/decodificación o 90 s de espera muestra «Reintentar». El vencimiento nunca
+declara lista una tarjeta incompleta. La espera total depende de la conexión.
+El cargador omite animaciones cuando el usuario solicita movimiento reducido.
+
+Checklist manual:
+
+1. Cargar sin caché en Chrome y WebKit móvil; al desaparecer la capa, comprobar
+   sobre y primer fotograma visibles, imágenes completas y audio/video preparados.
+   Durante la espera debe verse una única barra que avanza, sin números.
+2. Retener durante 6 s, por separado, el sobre, video, paleta de vestuario y música;
+   la capa debe seguir visible a los 3 s y retirarse solo al completar el recurso.
+3. Simular HTTP 503 o archivo corrupto; comprobar error y tarjeta bloqueada.
+   Retirar el fallo y pulsar Reintentar: debe abrir sin recargar toda la página.
+4. Retener una descarga más de 90 s: debe aparecer reintento y cancelarse la cola.
+5. Abrir con teclado/táctil, revisar hasta las fotos finales en móvil/escritorio,
+   comprobar reproducción y movimiento reducido, sin desbordamiento ni cambio de copy.
+6. Repetir por túnel sobre compilación optimizada y cerrar las pestañas de inspección.
+
+Mayra/Samuel usa derivados `-web-v1` de las imágenes pesadas, video H.264 CRF 24
+sin audio de fondo y canción MP3 160 kb/s. Las máscaras conservan píxeles sin
+pérdida; las fotos e ilustraciones usan WebP calidad 90. Originales y backups se
+conservan. El script, inventario SHA-256 y despliegue de archivos de storage están
+documentados en `backend-altezza/seeds/invitation_projects/bodmys/README.md`.
 
 ## Fondo opcional común de las secciones
 

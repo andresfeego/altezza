@@ -53,6 +53,39 @@ sin pasar por Cloudflare.
   mediante `ALTEZZA_LOCAL_PREVIEW=1`. Las rutas de producción normal conservan
   su configuración anterior.
 
+## Preparación completa en Oliva — 22 de septiembre de 2026
+
+La política anterior de tres segundos no cumplía el nuevo requisito de mostrar
+la tarjeta con todos los medios preparados. En pruebas con seis segundos de
+retraso, la capa desaparecía antes del sobre y del video: el helper omitía
+imágenes ocultas o sin altura, no esperaba video y aceptaba el vencimiento como
+éxito. Era un criterio de preparación del frontend, no un fallo de Cloudflare.
+
+La ruta pública de Oliva ahora usa `useMediaPreparationOliva` con manifiesto de
+recursos de módulos habilitados, incluyendo máscaras/texturas CSS y fuentes.
+Espera imágenes cargadas/decodificadas y descarga completa del video y la música
+a blobs reutilizados por el DOM. Después espera los elementos reales y dos
+frames antes de retirar el cargador. Un fallo o 90 s de espera ofrece reintento;
+nunca convierte un recurso pendiente en éxito. `waitForInitialAssets` conserva
+su comportamiento anterior en las demás plantillas.
+
+Los 21 archivos inventariados de Mayra/Samuel pasaron de 52.72 a 13.26 MB. Los
+originales siguen en sus rutas y también tienen respaldo verificado por SHA-256.
+La configuración local, seed, imports y whitelist del gateway usan los derivados.
+El procedimiento y perfiles están en el README de `bodmys` del backend.
+
+Validación local: Chrome y WebKit móvil retiraron el cargador con las 28 imágenes
+del DOM completas, fuentes cargadas y audio/video preparados. Al retener durante
+6 s el sobre, video, paleta o música, Chrome mantuvo la capa e interacción
+bloqueada a los 3.3 s y terminó solo tras cada descarga. Un 503 de video presentó
+error recuperable y el botón Reintentar completó la carga sin recargar la página.
+Por el túnel, Chrome y WebKit sin caché finalizaron en 25.625 / 33.763 s: todas las
+imágenes y fuentes listas, audio/video preparados, una sola descarga por archivo
+binario y sin solicitudes fallidas ni errores JavaScript. Esta espera incluye
+la música y el video completos, a diferencia de la medición del 21 de septiembre.
+Los artefactos están en `output/playwright/media-ready-20260922/`; el informe y
+logs de compresión en `output/media-audit-20260922/` (locales, fuera del commit).
+
 ## Uso local
 
 Backend requerido en el puerto 3022.
