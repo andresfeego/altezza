@@ -2,7 +2,7 @@ import BiblicalQuoteView from '../../module-views/BiblicalQuoteView';
 import FloralReliefOliva from './FloralReliefOliva';
 import heroStyles from './HeroOliva.module.scss';
 import quoteStyles from './BiblicalQuoteOliva.module.scss';
-import corner from './assets/images/quote-floral-corner-mask-v1.png';
+import corner from './assets/images/quote-floral-corner-mask-v1-web-v1.webp';
 
 export default function BiblicalQuoteOliva({ data, styles }) {
   return (

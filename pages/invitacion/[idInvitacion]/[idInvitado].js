@@ -177,6 +177,9 @@ export default function InvitationPublicRoute({
   }), [guests, savingGuestIds, confirmationClosed, feedback]);
 
   useEffect(() => {
+    // Oliva owns an explicit media preparation gate, including hidden artwork,
+    // full video/audio downloads and preparation of the mounted elements.
+    if (normalizeTemplateKey(evento?.templateKey) === 'wedding_oliva') return undefined;
     const controller = new AbortController();
     setCardReady(false);
     waitForInitialAssets(invitationRootRef.current, {
@@ -225,10 +228,11 @@ export default function InvitationPublicRoute({
             modules={modules}
             attendanceState={attendanceState}
             presentationReady={cardReady}
+            prepareMedia
           />
         </div>
       </InvitationBackground>
-      {!cardReady ? (
+      {!cardReady && normalizeTemplateKey(evento?.templateKey) !== 'wedding_oliva' ? (
         <div
           role="status" aria-live="polite"
           style={{

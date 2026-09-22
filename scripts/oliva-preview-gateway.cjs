@@ -5,6 +5,18 @@ const upstreamPort = Number(process.env.OLIVA_PREVIEW_UPSTREAM_PORT || 3004);
 const invitation = '/invitacion/mysprueba/910171';
 const api = '/api/responseAltezza/public/invitaciones/mysprueba';
 const coverAssets = new Set([
+  '/scrAppaltezza/invitations/bodmys/cover/fondo01portrait-web-v1.webp',
+  '/scrAppaltezza/invitations/bodmys/cover/fondo01wide-web-v1.webp',
+  '/scrAppaltezza/invitations/bodmys/cover/fondo-sobre-loop-web-v1.mp4',
+  '/scrAppaltezza/invitations/bodmys/cover/sobre-cerrado-sin-fondo-web-v1.webp',
+  '/scrAppaltezza/invitations/bodmys/cover/monograma-MS-transparente-web-v1.webp',
+  '/scrAppaltezza/invitations/bodmys/hero/floral-relief-v1-web-v1.webp',
+  '/scrAppaltezza/invitations/bodmys/photos/mayra-samuel-fondo-desenfocado-web-v1.webp',
+  '/scrAppaltezza/invitations/bodmys/couple_names/jardin-luz-natural-v1-web-v1.webp',
+  '/scrAppaltezza/invitations/bodmys/gift_envelopes/sobre-botanico-v1-web-v1.webp',
+  '/scrAppaltezza/invitations/bodmys/dresscode/grupo-vestidos-acuarela-v1-web-v1.webp',
+  '/scrAppaltezza/invitations/bodmys/dresscode/paleta-telas-referencia-v1-web-v1.webp',
+  '/scrAppaltezza/invitations/bodmys/audio/ELENA%20ROSE%20%26%20Rawayana%20-%20Luna%20de%20Miel%20-%20ELENA%20ROSE-web-v1.mp3',
   '/scrAppaltezza/invitations/bodmys/cover/fondo-sobre-loop.mp4',
   '/scrAppaltezza/invitations/bodmys/cover/fondo01.png',
   '/scrAppaltezza/invitations/bodmys/cover/fondo01wide.png',

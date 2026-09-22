@@ -25,6 +25,8 @@ import { COMMON_MODULE_VIEWS } from '../../registry/commonModuleViews';
 import HeroImage2ClassicView from '../../module-views/HeroImage2ClassicView';
 import portableStyles from '../../module-views/portable.module.scss';
 import debugStyles from './debug.module.scss';
+import useMediaPreparationOliva from './useMediaPreparationOliva';
+import MediaLoadingOliva from './MediaLoadingOliva';
 
 // Keep the finished envelope's root palette and styles independent of the interior.
 const styles = { ...portableStyles, ...templateStyles, ...interiorStyles };
@@ -136,7 +138,10 @@ export const MODULE_COMPONENTS = {
   instant_photos: InstantPhotosOliva,
 };
 
-export default function WeddingOlivaTemplate({ resolvedModules, attendanceState }) {
+export default function WeddingOlivaTemplate({ resolvedModules: sourceModules, attendanceState, prepareMedia = false }) {
+  const mediaRootRef = useRef(null);
+  const media = useMediaPreparationOliva(mediaRootRef, sourceModules, prepareMedia);
+  const resolvedModules = media.modules;
   const envelope = resolvedModules.find((module) => module.type === 'envelop_intro');
   const music = resolvedModules.find((module) => module.type === 'music_player');
   const [opened, setOpened] = useState(!envelope);
@@ -162,7 +167,7 @@ export default function WeddingOlivaTemplate({ resolvedModules, attendanceState 
   }, [openInvitation]);
 
   function startOpening(event) {
-    if (openingRef.current) return;
+    if (!media.ready || openingRef.current) return;
     openingRef.current = true;
     // Keep music activation in the user's gesture, before any animation timer.
     window.dispatchEvent(new Event('envelopIntro:open'));
@@ -185,13 +190,15 @@ export default function WeddingOlivaTemplate({ resolvedModules, attendanceState 
   }
 
   return (
+    <>
+    <div ref={mediaRootRef} inert={!media.ready ? '' : undefined} aria-hidden={!media.ready || undefined} data-invitation-media-state={media.phase}>
     <main className={`${styles.page} ${!opened ? styles.pageEnvelope : styles.pageOpen} ${lifting ? liftTrialStyles.page : ''}`}>
       {music ? <ModuleSurface background={music.config?.sectionBackground}><MusicPlayerView data={music.data} styles={styles} /></ModuleSurface> : null}
       {!opened ? (
         <div className={lifting ? liftTrialStyles.stage : undefined}>
           <ModuleFrame name="envelop_intro">
             <ModuleSurface background={envelope?.config?.sectionBackground}>
-              <EnvelopeOliva data={envelopeData} onOpen={startOpening} opening={lifting || Boolean(lightOrigin)} openingVariant={ENVELOPE_EXIT_TRIAL} openingDuration={lifting ? LIFT_TRIAL_DURATION_MS : LIGHT_TRIAL_DURATION_MS} />
+              <EnvelopeOliva data={envelopeData} mediaPrepared={prepareMedia} onOpen={startOpening} opening={lifting || Boolean(lightOrigin)} openingVariant={ENVELOPE_EXIT_TRIAL} openingDuration={lifting ? LIFT_TRIAL_DURATION_MS : LIGHT_TRIAL_DURATION_MS} />
             </ModuleSurface>
           </ModuleFrame>
         </div>
@@ -212,5 +219,8 @@ export default function WeddingOlivaTemplate({ resolvedModules, attendanceState 
       {lightOrigin ? <EnvelopeLightTrial origin={lightOrigin} onCovered={openInvitation} onComplete={finishLightTrial} /> : null}
       {lifting ? <EnvelopeLiftTrial onComplete={finishLiftTrial} /> : null}
     </main>
+    </div>
+    <MediaLoadingOliva phase={media.phase} completed={media.completed} total={media.total} onRetry={media.retry} />
+    </>
   );
 }

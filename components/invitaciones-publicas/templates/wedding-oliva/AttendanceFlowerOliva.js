@@ -1,4 +1,4 @@
-import flowerSrc from './assets/images/rsvp-flower-mask-v1.png';
+import flowerSrc from './assets/images/rsvp-flower-mask-v1-web-v1.webp';
 import styles from './AttendanceFlowerOliva.module.scss';
 
 export default function AttendanceFlowerOliva() {

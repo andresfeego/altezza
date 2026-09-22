@@ -1053,6 +1053,26 @@ Oliva — carga pública revisada (2026-09-21):
   reconstruir la vista optimizada antes de compartirlo.
 - Evidencia y operación: [diagnóstico de carga](../invitaciones-diagnostico-carga.md#revisión-del-21-de-septiembre-de-2026).
 
+Oliva — preparación completa de medios y compresión (2026-09-22):
+
+- Estado funcional: la ruta pública de Oliva prepara un manifiesto de los medios
+  de módulos habilitados, incluidos fondos, máscaras, ambas variantes responsive
+  y fuentes. Descarga completos el video y la música; reutiliza sus blobs y espera
+  imágenes decodificadas y datos reproducibles en los elementos del DOM antes de
+  habilitar el sobre. Un error o el límite de 90 s muestra reintento, sin abrir la
+  tarjeta incompleta. Las demás plantillas conservan su carga anterior.
+- Estado UX/UI: pantalla opaca con barra proporcional de progreso, sin contador
+  de archivos ni porcentajes numéricos visibles; tarjeta sin interacción
+  mientras carga, mensaje recuperable ante fallo y soporte de movimiento reducido.
+  La música conserva su inicio mediante el gesto de abrir. Sobre, video, imágenes
+  interiores y música comprobados con retrasos individuales de 6 s en Chrome;
+  carga completa también comprobada en WebKit móvil. Reintento sin recargar validado.
+- Recursos de Mayra/Samuel: 52.72 MB → 13.26 MB entre 21 archivos inventariados.
+  Derivados versionados con originales intactos y copia SHA-256; incluye imágenes,
+  video y audio, sin equivaler al total transferido por visita. Compresión aplicada
+  a la configuración local y seed, sin cambios de textos, orden ni respuestas.
+- Contrato y checklist: [preparación de medios](modules/cliente-invitaciones.md#preparación-completa-de-medios-en-oliva).
+
 Oliva — esquinas de la frase bíblica (2026-09-21):
 
 - Estado funcional: `biblical_quote` reutiliza su vista y datos, con decoración
