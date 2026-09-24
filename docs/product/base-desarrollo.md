@@ -1534,3 +1534,29 @@ Lemoncello — Abrir sin recuadro (2026-09-24):
   del foco. La navegación por teclado mantiene una variación leve de brillo del arte.
 - Estado UX/UI: sin marco añadido al letrero. Prueba manual: iniciar el recorrido
   y comprobar al llegar que Abrir se mueve sin recuadro. Aprobación visual pendiente.
+
+Lemoncello — continuidad Hero/frase (2026-09-24):
+
+- Respaldo previo: front `60ebbe5` y backend `19d0a35`, antes de cambiar la imagen.
+  Se guardaron fuentes, recursos, código y configuración; los temporales locales,
+  herramientas descargadas, respaldos `.env` y Storage permanecen fuera de Git.
+- Estado funcional: paisaje común `hero-quote-continuous-v2.webp` para Hero y
+  paseo, con posición de solape adaptada al escalado uniforme en móviles altos.
+  Datos, monograma, balcón, rama, pájaro, mesero, letrero y navegación conservados.
+  Un Hero con fondo personalizado mantiene su imagen y composición anteriores.
+- Estado UX/UI: cielo y costa continuos hacia la terraza de sombrillas; corregida
+  la conexión de la balaustrada y limitado el solape para evitar imágenes dobles.
+  Ilustración realizada con ImageGen, con originales y prompts guardados.
+  Revisado en WebKit a 440×763, 390×844 y escritorio 1440×900; 62 pruebas frontend
+  y 18 backend pasan. Aprobación visual pendiente. Prueba manual: abrir, avanzar
+  con el mesero desde Hero hasta frase y regresar; revisar paisaje durante el
+  movimiento, letrero y paso a las fotos.
+
+Lemoncello — agua del cierre más visible (2026-09-24):
+
+- Estado funcional: amplitud del oleaje aumentada aproximadamente un 35% y
+  variación de reflejos del 2.8% al 4%, conservando velocidad, máscara y pausas.
+- Estado UX/UI: revisado en WebKit móvil; el agua cambia entre fotogramas y el
+  cielo permanece idéntico. Movimiento reducido conserva la ilustración estática.
+  Prueba manual: llegar al mensaje final y observar oleaje y reflejos durante unos
+  segundos. Aprobación visual pendiente.

@@ -25,12 +25,12 @@ void main() {
   shore = mix(shore, 1116.0, smoothstep(480.0, 700.0, p.x));
   float water = smoothstep(shore, shore + 40.0, p.y);
   float depth = clamp((p.y - 1080.0) / 579.0, 0.0, 1.0);
-  float dx = water * (1.4 + 4.0 * depth) *
+  float dx = water * (1.9 + 5.4 * depth) *
     (sin(p.y * 0.12 - time * 1.2) + 0.35 * sin(p.y * 0.047 + time * 0.8 + p.x * 0.009));
-  float dy = water * (0.5 + 1.2 * depth) * sin(p.x * 0.019 + p.y * 0.08 - time * 1.1);
+  float dy = water * (0.7 + 1.6 * depth) * sin(p.x * 0.019 + p.y * 0.08 - time * 1.1);
   vec4 color = texture2D(painting, (p + vec2(dx, dy)) / size);
   // Breathe through the painted reflections, without adding new light or color.
-  color.rgb *= 1.0 + water * 0.028 * sin(time * 0.9 + p.y * 0.06 + p.x * 0.002);
+  color.rgb *= 1.0 + water * 0.04 * sin(time * 0.9 + p.y * 0.06 + p.x * 0.002);
   gl_FragColor = color;
 }`;
 

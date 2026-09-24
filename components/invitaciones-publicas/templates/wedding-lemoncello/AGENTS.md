@@ -151,6 +151,13 @@ no se convierte automáticamente en referencia maestra. La antigua canastilla
   panorama continuo para las escenas y el paseo intermedio. Esta continuidad
   aplica a los recorridos visibles; la presentación blanca de fecha usa el cambio
   cubierto por sombrillas aprobado por el usuario.
+- Hero → frase: cuando ambos son las primeras escenas y el Hero no tiene fondo
+  personalizado, usar `hero-quote-continuous-v2.webp` como paisaje único del Hero
+  y del paseo. No superponer `hero-coast` encima: reintroduciría la división vertical.
+  Conservar el balcón, la rama animada, el pájaro, el monograma, el letrero y sus
+  textos en sus capas actuales. La terraza enlaza con `quote-photo-panorama-v2`
+  mediante un solape estrecho; evitar fundidos anchos que dupliquen las sombrillas.
+  Un fondo de Hero configurado por el evento conserva prioridad y su composición.
 - En elementos abiertos (balcones, barandas, follaje), los huecos deben conservar
   alfa efectivo y mostrar las capas posteriores. Reservar capas independientes
   para paisaje, primer plano y futuras animaciones.

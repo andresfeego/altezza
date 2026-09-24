@@ -10,6 +10,7 @@ import { DRESS_FIREWORKS_MS, DRESS_COVER_MS, DRESS_RETURN_MS, DRESS_RETURN_COVER
 import UmbrellaTransitionLemoncello from './UmbrellaTransitionLemoncello';
 import { UMBRELLA_MS, UMBRELLA_COVER_MS } from './umbrellaTransition';
 import panorama from './assets/images/welcome-panorama-v1.webp';
+import connectedPanorama from './assets/images/hero-quote-continuous-v2.webp';
 import waiter from './assets/images/waiter-walk-v1.webp';
 import arrow from './assets/images/scene-arrow-round-v1.webp';
 import photoGarden from './assets/images/photo-garden-v1.webp';
@@ -146,6 +147,10 @@ export default function SceneCanvas({ modules: sourceModules, views, viewStyles,
   const presented = coveredJourney && journey.covered ? journey.to : active;
   const quoteIndex = modules.findIndex(module => module.type === 'biblical_quote');
   const hasPromenade = modules.some(module => module.type === 'hero_image_1') && quoteIndex >= 0;
+  const connectedLandscape = modules[0]?.type === 'hero_image_1' && quoteIndex === 1 && !modules[0].data.backgroundImage;
+  // Follow the painting's uniform cover scale on taller phones, not just the
+  // viewport grid: its matching last third can begin beyond column two.
+  const connectedQuoteX = Math.min(size.width * 2.7, Math.max(size.width * 3, size.height * 1649 / 954) * 2 / 3);
   const hasPhotoJourney = quoteIndex >= 0 && modules[quoteIndex + 1]?.type === 'image_slider_1';
   const dateIndex = modules.findIndex(isDateScene);
   const detailsIndex = modules.findIndex(module => module.type === 'event_details');
@@ -184,6 +189,7 @@ export default function SceneCanvas({ modules: sourceModules, views, viewStyles,
     return <div key={`${part.type}-${part.order}`} data-module={partIndex ? part.type : undefined}>
       <ModuleSurface background={part.config?.sectionBackground}>
         <View data={part.data} styles={viewStyles} attendanceState={attendanceState} eventStage={module.eventStage}
+          connectedLandscape={connectedLandscape && module === modules[0]}
           sceneActive={opened && modules[active] === module && !moving && !reducedMotion} />
       </ModuleSurface>
     </div>;
@@ -206,11 +212,11 @@ export default function SceneCanvas({ modules: sourceModules, views, viewStyles,
     }}>
     <div data-scene-camera className={`${styles.canvas} ${cameraMotion}`}
       onAnimationEnd={event => { if (event.target === event.currentTarget && !journeyRef.current?.coverMs) finish(); }}>
-      {hasPromenade ? <div className={styles.scenery} aria-hidden="true">
-        <img src={src(panorama)} alt="" data-invitation-preload />
+      {hasPromenade ? <div className={`${styles.scenery} ${connectedLandscape ? styles.connectedScenery : ''}`} aria-hidden="true" data-connected-landscape={connectedLandscape || undefined}>
+        <img src={src(connectedLandscape ? connectedPanorama : panorama)} alt="" data-invitation-preload />
       </div> : null}
-      {quoteIndex >= 0 ? <div className={styles.quoteScenery}
-        style={{ left: `${cell(quoteIndex).column * 100}%` }} aria-hidden="true">
+      {quoteIndex >= 0 ? <div className={`${styles.quoteScenery} ${connectedLandscape ? styles.connectedQuoteScenery : ''}`}
+        style={{ left: connectedLandscape ? connectedQuoteX : `${cell(quoteIndex).column * 100}%` }} aria-hidden="true">
         <img src={src(quotePanorama)} alt="" data-invitation-preload />
       </div> : null}
       {modules.map((module, index) => module.type === 'image_slider_1' && !(hasPhotoJourney && index === quoteIndex + 1) ? <div key={`garden-${index}`} className={styles.photoScenery}

@@ -48,7 +48,8 @@
     "welcome-panorama-v1.webp",
     "waiter-walk-v1.webp",
     "welcome-board-v1.webp",
-    "scene-arrow-v1.webp"
+    "scene-arrow-v1.webp",
+    "hero-quote-continuous-v2.webp"
   ],
   "revisionReference": "/tmp/codex-remote-attachments/01a0bbe5-8f53-7152-b064-ae2ec11273d0/EC46688C-AC57-4492-B507-6F06233180EE/1-Imagen-pegada-1.jpg",
   "postprocessing": {
@@ -561,7 +562,7 @@
         16
       ],
       "signToPaintingWidthRatio": 0.0342646,
-      "normalizedDriftMax": 1e-06,
+      "normalizedDriftMax": 0.000001,
       "clipping": false,
       "brokenImages": 0,
       "transparentPixels": 545856,
@@ -839,9 +840,15 @@
     "tool": "built-in ImageGen",
     "promptRecord": "../../../../../output/imagegen/lemoncello-tree-close-prompt.json",
     "editTarget": "output/imagegen/lemoncello-tree-edit-source.png",
-    "styleReferences": ["references/watercolor-style-master.jpg", "images/landscape-proportioned.png"],
+    "styleReferences": [
+      "references/watercolor-style-master.jpg",
+      "images/landscape-proportioned.png"
+    ],
     "generatedSource": "images/envelope-tree-close-edit-v2.png",
-    "output": ["images/landscape-open-clear-v3.png", "images/landscape-open-clear-v3.webp"],
+    "output": [
+      "images/landscape-open-clear-v3.png",
+      "images/landscape-open-clear-v3.webp"
+    ],
     "postprocessing": "scripts/lemoncello-prepare-envelope-tree.cjs",
     "constraints": "User correction: bring the compact natural tree close to the left jamb so its trunk, pot and foliage remain visible in mobile framing. Preserve camera, doorway, panorama outside local patch, and full alpha inside the registered opening. Supersedes envelopeTreeLeft."
   },
@@ -860,5 +867,37 @@
     ],
     "postprocessing": "scripts/lemoncello-prepare-envelope-tree.cjs",
     "constraints": "Move only tree left; preserve original panorama outside local patch; clear full registered arched opening including leaves."
+  },
+  "heroQuoteContinuity": {
+    "date": "2026-09-24",
+    "tool": "image_gen (built-in)",
+    "asset": "hero-quote-continuous-v2.webp",
+    "source": "hero-quote-continuous-v2.png",
+    "previous": "hero-quote-continuous-v1.png",
+    "prompts": [
+      "Use case: precise-object-edit / watercolor panorama continuity repair for the Lemoncello wedding invitation.\nEDIT TARGET = reference 1, the existing wide background composition. Produce ONE high-resolution landscape image at approximately 3072 x 1776, preserving its 1320:763 aspect ratio and framing. It covers exactly three adjacent portrait phone viewports. This is an EDIT of the existing scene, not a redesign.\nReference 2 is the rightmost band of the original Hero, and reference 3 is the leftmost band of the destination cocktail scene: these establish the exact scale, colors, coastline, sky and terrace connection. Do not bake the Hero's foreground big lemon plant, drink or top hanging branch into your output; they are separate layers. Reference 4 (bottle and lemons) is the mandatory ORIGINAL PRIMARY watercolor technique/palette master. Reference 5 (approved house landscape) is mandatory integration style, not new subject matter.\nTASK: eliminate the very obvious vertical join at x=33% and the discontinuity around x=67% of reference 1. Repaint the middle connecting landscape so the pale coast and Italian hillside town on the left become one believable continuous landscape leading to the cocktail terrace on the right. No vertical boundaries, mist curtains, blur bands, cutaway collage, duplicated horizons, doubled church towers, floating architecture, or step changes of scale. Let the distant mountain slope and same coastal village evolve naturally into the garden, cypresses and terrace. The cream stone balustrade must connect naturally to the original Hero's foreground railing visible in reference 2; its continuation starts at about x=33%, y=77%, then leads in perspective toward the terrace. Keep the stone rail and columns crisp and proportional, no jump in top-rail height at the join. The sea occupies the lower-left and stays the same soft blue; terrace paving expands gradually to the right.\nPRESERVE INVARIANTS: Keep the first 25% of the target (quiet cream/sky-blue sky, coast, sea) and final 28% (right-side villa, green shutters, yellow/ivory striped scalloped parasols, drinks bar, tables, plants and cream/blue paving) almost exactly registered to the target. No recentering, no overall zoom, no resizing or relocating the right cocktail scene. Keep the large calm sky in the left third for separate live monogram and texts. Keep the left village church's original position about x=32%, y=43% and its lovely painterly details; blend it into a continuous hillside without the abrupt vertical sliced edge. Any work needed to blend overlaps must remain locally confined to the central connection. Do not add people, birds, signs, boards, texts, letters, monograms or UI. No foreground hanging branches: they are animated as separate layers. Keep ample lower-right paving empty for the existing overlay sign.\nSTYLE: traditional soft luminous watercolor, translucent pigment washes, visible paper grain inside the paint, loose brushwork with legible architectural/botanical detail. Diluted sky/pastel blue, butter yellow, warm ivory, desaturated olive/sage, restrained navy. Preserve the detailed scene rather than blurring it. Moderate contrast, no thick dark outlines, no oversaturated orange or purple, no oil, photo, vector/cartoon, glossy 3D or sticker look. Fill every outer edge fully with painted scene, no white frame or alpha edge fade. One coherent full-bleed painting.",
+      "Use case: precise-object-edit. Target reference 1 is the newly connected wide Lemoncello watercolor panorama. Make exactly ONE local correction to its STONE BALUSTRADE near the left edge of the terrace; preserve the rest of this image, all sky, coast, village, tower positions, cypresses, plants, parasols, villa, bar and tables, framing and aspect ratio EXACTLY unchanged.\nReference 2 shows the actual old Hero's RIGHT EDGE, including its foreground balustrade. That existing foreground will be overlaid, so your balustrade must CONTINUE it in perspective. Reference 3 is a screenshot of the current bad junction: the left foreground top rail sits about 80 screen pixels LOWER than the rail in the panorama; they are visibly disconnected at the join. Fix that geometry, do not blur or hide it with flowers. Do not bake the whole screenshot or the foreground plant/branch/UI into the output.\nPrecise geometry for target reference 1 (1650 x 953): its terrace balustrade should start at x=540,y=735 for the TOP of its horizontal rail, instead of the current x~540,y~625. At x=585 the rail top should be about y=720, at x=650 about y=684, then join the existing stone pillar near x=760,y=610. A gentle diagonal perspective line connects these coordinates, with matching baluster/stonework size, slight watercolor irregularity. Lower ONLY the first two or three leftmost balusters and their rail so their soles can reach y=930; the step/terrace stones beneath adapt naturally. Join smoothly to the existing railing farther right, not a stair step. Keep the large pale foreground rail in reference 2 a SEPARATE overlay, do not add another foreground railing across the left third of the panorama. Your painting remains open sea and town on the left, terrace on the right, but now the near balustrade heights connect correctly. No floating railing, no separate railing protruding toward camera or handrail turn.\nReference 4 is mandatory ORIGINAL PRIMARY watercolor style (bottle and lemons); reference 5 is approved Lemoncello integration style. Keep all the fine details and soft traditional translucent watercolor/paper texture, muted ivory, sky blue, butter yellow, olive/sage, navy accents. No vector, photoreal, oil, thick outlines or blur. No new objects, people, writing, UI, monogram or foreground hanging lemon branches. Same full-bleed wide composition. Output the whole corrected image, ideally 3072x1776, with reference 1 aspect ratio preserved."
+    ],
+    "references": [
+      [
+        "output/imagegen/hero-quote-background-edit-source.png",
+        "output/imagegen/hero-right-edge-before.png",
+        "output/imagegen/quote-left-edge-before.png",
+        "components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+        "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+      ],
+      [
+        "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/hero-quote-continuous-v1.png",
+        "output/imagegen/hero-right-edge-before.png",
+        "output/playwright/lemon-seam-connected.png",
+        "components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+        "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+      ]
+    ],
+    "integration": "Shared full-bleed scenery for Hero and promenade. Original balcony, animated branch, bird, live monogram/text and quote easel remain separate. Narrow overlap with existing quote-photo panorama. Custom Hero backgrounds retain the previous standalone composition.",
+    "checkpoint": {
+      "front": "60ebbe5",
+      "back": "19d0a35"
+    }
   }
 }

@@ -146,6 +146,14 @@ fue rechazada por su acabado y no sirve como guía de estilo.
   alfa real y proporción 4:7; se escalan juntas uniformemente. Los huecos entre las
   columnas muestran el mar. Los extremos terminan en pinceladas irregulares con
   transparencia y el contenedor del Hero no pinta un rectángulo opaco.
+- Revisión de continuidad (24/09/2026): si Hero y frase abren el recorrido y no hay
+  `backgroundImage` explícito, comparten `hero-quote-continuous-v2.webp`. Sustituye
+  el fondo aislado del Hero y el antiguo paseo por una pintura conectada, con la
+  costa, la ladera y la terraza en una misma perspectiva. Se conserva el primer
+  plano original del balcón y todas las capas animadas/de contenido. Un solape
+  estrecho conecta la terraza con el panorama existente de frase/fotos. Los fondos
+  personalizados y otras secuencias mantienen la composición anterior. Prompts,
+  referencias y versiones PNG/WebP guardados con la plantilla; generado con ImageGen.
 - En el cielo se presentan `text1`, `logoImage` y `text2` del contrato compartido.
   El PNG del monograma se extrae por código del original, sin regenerar sus letras.
   La máscara CSS permite cambiar `--hero-monogram-color`; un halo azul marino

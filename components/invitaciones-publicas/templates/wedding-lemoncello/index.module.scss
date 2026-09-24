@@ -128,6 +128,11 @@
   mask-image: linear-gradient(to right, transparent 25%, black 35%);
   img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
+.connectedScenery {
+  // Hero and promenade share one painting; keep the foreground and live copy separate.
+  -webkit-mask-image: none;
+  mask-image: none;
+}
 .escorted { animation: cameraEscort var(--journey-duration) linear both; will-change: transform; }
 .photoScenery {
   position: absolute; top: 0; height: 100svh; width: 120%; pointer-events: none;
@@ -141,6 +146,11 @@
   -webkit-mask-image: linear-gradient(to right, transparent, black 3%);
   mask-image: linear-gradient(to right, transparent, black 3%);
   img { display: block; width: 100%; height: 100%; object-fit: cover; }
+}
+.connectedQuoteScenery {
+  // The matching cocktail terrace overlaps the original villa/photo panorama.
+  -webkit-mask-image: linear-gradient(to right, transparent 6%, black 9%);
+  mask-image: linear-gradient(to right, transparent 6%, black 9%);
 }
 .quoteCanopy {
   position: absolute; top: -1svh; width: min(94%, 52svh); z-index: 3; pointer-events: none;
