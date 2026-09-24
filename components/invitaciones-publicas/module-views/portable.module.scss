@@ -1,5 +1,20 @@
 // Structural defaults for shared views. Templates override these classes and
 // supply the typography/palette; this file contains no template assets.
+.recommendationsModule {
+  display: flex; flex-direction: column; align-items: center; gap: var(--ag-space-3);
+  padding: var(--ag-space-5) var(--ag-space-3); text-align: center;
+  color: inherit; font-family: var(--inv-font-secondary, serif);
+}
+.recommendationsTitle {
+  --ag-heading-h2-size: var(--ag-font-size-32);
+  --ag-heading-h2-line: 1.2; --ag-heading-h2-weight: 400;
+  margin: 0; color: inherit; font-size: var(--ag-heading-h2-size);
+  line-height: var(--ag-heading-h2-line); font-weight: var(--ag-heading-h2-weight);
+}
+.recommendationsText { margin: 0; max-width: 36ch; white-space: pre-line; overflow-wrap: anywhere; font-size: var(--ag-font-size-20); line-height: 1.4; }
+.recommendationsImage { display: block; max-width: 100%; height: auto; }
+.recommendationsLink, .recommendationsText a { color: inherit; text-decoration: underline; text-underline-offset: .2em; }
+.recommendationsLink { display: inline-flex; align-items: center; min-height: var(--ag-space-5); font-size: var(--ag-font-size-20); }
 .instantPhotosModule {
   padding: var(--ag-space-5) var(--ag-space-2) var(--ag-space-2);
 }
@@ -69,7 +84,7 @@
   line-height: var(--ag-heading-h2-line);
 }
 .biblicalQuoteModule, .dressCodeModule, .giftEnvelopesModule, .adultsOnlyNoticeModule,
-.saveTheDateCalendarModule, .sepiaSliderModule { padding: var(--ag-space-6) var(--ag-space-2); text-align: center; }
+.saveTheDateCalendarModule, .imageSlider1Module { padding: var(--ag-space-6) var(--ag-space-2); text-align: center; }
 .biblicalQuoteText, .giftEnvelopesLead, .adultsOnlyNoticeText, .eventDetailsMessage,
 .dressCodeSubtitle, .saveTheDateCalendarMessage { margin: var(--ag-space-3) auto; max-width: 38ch; white-space: pre-line; }
 .biblicalQuoteReference, .giftEnvelopesSubtitle, .dressCodeData, .eventDetailsAddress {
@@ -146,7 +161,12 @@
 .countdownDateMonth { grid-column: 1 / -1; text-transform: uppercase; }
 .countdownDateDay { font-size: var(--ag-font-size-48); }
 .countdownDateWeekday, .countdownDateYear { font-size: var(--ag-font-size-14); }
-.sepiaSliderFrame { position: relative; overflow: hidden; aspect-ratio: 3 / 4; }
-.sepiaSliderImage { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 300ms ease-out; }
-.sepiaSliderImageActive { opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .sepiaSliderImage { transition: none; } }
+.imageSlider1Frame { position: relative; overflow: hidden; aspect-ratio: 3 / 4; }
+.imageSlider1Image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 300ms ease-out; }
+.imageSlider1ImageActive { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .imageSlider1Image { transition: none; } }
+.closingMessageImage {
+  display: block; width: auto; max-width: min(70%, calc(var(--ag-space-9) * 2));
+  max-height: calc(var(--ag-space-9) * 1.5); height: auto;
+  object-fit: contain; margin: 0 auto var(--ag-space-3);
+}

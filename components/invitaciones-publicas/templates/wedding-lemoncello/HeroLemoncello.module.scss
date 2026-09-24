@@ -1,7 +1,7 @@
 .hero {
   --hero-monogram-color: var(--lemoncello-navy);
-  --hero-monogram-halo: color-mix(in srgb, var(--lemoncello-navy) 45%, transparent);
-  --hero-monogram-halo-radius: calc(var(--ag-space-1) * .375);
+  --hero-monogram-halo: var(--lemoncello-ink-halo);
+  --hero-monogram-halo-radius: var(--lemoncello-ink-halo-radius);
   position: relative;
   isolation: isolate;
   container-type: inline-size;

@@ -20,180 +20,96 @@ function SoundOffIcon() {
   );
 }
 
-export default function MusicPlayerView({ data, styles }) {
+export default function MusicPlayerView({ data, styles, playbackReady = true, waitForStart = false }) {
   const audioRef = useRef(null);
-  const [isMuted, setIsMuted] = useState(Boolean(data?.initiallyMuted));
+  const buttonRef = useRef(null);
+  const controlsRef = useRef(null);
+  const [audible, setAudible] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return undefined;
-
-    const initialMuted = Boolean(data?.initiallyMuted);
-    const syncMutedState = () => setIsMuted(Boolean(audio.muted));
+    if (!audio || !playbackReady) return undefined;
+    let disposed = false;
+    let userMuted = false;
+    const interactionEvents = ['pointerup', 'touchend', 'click', 'keydown'];
+    const sync = () => { if (!disposed) setAudible(!audio.paused && !audio.muted); };
+    const stopWaitingForGesture = () => interactionEvents.forEach(name => window.removeEventListener(name, firstInteraction));
 
     audio.loop = true;
-    audio.muted = initialMuted;
-    syncMutedState();
+    audio.muted = Boolean(data?.initiallyMuted);
+    sync();
 
-    async function startPlayback() {
+    async function resume() {
       try {
-        audio.muted = initialMuted;
         await audio.play();
-        syncMutedState();
+        if (disposed) return;
+        stopWaitingForGesture();
       } catch (_error) {
-        audio.pause();
-        syncMutedState();
+        // Keep the gesture listeners: an autoplay rejection is not a media failure.
+        // Do not pause here; an earlier rejected attempt must not stop a later gesture.
       }
+      sync();
     }
-
-    if (Boolean(data?.autoplay)) {
-      startPlayback();
+    function firstInteraction(event) {
+      // The sound button handles its own click; a bubbling gesture must not toggle twice.
+      if (userMuted || (event.target?.nodeType && buttonRef.current?.contains(event.target))) return;
+      if (!audio.paused) { sync(); stopWaitingForGesture(); return; }
+      resume();
     }
-
-    async function startOnFirstInteraction() {
-      if (!initialMuted && audio.muted) {
-        audio.muted = false;
-      }
-
-      if (!audio.paused) {
-        syncMutedState();
-        return;
-      }
-
-      try {
-        if (!initialMuted) {
-          audio.muted = false;
-        } else {
-          audio.muted = true;
-        }
-        await audio.play();
-        syncMutedState();
-      } catch (_error) {
-        // Browser policy can still block playback until a stronger gesture.
-        syncMutedState();
-      }
-    }
-
-    async function playUnmute() {
-      // eslint-disable-next-line no-console
-      console.debug('[music] playUnmute called');
+    function playUnmute() {
+      // Opening an envelope must not override a mute chosen during its introduction.
+      if (userMuted) return;
       audio.muted = false;
-      setIsMuted(false);
-      try {
-        await audio.play();
-        // eslint-disable-next-line no-console
-        console.debug('[music] playUnmute -> audio.play resolved');
-        interactionEvents.forEach((eventName) => {
-          window.removeEventListener(eventName, startOnFirstInteraction);
-        });
-      } catch (_error) {
-        // eslint-disable-next-line no-console
-        console.debug('[music] playUnmute -> audio.play blocked', _error);
-        // Browser may still require a stronger user interaction.
-      }
+      return resume();
     }
-
     function mute() {
+      userMuted = true;
       audio.muted = true;
-      setIsMuted(true);
+      stopWaitingForGesture();
+      sync();
     }
-
     function unmute() {
+      userMuted = false;
       audio.muted = false;
-      setIsMuted(false);
+      sync();
     }
-
-    async function toggleMute() {
-      // eslint-disable-next-line no-console
-      console.debug('[music] toggleMute called');
-      const nextMuted = !audio.muted;
-      audio.muted = nextMuted;
-      setIsMuted(nextMuted);
-      // eslint-disable-next-line no-console
-      console.debug('[music] toggleMute -> muted:', nextMuted);
-      if (audio.paused) {
-        try {
-          await audio.play();
-          // eslint-disable-next-line no-console
-          console.debug('[music] toggleMute -> resumed playback');
-        } catch (_error) {
-          // eslint-disable-next-line no-console
-          console.debug('[music] toggleMute -> resume blocked', _error);
-          // noop
-        }
+    function toggleMute() {
+      if (audio.paused || audio.muted) {
+        unmute();
+        return resume();
       }
+      mute();
     }
-
-    function handleEnvelopOpen() {
-      playUnmute();
+    const controls = { playUnmute, mute, unmute, toggleMute };
+    controlsRef.current = controls;
+    window.__invMusicControls = controls;
+    ['volumechange', 'play', 'pause', 'error'].forEach(name => audio.addEventListener(name, sync));
+    window.addEventListener('envelopIntro:open', playUnmute);
+    if (!waitForStart) {
+      interactionEvents.forEach(name => window.addEventListener(name, firstInteraction, { passive: true }));
+      if (data?.autoplay) resume();
     }
-
-    audio.addEventListener('volumechange', syncMutedState);
-    audio.addEventListener('play', syncMutedState);
-    audio.addEventListener('pause', syncMutedState);
-    window.addEventListener('envelopIntro:open', handleEnvelopOpen);
-    window.__invMusicControls = {
-      playUnmute,
-      mute,
-      unmute,
-      toggleMute,
-    };
-
-    const interactionEvents = ['pointerdown', 'touchstart', 'keydown'];
-    interactionEvents.forEach((eventName) => {
-      window.addEventListener(eventName, startOnFirstInteraction, { once: true, passive: true });
-    });
 
     return () => {
-      audio.removeEventListener('volumechange', syncMutedState);
-      audio.removeEventListener('play', syncMutedState);
-      audio.removeEventListener('pause', syncMutedState);
-      window.removeEventListener('envelopIntro:open', handleEnvelopOpen);
-      if (window.__invMusicControls?.playUnmute === playUnmute) {
-        delete window.__invMusicControls;
-      }
-      interactionEvents.forEach((eventName) => {
-        window.removeEventListener(eventName, startOnFirstInteraction);
-      });
+      disposed = true;
+      stopWaitingForGesture();
+      ['volumechange', 'play', 'pause', 'error'].forEach(name => audio.removeEventListener(name, sync));
+      window.removeEventListener('envelopIntro:open', playUnmute);
+      if (window.__invMusicControls === controls) delete window.__invMusicControls;
+      if (controlsRef.current === controls) controlsRef.current = null;
+      audio.pause();
     };
-  }, [data?.audioSrc, data?.autoplay, data?.initiallyMuted]);
-
-  async function handleMuteToggle() {
-    // eslint-disable-next-line no-console
-    console.debug('[music] mute button clicked');
-    if (typeof window !== 'undefined' && typeof window.__invMusicControls?.toggleMute === 'function') {
-      try {
-        // eslint-disable-next-line no-console
-        console.debug('[music] using window.__invMusicControls.toggleMute');
-        await window.__invMusicControls.toggleMute();
-        return;
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.debug('[music] global toggleMute failed, fallback to local', error);
-      }
-    }
-    const audio = audioRef.current;
-    if (!audio) return;
-    // eslint-disable-next-line no-console
-    console.debug('[music] using local fallback toggle');
-    const nextMuted = !audio.muted;
-    audio.muted = nextMuted;
-    setIsMuted(nextMuted);
-  }
+  }, [data?.audioSrc, data?.autoplay, data?.initiallyMuted, playbackReady, waitForStart]);
 
   if (!data?.audioSrc) return null;
-
+  const label = audible ? 'Silenciar sonido' : 'Activar sonido';
   return (
-    <div className={styles.musicDock}>
-      <audio ref={audioRef} preload="metadata" loop autoPlay={Boolean(data?.autoplay)} playsInline src={data.audioSrc} />
-      <button
-        type="button"
-        className={styles.musicToggleButton}
-        onClick={handleMuteToggle}
-        aria-label={isMuted ? 'Activar sonido' : 'Silenciar sonido'}
-        title={isMuted ? 'Activar sonido' : 'Silenciar sonido'}
-      >
-        {isMuted ? <SoundOffIcon /> : <SoundOnIcon />}
+    <div className={styles.musicDock} data-invitation-music>
+      <audio ref={audioRef} preload="auto" loop playsInline src={data.audioSrc} />
+      <button ref={buttonRef} type="button" className={styles.musicToggleButton}
+        onClick={() => controlsRef.current?.toggleMute()} disabled={!playbackReady}
+        aria-label={label} title={label}>
+        {audible ? <SoundOnIcon /> : <SoundOffIcon />}
       </button>
     </div>
   );

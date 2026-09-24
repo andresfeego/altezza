@@ -32,7 +32,7 @@ function normalizeAdjustments(value) {
   }, {});
 }
 
-export default function ImageSliderSepiaModule({ module }) {
+export default function ImageSlider1Module({ module }) {
   const configImages = Array.isArray(module?.config?.images) ? module.config.images.filter(Boolean) : [];
   const images = [...new Set(configImages)];
 

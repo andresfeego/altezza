@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import EnvelopeBackground from '../../module-views/EnvelopeBackground';
-import landscape from './assets/images/landscape-open-alpha.webp';
+import landscape from './assets/images/landscape-open-clear-v3.webp';
 import vespa from './assets/images/vespa.webp';
 import leftDoor from './assets/images/door-left-arched.webp';
 import rightDoor from './assets/images/door-right-arched.webp';
@@ -11,16 +11,20 @@ import hangingSign from './assets/images/hanging-abrir.webp';
 import frontWheel from './assets/images/vespa-wheel-front.webp';
 import rearWheel from './assets/images/vespa-wheel-rear.webp';
 import bodyMask from './assets/masks/vespa-body-mask.svg';
+import arrow from './assets/images/scene-arrow-round-v1.webp';
+import navigationStyles from './index.module.scss';
 import styles from './EnvelopeLemoncello.module.scss';
 
 const src = (asset) => typeof asset === 'string' ? asset : asset.src;
-const ART = [landscape, vespa, leftDoor, rightDoor, dog, basket, plaque, hangingSign, frontWheel, rearWheel, bodyMask].map(src);
-const TRAVEL_MS = 8000;
+const ART = [landscape, vespa, leftDoor, rightDoor, dog, basket, plaque, hangingSign, frontWheel, rearWheel, bodyMask, arrow].map(src);
+const TRAVEL_MS = 6000;
 const OPEN_MS = 3600;
 
-export default function EnvelopeLemoncello({ data = {}, onOpen, presentationReady = true }) {
+export default function EnvelopeLemoncello({ data = {}, onStart, onOpen, presentationReady = true }) {
   const rootRef = useRef(null);
   const startedRef = useRef(false);
+  const rideStartedRef = useRef(false);
+  const openRef = useRef(null);
   const [phase, setPhase] = useState('loading');
   const [reduced, setReduced] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -35,7 +39,7 @@ export default function EnvelopeLemoncello({ data = {}, onOpen, presentationRead
   }, []);
 
   useEffect(() => {
-    if (customMedia) { setPhase('arrived'); return undefined; }
+    if (customMedia) { setPhase('waiting'); return undefined; }
     let cancelled = false;
     let settled = false;
     const pending = [];
@@ -47,7 +51,7 @@ export default function EnvelopeLemoncello({ data = {}, onOpen, presentationRead
       image.src = url;
     })));
     const deadline = setTimeout(() => {
-      if (!cancelled) { settled = true; setFailed(true); setPhase('arrived'); }
+      if (!cancelled) { settled = true; setFailed(true); setPhase('waiting'); }
     }, 10000);
     load.then((results) => {
       clearTimeout(deadline);
@@ -55,7 +59,7 @@ export default function EnvelopeLemoncello({ data = {}, onOpen, presentationRead
       settled = true;
       const missing = results.some((ok) => !ok);
       setFailed(missing);
-      setPhase(missing || customMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'arrived' : 'travel');
+      setPhase('waiting');
     });
     return () => {
       cancelled = true;
@@ -78,6 +82,10 @@ export default function EnvelopeLemoncello({ data = {}, onOpen, presentationRead
     }
     return undefined;
   }, [phase, reduced, onOpen, presentationReady]);
+
+  useEffect(() => {
+    if (phase === 'arrived') openRef.current?.focus({ preventScroll: true });
+  }, [phase]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -128,19 +136,31 @@ export default function EnvelopeLemoncello({ data = {}, onOpen, presentationRead
     return () => observer.disconnect();
   }, []);
 
-  function open() {
-    if (startedRef.current || phase === 'opening') return;
-    startedRef.current = true;
-    // Same user-gesture event as the other interchangeable invitation templates.
+  function startMusic() {
+    // Invoke play synchronously inside the original click for mobile audio policies.
     if (typeof window.__invMusicControls?.playUnmute === 'function') window.__invMusicControls.playUnmute();
     else window.dispatchEvent(new window.Event('envelopIntro:open'));
+  }
+
+  function start() {
+    if (rideStartedRef.current || phase !== 'waiting' || !presentationReady) return;
+    rideStartedRef.current = true;
+    startMusic();
+    onStart?.();
+    setPhase(reduced || failed || customMedia ? 'arrived' : 'travel');
+  }
+
+  function open() {
+    if (startedRef.current || phase !== 'arrived') return;
+    startedRef.current = true;
+    startMusic();
     if (reduced || failed || customMedia) onOpen?.();
     else setPhase('opening');
   }
 
   const ready = phase === 'arrived' || phase === 'opening';
   const openControl = (
-    <button type="button" className={styles.open} onClick={open}
+    <button ref={openRef} type="button" className={styles.open} onClick={open}
       disabled={!ready || phase === 'opening'} aria-label="Abrir invitación"
       aria-busy={phase === 'opening' || undefined}>
       {failed ? <span className={styles.openFallback}>Abrir</span>
@@ -188,6 +208,11 @@ export default function EnvelopeLemoncello({ data = {}, onOpen, presentationRead
         </div>}
         {customMedia || failed ? openControl : null}
       </div>
+      {phase === 'waiting' && presentationReady ? <button type="button"
+        className={`${navigationStyles.sceneArrow} ${navigationStyles.nextArrow} ${styles.startArrow}`}
+        aria-label="Comenzar invitación" onClick={start}>
+        <img src={ART[11]} alt="" data-invitation-preload />
+      </button> : null}
       {phase === 'loading' ? <p className={styles.status} role="status">Cargando invitación…</p> : null}
     </section>
   );

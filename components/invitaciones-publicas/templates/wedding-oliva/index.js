@@ -117,6 +117,7 @@ function Closing({ data }) {
   return (
     <footer className={styles.footer}>
       {data.showFrame !== false ? (data.frameImage ? <img className={styles.footerFlorals} src={data.frameImage} alt={data.frameImageAlt} /> : <BotanicalArt className={styles.footerFlorals} />) : null}
+      {data.imageSrc ? <img className={styles.closingMessageImage} src={data.imageSrc} alt={data.imageAlt || ''} /> : null}
       <p className={styles.closingText}>{data.message}</p>
     </footer>
   );

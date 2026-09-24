@@ -2,7 +2,11 @@ const http = require('node:http');
 const upstreamPort = Number(process.env.LEMONCELLO_PREVIEW_UPSTREAM_PORT || 3002);
 const invitation = '/invitacion/lausprueba/910175';
 const api = '/api/responseAltezza/public/invitaciones/lausprueba';
-const coverAssets = new Set();
+const preview = require('../components/invitaciones-publicas/templates/wedding-lemoncello/preview.json');
+const coverAssets = new Set((preview.modules.find(module => module.type === 'image_slider_1')?.config.images || [])
+  .filter(src => /^\/scrAppaltezza\/invitations\/bodlauser\/image_slider_1\/\d{3}\.webp$/.test(src)));
+coverAssets.add('/scrAppaltezza/invitations/bodlauser/cover/laura-sergio-monogram.png');
+coverAssets.add('/scrAppaltezza/invitations/bodlauser/music/carla-morrison-eres-tu.mp3');
 const server = http.createServer((req, res) => {
   let url;
   try { url = new URL(req.url, 'http://localhost'); } catch { res.writeHead(400).end(); return; }
@@ -13,7 +17,8 @@ const server = http.createServer((req, res) => {
   const imageUrl = url.searchParams.get('url') || '';
   const optimizedImage = pathname === '/_next/image' && imageUrl.startsWith('/images/')
     && new URL(imageUrl, 'http://localhost').pathname.startsWith('/images/');
-  const allowed = (read && (pathname === invitation || pathname === `${api}/910175` || resource || pathname === '/favicon.ico' || optimizedImage));
+  const confirmation = req.method === 'PUT' && pathname === `${api}/confirmacion`;
+  const allowed = confirmation || (read && (pathname === invitation || pathname === `${api}/910175` || resource || pathname === '/favicon.ico' || optimizedImage));
   if (!allowed || /%2e|%2f|%5c|\\/i.test(pathname)) { res.writeHead(404).end('Not found'); return; }
   const headers = { ...req.headers };
   for (const name of Object.keys(headers)) {

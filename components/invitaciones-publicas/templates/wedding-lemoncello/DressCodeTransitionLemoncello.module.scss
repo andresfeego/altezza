@@ -1,0 +1,51 @@
+.transition { position: absolute; inset: 0; z-index: 9; pointer-events: none; overflow: hidden; }
+.rocket {
+  position: absolute; left: var(--launch-x); top: var(--launch-y);
+  width: calc(var(--ag-space-1) / 2); height: calc(var(--ag-space-1) / 2); border-radius: 50%;
+  background: var(--lemoncello-paper); box-shadow: 0 0 var(--ag-space-1) var(--lemoncello-butter);
+  animation: launch var(--rise-duration) cubic-bezier(.18, .55, .42, 1) var(--launch-delay) both;
+  &::after {
+    content: ''; position: absolute; left: 25%; top: 50%; width: 50%; height: var(--ag-space-3);
+    transform-origin: top; transform: rotate(var(--trail-angle));
+    background: linear-gradient(var(--lemoncello-butter), transparent);
+  }
+}
+.burst {
+  position: absolute; left: var(--burst-x); top: var(--burst-y);
+  animation: bloom var(--bloom-duration) ease-out var(--bloom-delay) both;
+  i {
+    position: absolute; width: calc(var(--ag-space-1) / 4); height: var(--ag-space-1); border-radius: 50%;
+    background: var(--lemoncello-butter); box-shadow: 0 0 var(--ag-space-1) var(--lemoncello-paper);
+    transform: rotate(var(--ray-angle)) translateY(calc(-1 * var(--ray-distance)));
+  }
+}
+.wash, .glow { position: absolute; inset: 0; }
+.wash { background: var(--lemoncello-white); animation-duration: var(--journey-duration); animation-timing-function: linear; animation-fill-mode: both; }
+.arrivalWash { animation-name: arriveWhite; }
+.returnWash { animation-name: returnWhite; }
+.glow {
+  background: radial-gradient(ellipse at 52% 32%, var(--lemoncello-white), var(--lemoncello-butter) 10%, transparent 48%);
+  transform-origin: 52% 32%; animation: bloomLight var(--journey-duration) ease-in both;
+}
+@keyframes launch {
+  0% { left: var(--launch-x); top: var(--launch-y); opacity: 0; }
+  6% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { left: var(--burst-x); top: var(--burst-y); opacity: 0; }
+}
+@keyframes bloom {
+  0% { opacity: 0; transform: scale(.05); }
+  15% { opacity: 1; transform: scale(.4); }
+  65% { opacity: .7; transform: scale(1.15); }
+  100% { opacity: 0; transform: scale(1.45) translateY(var(--ag-space-1)); }
+}
+@keyframes bloomLight {
+  0%, 67.85% { opacity: 0; transform: scale(.05); }
+  73% { opacity: .8; }
+  80.35%, 84% { opacity: 1; transform: scale(5); }
+  100% { opacity: 0; transform: scale(5); }
+}
+// Fully opaque at 4500 ms, with a small covered interval for the React swap.
+@keyframes arriveWhite { 0%, 68% { opacity: 0; } 80%, 84% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes returnWhite { 0%, 100% { opacity: 0; } 45%, 55% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .transition { display: none; } }

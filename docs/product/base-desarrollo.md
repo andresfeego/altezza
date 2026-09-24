@@ -1034,6 +1034,47 @@ Acción requerida:
 
 ### Invitaciones
 
+Lemoncello — actualización 2026-09-23:
+
+- Estado funcional: sobre y Hero animados, frase bíblica con recorrido horizontal
+  y mesero, fotos en bucle con `image_slider_1`, y `countdown` con fecha seguido de
+  `save_the_date_calendar`. Estos últimos comparten una sola escena en Lemoncello
+  y conservan contratos independientes al cambiar de plantilla. `event_details`
+  añade dos pasos visuales, ceremonia/recepción, con los mismos datos del evento,
+  banderas de visibilidad, mensajes y mapa existente.
+- Estado UX/UI: acuarela suave, Polaroids con recorte centrado y gesto corto,
+  presentación blanca para fecha/mensaje/contador/calendario, cenefas de azulejos
+  azules arriba/abajo y rama de limones animada abajo a la derecha.
+  Fotos ↔ fecha ↔ iglesia usan sombrillas amarillas/marfil que entran girando,
+  cubren toda la pantalla, cambian el fondo a mitad y salen girando (unos 3.66 s).
+  Posiciones/tamaños irregulares y recorrido continuo, sin pausa central; los
+  tramos de entrada/salida van un 30% más despacio.
+  Sustituye el caballete y los zooms. Flechas con aparición/desaparición de 300 ms;
+  el texto en el cielo aparece al terminar de salir las sombrillas.
+  Ceremonia aparece centrada y más grande con el halo del monograma; la siguiente
+  flecha dispara una chispa discreta en 4 s, seguida del texto de recepción sobre
+  la misma imagen de cielo claro y en azul marino. Regreso a ceremonia en 2.2 s;
+  sin efectos con movimiento reducido.
+  La iglesia conserva detalles sobre el cielo (60%) y paisaje abajo (40%).
+  La capilla toma su arquitectura del dibujo del Hero de Natalia y Andrés:
+  cúpula, escalinata y cipreses, con dos canastillas de limones. Fondo de día
+  centrado en la fachada; referencia original y ambas tarjetas conservan sus datos.
+  Cipreses con viento localizado suave y base fija, continuo entre eventos;
+  se omite con movimiento reducido.
+  Lluvia de sobres (`gift_envelopes`) funcional después de recepción: ascenso y
+  fundido nocturno simultáneos en 4.8 s, luna/estrellas, cuatro haces difuminados,
+  silueta de novios, icono y texto desde el contrato común. Regreso y movimiento
+  reducido verificados; configuración local idempotente con respaldo. Revisión
+  UX/UI realizada en WebKit móvil y desktop; aprobación visual del usuario pendiente.
+  Recomendaciones funcionales como módulo genérico compartido: título, dos textos,
+  imagen y enlace. Lemoncello incorpora hospedaje tras sobres con descenso nocturno,
+  cielo continuo y estrellas adicionales; contacto WhatsApp desde la web oficial
+  del hotel. 52 pruebas frontend y configurador local idempotente verificados;
+  aprobación visual del usuario pendiente.
+  Los datos de fecha se pintan a resolución final. Revisión responsive y teclado en Playwright;
+  aprobación visual de esta nueva sección pendiente. Recepción 16:00 provisional,
+  marcada en inglés; ceremonia 14:30 y puntualidad confirmadas en el Word.
+
 Tarjeta pública modular (actualización 2026-09-19):
 
 - Estado funcional: `instant_photos` implementado con dos fotos, sello, texto opcional y carga diferida; migración local de `bodmys` después de asistencia. El texto del cierre pertenece ahora a las fotos y el cierre independiente queda desactivado. Oliva admite relieve botánico en el fondo beige de esta sección.
@@ -1368,3 +1409,128 @@ Para mantener coherencia con el manual, conviene separar el trabajo en tres grup
 - operación avanzada: decoración, colaborador, tiempo real, event mode
 
 Esta separación reduce retrabajo y evita mezclar planeación del evento con logística avanzada demasiado temprano.
+
+Lemoncello — vestuario (2026-09-24):
+
+- Estado funcional: `dresscode` configurado después de recomendaciones con textos
+  del usuario, seis invitados ilustrados, seis telas sugeridas y dos colores
+  reservados (amarillo mantequilla y azul cielo). Mismo contrato en todas las
+  plantillas; configuración local repetible con respaldo.
+- Estado UX/UI: diez fuegos desde el hotel, resplandor cálido que cubre el cambio
+  y papelería blanca con azulejos/rama compartidos con fecha. Revisado en WebKit
+  móvil y desktop, ida/regreso y movimiento reducido; aprobación visual del usuario
+  pendiente. En 320×568 se admite scroll interno para mantener legibilidad.
+
+Lemoncello — asistencia (2026-09-24):
+
+- Estado funcional: `attendance_confirm` después de vestuario, con el formulario
+  común de respuestas, errores y fecha límite. Configuración local con respaldo,
+  sin modificar invitados ni respuestas. Túnel habilitado solo para la confirmación
+  de la invitación de prueba.
+- Estado UX/UI: descenso simple de 900 ms, cielo azul y adornos claros arriba/abajo,
+  sin plantas ni azulejos. Scroll interno validado con 24 filas en móvil pequeño,
+  iPhone y escritorio; navegación, foco y movimiento reducido comprobados.
+  Aprobación visual del usuario pendiente.
+
+Lemoncello — cierre y navegación (2026-09-24):
+
+- Estado funcional: `closing_message` al final con «Te esperamos» e imagen del
+  monograma. Campos opcionales `imageSrc`/`imageAlt` disponibles en las cuatro
+  plantillas y separados del marco ornamental. Configuración local con respaldo.
+- Estado UX/UI: costa nocturna distante, monograma mantequilla arriba a la derecha
+  y halo centrado; navegación circular de 48 px, siempre izquierda/derecha.
+  Vespa acelera/frena en 6.8 s. Revisado en WebKit móvil/escritorio, incluyendo
+  ida/regreso y movimiento reducido; aprobación visual del usuario pendiente.
+
+Lemoncello — agua del cierre (2026-09-24):
+
+- Estado funcional: oleaje localizado en la ilustración existente; se libera al
+  salir, pausa con pestaña oculta y conserva imagen estática sin WebGL o con
+  movimiento reducido. Sin cambios de contrato ni configuración.
+- Estado UX/UI: ondas y reflejos suaves; cielo, costa y monograma inmóviles.
+  Verificado en WebKit móvil y 53 pruebas frontend; aprobación visual pendiente.
+
+Lemoncello — tipografía del letrero bíblico (2026-09-24):
+
+- Estado funcional: paquetes Cormorant y Khalifah Script extraídos y trasladados
+  del Storage del evento a `assets/fonts` de la plantilla, incluidos sus originales
+  y documentación. El mensaje bíblico usa Cormorant local; Khalifah se reserva
+  para los títulos «Ceremonia» y «Recepción» del módulo de detalles.
+- Estado UX/UI: Cormorant cursiva en azul marino y escala ajustada al papel;
+  mensaje y adorno inferior visibles en móvil y escritorio. Aprobación visual pendiente.
+  Prueba manual: abrir, avanzar al letrero y verificar el texto completo y el limón.
+
+Lemoncello — títulos de ceremonia y recepción (2026-09-24):
+
+- Estado funcional: Khalifah Script local aplicada solo a ambos títulos de detalles;
+  fechas, horas, lugares, mensajes y enlaces conservan su fuente y contenido.
+- Estado UX/UI: fecha elevada 16 px para separarla de los títulos sin desplazar
+  los demás datos; títulos completos dentro del cielo. Verificado en WebKit a
+  320 y 440 px. Aprobación visual pendiente. Prueba manual: recorrer ceremonia y recepción
+  y comprobar ambos encabezados y la tipografía sin cambios de los demás datos.
+
+Lemoncello — tipografía editorial y sobre (2026-09-24):
+
+- Estado funcional: Khalifah local en títulos de sobres, hospedaje, vestuario,
+  confirmación y mensaje final; Cormorant en cuerpos. Mensaje de adultos en frase
+  normal y blanco añadido a reservados en DB, seed y preview con script idempotente
+  y respaldo. Vespa en 6 s, conservando curva y apertura de 3.6 s. 53 pruebas pasan.
+- Estado UX/UI: árbol reilustrado cerca del marco izquierdo para verlo en el
+  encuadre móvil; abertura arqueada con alfa completo, sin ramas dentro del hueco.
+  Recursos `envelope-tree-close-edit-v2` y `landscape-open-clear-v3`; cámara y otros
+  objetos conservados. Revisado en WebKit móvil, apertura y módulos finales;
+  aprobación visual del usuario pendiente. Prueba manual: esperar la llegada,
+  abrir y comprobar árbol visible/hueco despejado; recorrer los títulos y comprobar
+  el blanco reservado mediante el scroll interno de vestuario en pantallas cortas.
+
+Lemoncello — vestuario sin scroll (2026-09-24):
+
+- Estado funcional: presentación de `dresscode` sin desplazamiento interno;
+  datos, imágenes de colores y navegación conservados. La cuenta regresiva y
+  el scroll de asistencia mantienen su comportamiento.
+- Estado UX/UI: ambas cenefas a media altura e ilustración de personas un 10%
+  menor, sin deformación. Densidad adaptada en pantallas cortas; las paletas quedan
+  delante de la rama. Verificado en WebKit a 320×568, 375×667, 390×844, 440×763,
+  480×687 y escritorio. Aprobación visual pendiente. Prueba manual: entrar a
+  vestuario y ver título, seis tonos sugeridos y tres reservados completos sin
+  deslizar; avanzar/regresar y comprobar el scroll independiente de asistencia.
+
+Lemoncello — música desde el inicio (2026-09-24):
+
+- Estado funcional: `music_player` habilitado con «Eres tú · Carla Morrison»,
+  desde el Storage del evento; configuración local, seed y preview alineados.
+  Inicia al salir del loader, durante el recorrido del sobre. Si autoplay está
+  bloqueado, reintenta con interacción. Abrir respeta el silencio elegido y
+  navegar no reinicia la canción. Script backend idempotente con respaldo.
+- Validación: 62 pruebas frontend y una backend pasan. WebKit móvil por túnel
+  confirmó inicio audible en fase `travel`; bloqueo de autoplay simulado recuperado
+  con un toque, silencio conservado al abrir y continuidad al avanzar.
+- Estado UX/UI: control circular beige y azul marino en la esquina superior
+  derecha, revisado a 440×763. Aprobación visual pendiente. Prueba manual: entrar
+  desde un móvil, comprobar el sonido inicial o tocar si el navegador lo bloquea,
+  silenciar, abrir, reactivar y avanzar sin reinicio de la pista.
+
+Lemoncello — inicio con flecha y ritmo del recorrido (2026-09-24):
+
+- Estado funcional: la Vespa espera estática tras la carga. La flecha circular
+  inicia moto y música en el mismo gesto y desaparece; el control de sonido se
+  revela entonces. Abrir hace un vaivén breve cada 3 s al llegar. La ceremonia
+  aparece junto con su paisaje bajo las sombrillas, manteniendo bloqueada la
+  interacción hasta terminar. Frase ↔ fotos dura 3 s con aceleración/frenado.
+  Los demás recorridos y datos permanecen iguales. `RECEPTION TIME TO REPLACE`
+  sigue indicando que las 16:00 de recepción son provisionales.
+- Validación: 62 pruebas frontend pasan, incluidos espera inicial, clics repetidos,
+  continuidad del audio, cambio bajo cobertura y movimiento reducido. WebKit móvil
+  confirmó audio detenido antes de la flecha, reproducción durante la moto,
+  duración/easing de fotos y texto de ceremonia opaco al revelar el paisaje.
+- Estado UX/UI: se reutiliza la flecha circular aprobada y el letrero existente;
+  capturas a 440×763 revisadas. Aprobación visual pendiente. Prueba manual: esperar
+  tras cargar, tocar la flecha, comprobar canción/recorrido y vaivén al llegar;
+  abrir, pasar de frase a fotos y de cuenta regresiva a ceremonia sin texto tardío.
+
+Lemoncello — Abrir sin recuadro (2026-09-24):
+
+- Estado funcional: apertura y vaivén conservados; se elimina el contorno amarillo
+  del foco. La navegación por teclado mantiene una variación leve de brillo del arte.
+- Estado UX/UI: sin marco añadido al letrero. Prueba manual: iniciar el recorrido
+  y comprobar al llegar que Abrir se mueve sin recuadro. Aprobación visual pendiente.
