@@ -91,7 +91,8 @@
   cursor: pointer; opacity: 1; visibility: visible;
   &:disabled { cursor: default; }
   img { display: block; width: 100%; height: auto; pointer-events: none; }
-  &:focus-visible { outline: 2px solid var(--lemoncello-butter); outline-offset: 4px; }
+  outline: none;
+  &:focus-visible img { filter: brightness(.9); }
 }
 .openFallback {
   display: block; padding: var(--ag-space-1);
@@ -108,11 +109,27 @@
   p { margin: 0; background: var(--lemoncello-paper); padding: var(--ag-space-1); }
 }
 .status { position: absolute; left: 0; right: 0; bottom: var(--ag-space-4); text-align: center; }
+.scene .startArrow { bottom: max(var(--ag-space-2), env(safe-area-inset-bottom)); z-index: 6; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .scene[data-envelope-phase='arrived'] .open img {
+    transform-origin: 50% 3%;
+    animation: signSway 3s ease-in-out infinite;
+  }
+}
+@keyframes signSway {
+  0%, 30%, 100% { transform: rotate(0); }
+  7% { transform: rotate(-5deg); }
+  15% { transform: rotate(4deg); }
+  23% { transform: rotate(-2deg); }
+}
 
 .scene[data-envelope-phase='travel'] {
-  .world { animation: travel var(--travel-duration) cubic-bezier(.35,0,.65,1) both; }
-  .vespa { animation: ride var(--travel-duration) cubic-bezier(.35,0,.65,1) both; }
-  .wheel { animation: wheelRoll var(--travel-duration) cubic-bezier(.35,0,.65,1) both; }
+  // Camera, scooter and wheels share acceleration, so the wheels never slide.
+  --ride-easing: cubic-bezier(.45, 0, .55, 1);
+  .world { animation: travel var(--travel-duration) var(--ride-easing) both; }
+  .vespa { animation: ride var(--travel-duration) var(--ride-easing) both; }
+  .wheel { animation: wheelRoll var(--travel-duration) var(--ride-easing) both; }
 }
 .scene:not([data-presentation-ready]) { .world, .vespa, .wheel { animation-play-state: paused; } }
 .scene[data-envelope-phase='arrived'], .scene[data-envelope-phase='opening'] {

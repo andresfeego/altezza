@@ -1,0 +1,81 @@
+@font-face {
+  font-family: 'Lemoncello Cormorant';
+  src: url('./assets/fonts/Cormorant/Cormorant-VariableFont_wght.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lemoncello Cormorant';
+  src: url('./assets/fonts/Cormorant/Cormorant-Italic-VariableFont_wght.ttf') format('truetype');
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+.quote {
+  position: relative;
+  container-type: inline-size;
+  min-height: 100svh;
+  font-family: var(--lemoncello-quote-serif);
+  color: var(--lemoncello-quote-ink);
+}
+
+.board {
+  position: absolute;
+  container-type: inline-size;
+  width: min(calc(100cqw - var(--ag-space-2)), 57svh);
+  bottom: calc(var(--ag-space-6) + var(--ag-space-4));
+  right: var(--ag-space-1);
+  aspect-ratio: 1086 / 1448;
+}
+
+.artwork {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+// These percentages register the live text to the paper face in the painting.
+.writing {
+  position: absolute;
+  inset: 16% 28% 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  align-items: center;
+  gap: var(--ag-space-2);
+  overflow-y: auto;
+  scrollbar-width: none;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  &::-webkit-scrollbar { display: none; }
+  p { margin: 0; color: inherit; }
+}
+
+.message {
+  flex: 0 0 auto;
+  font-family: var(--lemoncello-quote-serif);
+  font-size: clamp(var(--ag-font-size-16), 6cqw, var(--ag-font-size-32));
+  font-style: italic;
+  font-weight: 500;
+  font-synthesis: none;
+  line-height: 1.2;
+}
+
+.reference {
+  flex: 0 0 auto;
+  font-size: var(--ag-font-size-16);
+  font-style: normal;
+  line-height: var(--ag-text-caption-line);
+}
+
+.ornament {
+  flex: 0 0 auto;
+  width: 44%;
+  height: auto;
+  pointer-events: none;
+}

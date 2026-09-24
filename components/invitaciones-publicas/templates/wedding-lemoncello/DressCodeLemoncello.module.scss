@@ -1,0 +1,75 @@
+.stationery.stationery {
+  --date-band-height: calc(clamp(var(--ag-space-6), 10svh, var(--ag-space-8)) / 2);
+  --stationery-top: calc(var(--date-band-height) + var(--ag-space-2));
+  --stationery-inline: var(--ag-space-2);
+  --stationery-bottom: calc(var(--date-band-height) + var(--ag-space-5));
+  --stationery-overflow-y: clip;
+}
+.preload { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; overflow: hidden; }
+.moduleCard { border: 0; }
+.dressCodeChipWithImage { isolation: isolate; }
+.dressCodeModule {
+  display: flex; flex-direction: column; align-items: center;
+  gap: var(--ag-space-1); text-align: center;
+  color: var(--lemoncello-navy);
+  font-family: var(--lemoncello-serif);
+}
+.dressCodeTitle {
+  --ag-heading-h2-size: var(--ag-font-size-32);
+  --ag-heading-h2-line: 1.2; --ag-heading-h2-weight: 400;
+  font-family: var(--lemoncello-script); font-synthesis: none;
+  font-size: var(--ag-heading-h2-size); line-height: var(--ag-heading-h2-line); font-weight: var(--ag-heading-h2-weight);
+  text-wrap: balance;
+}
+.dressCodeData { font-size: var(--ag-font-size-20); font-style: italic; }
+.dressCodeSubtitle {
+  font-family: var(--lemoncello-serif);
+  font-size: var(--ag-font-size-20); line-height: 1.25;
+  white-space: pre-line; text-wrap: balance; max-width: 43ch;
+}
+.dressCodeIllustrationFrame { width: 100%; }
+.dressCodeIllustration {
+  display: block; width: 90%; height: auto; max-height: 19.8svh;
+  margin-inline: auto;
+  object-fit: contain; object-position: center;
+}
+.dressCodePalette {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center; gap: var(--ag-space-1); flex-wrap: wrap;
+}
+.dressCodeChip {
+  position: relative; display: inline-block; flex: 0 0 auto;
+  width: var(--ag-space-5); height: var(--ag-space-5);
+  border-radius: 50%; overflow: hidden;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--lemoncello-navy) 15%, transparent);
+}
+.dressCodeChipImage {
+  position: absolute; width: var(--swatch-image-width, 100%); height: var(--swatch-image-height, 100%);
+  left: var(--swatch-image-x, 0); top: var(--swatch-image-y, 0); max-width: none; object-fit: cover;
+}
+.dressCodeChipAvoided { width: var(--ag-space-6); height: var(--ag-space-6); }
+.dressCodeChipCross {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  color: var(--lemoncello-navy); font: 400 var(--ag-font-size-32)/1 Georgia, serif;
+  text-shadow: 0 0 var(--ag-space-1) var(--lemoncello-white);
+}
+@media (min-height: 820px) {
+  .dressCodeModule { gap: var(--ag-space-2); }
+  .dressCodeIllustration { max-height: 21.6svh; }
+}
+@media (max-height: 740px) {
+  .dressCodeSubtitle { font-size: var(--ag-font-size-16); }
+}
+@media (max-height: 700px) {
+  .stationery.stationery {
+    --date-band-height: calc(clamp(var(--ag-space-4), 8svh, var(--ag-space-6)) / 2);
+  }
+}
+@media (max-width: 399px) {
+  .dressCodeTitle { --ag-heading-h2-size: var(--ag-font-size-24); }
+}
+@media (max-height: 640px) {
+  .dressCodeSubtitle { font-size: var(--ag-font-size-14); }
+  .dressCodeChip { width: var(--ag-space-4); height: var(--ag-space-4); }
+  .dressCodeChipAvoided { width: var(--ag-space-5); height: var(--ag-space-5); }
+}

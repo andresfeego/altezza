@@ -1,5 +1,13 @@
 # Alineación de contratos de invitaciones
 
+`image_slider_1` es el nombre canónico de `image_slider_sepia` desde el 20/09/2026.
+El alias anterior se normaliza tanto en frontend como backend. Los contratos
+`images` (array de URLs), `title`, `intervalMs` e `imageAdjustments` se conservan,
+así como `enabled`, `order` y `sectionBackground`. La migración de datos cambia
+solo `type`: no cambia rutas de fotos ni presentación de Classic, Oliva o Terracota.
+Lemoncello utiliza esos mismos datos en una pila manual de Polaroids, solicitada
+por el usuario; las otras plantillas mantienen su slider automático.
+
 Actualización Lemoncello: `wedding_lemoncello` incorpora el catálogo común y ambos
 heroes con los mismos contratos. El sobre animado consume `invitationLabel` y
 `eventDate` del resolver compartido; sus cinco capas ilustradas son recursos de
@@ -27,7 +35,8 @@ datos antes de pasarlos a las vistas.
 | `save_the_date_calendar` | `message`; fecha de ceremonia del evento | Mes, año, cuadrícula y día marcado derivados de la fecha en Colombia |
 | `event_details` | `title` opcional, flags existentes, `backgroundVideo`, frases opcionales `ceremonyMessage` / `receptionMessage`; lugares y fechas de `invitacion` | Fechas/lugares en `invitacion`; enlaces, direcciones y frases resueltos en campos comunes del módulo |
 | `attendance_confirm` | `title`, `helperText`, opciones existentes y datos de invitación | Contrato compartido de confirmación; sin `introMessage` exclusivo de Oliva |
-| `closing_message` | `message`, `frameImage` y `frameImageAlt` opcionales | Los mismos campos. Un cierre de texto no requiere un marco |
+| `music_player` | `title`, `trackLabel`, `audioSrc`, `autoplay`, `initiallyMuted` | Mismos datos en todas las plantillas; recurso de audio del evento, reproducción continua y control de sonido compartido |
+| `closing_message` | `message`; `imageSrc`/`imageAlt` opcionales para monograma u otra imagen; `frameImage`, `frameImageAlt`, `showFrame` para ornamento | Los mismos campos. La imagen de contenido es independiente del marco; los cierres anteriores sin imagen conservan su presentación |
 
 El hero no contiene una introducción, foto editorial independiente ni nombres
 completos exclusivos. Las introducciones van a `welcome_message`, las fotos a
@@ -69,6 +78,21 @@ botánicos propios. No consume fecha, frase, logo ni imagen desde el evento. En
 Esta alineación no añade validación exhaustiva por schema al backend. Esa
 validación sigue pendiente; las pruebas de compatibilidad verifican los
 contratos compartidos, los módulos soportados y la conservación de contenido.
+
+## Reproducción de música
+
+`MusicPlayerView` admite la señal opcional de presentación `playbackReady`
+(verdadera por defecto), sin agregar campos al contrato de datos. `waitForStart`
+(falso por defecto) permite esperar un arranque explícito mediante los controles
+compartidos. Lemoncello precarga el audio y prepara esos controles al salir del
+loader; su flecha inicial reproduce dentro del clic que inicia la moto. No intenta
+autoplay ni responde a gestos ajenos antes de esa flecha. Las demás plantillas
+conservan el inicio y respaldo por gestos existentes. El reproductor permanece montado entre
+escenas. Si el navegador rechaza el inicio, reintenta con un gesto posterior;
+un intento fallido no consume definitivamente esa posibilidad. El control refleja
+la reproducción real y la decisión explícita de silenciar se respeta al abrir
+el sobre. La política de [autoplay del navegador](https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Autoplay)
+puede exigir interacción para reproducir sonido.
 
 ## Fondo multimedia del sobre
 
@@ -162,3 +186,16 @@ etiquetas anteriores por compatibilidad, y una cadena vacía oculta el título.
 Una lista vacía oculta también su título. Un módulo con solo `title`/`message`
 ya puede mostrarse. Se conserva el respaldo de ilustración de Classic y
 Terracota para tarjetas anteriores. Las tres plantillas comparten esta lógica.
+
+## Recomendaciones
+
+`recommendations` es un módulo genérico disponible en Classic, Oliva, Terracota y
+Lemoncello. Su configuración contiene `title`, `text1`, `text2`, `imageSrc`,
+`imageAlt`, `linkUrl` y `linkLabel` (predeterminado «Ver web»). Todos son opcionales;
+un módulo sin contenido se omite. La imagen acepta rutas locales o HTTP(S), y
+los enlaces solamente HTTP(S). Los dos textos admiten saltos de línea y enlaces
+explícitos `[etiqueta](https://...)`; no se interpreta HTML. Permite un teléfono
+visible sin código de país con un destino WhatsApp completo, sin añadir campos
+específicos de hoteles al contrato. Las plantillas conservan exactamente los datos.
+En Lemoncello la imagen es el paisaje de la escena, con la información sobre el
+cielo; las otras plantillas la muestran junto al contenido.

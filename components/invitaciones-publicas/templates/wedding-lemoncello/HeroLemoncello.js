@@ -6,12 +6,12 @@ import styles from './HeroLemoncello.module.scss';
 
 const src = asset => typeof asset === 'string' ? asset : asset.src;
 
-export default function HeroLemoncello({ data = {} }) {
+export default function HeroLemoncello({ data = {}, connectedLandscape = false }) {
   const [failedLogo, setFailedLogo] = useState('');
   return <header className={styles.hero}>
-    <div className={styles.painting} aria-hidden="true">
+    {!connectedLandscape ? <div className={styles.painting} aria-hidden="true">
       <img className={styles.coast} src={data.backgroundImage || src(coast)} alt="" data-invitation-preload />
-    </div>
+    </div> : null}
     <div className={styles.bird} aria-hidden="true">
       <div className={styles.birdWindow}>
         <img className={styles.birdFrames} src={src(bird)} alt="" data-invitation-preload />

@@ -127,7 +127,7 @@
 .moduleBlocksave_the_date_calendar { z-index: 125; }
 .moduleBlockparallax_image_date { z-index: 110; }
 .moduleBlockgift_envelopes  { z-index: 120; }
-.moduleBlockimage_slider_sepia { z-index: 115; }
+.moduleBlockimage_slider_1 { z-index: 115; }
 .moduleBlockattendance_confirm { z-index: 130; }
 .moduleBlockclosing_message { z-index: 140; }
 
@@ -1042,21 +1042,21 @@
 /* =====================
    IMAGE SLIDER SEPIA
    ===================== */
-.sepiaSliderModule {
+.imageSlider1Module {
   position: relative;
   overflow: hidden;
   padding: 0px;
   background: var(--inv-bg-base);
 }
 
-.sepiaSliderFrame {
+.imageSlider1Frame {
   position: relative;
   overflow: hidden;
   min-height: clamp(418px, 85.8vw, 616px);
   background: var(--inv-accent-soft);
 }
 
-.sepiaSliderImage {
+.imageSlider1Image {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1069,7 +1069,7 @@
   will-change: opacity, transform;
 }
 
-.sepiaSliderImageActive {
+.imageSlider1ImageActive {
   opacity: 1;
 }
 

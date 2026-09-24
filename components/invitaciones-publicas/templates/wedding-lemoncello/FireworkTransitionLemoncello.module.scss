@@ -1,0 +1,37 @@
+// The firework only accompanies the event text change; the daylight stays fixed.
+.transition { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+.ember {
+  position: absolute; left: 72%; top: 76%;
+  width: calc(var(--ag-space-1) / 2); height: calc(var(--ag-space-1) / 2);
+  border-radius: 50%; background: var(--lemoncello-paper);
+  box-shadow: 0 0 var(--ag-space-1) var(--lemoncello-butter);
+  animation: emberRise var(--journey-duration) linear both;
+  &::after {
+    content: ''; position: absolute; top: 50%; left: 25%; width: 50%; height: var(--ag-space-2);
+    background: linear-gradient(var(--lemoncello-butter), transparent);
+    transform: rotate(-12deg); transform-origin: top;
+  }
+}
+.burst {
+  position: absolute; left: 50%; top: 29%;
+  animation: emberBloom var(--journey-duration) linear both;
+  i {
+    position: absolute; width: calc(var(--ag-space-1) / 4); height: var(--ag-space-1);
+    border-radius: 50%; background: var(--lemoncello-butter);
+    box-shadow: 0 0 calc(var(--ag-space-1) / 2) var(--lemoncello-paper);
+    transform: rotate(var(--ray-angle)) translateY(calc(-1 * var(--ray-distance)));
+  }
+}
+@keyframes emberRise {
+  0%, 8% { left: 72%; top: 76%; opacity: 0; }
+  10% { left: 71%; top: 73%; opacity: 1; }
+  40% { left: 50%; top: 29%; opacity: 1; }
+  43%, 100% { left: 50%; top: 29%; opacity: 0; }
+}
+@keyframes emberBloom {
+  0%, 39% { opacity: 0; transform: scale(.15); }
+  41% { opacity: .9; transform: scale(.3); }
+  52% { opacity: .7; transform: scale(1); }
+  63%, 100% { opacity: 0; transform: scale(1.2); }
+}
+@media (prefers-reduced-motion: reduce) { .transition { display: none; } }

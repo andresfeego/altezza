@@ -1,0 +1,5 @@
+{
+  "landscape": { "width": 1897, "height": 829, "panels": 4, "chapelCenterX": 1422, "skyBottom": 416 },
+  "sign": { "x": 1276, "y": 635, "width": 65, "designWidth": 480, "imageWidth": 941, "imageHeight": 1672 },
+  "paper": { "left": 0.09, "top": 0.076, "width": 0.82, "height": 0.739 }
+}
