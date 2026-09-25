@@ -8,10 +8,11 @@
     "nombreEvento": "Laura & Sergio",
     "fechaHoraCeremonia": "2026-12-19T14:30:00-05:00",
     "label": "TEST INVITATION TO REPLACE",
-    "fechaHoraRecepcion": "2026-12-19T16:00:00-05:00",
+    "fechaHoraRecepcion": "2026-12-19T16:30:00-05:00",
     "lugarCeremonia": "Capilla Señora del Rosario del Pantano de Vargas",
-    "lugarRecepcion": "Villa Germana",
-    "receptionMapUrl": "https://www.google.com/maps/search/?api=1&query=5.7550716,-73.0934421"
+    "lugarRecepcion": "Villa Germana Paipa",
+    "receptionMapUrl": "https://www.google.com/maps/search/?api=1&query=5.7550716,-73.0934421",
+    "ceremonyMapUrl": "https://maps.app.goo.gl/ULysqgZLGN33vxTv9?g_st=ic"
   },
   "modules": [
     {
@@ -49,12 +50,16 @@
         "title": "",
         "images": [
           "/scrAppaltezza/invitations/bodlauser/image_slider_1/017.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/023.webp",
           "/scrAppaltezza/invitations/bodlauser/image_slider_1/005.webp",
           "/scrAppaltezza/invitations/bodlauser/image_slider_1/012.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/024.webp",
           "/scrAppaltezza/invitations/bodlauser/image_slider_1/004.webp",
           "/scrAppaltezza/invitations/bodlauser/image_slider_1/011.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/025.webp",
           "/scrAppaltezza/invitations/bodlauser/image_slider_1/015.webp",
-          "/scrAppaltezza/invitations/bodlauser/image_slider_1/006.webp"
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/006.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/026.webp"
         ]
       }
     },
@@ -87,7 +92,9 @@
         "showReception": true,
         "title": "",
         "ceremonyMessage": "Te agradecemos llegar puntualmente.",
-        "receptionMessage": "RECEPTION TIME TO REPLACE"
+        "receptionMessage": "",
+        "ceremonyMapUrl": "https://maps.app.goo.gl/ULysqgZLGN33vxTv9?g_st=ic",
+        "receptionMapUrl": "https://www.google.com/maps/search/?api=1&query=5.7550716,-73.0934421"
       }
     },
     {

@@ -24,6 +24,9 @@
   background: var(--lemoncello-white);
   color: var(--lemoncello-navy); font-family: var(--date-serif);
 }
+.scene[data-date-scene] {
+  --stationery-bottom: calc(var(--date-band-height) + var(--ag-space-6));
+}
 .tiles {
   position: absolute; left: 0; display: block;
   width: 100%; height: var(--date-band-height); object-fit: cover;
@@ -54,6 +57,7 @@
 }
 @media (max-height: 700px) {
   .scene { --date-band-height: clamp(var(--ag-space-4), 8svh, var(--ag-space-6)); }
+  .scene[data-date-scene] { --stationery-bottom: calc(var(--date-band-height) + var(--ag-space-4)); }
   .writing {
     inset: var(--stationery-top, calc(var(--date-band-height) + var(--ag-space-2))) var(--stationery-inline, var(--ag-space-3)) var(--stationery-bottom, calc(var(--date-band-height) + var(--ag-space-5)));
     gap: var(--ag-space-2);
@@ -97,7 +101,13 @@
 .saveTheDateCalendarYear { order: 1; }
 .saveTheDateCalendarWeekdays, .saveTheDateCalendarGrid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
 .saveTheDateCalendarWeekdays { margin-bottom: var(--ag-space-1); font: 400 var(--ag-font-size-12)/1.2 var(--date-serif); }
-.saveTheDateCalendarCell, .saveTheDateCalendarCellEmpty { position: relative; display: grid; place-items: center; height: var(--ag-space-3); min-width: 0; font: 400 var(--ag-font-size-16)/1 var(--date-serif); }
+.saveTheDateCalendarCell, .saveTheDateCalendarCellEmpty { position: relative; display: grid; place-items: center; height: var(--ag-space-4); min-width: 0; font: 400 var(--ag-font-size-16)/1 var(--date-serif); }
 .saveTheDateCalendarCellSelected { font-weight: 600; }
-.saveTheDateCalendarHeart { position: absolute; inset: 0; display: grid; place-items: center; svg { width: var(--ag-font-size-24); height: var(--ag-font-size-24); stroke-width: 1; transform: rotate(-8deg); } }
+.saveTheDateCalendarHeart {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  // Cormorant's visible numerals sit below their line-box centre.
+  transform: translateY(calc(var(--ag-space-1) / 2));
+  svg { width: var(--ag-space-4); height: var(--ag-space-4); stroke-width: 1; }
+}
 .saveTheDateCalendarCellNumber { position: relative; }

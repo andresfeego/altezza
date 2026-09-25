@@ -867,12 +867,14 @@ test('Lemoncello details use shared places, times, links and visibility, and onl
   const View = templates.wedding_lemoncello.MODULE_COMPONENTS.event_details;
   const html = renderToStaticMarkup(React.createElement(View, { data: module.data }));
   assert.match(html, /Capilla Señora del Rosario del Pantano de Vargas/);
-  assert.match(html, /Villa Germana/);
+  assert.match(html, /Villa Germana Paipa/);
   assert.match(html, /2:30 p\. m\./);
-  assert.match(html, /4:00 p\. m\./);
+  assert.match(html, /4:30 p\. m\./);
   assert.equal((html.match(/19 de diciembre de 2026/g) || []).length, 1);
   assert.match(html, /Ver ubicación de recepción/);
-  assert.doesNotMatch(html, /Ver ubicación de ceremonia/);
+  assert.match(html, /Ver ubicación de ceremonia/);
+  assert.ok(html.includes('https://maps.app.goo.gl/ULysqgZLGN33vxTv9?g_st=ic'));
+  assert.doesNotMatch(html, /RECEPTION TIME TO REPLACE/);
   const alternate = renderToStaticMarkup(React.createElement(View, { data: { ...module.data, showCeremony: false, receptionAddress: 'Avenida de prueba', receptionMessage: 'Mensaje editable' } }));
   assert.doesNotMatch(alternate, /Capilla Señora/);
   assert.match(alternate, /Avenida de prueba/);
@@ -880,8 +882,8 @@ test('Lemoncello details use shared places, times, links and visibility, and onl
   const ceremony = renderToStaticMarkup(React.createElement(View, { data: module.data, eventStage: 'ceremony' }));
   const reception = renderToStaticMarkup(React.createElement(View, { data: module.data, eventStage: 'reception' }));
   assert.match(ceremony, /Capilla Señora/);
-  assert.doesNotMatch(ceremony, /Villa Germana|4:00 p\. m\./);
-  assert.match(reception, /Villa Germana/);
+  assert.doesNotMatch(ceremony, /Villa Germana|4:30 p\. m\./);
+  assert.match(reception, /Villa Germana Paipa/);
   assert.doesNotMatch(reception, /Capilla Señora|2:30 p\. m\./);
   const onlyReception = groupSceneModules([{ ...module, data: { ...module.data, showCeremony: false } }]);
   assert.deepEqual(onlyReception.map(scene => scene.eventStage), ['reception']);
