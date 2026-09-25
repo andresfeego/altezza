@@ -868,6 +868,21 @@
     "postprocessing": "scripts/lemoncello-prepare-envelope-tree.cjs",
     "constraints": "Move only tree left; preserve original panorama outside local patch; clear full registered arched opening including leaves."
   },
+  "dresscodeFormalMenswearPreview": {
+    "date": "2026-09-25",
+    "tool": "image_gen (built-in)",
+    "status": "Approved and integrated on 2026-09-25. Suggested color title and palette removed from the event configuration; reserved colors retained.",
+    "output": "public/images/invitaciones/bodlauser/dresscode-guests-formal-v2.webp",
+    "generatedSource": "exec-d3491973-bb69-47ab-b7e8-ea2634ecb94b.png",
+    "references": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/public/images/invitaciones/bodlauser/dresscode-guests-v1.webp",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+    ],
+    "prompt": "Use case: precise-object-edit / identity-preserve.\nAsset: dress-code illustration for the Lemoncello wedding invitation. Make ONE edited version of input image 1.\n\nINPUT ROLES:\n1. dresscode-guests-v1.webp is the EDIT TARGET: six watercolor guests, three women on the left and three men on the right. This defines the exact composition, people, poses, scale, spacing and existing artwork.\n2. watercolor-style-master.jpg is the mandatory traditional watercolor technique and muted palette reference ONLY.\n3. landscape-proportioned.png is the approved invitation painting, for watercolor softness and integration ONLY. Do not copy any scenery or objects from inputs 2 or 3.\n\nEDIT ONLY THE CLOTHING OF THE THREE MEN ON THE RIGHT.\nFrom left to right among the men: first a conventional MEDIUM GRAY wool business/wedding suit, second a DARKER CHARCOAL GRAY wool suit, third a BLACK wool suit. Each must be a classic matching two-piece suit with structured tailored jacket, normal notch lapels, full-length matching formal trousers, white dress shirt, restrained classic necktie and appropriate formal leather shoes. Matte suiting wool (paño), natural tailoring and subtle watercolor folds. No linen, rolled-up sleeves, pastel suits, casual open shirt, cropped bare-ankle trousers, tuxedos, satin lapels or bow ties. The middle man must now have a proper matching charcoal jacket as well as trousers.\n\nLOCK EVERYTHING ELSE: the three WOMEN must remain EXACTLY identical to input 1, as if their original pixels were protected from editing. Do not redraw, beautify, recolor, reposition or change them. Keep their blush pink, sage green and muted peach dresses, folds, handbags, jewelry, shoes, hands, hair and faceless softly shaded faces unchanged. Retain all men's exact heads, hair, minimal facial shading, natural proportions, standing positions, hand/arm positions and leg poses; the rightmost man keeps his crossed-leg pose. Keep the exact six-figure group arrangement and full head-to-shoe framing.\n\nMaintain the same wide 2:1 canvas and relative figure sizes. GENUINE transparent alpha background everywhere around and between figures. No scenery, floor, shadows outside the silhouettes, white rectangle, checkerboard pattern, text, labels, color swatches or watermarks.\nKeep soft traditional watercolor: translucent pigment washes, visible paper-like pigment within forms, delicate organic brushwork, moderate contrast and muted colors. Render the black suit as rich softly modulated black/charcoal watercolor with readable folds, not a solid vector silhouette. No photo/3D/cartoon look, hard dark outlines, oversaturated colors, orange or violet cast. The only intended visible change is the three men's attire becoming conventional formal gray/charcoal/black wool suits.",
+    "original": "public/images/invitaciones/bodlauser/dresscode-guests-formal-v2.png",
+    "postprocessing": "Lossless WebP conversion at the original 1774 × 887 dimensions; alpha retained, no visual edits."
+  },
   "heroQuoteContinuity": {
     "date": "2026-09-24",
     "tool": "image_gen (built-in)",
