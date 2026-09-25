@@ -86,12 +86,15 @@ no se convierte automáticamente en referencia maestra. La antigua canastilla
   fondo solamente debajo de cobertura total (4.5 s), terminar en 5.6 s. Cámara
   fija. Regreso con fundido blanco de 1.2 s; movimiento reducido omite efectos.
   Vestuario reutiliza fondo blanco, azulejos arriba/abajo y rama de fecha.
-  Tres mujeres a la izquierda y tres hombres a la derecha, sin novia, con ropa
-  ligera en acuarela. Telas sugeridas suaves; mantequilla, cielo y blanco reservados.
+  Tres mujeres a la izquierda y tres hombres a la derecha, sin novia, en acuarela.
+  Dirección aprobada 2026-09-25: conservar los vestidos rosa, salvia y durazno de
+  las mujeres; hombres con trajes convencionales de paño gris, gris oscuro y negro,
+  en las poses originales. Recurso `dresscode-guests-formal-v2.webp`. Sin título
+  ni paleta de colores sugeridos; mantequilla, cielo y blanco siguen reservados.
   Todo texto, ilustración y paletas proviene del contrato compartido `dresscode`.
   Vestuario no tiene scroll interno: sus dos cenefas miden la mitad de las de
   fecha y su ilustración de personas es un 10% menor. Ajustar la densidad en móviles
-  cortos para mostrar título, mensaje y ambas paletas completos; nunca esconderlos
+  cortos para mostrar título, mensaje y paleta reservada completos; nunca esconderlos
   debajo de cenefas o de la rama. El calendario conserva sus medidas actuales.
 - `dresscode` → `attendance_confirm`: desplazamiento vertical sencillo de 900 ms,
   regreso hacia arriba con la misma duración. Asistencia usa fondo azul cielo,
