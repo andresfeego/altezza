@@ -1,0 +1,29 @@
+.transition {
+  position: absolute; inset: 0; z-index: 8; overflow: hidden;
+  pointer-events: none; visibility: hidden;
+}
+.track {
+  position: absolute; isolation: isolate;
+  transform: translate(calc(-50% + var(--umbrella-x)), calc(-50% + var(--umbrella-y)));
+  // Back the fabric's translucent watercolor pixels with an opaque central disk.
+  &::before { content: ''; position: absolute; inset: 10%; border-radius: 50%; background: var(--lemoncello-butter); z-index: -1; }
+  img { display: block; width: 100%; height: 100%; transform-origin: center; }
+}
+.coverCue { position: absolute; width: 0; height: 0; visibility: hidden; }
+.running {
+  visibility: visible;
+  animation: umbrellaClock var(--journey-duration) linear both;
+  .coverCue { animation: umbrellaClock calc(var(--journey-duration) / 2) linear both; }
+  .track { animation: umbrellaTravel var(--journey-duration) linear both; }
+  .track img { animation: umbrellaTurn var(--journey-duration) linear both; }
+}
+@keyframes umbrellaClock { from { opacity: 1; } to { opacity: 1; } }
+@keyframes umbrellaTravel {
+  0% { transform: translate(calc(-50% + var(--umbrella-x)), calc(-50% + var(--umbrella-y))); }
+  100% { transform: translate(calc(-50% + var(--umbrella-exit-x)), calc(-50% + var(--umbrella-exit-y))); }
+}
+@keyframes umbrellaTurn {
+  from { transform: rotate(var(--umbrella-angle)); }
+  to { transform: rotate(calc(var(--umbrella-angle) + var(--umbrella-turn))); }
+}
+@media (prefers-reduced-motion: reduce) { .transition { display: none; } }

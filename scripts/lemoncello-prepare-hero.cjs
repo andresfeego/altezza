@@ -4,11 +4,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 const sharp = require('../../backend-altezza/node_modules/sharp');
 const root = path.resolve(__dirname, '../components/invitaciones-publicas/templates/wedding-lemoncello/assets');
-const destination = path.resolve(__dirname, '../public/images/invitaciones/bodlauser');
+const destination = path.resolve(__dirname, '../../backend-altezza/_local_storage/invitations/bodlauser/cover');
 
 async function run() {
   fs.mkdirSync(destination, { recursive: true });
-  const { data, info } = await sharp(path.join(root, 'references/laura-sergio-monogram-source.jpg'))
+  const { data, info } = await sharp(path.join(destination, 'laura-sergio-monogram-source.jpg'))
     .removeAlpha().raw().toBuffer({ resolveWithObject: true });
   const rgba = Buffer.alloc(info.width * info.height * 4);
   for (let pixel = 0; pixel < info.width * info.height; pixel++) {

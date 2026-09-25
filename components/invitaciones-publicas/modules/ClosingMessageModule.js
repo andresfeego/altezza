@@ -8,6 +8,8 @@ export default function ClosingMessageModule({ module }) {
 
   return {
     message,
+    imageSrc: String(module?.config?.imageSrc || '').trim(),
+    imageAlt: String(module?.config?.imageAlt || '').trim(),
     frameImage,
     showFrame: module?.config?.showFrame !== false,
     frameImageAlt: String(module?.config?.frameImageAlt || 'Marco ornamental').trim(),

@@ -7,7 +7,12 @@
   "invitacion": {
     "nombreEvento": "Laura & Sergio",
     "fechaHoraCeremonia": "2026-12-19T14:30:00-05:00",
-    "label": "TEST INVITATION TO REPLACE"
+    "label": "TEST INVITATION TO REPLACE",
+    "fechaHoraRecepcion": "2026-12-19T16:30:00-05:00",
+    "lugarCeremonia": "Capilla Señora del Rosario del Pantano de Vargas",
+    "lugarRecepcion": "Villa Germana Paipa",
+    "receptionMapUrl": "https://www.google.com/maps/search/?api=1&query=5.7550716,-73.0934421",
+    "ceremonyMapUrl": "https://maps.app.goo.gl/ULysqgZLGN33vxTv9?g_st=ic"
   },
   "modules": [
     {
@@ -25,25 +30,230 @@
       "enabled": true,
       "config": {
         "text1": "Nos casamos",
-        "logoImage": "/images/invitaciones/bodlauser/laura-sergio-monogram.png"
-      }
-    },
-    {
-      "type": "welcome_message",
-      "enabled": true,
-      "order": 3,
-      "config": {
-        "title": "",
-        "subtitle": "Celebramos nuestro amor y queremos compartirlo con nuestras personas favoritas."
+        "logoImage": "/scrAppaltezza/invitations/bodlauser/cover/laura-sergio-monogram.png"
       }
     },
     {
       "type": "biblical_quote",
-      "order": 4,
+      "order": 3,
       "enabled": true,
       "config": {
         "passageText": "Celebramos nuestro amor y queremos compartirlo con nuestras personas favoritas.",
         "passageReference": ""
+      }
+    },
+    {
+      "type": "image_slider_1",
+      "enabled": true,
+      "order": 4,
+      "config": {
+        "title": "",
+        "images": [
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/017.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/023.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/005.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/012.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/024.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/004.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/011.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/025.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/015.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/006.webp",
+          "/scrAppaltezza/invitations/bodlauser/image_slider_1/026.webp"
+        ]
+      }
+    },
+    {
+      "type": "countdown",
+      "enabled": true,
+      "order": 5,
+      "config": {
+        "title": "Faltan",
+        "target": "fechaHoraCeremonia",
+        "message": "Cada instante nos acerca a compartir este día contigo.",
+        "completedMessage": "El momento esperado ya llegó.",
+        "showDate": true
+      }
+    },
+    {
+      "type": "save_the_date_calendar",
+      "enabled": true,
+      "config": {
+        "message": "El gran día"
+      },
+      "order": 6
+    },
+    {
+      "type": "event_details",
+      "enabled": true,
+      "order": 7,
+      "config": {
+        "showCeremony": true,
+        "showReception": true,
+        "title": "",
+        "ceremonyMessage": "Te agradecemos llegar puntualmente.",
+        "receptionMessage": "",
+        "ceremonyMapUrl": "https://maps.app.goo.gl/ULysqgZLGN33vxTv9?g_st=ic",
+        "receptionMapUrl": "https://www.google.com/maps/search/?api=1&query=5.7550716,-73.0934421"
+      }
+    },
+    {
+      "type": "gift_envelopes",
+      "enabled": true,
+      "order": 8,
+      "config": {
+        "title": "Lluvia de sobres",
+        "leadText": "Amamos los niños, pero este evento es exclusivo para adultos.",
+        "imageSrc": "/images/invitaciones/bodlauser/gift-envelope-watercolor-v1.webp",
+        "imageAlt": "Sobre en acuarela con un limón y hojas"
+      }
+    },
+    {
+      "type": "recommendations",
+      "enabled": true,
+      "order": 9,
+      "config": {
+        "title": "Hospedaje",
+        "text1": "Para los familiares y amigos que nos acompañan desde otras ciudades, les recomendamos esta opción de hospedaje.",
+        "text2": "Casa Hotel Descanso Real\n[318 393 1186](https://wa.me/573183931186?text=Hola%2C%20estoy%20interesado%20en%20informaci%C3%B3n%20sobre%20hospedaje%20para%20la%20boda%20de%20Laura%20y%20Sergio.)",
+        "imageSrc": "/images/invitaciones/bodlauser/recommendations-hotel-night-v1.webp",
+        "imageAlt": "Ilustración en acuarela de un hotel italiano entre montañas, con ventanas iluminadas y balcones",
+        "linkUrl": "https://hoteldescansoreal.com/",
+        "linkLabel": "Ver web"
+      }
+    },
+    {
+      "type": "dresscode",
+      "enabled": true,
+      "order": 10,
+      "config": {
+        "title": "Vestuario · Elegancia fresca",
+        "attireLabel": "",
+        "message": "Queremos que disfrutes de este día con libertad y comodidad.\n\nElige prendas frescas, ligeras y elegantes, con siluetas fluidas y tejidos que te permitan celebrar sin restricciones.\n\nNo es etiqueta. Es elegancia relajada.",
+        "imageSrc": "/images/invitaciones/bodlauser/dresscode-guests-v1.webp",
+        "imageAlt": "Tres mujeres a la izquierda y tres hombres a la derecha, con prendas ligeras y elegantes en tonos pastel, ilustrados en acuarela.",
+        "suggestedColorsTitle": "Tonos sugeridos",
+        "suggestedColors": [
+          {
+            "label": "Salvia",
+            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
+            "crop": {
+              "x": 3,
+              "y": 6,
+              "width": 19,
+              "height": 38
+            }
+          },
+          {
+            "label": "Rosa empolvado",
+            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
+            "crop": {
+              "x": 28,
+              "y": 6,
+              "width": 19,
+              "height": 38
+            }
+          },
+          {
+            "label": "Durazno",
+            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
+            "crop": {
+              "x": 53,
+              "y": 6,
+              "width": 19,
+              "height": 38
+            }
+          },
+          {
+            "label": "Lavanda suave",
+            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
+            "crop": {
+              "x": 78,
+              "y": 6,
+              "width": 19,
+              "height": 38
+            }
+          },
+          {
+            "label": "Verde agua",
+            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
+            "crop": {
+              "x": 3,
+              "y": 56,
+              "width": 19,
+              "height": 38
+            }
+          },
+          {
+            "label": "Arena rosada",
+            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
+            "crop": {
+              "x": 28,
+              "y": 56,
+              "width": 19,
+              "height": 38
+            }
+          }
+        ],
+        "avoidedColorsTitle": "Reservados: amarillo mantequilla, azul cielo y blanco",
+        "avoidedColors": [
+          {
+            "label": "Amarillo mantequilla",
+            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
+            "crop": {
+              "x": 53,
+              "y": 56,
+              "width": 19,
+              "height": 38
+            }
+          },
+          {
+            "label": "Azul cielo",
+            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
+            "crop": {
+              "x": 78,
+              "y": 56,
+              "width": 19,
+              "height": 38
+            }
+          },
+          {
+            "color": "#FFFFFF",
+            "label": "Blanco"
+          }
+        ]
+      }
+    },
+    {
+      "type": "attendance_confirm",
+      "enabled": true,
+      "order": 11,
+      "config": {
+        "title": "¿Nos acompañas?",
+        "helperText": "Estamos felices de que hagas parte de celebrar nuestro amor, eres una persona muy especial para nosotros.\n\nConfirma la asistencia de cada integrante de tu invitación."
+      }
+    },
+    {
+      "type": "closing_message",
+      "enabled": true,
+      "order": 12,
+      "config": {
+        "message": "Te esperamos",
+        "imageSrc": "/scrAppaltezza/invitations/bodlauser/cover/laura-sergio-monogram.png",
+        "imageAlt": "Monograma de Laura y Sergio",
+        "showFrame": false
+      }
+    },
+    {
+      "type": "music_player",
+      "order": 13,
+      "enabled": true,
+      "config": {
+        "title": "Nuestra canción",
+        "trackLabel": "Eres tú · Carla Morrison",
+        "audioSrc": "/scrAppaltezza/invitations/bodlauser/music/carla-morrison-eres-tu.mp3",
+        "autoplay": true,
+        "initiallyMuted": false
       }
     }
   ]

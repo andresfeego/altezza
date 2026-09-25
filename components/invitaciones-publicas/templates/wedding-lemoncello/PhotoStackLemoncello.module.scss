@@ -1,0 +1,57 @@
+.scene {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  color: var(--lemoncello-navy);
+  font-family: Georgia, 'Times New Roman', serif;
+}
+.title { position: absolute; top: var(--ag-space-7); inset-inline: var(--ag-space-3); }
+.deck { position: relative; width: min(72cqw, 48svh); aspect-ratio: 4 / 5; }
+.polaroid {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: var(--ag-space-2) var(--ag-space-2) 0;
+  display: flex;
+  flex-direction: column;
+  border: 0;
+  border-radius: 0;
+  background: var(--lemoncello-paper);
+  color: var(--lemoncello-navy);
+  box-shadow: 0 var(--ag-space-1) var(--ag-space-3) color-mix(in srgb, var(--lemoncello-navy) 22%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--lemoncello-navy) 9%, transparent);
+  transform: translate3d(var(--photo-x), var(--photo-y), 0) rotate(var(--photo-angle)) scale(var(--photo-scale));
+  transition: transform 300ms ease-out;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: grab;
+  outline-offset: var(--ag-space-1);
+  &:focus-visible { outline: 2px solid var(--lemoncello-navy); }
+  &[data-photo-top='false'] { pointer-events: none; }
+}
+.dragging { transition: none; cursor: grabbing; }
+.photoWindow {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--lemoncello-paper);
+  img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; pointer-events: none; }
+}
+.caption {
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  font: italic 400 var(--ag-font-size-24)/var(--ag-text-card-title-line) Georgia, 'Times New Roman', serif;
+  letter-spacing: .04em;
+}
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@media (prefers-reduced-motion: reduce) { .polaroid { transition: none; } }

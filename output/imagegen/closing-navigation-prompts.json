@@ -1,0 +1,30 @@
+{
+  "tool": "built-in image_gen",
+  "closing": {
+    "refs": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/hero-coast.webp",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/chapel-reference-night-v1.webp"
+    ],
+    "prompt": "Use case: illustration-story. Create a portrait 4:7 watercolor painting background for the final scene of the Lemoncello Italian wedding invitation. Input 1 is the mandatory technique and palette master; input 2 is the approved invitation painting defining soft brushwork and materials. Input 3 defines the coastal landscape subject, but zoom FAR BACK: see the beautiful Amalfi coastline, layers of distant mountains, very small Italian hillside town with pale buildings and subtle warm butter-yellow window lights, and tranquil sea from afar. No balcony, no railing, no close objects, no plants in foreground, no people. Input 4 defines the established NIGHT atmosphere: deep navy watercolored starry sky with visible translucent pigment and subtle paper grain; muted powder blue mountain ridges, pale yellow highlights; absolutely no purple. Use the very same thin butter-ivory crescent moon shape, orientation and watercolor softness as input 4, small near the UPPER LEFT at about 20% width, 12% height. Only ONE moon. Leave a generous quiet navy sky over the upper 60% of the canvas, especially the upper right from x40-90%, y15-45%, where an HTML monogram and message will be overlaid later. Distribute tiny delicate ivory stars, sparse near the copy area. Put the distant town and coast in the lower 40%, mainly left with sea stretching to the right, natural small scale and clear view. Very refined traditional translucent watercolor, pigment granulation, soft organically feathered brush shapes WITHIN a full-bleed rectangular portrait canvas. No flat vector art, no photorealism, no 3D, no harsh outlines or neon colors, no sunset. Night is deep blue but silhouettes remain legible, not black. No text, no typography, no monogram, no frame, no borders. The setting feels like the same Italian coast as the hero viewed from far away at night.",
+    "source": "exec-26812c6a-70cb-4d1f-b1b5-3b1356bce2e1.png",
+    "outputs": [
+      "images/closing-coast-night-v1.png",
+      "images/closing-coast-night-v1.webp"
+    ]
+  },
+  "navigation": {
+    "refs": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/scene-arrow-v1.webp"
+    ],
+    "prompt": "Use case: precise-object-edit. Create ONE circular navigation medallion as a transparent PNG, matching the existing Lemoncello wedding illustration. Inputs 1 and 2 are mandatory watercolor technique and softness references; input 3 is the existing arrow material/color reference ONLY. Replace its long horizontal silhouette with a small perfectly round disc, front facing with no perspective. Disc material: softly painted pale warm butter-beige ivory ceramic/paper, subtle natural watercolor granulation, with a thin hand-painted slightly darker muted ochre beige rim. Center ONE short small navy blue arrow pointing RIGHT inside the circle, based on the blue arrow in input 3, hand painted, subtle powder-blue pigment variation, broad enough to read at 48px, with a short shaft and simple triangular arrowhead, occupying only 42% of the disc width. Leave ample pale blank space around arrow inside circle. Absolutely no lemon, no leaves, no flowers, no ornament, no text, no extraneous decoration, no drop shadow outside circle. Match softly diluted traditional watercolor, no glossy plastic, no 3D, no black outline, no vector-flat look. Square canvas, disc occupies about 90% of canvas, GENUINE transparent alpha outside circular disc; no background and no painted checkerboard.",
+    "source": "exec-1b4eb39b-f5af-4f86-a811-e9770ada2fc4.png",
+    "outputs": [
+      "images/scene-arrow-round-v1.png",
+      "images/scene-arrow-round-v1.webp"
+    ]
+  }
+}

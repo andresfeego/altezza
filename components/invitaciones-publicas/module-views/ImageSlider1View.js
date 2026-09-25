@@ -44,7 +44,7 @@ function getImageAdjustment(image, index, configAdjustments = {}) {
   };
 }
 
-export default function ImageSliderSepiaView({ data, styles }) {
+export default function ImageSlider1View({ data, styles }) {
   const images = useMemo(() => (Array.isArray(data?.images) ? data.images.filter(Boolean) : []), [data?.images]);
   const intervalMs = Number(data?.intervalMs) > 0 ? Number(data.intervalMs) : 2000;
   const configAdjustments = data?.imageAdjustments && typeof data.imageAdjustments === 'object'
@@ -69,13 +69,13 @@ export default function ImageSliderSepiaView({ data, styles }) {
   if (!images.length) return null;
 
   return (
-    <section className={`${styles.moduleCard} ${styles.sepiaSliderModule || ''}`}>
+    <section className={`${styles.moduleCard} ${styles.imageSlider1Module || ''}`}>
       {data?.title ? (
         <div className={styles.sectionHeading}>
           <h2 className={styles.moduleTitle}>{data.title}</h2>
         </div>
       ) : null}
-      <Filtered as="div" filter="none" className={styles.sepiaSliderFrame || ''}>
+      <Filtered as="div" filter="none" className={styles.imageSlider1Frame || ''}>
         {images.map((image, index) => {
           const adjustment = getImageAdjustment(image, index, configAdjustments);
 
@@ -88,7 +88,7 @@ export default function ImageSliderSepiaView({ data, styles }) {
                 objectPosition: `${adjustment.positionX}% ${adjustment.positionY}%`,
                 transform: `translateX(${adjustment.translateX}%) scale(${adjustment.zoom})`,
               }}
-              className={`${styles.sepiaSliderImage || ''} ${activeIndex === index ? styles.sepiaSliderImageActive || '' : ''}`}
+              className={`${styles.imageSlider1Image || ''} ${activeIndex === index ? styles.imageSlider1ImageActive || '' : ''}`}
             />
           );
         })}

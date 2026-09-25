@@ -1,0 +1,38 @@
+.scene {
+  position: relative; isolation: isolate; height: 100svh; overflow: hidden;
+  background: var(--lemoncello-navy); color: var(--lemoncello-butter);
+  container-type: inline-size;
+  --closing-halo: color-mix(in srgb, var(--lemoncello-butter) 70%, var(--lemoncello-navy));
+}
+.landscape { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.frame { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.copy {
+  position: absolute; top: 19svh; right: var(--ag-space-3); width: 60%;
+  display: flex; flex-direction: column; align-items: center; gap: var(--ag-space-3);
+  text-align: center;
+}
+.monogram { display: block; position: relative; width: 100%; }
+.monogram img { display: block; width: auto; max-width: 100%; max-height: 18svh; height: auto; margin-inline: auto; }
+.ink { display: none; }
+@supports ((mask-image: none) or (-webkit-mask-image: none)) {
+  .monogram {
+    filter: drop-shadow(0 0 var(--lemoncello-ink-halo-radius) var(--closing-halo));
+    img { opacity: 0; }
+  }
+  .ink {
+    display: block; position: absolute; inset: 0; background: var(--lemoncello-butter);
+    -webkit-mask: var(--closing-image-mask) center / contain no-repeat;
+    mask: var(--closing-image-mask) center / contain no-repeat; mask-mode: alpha;
+  }
+}
+.message {
+  margin: 0; color: inherit; font-family: var(--lemoncello-script);
+  font-weight: 400; font-synthesis: none;
+  font-size: clamp(var(--ag-font-size-32), 8cqw, var(--ag-font-size-40)); line-height: 1.2;
+  text-shadow: 0 0 var(--lemoncello-ink-halo-radius) var(--closing-halo);
+  white-space: pre-line; text-wrap: balance; overflow-wrap: anywhere;
+}
+@media (forced-colors: active) {
+  .monogram { filter: none; img { opacity: 1; } }
+  .ink { display: none; }
+}

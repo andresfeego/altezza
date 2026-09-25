@@ -48,7 +48,8 @@
     "welcome-panorama-v1.webp",
     "waiter-walk-v1.webp",
     "welcome-board-v1.webp",
-    "scene-arrow-v1.webp"
+    "scene-arrow-v1.webp",
+    "hero-quote-continuous-v2.webp"
   ],
   "revisionReference": "/tmp/codex-remote-attachments/01a0bbe5-8f53-7152-b064-ae2ec11273d0/EC46688C-AC57-4492-B507-6F06233180EE/1-Imagen-pegada-1.jpg",
   "postprocessing": {
@@ -77,7 +78,7 @@
   "hero": {
     "tool": "built-in ImageGen",
     "compositionReference": "references/hero-composition.jpg",
-    "monogramReference": "references/laura-sergio-monogram-source.jpg",
+    "monogramReference": "/scrAppaltezza/invitations/bodlauser/cover/laura-sergio-monogram-source.jpg",
     "generated": {
       "coast": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-a462a1bc-0157-414a-b0b0-747f8cf90cb3.png",
       "balcony": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-7156ea22-8f00-4502-ba0e-5ab77b32fbcf.png"
@@ -204,6 +205,36 @@
       "rotation": "Actual world travel distance / wheel circumference, 8000ms, same cubic-bezier as travel; stationary on arrival; disabled for reduced motion."
     }
   },
+  "photoScene": {
+    "tool": "built-in ImageGen",
+    "prompt": "Use case: illustration-story. Asset type: full-bleed vertical 2:3 background painting for the next horizontal scene of a mobile Italian Limoncello wedding invitation. Image 1 is the REQUIRED master for traditional delicate watercolor pigment, translucent washes and muted palette. Image 2 is the APPROVED invitation scene: match its exact soft watercolor treatment and natural proportions. Image 3 is the adjacent cocktail terrace, a COMPOSITION and continuity reference only; continue to the right from that terrace into a peaceful Italian lemon garden overlooking the blue Mediterranean. Paint a continuous natural setting: on the far left margin the last sliver of ivory villa stone wall draped with small white blossoms and a partial butter-yellow striped umbrella; pale limestone paving crosses the lower foreground at the same level; a low aged stone balustrade recedes from lower left toward right, with distant pale blue hills, a small Italian town on the right and luminous sky and sea. Lemon foliage softly frames the upper corners, small terracotta pots of lemons and white flowers at the lower corners. Keep the central 65% of the image quiet, bright, spacious and mostly unobstructed sky/sea/open terrace, to receive real overlaid photographs later. No actual photos, no Polaroids, no frames, no paper sheet, no table, no sign, no lettering, no people. Full edge-to-edge painting, no white border. Restrained diluted sky blue/pastel, butter yellow, ivory, sage/olive, light ochre with navy as a minor accent. Fine visible watercolor paper/pigment and organic loose brushwork, moderate soft contrast. No digital vectors, cartoon outlines, photorealism, 3D, saturated orange or thick dark outlines. Preserve the first two references as style authorities. Portrait 2:3 aspect ratio.",
+    "references": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/welcome-panorama-v1.png"
+    ],
+    "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-50ecd92c-0884-4958-b8cb-3a9dc0ec48e4.png",
+    "assets": [
+      "images/photo-garden-v1.png",
+      "images/photo-garden-v1.webp"
+    ],
+    "photos": {
+      "selected": [
+        "017.jpeg",
+        "005.jpeg",
+        "012.jpeg",
+        "004.jpeg",
+        "011.jpeg",
+        "015.jpeg",
+        "006.jpeg"
+      ],
+      "originals": "backend-altezza/_local_storage/invitations/bodlauser/photos",
+      "manifest": "backend-altezza/_local_storage/invitations/bodlauser/photos-manifest.json",
+      "delivery": "backend-altezza/_local_storage/invitations/bodlauser/image_slider_1",
+      "processing": "Original JPEG bytes preserved; delivery WebP auto-orients EXIF, fits inside 1400x1400 without enlargement, quality 88."
+    },
+    "interaction": "Seven Polaroids; any swipe direction sends the first to the back. Hint disappears at first deliberate drag, retained in sessionStorage for this collection. Pointer cancel, keyboard and reduced motion supported."
+  },
   "welcomeScene": {
     "tool": "built-in ImageGen",
     "sourceWord": "backend-altezza/_local_storage/invitations/bodlauser/refenreces/ENUNCIADO INVITACIÓN SERGIO  LAURA.docx",
@@ -242,7 +273,12 @@
     "validation": {
       "date": "2026-09-20",
       "tests": "44 passing: invitation-contracts.test.cjs and invitation-loading.test.cjs",
-      "viewports": ["320x740", "390x844", "440x766", "1440x900 (480px card)"],
+      "viewports": [
+        "320x740",
+        "390x844",
+        "440x766",
+        "1440x900 (480px card)"
+      ],
       "browser": "Playwright: public Cloudflare URL, envelope opening, escorted arrival, return to Hero, reduced motion; no broken images or horizontal document overflow",
       "screenshots": [
         "output/playwright/lemoncello-welcome-hero-before.png",
@@ -250,6 +286,618 @@
         "output/playwright/lemoncello-welcome-320.png",
         "output/playwright/lemoncello-welcome-public.png"
       ]
+    },
+    "module": "biblical_quote",
+    "note": "Asset names retained; the cocktail board now uses passageText and optional passageReference only. The upper foreground branch is independently animated."
+  },
+  "quoteScene": {
+    "tool": "built-in ImageGen",
+    "date": "2026-09-20",
+    "module": "biblical_quote",
+    "message": "Celebramos nuestro amor y queremos compartirlo con nuestras personas favoritas.",
+    "assets": [
+      {
+        "key": "quote-photo-panorama-v2",
+        "prompt": "Use case: precise-object-edit and horizontal outpainting. Create ONE seamless wide watercolor panorama, aspect ratio approximately 1.72:1, for a camera traveling across THREE adjacent tall portrait viewports. Input 1 is the mandatory MASTER style (soft traditional watercolor, diluted pigment). Input 2 is the approved scene STYLE and natural proportions. Input 3 is the EXACT LEFT THIRD composition to preserve: yellow striped cocktail umbrellas, flowered stone villa with green shutters, cocktail counter and pale limestone foreground. Input 4 is its rightmost strip: inspect and continue those exact paving lines, stone courses, windows, vines, scale, perspective and color into the middle third. Input 5 is the RIGHT THIRD destination composition: the seaside terrace for photos, with pale balustrade, distant town and blue sea, lemon pots and sky. Paint a coherent continuous environment: LEFT THIRD retain input 3 geometry and furnishings; MIDDLE THIRD extend and complete the building from the right edge of inputs 3/4, with more of the same cream-stone facade and green shutters, then reveal its end/corner around 63% of the whole width; RIGHT THIRD after that corner opens directly onto the terrace in input 5. Same ground level, horizon and illumination throughout. No collage seams, vignette or abrupt cut; masonry, paving and foliage must flow seamlessly across thirds. Very important: remove ONLY the large CLOSE FOREGROUND lemon branch hanging across the top of input 3, replacing its area with the actual sky and upper villa stone behind it; that branch will be overlaid as an independently animated layer. Keep all other attached facade flowers/vines, trees, umbrella and potted plants. No close overhead branch in the left third; right terrace may have its existing corner foliage. Keep the right third center quiet for overlaid photos. No people, birds, photos, frames, board, signs or lettering. Keep softly translucent traditional watercolor, visible paper/pigment within brushwork, butter yellow, pale sky blue, ivory, desaturated sage, light ochre, restrained navy; moderate contrast, never photorealistic, 3D, vector, thick outlines or saturated orange. Output a full rectangular edge-to-edge panorama.",
+        "references": [
+          "references/watercolor-style-master.jpg",
+          "images/landscape-proportioned.png",
+          "references/quote-left-panel-source.png",
+          "references/quote-right-edge-source.png",
+          "images/photo-garden-v1.png"
+        ],
+        "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-9da7a5b4-a037-42ab-9d74-7c0ffc643198.png",
+        "files": [
+          "images/quote-photo-panorama-v2.png",
+          "images/quote-photo-panorama-v2.webp"
+        ]
+      },
+      {
+        "key": "quote-lemon-canopy-v1",
+        "prompt": "Use case: background-extraction. Make an independent transparent PNG sprite of ONLY the foreground lemon branch that hangs across the top of image 3. Image 1 is mandatory watercolor master; image 2 is approved watercolor scene; image 3 is the exact subject, composition and silhouette reference. Preserve the distinctive roughly horizontal hanging canopy, yellow lemons, sage green pointed leaves, small white blossoms and fine brown twigs, in the same natural proportions and same traditional soft watercolor painting. The branch enters across the top, with leaf groups and lemons hanging downward, largest central lemon. Remove ALL the sky, building, stonework, distant trees/cypresses, background vines and umbrella. The pixels outside the selected foreground branch and all spaces between leaves/twigs must have real alpha transparency, not cream, white or a fake checkerboard. Keep ONLY those foreground leaves/lemons/flowers in the top roughly 75% of input3. Sprite aspect about 2.2:1 with modest transparent padding around the fine silhouette; no hard rectangular image backing. Texture and palette must match master, diluted butter yellow/olive-sage, ivory white flowers, restrained contrast, visible watercolor pigment. Do not add objects or a hanging pot, do not mirror branch, no photo, no vector, no thick dark outline, no text.",
+        "references": [
+          "references/watercolor-style-master.jpg",
+          "images/landscape-proportioned.png",
+          "references/quote-canopy-source.png"
+        ],
+        "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-52b784e9-bcaf-4cf8-b0b5-8d9196487a31.png",
+        "files": [
+          "images/quote-lemon-canopy-v1.png",
+          "images/quote-lemon-canopy-v1.webp"
+        ]
+      }
+    ],
+    "composition": "One continuous panorama spans quote at column 2, completed villa at column 3 and photos at column 4. Original photo-garden-v1 is the destination reference and fallback.",
+    "canopy": {
+      "layer": "Independent real-alpha PNG/WebP",
+      "loopMs": 4500,
+      "anglesDeg": [
+        -2,
+        2.5
+      ],
+      "pivot": "68% 0"
+    },
+    "birdGuide": {
+      "asset": "images/hero-bird-flight-v1.webp",
+      "frames": 8,
+      "wingbeatMs": 560,
+      "travelMs": 6400,
+      "cameraArrivesAtPercent": 86,
+      "exit": "Continues right until fully outside viewport",
+      "reducedMotion": "Immediate scene change, no guide flight or canopy sway"
+    },
+    "validation": {
+      "frontendTests": 47,
+      "backendTests": 3,
+      "viewports": [
+        "320x740",
+        "390x844",
+        "440x766",
+        "1440x900"
+      ],
+      "canopyAlpha": {
+        "transparentPixels": 224121,
+        "antialiasedPixels": 227682,
+        "width": 1000,
+        "height": 455
+      },
+      "publicUrl": "https://advantages-identification-forty-mighty.trycloudflare.com/invitacion/lausprueba/910175",
+      "browser": "Playwright: correct quote-only content, independent canopy transform changes, escorted journey, bird exit, zero broken images, photo drag advances to second photo, return and reduced motion.",
+      "screenshots": [
+        "output/playwright/quote-public-440.png",
+        "output/playwright/quote-public-bird.png",
+        "output/playwright/quote-public-photos.png"
+      ]
+    }
+  },
+  "countdownScene": {
+    "tool": "built-in ImageGen",
+    "date": "2026-09-20",
+    "modules": [
+      "countdown",
+      "save_the_date_calendar"
+    ],
+    "sourceCopy": "backend-altezza/seeds/invitation_projects/bodmys/modules.json",
+    "composition": "Date, message, countdown and calendar grouped visually in one sign; independent shared data contracts.",
+    "assets": [
+      {
+        "key": "photo-countdown-panorama-v1",
+        "prompt": "Use case: precise-object-edit / horizontal outpainting. Produce ONE continuous watercolor panorama 1096 wide by 957 high, approximately 1.145:1 aspect ratio. This is TWO adjacent portrait viewports for an Italian Lemoncello wedding invitation. Image 1 is the mandatory soft traditional watercolor STYLE MASTER; image 2 is the APPROVED invitation style and proportions. Image 3 is the EXACT existing LEFT HALF (548x957): preserve its entire composition, sea horizon y~48%, clouds, distant town at right, ivory balustrade y~64%, yellow lemon pot at right y~74%, cream-blue stone paving across bottom. Image 4 is its last right-hand strip: extend those EXACT elements seamlessly to the right with matching level, scale, perspective, pigment and light, no collage cut. The output LEFT HALF must faithfully reproduce image3, not reinterpret it. The NEW RIGHT HALF continues the terrace into a quiet Italian church garden: connected ivory limestone paving and low rail, delicate small lemon shrubs and white blossoms at outer edges, a small elegant pale cream church with rounded blue doorway and a modest bell tower amid sage gardens in the lower part, beyond a large empty foreground area for a separately overlaid close-up chalkboard. In the RIGHT HALF reserve the upper 60% mostly for luminous soft open sky for later text; the church, garden and paving should occupy the bottom40%, so the architecture is secondary and small, with no giant building. Preserve the already-existing left half's mountain and coastline transition naturally while reducing architecture on the new side. NO sign or chalkboard, NO text, no dates, no countdown, no calendar, no people or birds, no photos, no decorative frames. Continuous edge-to-edge watercolor. Exact same diluted sky/pastel blue, butter yellow, ivory, sage/olive, gentle ochre and restrained navy accents; translucent washes, visible paper/pigment, moderate soft contrast. Not photographic, not vector, no 3D, no saturated orange, no heavy outlines. This new right-side scenery will sit behind a large separate foreground sign now; later the camera will zoom out to reveal the church and gardens.",
+        "references": [
+          "references/watercolor-style-master.jpg",
+          "images/landscape-proportioned.png",
+          "references/countdown-photo-panel-source.png",
+          "references/countdown-join-strip-source.png"
+        ],
+        "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-6b129fcc-1e1a-4f9a-93b4-5d2888eb3419.png",
+        "files": [
+          "images/photo-countdown-panorama-v1.png",
+          "images/photo-countdown-panorama-v1.webp"
+        ],
+        "delivery": "PNG preserved; WebP quality 88, alphaQuality 100."
+      },
+      {
+        "key": "countdown-arched-board-v1",
+        "prompt": "Use case: precise-object-edit. Generate a separate transparent watercolor chalkboard sign sprite for a Lemoncello wedding invitation. Image1 mandatory traditional watercolor STYLE MASTER. Image2 approved card style/palette/natural proportions. Image3 existing rectangular sign: use as material and painting reference only. NEW SIGN: frontal, straight and symmetrical, tall vertical Italian outdoor bistro sign, square/straight bottom and sides, with an elegant semicircular domed/arched top. Full silhouette aspect approx 0.60 wide to1 high. Fine warm light-ochre aged timber frame follows the arch and continues straight down the sides; small two wooden feet at the very bottom only, no tall empty leg area. Very large uninterrupted charcoal-black chalkboard interior, subtly cool navy undertones, softly painted watercolor pigment/grain; blank writing surface occupies almost all height and about85% width, usable from below the arch all the way near the bottom. Must accommodate live date, message, countdown and calendar later, so NO lettering, numbers, calendar, ornaments or rules printed onto the board. Minimal tiny lemon/two leaves/white flower decoration allowed ONLY outside the lower-right frame, never over writing surface. Match existing master soft transparent watercolor, muted butter yellow, ivory, sage, pale warm wood, subdued contrast, not shiny/photo/3D/vector or thick black outlines. Full sign visible, strict front elevation without perspective taper, no slant, no strong cast shadow. Genuine ALPHA transparent background around whole sign AND between feet, no sky, garden, wall, checkerboard or paper rectangle. Tight transparent margins. Portrait approx 900x1500 output.",
+        "references": [
+          "references/watercolor-style-master.jpg",
+          "images/landscape-proportioned.png",
+          "images/welcome-board-v1.png"
+        ],
+        "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-7ea0da59-d76d-41b4-b07e-e496903beda9.png",
+        "files": [
+          "images/countdown-arched-board-v1.png",
+          "images/countdown-arched-board-v1.webp"
+        ],
+        "delivery": "PNG preserved; WebP quality 88, alphaQuality 100."
+      }
+    ],
+    "futureScene": "Implemented by eventDetailsScene: separate sign and landscape, reversible 2800ms zoom into event_details, church/gardens lower40%, live text upper60%.",
+    "boardRevision": {
+      "tool": "built-in ImageGen",
+      "prompt": "Use case: precise-object-edit. Image1 is the target arched watercolor chalkboard sprite. Make ONE change only: remove the entire lower-right lemon/leaves/flowers decoration, exposing the uninterrupted dark chalkboard and wooden border/feet that should lie behind it. Reconstruct that small area in the existing paint and grain. Preserve EXACTLY the arched outline, aged pale ochre frame, portrait proportions, front elevation, both short feet, navy-charcoal black blank board and watercolor texture. No lettering, no numbers, no dates, no ornaments elsewhere. Image2 is mandatory watercolor master and image3 the approved invitation scene; maintain their soft diluted palette and traditional paper/pigment style. Genuine transparent alpha outside the sign and between feet. Keep the same canvas framing and dimensions/proportions as image1. The whole dark inner writing surface must be unobstructed for a live calendar. No white background or checkerboard.",
+      "references": [
+        "images/countdown-arched-board-v1.png",
+        "references/watercolor-style-master.jpg",
+        "images/landscape-proportioned.png"
+      ],
+      "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-97fd0958-a558-49b1-ab0b-704070f35f58.png",
+      "files": [
+        "images/countdown-arched-board-v2.png",
+        "images/countdown-arched-board-v2.webp"
+      ],
+      "reason": "Keeps the full writing area unobstructed; decoration stays in the landscape."
+    },
+    "activeAssets": [
+      "images/striped-easel-v2.webp",
+      "images/photo-church-continuous-v2.webp"
+    ],
+    "validation": {
+      "frontendTests": 48,
+      "backendDateConfigTests": 2,
+      "viewports": [
+        "320x740",
+        "390x844",
+        "440x766",
+        "1440x900"
+      ],
+      "browser": "Playwright via Cloudflare: correct live ceremony countdown, Saturday December19 2026, selected day19, one combined stop, return/focus, reduced motion, no clipping/overflow or broken images.",
+      "boardAlpha": {
+        "width": 971,
+        "height": 1619,
+        "transparentPixels": 497109
+      },
+      "screenshots": [
+        "output/playwright/date-public-320.png",
+        "output/playwright/date-public-390.png",
+        "output/playwright/date-public-440.png",
+        "output/playwright/date-public-1440.png"
+      ]
+    }
+  },
+  "eventDetailsScene": {
+    "tool": "built-in ImageGen",
+    "date": "2026-09-20",
+    "module": "event_details",
+    "prompt": "Use case: precise-object-edit / zoom-out reframing. Asset type: portrait watercolor wedding invitation scenery, approx 960x1680 (4:7). Image1 is mandatory original traditional watercolor STYLE MASTER. Image2 is approved scene/style/natural proportions. Image3 is the CURRENT panorama to continue: focus on its small cream church with cobalt blue rounded door and bell tower on the RIGHT. Paint a pulled-back view of that SAME church garden, same church design, same sunny ivory limestone paving, little lemon trees in warm ochre pots, white blossom hedges, sage olive trees, cypress, distant pale blue coastal hills. This is not a new church or a photographic real venue: it is the same illustration seen from further away, with the church centered slightly right (60% x) so a small separate sign can stand lower-left. CRITICAL COMPOSITION: the top 60% of the entire portrait canvas must be luminous very pale sky / ivory watercolor cloud washes, calm and unobstructed, readable negative space for live ceremony and reception text. Keep ALL church/cross/cypress/vegetation/mountains confined to the BOTTOM 40%; tallest church cross starts around y=64%, church occupies approx25% of canvas height. Foreground garden and connected pale stone path at bottom. No large high trees entering the text sky. Keep both sides coherent with image3, same navy blue accent, butter-yellow diluted lemons, sky/pastel blue and ivory, sage/olive muted foliage, translucent watercolor pigment and paper visible, gentle contrast, no vivid digital colors. Full-bleed painting, no rectangular inset or border. NO letters, no calendar, no numbers, no signs/chalkboard, no people, no birds, no 3D, vector, photographic or sharp outlined illustration. Preserve natural proportions, beautiful fine watercolor brushwork.",
+    "references": [
+      "references/watercolor-style-master.jpg",
+      "images/landscape-proportioned.png",
+      "images/photo-countdown-panorama-v1.png"
+    ],
+    "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-31cb92ad-b035-45cd-a98c-1e60f618529c.png",
+    "files": [
+      "images/church-garden-wide-v1.png",
+      "images/church-garden-wide-v1.webp"
+    ],
+    "delivery": "Original PNG preserved; WebP quality88. Portrait948x1659; sky60%, church/garden40%. Separate live content and existing date board; 2800ms reversible zoom, no additional horizontal pan.",
+    "validation": {
+      "frontendTests": 49,
+      "backendTests": 2,
+      "viewports": [
+        "320x740",
+        "390x844",
+        "440x766",
+        "1440x900"
+      ],
+      "publicRoute": "https://advantages-identification-forty-mighty.trycloudflare.com/invitacion/lausprueba/910175",
+      "browser": "Playwright: no clipped text, no document overflow, no broken images; animated forward/back zoom, correct focus after inert removal, reduced motion, keyboard map link.",
+      "screenshots": [
+        "output/playwright/events-public-320.png",
+        "output/playwright/events-public-390.png",
+        "output/playwright/events-public-440.png",
+        "output/playwright/events-public-1440.png"
+      ],
+      "sourceData": "Word confirms ceremony 14:30 and punctuality; reception16:00 remains provisional, marked RECEPTION TIME TO REPLACE via shared receptionMessage."
+    },
+    "supersededBy": "fixedCameraRevision"
+  },
+  "fixedCameraRevision": {
+    "tool": "built-in ImageGen",
+    "date": "2026-09-20",
+    "request": "Striped watercolor easel; invariant world scale; one actual camera for photos→sign and sign→church; 16px left paper edge when wide. Sky animation explicitly cancelled.",
+    "drafts": [
+      {
+        "key": "striped-easel-v1",
+        "prompt": "Use case: illustration-story. Asset: isolated watercolor wedding sign on a slender natural pale wood easel, genuine transparent ALPHA background, front elevation, portrait approximately1000x1800. Image1 mandatory original watercolor STYLE MASTER; image2 approved invitation watercolor/palette. Image3 is only the DESIGN reference for the sign: ignore screenshot interface and photographic rendering. Reinterpret its RECTANGULAR ivory paper poster with vertical very pale butter-yellow and ivory stripes, a fine wavy muted-blue border with a small delicate blue bow at top center, two tiny watercolor lemons with sage leaves at upper-right margin and lower-left margin. Straight square corners, NO arched top, NO dark chalkboard. The paper should occupy roughly x8%-92%, y5%-75% of the full image. Full pale wood easel visible below with narrow proportionate legs, no huge frame, all perfectly front facing without perspective skew; feet near y96%. Very little transparent outer padding. Crucial: entire center is EMPTY writing space for date/countdown/calendar supplied as HTML; no letters/numbers/words, logos, hearts or calendar drawn. Decoration limited to outer9% margins so a large central rectangle x19%-81%, y14%-69% remains clear. Stripes extremely diluted so navy text will be readable later. Same soft traditional watercolor as images1and2: translucent pigments, ivory paper grain, muted butter yellow, pastel/cornflower blue, navy accents, sage leaves, pale ochre wood, no heavy outlines/sharp vector/photography/digital3D. Preserve natural material proportions. No garden or floor, no rectangular background or white/checkerboard; true alpha around object and between easel legs.",
+        "refs": [
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+          "/tmp/codex-remote-attachments/01a0bbe5-8f53-7152-b064-ae2ec11273d0/BD027958-F005-4CE3-B2B3-B94BAE6C9B4B/1-Imagen-pegada-1.jpg"
+        ]
+      },
+      {
+        "key": "photo-church-continuous-v1",
+        "prompt": "Use case: precise-object-edit / horizontal outpainting. Create ONE unified full-bleed watercolor panorama about2192x957, aspect2.29:1, FOUR adjacent portrait viewport widths, not a collage. Image1 mandatory original watercolor STYLE MASTER. Image2 approved invitation palette and technique. Image3 is EXACT previous photo scene portrait548x957: reproduce that as the FIRST QUARTER of panorama, preserving sea horizon around48%, distant town, ivory balustrade, blue/cream stone paving, lemon planter at right. Image4 is that portrait's rightmost strip, continue its paving and vegetation seamlessly into SECOND QUARTER: a leisurely longer terrace walkway with same low cream walls, modest sage shrubs, lemons and sea, no new buildings. Image5 is the APPROVED CHURCH scene: integrate exactly that small cream church with blue arched door/bell tower, its stairs, stone garden walls and path in the THIRD QUARTER, with the church centered around x70% of whole canvas. Continue the SAME garden and paving naturally through FOURTH QUARTER to the right, enough landscape to reframe the church. Third/fourth quarters must have upper60% mostly pale open sky, church and garden in bottom40% as image5. Preserve church design/proportions, distance, light, same coast, delicate sky clouds, blue/marfil stone paving. Leave a small clear standing area on the stone path immediately LEFT of the church stair entrance around x64% y80%, for a separately overlaid easel; NO sign/easel painted. Only one nearby church; the distant coastal town at far left stays distant. A camera will move right along this single painting then zoom in on that fixed sign, then zoom back out WITHOUT CHANGING THE BACKGROUND image. All horizons/paving/perspective must form one coherent painting, no vertical seams, no duplicated buildings, no inset frames, no separate panels. Match soft traditional watercolor master, diluted sky/pastel blue, butter yellow, ivory, muted sage/olive and navy accents, translucent washes and paper/pigment, moderate contrast. No words, numbers, people, birds, calendar, sign, 3D, vector, photographic finish, bright saturated color. Do not make poster or screenshot. Whole panorama edge-to-edge.",
+        "refs": [
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/countdown-photo-panel-source.png",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/countdown-join-strip-source.png",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/church-garden-wide-v1.png"
+        ]
+      }
+    ],
+    "revisions": [
+      {
+        "key": "striped-easel-v2",
+        "prompt": "Use case: precise-object-edit. Image1 target watercolor easel. Image2 original mandatory watercolor master, image3 approved style. Keep the exact ivory and very pale yellow stripes, wavy blue border, blue bow and pale wood easel watercolor style. Correct geometry for a date and full calendar: same approx900x1600 portrait canvas, but enlarge/extend the PAPER RECTANGLE vertically so its bounds are x9% to91%, top4% to82% of total canvas. Paper must be a tall elegant rectangle, width-to-height ratio roughly0.60. Shorten the exposed easel legs to the remaining bottom16% only, feet at97%, no excessively long legs. Reduce both lemon/leaf corner clusters to ONE THIRD their present area; put them only inside the extreme top-right and bottom-left corner of border, not intruding on the central writing surface. Smaller blue bow at top edge. Clear empty text area x18%-82%,y12%-76%. No text or numbers. Keep thin wood and natural plausible easel proportions, strict frontal parallel vertical edges, no perspective skew, no arch, no black panel. Genuinely transparent alpha background around and between feet, no fake paper outside the poster. Same delicate traditional watercolor, pale restrained palette and visible pigment texture. No photography, vector, digital3D or saturated color.",
+        "refs": [
+          "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-d7597607-7cac-43c1-8bdd-2b3e48de65a9.png",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+        ]
+      },
+      {
+        "key": "photo-church-continuous-v2",
+        "prompt": "Use case: precise-object-edit. Image1 target wide continuous panorama, KEEP the same wide approx2.29:1 aspect and layout. Images2/3 mandatory watercolor/style masters. Image4 shows EXACT REQUIRED CHURCH DISTANCE AND SKY RATIO in the destination portrait. Change only the RIGHT TWO QUARTERS of image1: the church/cypress/landscape are much too tall/high. Set the view farther back so every church architectural part including cross, all cypress/tree tops and mountains in the last two quarters lies BELOW y60% of total canvas. Church cross at y63%, door/steps around y76%-87%. The entire top60% on right half must be soft luminous calm ivory/pale-blue clouded sky, like image4. Scale the church and nearby planting DOWN uniformly, do NOT squash or stretch them; fill the revealed upper space with the existing sky. Keep church centered x73% (of full panorama), same cream church, blue rounded door, cross, bell tower. Ground/paving stays at bottom and naturally continues from the foreground left; tiny plants and short walls frame the access around x64%-82% y82%-94%, leaving clear standing area LEFT of stair entrance nearx66% y88% for separate sign. No sign painted. PRESERVE the entire FIRST QUARTER of image1 exactly including existing horizon, balustrade and lemon pot. Second quarter gradually connects the nearer terrace on left to farther-away church garden on right with naturally diminishing perspective, low vegetation, uninterrupted paving, no seams or abrupt cuts. Only one near church, same scene and watercolor lighting/materials. Never repeat buildings or use divided panels. No text/people/birds/chalkboard. Soft diluted original watercolor, sky/pastelblue butteryellow ivory and sage, no photoreal/vector/digital3D.",
+        "refs": [
+          "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-dc12c0e3-cf9d-4f98-9e15-964cb8caa060.png",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/church-garden-wide-v1.png"
+        ]
+      }
+    ],
+    "activeAssets": [
+      "images/striped-easel-v2.webp",
+      "images/photo-church-continuous-v2.webp"
+    ],
+    "sources": {
+      "sign": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-b1f74224-92b0-4e8a-92c6-4c9a92209c41.png",
+      "panorama": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-ace1097a-52d5-4540-951e-6a96164d04a1.png"
+    },
+    "delivery": "Original PNG and WebP quality90/alpha100 preserved in assets/images. Prior artwork retained but no longer imported by these scenes.",
+    "geometry": "gardenComposition.json: fixed image coordinates and one parent camera. 7600ms approach; 3600ms zoom out. No per-object size/position animation or background crossfade.",
+    "validation": {
+      "frontendTests": 50,
+      "viewports": [
+        "320x740",
+        "390x844",
+        "440x766",
+        "1440x900"
+      ],
+      "leftMarginRangePx": [
+        15.98,
+        16
+      ],
+      "signToPaintingWidthRatio": 0.0342646,
+      "normalizedDriftMax": 0.000001,
+      "clipping": false,
+      "brokenImages": 0,
+      "transparentPixels": 545856,
+      "publicRoute": "https://advantages-identification-forty-mighty.trycloudflare.com/invitacion/lausprueba/910175",
+      "publicFlow": "Playwright: photos→date→details→date→photos animated; returned focus image_slider_1; no broken images; left margin15.9983px.",
+      "screenshots": [
+        "output/playwright/fixed-public-date.png",
+        "output/playwright/fixed-public-wide.png"
+      ]
+    }
+  },
+  "nightSceneIllustration": {
+    "mode": "Built-in image_gen (lighting-weather edit)",
+    "prompt": "Use case: lighting-weather. EDIT IMAGE 1 ONLY into a genuine night-time companion painting. Asset: wide background for an existing watercolor wedding invitation, with a day-to-night crossfade. Image 1 is the EXACT composition/edit target: a 1897x829 panoramic watercolor Italian terrace, gardens, distant bay and village, and a small chapel at the right. Image 2 (bottle/lemons) is the mandatory original watercolor technique and restrained palette master. Image 3 is the approved envelope style reference ONLY, do not copy its doorway or composition.\n\nCRITICAL GEOMETRY: preserve Image 1's same 1897:829 wide aspect ratio, crop, camera angle, perspective and scale. Keep every building, chapel roof/cross/bell tower/round blue door, tree, cypress, lemon pot, garden wall, stone pillar, terrace railing, staircase, mountain ridge, shoreline and paved path in precisely the same position and outline. In particular the near chapel remains around x76% of the full canvas, its cross at y57%, doorway around y74%, steps around y80%; large left lemon pot near x25%,y81%; right olive tree near x90%,y74%. Do not raise/lower the horizon, move the chapel, enlarge trees, add structures or recompose. The existing sign is a separate overlay and must NOT be painted into this image.\n\nCHANGE THE TIME OF DAY AND SKY: replace ALL the pale blue daytime sky and large white cumulus clouds with an open, clear deep navy/indigo night sky, softly variegated traditional watercolor washes, fine visible paper/pigment texture. No leftover white daytime clouds. Include one modest warm-ivory crescent moon centered around x85%, y10% of the full canvas, about 4% of canvas height in diameter; sparse delicate hand-painted ivory stars at varied tiny sizes. Keep the large right-side upper sky calm and uncluttered for live invitation text, particularly x70%-85%, y20%-52%. Moon and stars must be watercolor, not photographic, vector or glitter graphics.\n\nPaint the SAME ENTIRE LANDSCAPE naturally at night, rather than a uniformly dark filter: cool muted blue moonlight on the identical chapel facade, stonework and paving; muted sage/blue vegetation and lemons; a few soft butter-yellow glows from EXISTING village windows and the chapel's existing openings. Make it visibly nocturnal yet legible and romantic, with restrained luminous accents. Preserve the exact soft watercolor line, transparent washes, pigment granulation and loose brush texture of the reference. No heavy black outlines, digital 3D, hard gradients, neon, photographic finish, saturated purple or orange. No people, fireworks, text, lettering, easel or new objects. The overall geometry should register directly over Image 1 for a smooth crossfade; only sky content and night lighting differ.",
+    "references": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/photo-church-continuous-v2.png",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+    ],
+    "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-83b1bf2e-4eee-4b4b-a98a-3f4bb08c2fe5.png",
+    "activeAssets": [
+      "images/photo-church-night-v2.png",
+      "images/photo-church-night-v2.webp"
+    ],
+    "dimensions": {
+      "width": 1897,
+      "height": 829
+    },
+    "integration": "Separate nocturnal illustration, same fixed canvas/camera as day. No dark filter or gradient over the night artwork. Existing spark initiates opacity crossfade; reception text appears afterward.",
+    "revisions": [
+      {
+        "mode": "Built-in image_gen (precise-object edit)",
+        "prompt": "Use case: precise-object-edit. Image 1 is the approved NIGHT watercolor panorama to edit. Images 2 and 3 are the mandatory original watercolor and approved style references only. Make ONE localized correction: the crescent moon currently near x85%,y10% is too large and touches live text when used in the invitation. Remove that moon from its current location, restoring the surrounding blue watercolor sky seamlessly. Repaint the SAME crescent moon at x85% of full canvas width, y5.5% of full canvas height, at HALF its current width and height (approximately 30 pixels tall in the 1897x829 target). The crescent should occupy a small area near the upper edge, fully inside the image. Preserve its pale butter/ivory watercolor color and very soft halo. Absolutely preserve all other pixels/composition: entire night sky colors, all stars, every mountain ridge, chapel and cross and windows, all plants, trees, pots, walls, stairs and paving in exactly the same positions, identical scale, identical night lighting and same delicate watercolor/pigment texture. No new objects, no text, no changes to the landscape, no crop/zoom/stretch, no extra moons. Keep EXACT 1897x829 dimensions and full panoramic aspect. This is only a small moon relocation and size reduction for text clearance.",
+        "references": [
+          "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/photo-church-night-v1.png",
+          "components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+          "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+        ],
+        "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-09121a2f-1086-41a3-b02a-33e5f49325c0.png"
+      }
+    ]
+  },
+  "biblicalEasel": {
+    "mode": "Built-in image_gen",
+    "key": "biblicalEasel",
+    "name": "quote-ivory-easel-v1",
+    "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-d53e693d-4fe6-44ae-93fb-f37f27a785f7.png",
+    "prompt": "Use case: illustration-story. Create one isolated foreground decoration asset with a REAL transparent alpha background for an existing watercolor Italian wedding invitation. No scene/background, no text at all.\nREFERENCE ROLES: Image 1 bottle and lemons is the mandatory master watercolor technique/palette. Image 2 is the approved painted invitation environment: match its traditional watercolor surface and brushwork. Image 3 is design reference for ONLY the cream paper sign on a natural wooden artist's easel: its simple thin warm ochre inner ruled border, large rectangular ivory paper face, generous proportions, lightly aged soft paper, elegant natural pale wooden legs. Do not copy its landscape or text. Image 4 only guides wicker lemon basket shape and approximate relation to the easel's legs. Ignore its red annotation and text.\nCreate a full-height pale warm wood easel carrying a LARGE portrait ivory/cream rectangular paper sign. Nearly front-on with a very subtle natural backward lean; easy to overlay live text. Paper face should be rectangular, almost straight horizontal/vertical edges, thin single warm ochre border inset around its edge, NO thick gilded frame, NO ornate frame, NO arch, NO dark chalkboard, NO elaborate lemon foliage over the paper. Paper must be completely BLANK inside border, no illustration on the paper, no lettering, no logo. The paper looks like reference 3, a sophisticated restrained Italian aperitivo sign. It occupies about x19%-81%, y4%-69% of full canvas, keeping plenty of broad readable space. Wood crossbeam immediately below paper, long elegant legs down to y96%. Entire easel visible, natural proportions.\nAdd exactly TWO low rounded natural straw wicker baskets FULL of soft butter-yellow lemons with a few olive/sage leaves, one on ground to LEFT of the left leg and one on ground to RIGHT of right leg. Baskets approximately 22% canvas width and 22% canvas height each, near x2%-24% and x76%-98%, ground at y96%, slightly overlap outer feet naturally, but do not cover paper/text face. Small graceful arched woven handles, not enormous upright handles. Different subtly varied fruit arrangement in each basket; both similarly scaled. Soft watercolor mimbre texture, not hyperdetailed hard line wicker. A few leaves drape naturally over rim. Not flower baskets, not potted lemon trees.\nTraditional delicate watercolor on fine paper: translucent washes and organic soft brush edges, muted pale ochre wood/straw, luminous ivory board, butter yellow lemons, desaturated sage/olive leaves and subtle powder blue shadows. Match style references 1 and 2 EXACTLY, no photoreal/3D/vector/sticker styling, no thick outlines, no saturated orange or violet. Clear shapes, not blurry. Minimal faint contact shadows only.\nPortrait composition around 1000x1350 or similar 3:4. Preserve all objects uncropped with a small transparent margin. REAL RGBA transparency everywhere outside objects, including between legs, inside handle holes and leaf gaps. No white background, no checkerboard drawn into image, no ground plane. No words or symbols, no red line. One combined cutout asset only.",
+    "references": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+      "/var/folders/nw/flj273112h153wdbkpnndjvm0000gn/T/codex-clipboard-34a55427-e369-44ca-9b37-f8f626b95527.png",
+      "/var/folders/nw/flj273112h153wdbkpnndjvm0000gn/T/codex-clipboard-bac9cfc5-c34d-4701-b5a7-fbe1f5f58545.png"
+    ],
+    "activeAssets": [
+      "images/quote-ivory-easel-v2.png",
+      "images/quote-ivory-easel-v2.webp"
+    ],
+    "savedDesignReferences": [
+      "references/quote-aperitivo-design.png",
+      "references/quote-baskets-design.png"
+    ],
+    "revisions": [
+      {
+        "mode": "Built-in image_gen (precise-object edit)",
+        "prompt": "Use case: precise-object-edit.\nImage 1 is the TARGET existing watercolor easel with blank ivory paper and two lemon baskets, real transparent alpha. Images 2 and 3 are the mandatory original watercolor style masters ONLY.\nCorrect ONE local physical construction error in the lower right: the easel's right wooden leg currently passes impossibly THROUGH the right wicker basket and emerges at the bottom of its woven body. Repair this intersection. The right wooden support must be a complete plausible continuous leg that reaches its own foot on the ground IMMEDIATELY TO THE LEFT OF the right basket, visibly separate from the basket. The basket must have an intact continuous woven body, rim and bottom, with no wood plank inserted into it. Give a small visible transparent gap between the wooden foot and the basket body, about 12–20 image pixels.\nYou may adjust the lower right leg's placement/angle slightly and shift the RIGHT basket a little to the right and/or slightly farther back to achieve separation. Keep it looking naturally arranged next to the easel, within the canvas and approximately the same scale as its current size. Keep ALL its lemons/leaves and wicker handle elegant. Do not enlarge the canvas or crop anything. Natural structural geometry, no floating detached feet or disconnected planks; two front legs plus the central rear leg support the board.\nStrict invariants outside this small lower-right fix: keep the blank paper rectangle's corners and all pixel coordinates EXACTLY unchanged, including its inner ruled border, wood crossbeam and top clamp. Same exact 1086x1448 canvas. Same blank paper tone and grain, the same left basket and left leg, central rear leg, light, palette, traditional watercolor style and overall composition. Do NOT add letters, ornament on the paper, frames, background, shadows or extra objects. Maintain REAL alpha transparency outside objects and all holes/leaf gaps. Repair only the right basket/right support relationship without redesigning this approved illustration.\nStyle remains delicate traditional watercolor: translucent warm ivory/ochre and butter yellow pigment, sage leaves, readable organic brushwork, no photorealism/3D/vector or thick dark outlines. No flat white background or checkerboard image.",
+        "references": [
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/quote-ivory-easel-v1.png",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+        ],
+        "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-12715a56-9a8b-42cc-9f91-c8e232a12719.png"
+      }
+    ]
+  },
+  "biblicalLemonOrnament": {
+    "mode": "Built-in image_gen",
+    "key": "biblicalLemonOrnament",
+    "name": "quote-lemon-ornament-v1",
+    "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-2d2e4c52-9679-4c3b-9627-3f2c60f39f84.png",
+    "prompt": "Use case: illustration-story. Create a single SMALL botanical watercolor ornament to place immediately under live text on an ivory wedding sign, isolated on REAL transparent alpha. Input Image 1 is the mandatory master for soft traditional watercolor and palette; Image 2 the approved invitation's watercolor style; Image 3 guides ONLY the tiny botanical motif centered below the lettering on its sign.\nSubject: a delicate compact sprig with exactly two butter-yellow lemons hanging together, one slightly forward and one behind, several tapering muted olive/sage leaves spreading softly left/right and upward, one or two tiny ivory citrus blossoms. Match the understated elegant painted lemon ornament on Image 3. Natural proportions, loose translucently painted pigment, visible subtle paper grain inside the brushwork, luminous but subdued pastel colors, organic edges. It will be displayed about 75px wide so keep an unmistakable silhouette and uncluttered detail.\nLandscape canvas approximately 4:3, centered motif occupies about 80% width and 80% height; no cutoffs. Transparent outside all leaves and fruit and in all internal gaps, no ivory or white rectangular backing, no paper rectangle, no shadow underneath, no text or letters. No basket, no sign, no scene, no frame. Avoid photoreal/3D/vector/sticker looks, harsh contour strokes, saturated orange, neon, strongly saturated green. This is a sophisticated gentle watercolor detail for the same Lemoncello invitation.",
+    "references": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+      "/var/folders/nw/flj273112h153wdbkpnndjvm0000gn/T/codex-clipboard-34a55427-e369-44ca-9b37-f8f626b95527.png"
+    ],
+    "activeAssets": [
+      "images/quote-lemon-ornament-v1.png",
+      "images/quote-lemon-ornament-v1.webp"
+    ],
+    "savedDesignReferences": [
+      "references/quote-aperitivo-design.png"
+    ]
+  },
+  "parasolTransition": {
+    "mode": "Built-in image_gen",
+    "key": "parasolTransition",
+    "name": "parasol-overhead-v1",
+    "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-d6206b63-af24-4f8a-99b7-d7d280331f3f.png",
+    "prompt": "Use case: illustration-story. Create ONE isolated top-down beach parasol canopy sprite for a wedding invitation transition, real transparent alpha background. Image 1 is the mandatory original watercolor technique and palette master. Image 2 is the approved Lemoncello invitation: match its delicate watercolor, pastel blues, butter yellow and ivory palette. Image 3 is ONLY reference for the overhead parasol structure and rotating transition composition; do NOT copy orange, UI, screenshot, multiple umbrellas or text.\nA perfectly overhead view of one OPEN ROUND Italian terrace parasol: eight broad alternating BUTTER-YELLOW and IVORY fabric wedges radiating symmetrically from a small ivory central cap, subtle painted seams/spokes and softly scalloped perimeter. No shaft protruding to either side, no stand, no perspective tilt, no oval. Geometric rotation center exactly at the canvas center. Warm pale yellow, not orange; opaque ivory fabric, NOT transparent gaps between sectors. This canopy needs to completely obscure scenery behind it when tiled over other canopies.\nTraditional soft watercolor pigment washes and subtle paper-grain brush texture within every fabric panel, organic delicate edges, slightly darker yellow near fold seams, translucent PAINT look but fully OPAQUE fabric alpha. A small softly painted center cap, understated blue-gray shading, no high contrast outline. No 3D, vector graphics, photorealism, heavy shadows, thick dark outlines or glossy plastic.\nSquare 1024x1024, canopy centered, diameter about 94% canvas, fully inside with even margin. Actual alpha0 outside the canopy, no checkerboard or white backing. The opaque fabric must include an unbroken full disk of radius at least 40% canvas width for seamless coverage when umbrellas overlap. No holes, no text. Output only this one canopy.",
+    "references": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+      "/var/folders/nw/flj273112h153wdbkpnndjvm0000gn/T/codex-clipboard-183ec5a1-197b-4477-8f8d-ee78910373cd.png"
+    ],
+    "activeAssets": [
+      "images/parasol-overhead-v1.png",
+      "images/parasol-overhead-v1.webp"
+    ]
+  },
+  "dateMaiolica": {
+    "mode": "Built-in image_gen",
+    "key": "dateMaiolica",
+    "name": "date-maiolica-v1",
+    "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-bdb23894-9166-415d-9682-02bd28d58dad.png",
+    "prompt": "Use case: illustration-story. Create one horizontal blue-and-white Italian maiolica tile border for the top and bottom of a white watercolor wedding invitation. Reference 1 bottle/lemons is the mandatory original technique and palette master; reference 2 is approved Lemoncello watercolor surface quality. Reference 3 guides only the pale BLUE decorative tile bands shown on the white invitation, not the phone, text or photography.\nA full rectangular strip comprising four adjoining traditional square hand-painted ceramic tiles. Elegant Italian/Sicilian maiolica botanical arabesques: symmetrical scrolling acanthus leaves, small stylized blue blossoms and curved filigree around understated central medallions. Drawn in a refined diluted pastel blue with a few muted navy accents on luminous WHITE ceramic. Two very thin pale blue horizontal framing lines along top and bottom. A restrained delicate ornamental density, elegant and light, not dark solid cobalt blocks. Pattern should visually continue from tile to tile, nearly invisible fine white grout.\nTraditional watercolor, translucent blue pigment variations, soft slightly irregular brush edges and subtle hand-painted ceramic surface. Flat frontal orthographic view, no perspective or thickness, no 3D shine/shadows. No lemons/fruit, no yellow, no green, no orange, no beige wash across white. No people or text, no frame mockup.\nOutput landscape 4:1 rectangle approx 1600x400, full bleed pattern to all edges, no margins. This is just the repeating horizontal tile strip bitmap, not an entire invitation. White fully opaque background. Same delicate painted aesthetic as the references.",
+    "references": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+      "/var/folders/nw/flj273112h153wdbkpnndjvm0000gn/T/codex-clipboard-2ee8b686-e620-4960-88f7-813d0e1b57b0.png"
+    ],
+    "activeAssets": [
+      "images/date-maiolica-v1.png",
+      "images/date-maiolica-v1.webp"
+    ]
+  },
+  "dateCornerBranch": {
+    "mode": "Built-in image_gen",
+    "key": "dateCornerBranch",
+    "name": "date-lemon-branch-v1",
+    "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-5db99224-5a8a-4970-94ff-e98e80038ab4.png",
+    "prompt": "Use case: illustration-story. One isolated botanical watercolor corner decoration, real transparent alpha. Reference 1 original bottle/lemons is mandatory watercolor master; reference 2 approved Lemoncello landscape for brushwork/palette; reference 3 gives only the lemon-and-leaf decoration idea. No phone, UI, words, tiles or background.\nPaint a graceful small lemon bough anchored at the BOTTOM RIGHT CORNER, extending diagonally gently upwards and left. A fine natural curved woody twig, three butter-yellow lemons in different sizes, a few narrow muted sage/olive leaves, two tiny ivory citrus blossoms, and one small pale yellow lemon slice subtly tucked behind near the lower edge. Keep it elegant and airy, not a dense tree or bush. Main fruit mass stays in the lower-right quadrant; the slender tip higher/left has a couple of leaves so it can sway gently from its bottom-right anchor. Natural fruit proportions, one coherent branch, no pots/baskets.\nTraditional translucent delicate watercolor with pigment and paper texture, organic irregular brush edges, soft powder blue in shadows, ivory highlights and restrained butter yellow. Match references 1 and 2, not photoreal, 3D, digital vector or cartoon. No heavy outlines, no saturated orange/violet, no hard backing shape.\nSquare canvas approx 1024x1024. Let the branch occupy most of the square with narrow natural transparent margins, anchored just inside bottom right. Genuine transparent alpha0 outside botanical strokes and between leaves, no white rectangle or drawn checkerboard. No drop shadow, no ground, no text. Full branch intact.",
+    "references": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+      "/var/folders/nw/flj273112h153wdbkpnndjvm0000gn/T/codex-clipboard-2ee8b686-e620-4960-88f7-813d0e1b57b0.png"
+    ],
+    "activeAssets": [
+      "images/date-lemon-branch-v1.png",
+      "images/date-lemon-branch-v1.webp"
+    ]
+  },
+  "chapelReferenceIllustration": {
+    "mode": "Built-in image_gen",
+    "date": "2026-09-23",
+    "architectureSource": {
+      "event": "bodnatyand",
+      "module": "hero_image_1",
+      "configField": "backgroundImage",
+      "source": "/scrAppaltezza/invitations/bodnatyand/cover/seo_cover.webp",
+      "localCopy": "references/chapel-natalia-andres-line.webp"
+    },
+    "day": {
+      "prompt": "Use case: precise-object-edit / sketch-to-watercolor.\nEdit IMAGE 1, the existing wide watercolor panorama for a wedding invitation. Replace the little chapel and its immediate access garden at the RIGHT with a faithful watercolor interpretation of the REAL chapel architecture in IMAGE 2. IMAGE 2 is architecture and approach reference ONLY, not its golden line-art style. IMAGE 3 (bottle and lemons) is the mandatory original watercolor technique and soft palette master; IMAGE 4 is the approved envelope watercolor/palette reference only, never copy its big blue doorway.\n\nKEEP THE EXISTING IMAGE 1 FULL WIDE 1897:829 aspect ratio and unchanged camera/crop. Do not generate a portrait image. Keep the entire left 62% of the panorama identical: its bay, town, lemon pot, terrace railing, mountain skyline, pavement, white/pastel-blue watercolor sky. The modification is localized around the small chapel at x76% of the FULL wide canvas and the narrow garden approach at x66%-88%. Maintain the same size and ground position of the chapel, and the same surrounding perspective. Keep the huge pale blue clouded upper sky unchanged and free of text and objects: top 57% on the right is reserved for live ceremony text.\n\nARCHITECTURE: replace the existing generic bell-tower church with the specific front elevation from image 2: small white/ivory stucco chapel, triangular gable with terracotta/pale ochre roof edging, modest circular oculus above its tall centrally placed segmented-arch double timber door, a small octagonal drum and rounded cupola/little dome with cross above the gable (NOT the old square open belfry). Delicate warm-beige architectural trim, muted honey timber door. Recognizable silhouette and details from the sketch. The cupola/cross stays near x76%, y58% of full panorama; facade centered near x76%,y71%. Chapel fully in lower 43% of painting. Preserve scale and do not enlarge it toward the sky.\n\nAPPROACH: recreate the sketch's welcoming central flight of stone stairs with low stone side rails, leading up to the chapel door, and a paved path in front. Slender tall cypresses arranged along both sides of that approach, tapering elegant natural proportions, softened sage/olive foliage in our approved watercolor. Cypresses must stay within the lower landscape, not invade the upper text area. Integrate with the existing surrounding garden and distant hills, with no obvious edited boundary. Add two clearly visible small woven wicker baskets full of butter-yellow lemons, a few lemon leaves and subtle tiny white blossoms, one beside the base of a foreground cypress on each side of the chapel approach: approximately x69%,y87% and x84%,y87% on the full wide canvas. Both must be inside the mobile crop x67%-89%, visually distinct and naturally resting on the paving. Keep them separated from tree trunks and stair rails, no objects fused together. Baskets proportional, about knee-high, not huge flower pots. No liquor bottles.\n\nSTYLE: exactly the traditional soft hand-painted watercolor of images 1,3,4: transparent pigment washes, paper grain, natural painterly edges, pastel sky blues, cream/ivory architecture, diluted butter-yellow lemons, desaturated sage/olive vegetation. Preserve crisp legible shapes, do not blur. No monochrome gold linework, black outlines, vector graphics, photorealism, 3D, saturated orange/purple, people, text, signs, added moons. No changes elsewhere in the panorama. Output one complete edited panoramic painting.",
+      "references": [
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/photo-church-continuous-v2.png",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/backend-altezza/_local_storage/invitations/bodnatyand/cover/seo_cover.webp",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+      ],
+      "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-db68c970-2f73-4c81-b3a1-14380df46e22.png",
+      "framingCorrection": {
+        "prompt": "Use case: precise-object-edit. Image 1 is the watercolor panorama EDIT TARGET. Make ONE localized framing correction to the NEW CHAPEL GROUP in its right half, while preserving the approved architectural design and both lemon baskets. Image 2 shows the older composition ONLY as the location/scale guide. Images 3 and 4 are mandatory watercolor style/palette references only.\n\nThe newly drawn chapel, stairs, avenue cypresses and two wicker lemon baskets in Image 1 are currently too high and too far LEFT for our fixed mobile camera. Relocate this SAME group approximately 75 pixels RIGHT and 100 pixels DOWN within the same 1897x829 panorama. Keep natural proportions and the same building's cupola, cross, oculus, timber door, stairs, rails, paired cypress rows and baskets, do not redesign them. Final cross top must be near x1455,y480 (76.7%,58% of full image). Chapel door base about x1455,y656, staircase ends near y748. Left basket centered at x1305,y757; right basket at x1600,y762, fully inside the image. Cypress tops at or below y477, except unrelated preexisting trees further left. The baskets stay separated from trunks and masonry. Reconstruct matching distant hills/sky in the vacated area with seamless watercolor. The entire upper right 57% of canvas must remain open clouded sky because ceremony text occupies it. This is why moving DOWN is essential. Keep group at same visual scale, no enlargement, no new objects.\n\nKeep the full wide image EXACT 1897:829 aspect/crop; leave the left 60% completely unchanged and preserve the existing white-blue sky, sea, town, big potted lemon tree, terrace, stone walls and outer gardens, matching soft watercolor washes, palette, detail and pigment grain. No text, people, easel or graphics. Output one edited full panorama with the chapel lower and to the right as specified.",
+        "references": [
+          "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-db68c970-2f73-4c81-b3a1-14380df46e22.png",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/photo-church-continuous-v2.png",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+          "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+        ],
+        "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-78c78b49-5ef2-4e6b-b7ef-07803dd59f5f.png"
+      }
+    },
+    "night": {
+      "prompt": "Use case: lighting-weather. EDIT IMAGE 1 ONLY into its night-time companion. Image 1 is the EXACT new approved wide watercolor chapel panorama and its geometry must be preserved. Image 2 is the old NIGHT palette/lighting/sky reference ONLY, never copy the old church or geometry. Images 3 and 4 are mandatory original watercolor and approved invitation style references only.\n\nOutput same full 1897x829 panoramic composition and crop as image 1. Preserve every silhouette and coordinate from IMAGE 1 precisely: new central-right white chapel centered at x1422 with rounded cupola and cross, timber door, oculus, its central long stairs and low stone rails, the symmetrical rows of slender tall cypresses, BOTH wicker baskets full of lemons beside the front cypresses (left basket x1264, right basket x1567), all stones, flowers, foliage, path, trees, terraces and the entire distant bay and left village. No moving, resizing or replacing any object. Keep basket weaving and lemons softly painted but clearly visible in moonlight. No old belfry, no blue chapel door.\n\nReplace all bright white/cloudy daytime sky with the clear deep navy blue night watercolor sky of IMAGE 2; sparse tiny painted ivory stars and ONE modest pale butter/ivory crescent moon. Moon center at x1530,y46 on the full 1897x829 canvas, about 25 pixels tall, fully visible away from live invitation text. No large bright clouds left. Upper center-right sky stays calm, dark navy with soft diluted pigment texture and no high-contrast objects where live text will be placed. Naturally relight the SAME entire landscape at night: restrained cool moonlight on ivory chapel and pale paving, soft navy/sage foliage, subtle warm light from existing chapel windows/cupola, tiny distant windows. Keep the new timber doors recognizable. Lemons gentle muted butter yellow and wicker muted straw. No uniformly dark filter: paint true nocturnal lighting and shadows in watercolor while preserving all architecture and landscape registration.\n\nMatch original traditional watercolor, pigment granulation, transparent layers, soft organic brush edges, delicate paper texture, moderate contrast, navy/pastel blue, butter yellow, ivory, desaturated sage. No purple/pink cast, neon, photographic look, black ink contours, vector art, 3D or blur. No people, text, signs, fireworks, extra buildings, composition changes, cropping or distortion. The daytime and nighttime should dissolve directly over each other with no geometric jump.",
+      "references": [
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/chapel-reference-day-v1.png",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/photo-church-night-v2.png",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+      ],
+      "source": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-70b9c782-e0a0-45f3-abe6-982f1b2d1923.png"
+    },
+    "activeAssets": [
+      "images/chapel-reference-day-v1.png",
+      "images/chapel-reference-day-v1.webp",
+      "images/chapel-reference-night-v1.png",
+      "images/chapel-reference-night-v1.webp"
+    ]
+  },
+  "giftSkyIllustration": {
+    "tool": "built-in image_gen",
+    "refs": [
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+    ],
+    "coupleInitial": "Use case: illustration-story. Asset type: transparent foreground illustration for the Lemoncello wedding invitation.\nInput image 1 is the mandatory watercolor technique/palette master (bottle with lemons); image 2 is the approved invitation scene, defining softness and integration only. Do not copy their subjects.\nCreate ONE full-length elegant bride and groom slow-dancing together, ONLY their silhouettes: no eyes, noses, mouths, skin, facial features or clothing detail. Soft traditional watercolor ink silhouettes with subtle pigment granulation and organic brush edges, restrained navy blue with muted powder-blue edges so they are legible over a dark navy night sky. Not black vector silhouettes, not a cartoon, not a photo, not 3D. The woman wears a flowing full-length wedding dress with a modest flared skirt, the man a tailored tuxedo; slightly bowed heads facing one another and held hands give a graceful recognizable dance pose. Both people naturally proportioned; full bodies and dress inside frame. Center the pair and fill most of a portrait canvas with generous transparent margin, no scenery, no floor, no shadow patch, no stars, no text or other objects. GENUINE TRANSPARENT alpha background including the spaces between arms and bodies. Preserve the soft diluted sky blue/navy palette from references; avoid purple, orange, saturated colors and harsh outlines.",
+    "coupleFinal": "Use case: precise-object-edit. First input is the edit target, second mandatory watercolor style master, third approved scene for palette and softness only.\nConvert the dancing couple in the FIRST image into ONLY TWO INTERLOCKING SILHOUETTES, keeping their exact full-body dance pose, shape and elegant proportions. Flatten ALL interior clothing, hands, hair and faces to one continuous deep muted navy-blue watercolor pigment wash with subtle granulation. There must be NO white dress, NO shirt or lapels, NO cuff, NO facial feature, NO individual fingers, NO clothing seams, NO hair strands. Think traditional silhouette portrait hand painted in ink wash, not detailed bride/groom illustration. Keep clean organic watercolor outlines and subtle pigment variation WITHIN each silhouette. Remove EVERY part of the blue glow outside their bodies: genuinely transparent alpha around the figures and in spaces between their bodies/arms. No cast shadow, no floor, no scenery, no rectangular background. No text. A single unified dark navy silhouette of the bride with a flared wedding dress dancing closely with the groom. No vector crispness, 3D, photo, harsh black, orange or purple. Full figures completely inside image with clear transparent margin.",
+    "envelope": "Use case: illustration-story. Asset type: small transparent watercolor envelope icon for Lemoncello wedding invitation.\nInput image 1 is mandatory watercolor technique/palette master (bottle with lemons); image 2 is approved invitation scene defining softness/integration. Do not reproduce the scene.\nCreate one elegant ivory/cream paper envelope, front-facing with its triangular flap visible, delicately accented with a tiny butter-yellow lemon and two desaturated sage/olive leaves at the flap seal. Simple legible silhouette, traditional hand-painted soft watercolor, diluted pigment with subtle paper granulation, loose organic painted edges, faint pastel blue shadows and a restrained navy seam line, very moderate contrast. Designed to sit over a deep navy watercolor night sky. Centered compact landscape envelope, no lettering, no money, no hands, no other objects, no background or rectangular paper sheet. GENUINE TRANSPARENT alpha background around entire object. Natural proportions. No vector icon, sticker border, photorealism, plastic, 3D, bright orange, violet or harsh outlines.",
+    "outputs": [
+      "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/gift-dancing-silhouette-v1.webp",
+      "public/images/invitaciones/bodlauser/gift-envelope-watercolor-v1.webp"
+    ]
+  },
+  "hotelRecommendationsIllustration": {
+    "date": "2026-09-24",
+    "tool": "image_gen built-in",
+    "useCase": "precise-object-edit",
+    "asset": "public/images/invitaciones/bodlauser/recommendations-hotel-night-v1.webp",
+    "source": "public/images/invitaciones/bodlauser/recommendations-hotel-night-v1.png",
+    "references": [
+      "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/chapel-reference-night-v1.webp",
+      "components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+    ],
+    "prompts": [
+      "Use case: precise-object-edit. Asset type: wide watercolor landscape background for a wedding invitation.\nInput 1 EDIT TARGET: approved nighttime chapel panorama. Input 2 MANDATORY STYLE MASTER: watercolor bottle/lemons, medium and muted palette only. Input 3 APPROVED INVITATION SCENE: softness, painted texture and visual consistency only.\nEdit ONLY the LANDSCAPE BELOW THE NIGHT SKY, on the RIGHT THIRD where the little domed chapel stands. Replace the chapel with an elegant romantic Italian mountain hotel / historic alpine lakeside villa: three or four stories, many welcoming warmly lit windows, gracefully repeated balconies, pale cream stucco and natural stone, soft muted roof, cypress and mountain gardens. Keep the hotel centered in exactly the position of the chapel at 75% of canvas width; building and garden in bottom 40%, roof no higher than about 60% of canvas height. Make hotel somewhat wider than chapel, comfortably filling the portrait viewport in right third. Preserve the lake and Italian mountains around it, terrace perspective, luminous cobblestone approach and vegetation in the same soft traditional watercolor. No chapel dome or cross, no hotel name, no people, no text, no modern signs.\nABSOLUTELY PRESERVE THE ENTIRE TOP HALF OF THE IMAGE: SAME NAVY WATERCOLOR SKY, SAME MOON POSITION/SIZE, SAME EXISTING STARS, SAME COLOR, SAME TEXTURE, SAME CANVAS/COMPOSITION. It must connect perfectly with the preceding shot of this exact sky. Do not add or move a moon. Do not zoom or reframe. Keep wide original aspect ratio ~2.288:1 and original arrangement outside the right-side architecture.\nStyle: hand-painted soft watercolor pigment/paper texture within the painting, muted navy night, pale sky blue, warm butter-yellow windows, ivory walls, desaturated olive/sage foliage, delicate organic loose brushwork. NO photorealism, NO vector outlines, NO 3D, NO plastic, NO saturated orange or violet. High-quality elegant composition, natural proportions, no blur. Opaque landscape, not transparent.",
+      "Precise composition correction. Input 1 is the hotel illustration to edit. Input 2 is the original night chapel panorama with the EXACT protected sky. Input 3 watercolor master and input 4 approved invitation watercolor style.\nKeep the hotel design, nighttime lighting and all watercolor style. IMPORTANT: move the hotel and its tall flanking trees DOWN into the lower 40 percent of the panorama, slightly reduce their size uniformly so there is generous uninterrupted night sky above. On the 1897 by 829 image, the hotel roof and chimneys must begin at y=490 or below, the hotel facade should end around y=710, hotel center x=1422. The hotel should have three stories with many balconies and warm windows, still naturally proportioned. Its tallest immediately adjacent cypress trees must begin below y=440. Keep cobbled foreground, mountain/lake atmosphere, ivory stone and gardens in the bottom. Restore every pixel of sky above y=416 from input 2 with exactly the same moon and stars in their original locations. No architecture or tree silhouettes in that upper half. Do not move the moon, do not add another moon, no texts/logos/people. Preserve overall wide 2.288:1 canvas. The center of interest is the right third as before. Soft traditional watercolor as the mandatory master: muted navy/sky blue, butter yellow lights, cream stone, desaturated olive greenery. No vector, black outlines, 3D, photo or saturated violet."
+    ],
+    "integration": "Original night sky remains underneath. A CSS alpha mask reveals the hotel panorama only below y=416 in a 1897×829 world. The same sky, moon and additional star layer remain continuous during descent and reverse ascent."
+  },
+  "dressCodeIllustrations": {
+    "date": "2026-09-24",
+    "tool": "image_gen built-in",
+    "references": {
+      "styleMaster": "components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+      "approvedLandscape": "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+      "composition": "../backend-altezza/_local_storage/invitations/bodmys/dresscode/grupo-vestidos-acuarela-v1-web-v1.webp",
+      "fabric": "../backend-altezza/_local_storage/invitations/bodmys/dresscode/paleta-telas-referencia-v1-web-v1.webp"
+    },
+    "assets": [
+      {
+        "file": "public/images/invitaciones/bodlauser/dresscode-guests-v1.webp",
+        "original": "public/images/invitaciones/bodlauser/dresscode-guests-v1.png",
+        "prompt": "Use case: illustration-story. Create a new wide watercolor cutout for the Lemoncello Italian wedding invitation dress code. Input 1 is the mandatory watercolor technique and muted palette master. Input 2 is the approved Lemoncello illustration for exact style integration. Input 3 is a COMPOSITION and facial-detail reference only, not a bride to copy.\nExactly SIX elegant adult wedding guests, full body standing side by side, THREE WOMEN on the LEFT and THREE MEN on the RIGHT, with a small airy gap between the groups. No bride, no groom, no bouquets, no veils, no white dresses, no tuxedos, no bow ties. Calm relaxed elegant poses, slight turns toward one another. Faces only soft painted shadows, no recognizable detailed features.\nWomen wear flowing light fabric midi or long dresses in dusty blush, soft sage and muted peach; men wear light unstructured Italian linen or fine cotton tailored clothes in muted dusty lavender, soft seafoam GREEN (not sky blue), and rosy sand, with open collars and relaxed elegance. Six distinguishable coordinated pastel outfits. Do NOT use butter yellow or sky blue for clothing: those are reserved.\nHand-painted traditional watercolor with translucent washes, visible soft pigment and delicate folds, organic outlines, moderate contrast, natural body proportions. Match the approved invitation, avoid vector or cartoon outlines, photoreal faces, 3D and saturated colors. Wide composition about 2:1 with all six complete from head to shoes, similar standing height, a little outer padding. GENUINE transparent alpha background around and between all six figures, no ground scenery, no white rectangle, no checkerboard baked into art, no text/logos. Beautiful sophisticated delicate editorial fashion watercolor."
+      },
+      {
+        "file": "public/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
+        "original": "public/images/invitaciones/bodlauser/dresscode-fabrics-v1.png",
+        "prompt": "Use case: illustration-story. Create ONE fabric-swatch atlas for the Lemoncello invitation. Eight equally sized square panels in a precise 4 columns by 2 rows grid, no gutters, no borders, NO text, NO people. Every panel filled edge to edge with a different luxurious fine silk/chiffon fabric gently draping in broad diagonal folds, like the fabric swatches at the bottom of input 3. Input 3 defines ONLY folded-fabric composition and tactile fine fabric. Input 1 defines mandatory soft traditional watercolor technique and input 2 approved watercolor integration.\nColor arrangement EXACTLY: TOP ROW left to right: 1 muted sage green, 2 dusty blush pink, 3 pale peach/apricot, 4 delicate dusty lavender. BOTTOM ROW left to right: 5 seafoam green (distinctly green not blue), 6 rosy sand/light warm taupe, 7 butter yellow, 8 sky blue.\nColors 1-6 are suggested wedding guest clothing colors, 7-8 are reserved, keep each clearly distinguishable. Soft pastel Italian wedding atmosphere, gentle material highlights and deeper but restrained folds, broad soft pigment gradations, translucent watercolor washes with subtle paper texture within the rendering. Beautiful smooth flowing folds that remain recognizable when cropped into small circles. No hard outlined illustrations, no plastic or metallic material, no flat color discs, no dark oversaturated tones. Match the watercolor family of inputs 1 and 2. Canvas 2:1 landscape, exactly eight square equal-sized panels. No typography, numbering, labels, symbols or framing."
+      }
+    ],
+    "notes": "RGBA originals retained. WebP preserves original dimensions and alpha. Fabric atlas uses the existing percentage crop contract; no new dresscode data fields."
+  },
+  "closingAndNavigation": {
+    "tool": "built-in image_gen",
+    "closing": {
+      "refs": [
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/hero-coast.webp",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/chapel-reference-night-v1.webp"
+      ],
+      "prompt": "Use case: illustration-story. Create a portrait 4:7 watercolor painting background for the final scene of the Lemoncello Italian wedding invitation. Input 1 is the mandatory technique and palette master; input 2 is the approved invitation painting defining soft brushwork and materials. Input 3 defines the coastal landscape subject, but zoom FAR BACK: see the beautiful Amalfi coastline, layers of distant mountains, very small Italian hillside town with pale buildings and subtle warm butter-yellow window lights, and tranquil sea from afar. No balcony, no railing, no close objects, no plants in foreground, no people. Input 4 defines the established NIGHT atmosphere: deep navy watercolored starry sky with visible translucent pigment and subtle paper grain; muted powder blue mountain ridges, pale yellow highlights; absolutely no purple. Use the very same thin butter-ivory crescent moon shape, orientation and watercolor softness as input 4, small near the UPPER LEFT at about 20% width, 12% height. Only ONE moon. Leave a generous quiet navy sky over the upper 60% of the canvas, especially the upper right from x40-90%, y15-45%, where an HTML monogram and message will be overlaid later. Distribute tiny delicate ivory stars, sparse near the copy area. Put the distant town and coast in the lower 40%, mainly left with sea stretching to the right, natural small scale and clear view. Very refined traditional translucent watercolor, pigment granulation, soft organically feathered brush shapes WITHIN a full-bleed rectangular portrait canvas. No flat vector art, no photorealism, no 3D, no harsh outlines or neon colors, no sunset. Night is deep blue but silhouettes remain legible, not black. No text, no typography, no monogram, no frame, no borders. The setting feels like the same Italian coast as the hero viewed from far away at night.",
+      "source": "exec-26812c6a-70cb-4d1f-b1b5-3b1356bce2e1.png",
+      "outputs": [
+        "images/closing-coast-night-v1.png",
+        "images/closing-coast-night-v1.webp"
+      ]
+    },
+    "navigation": {
+      "refs": [
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+        "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/scene-arrow-v1.webp"
+      ],
+      "prompt": "Use case: precise-object-edit. Create ONE circular navigation medallion as a transparent PNG, matching the existing Lemoncello wedding illustration. Inputs 1 and 2 are mandatory watercolor technique and softness references; input 3 is the existing arrow material/color reference ONLY. Replace its long horizontal silhouette with a small perfectly round disc, front facing with no perspective. Disc material: softly painted pale warm butter-beige ivory ceramic/paper, subtle natural watercolor granulation, with a thin hand-painted slightly darker muted ochre beige rim. Center ONE short small navy blue arrow pointing RIGHT inside the circle, based on the blue arrow in input 3, hand painted, subtle powder-blue pigment variation, broad enough to read at 48px, with a short shaft and simple triangular arrowhead, occupying only 42% of the disc width. Leave ample pale blank space around arrow inside circle. Absolutely no lemon, no leaves, no flowers, no ornament, no text, no extraneous decoration, no drop shadow outside circle. Match softly diluted traditional watercolor, no glossy plastic, no 3D, no black outline, no vector-flat look. Square canvas, disc occupies about 90% of canvas, GENUINE transparent alpha outside circular disc; no background and no painted checkerboard.",
+      "source": "exec-1b4eb39b-f5af-4f86-a811-e9770ada2fc4.png",
+      "outputs": [
+        "images/scene-arrow-round-v1.png",
+        "images/scene-arrow-round-v1.webp"
+      ]
+    }
+  },
+  "envelopeTreeClose": {
+    "tool": "built-in ImageGen",
+    "promptRecord": "../../../../../output/imagegen/lemoncello-tree-close-prompt.json",
+    "editTarget": "output/imagegen/lemoncello-tree-edit-source.png",
+    "styleReferences": [
+      "references/watercolor-style-master.jpg",
+      "images/landscape-proportioned.png"
+    ],
+    "generatedSource": "images/envelope-tree-close-edit-v2.png",
+    "output": [
+      "images/landscape-open-clear-v3.png",
+      "images/landscape-open-clear-v3.webp"
+    ],
+    "postprocessing": "scripts/lemoncello-prepare-envelope-tree.cjs",
+    "constraints": "User correction: bring the compact natural tree close to the left jamb so its trunk, pot and foliage remain visible in mobile framing. Preserve camera, doorway, panorama outside local patch, and full alpha inside the registered opening. Supersedes envelopeTreeLeft."
+  },
+  "envelopeTreeLeft": {
+    "tool": "built-in ImageGen",
+    "promptRecord": "../../../../../output/imagegen/lemoncello-tree-left-prompt.json",
+    "editTarget": "output/imagegen/lemoncello-tree-edit-source.png",
+    "styleReferences": [
+      "references/watercolor-style-master.jpg",
+      "images/landscape-proportioned.png"
+    ],
+    "generatedSource": "images/envelope-tree-left-edit-v1.png",
+    "output": [
+      "images/landscape-open-clear-v2.png",
+      "images/landscape-open-clear-v2.webp"
+    ],
+    "postprocessing": "scripts/lemoncello-prepare-envelope-tree.cjs",
+    "constraints": "Move only tree left; preserve original panorama outside local patch; clear full registered arched opening including leaves."
+  },
+  "heroQuoteContinuity": {
+    "date": "2026-09-24",
+    "tool": "image_gen (built-in)",
+    "asset": "hero-quote-continuous-v2.webp",
+    "source": "hero-quote-continuous-v2.png",
+    "previous": "hero-quote-continuous-v1.png",
+    "prompts": [
+      "Use case: precise-object-edit / watercolor panorama continuity repair for the Lemoncello wedding invitation.\nEDIT TARGET = reference 1, the existing wide background composition. Produce ONE high-resolution landscape image at approximately 3072 x 1776, preserving its 1320:763 aspect ratio and framing. It covers exactly three adjacent portrait phone viewports. This is an EDIT of the existing scene, not a redesign.\nReference 2 is the rightmost band of the original Hero, and reference 3 is the leftmost band of the destination cocktail scene: these establish the exact scale, colors, coastline, sky and terrace connection. Do not bake the Hero's foreground big lemon plant, drink or top hanging branch into your output; they are separate layers. Reference 4 (bottle and lemons) is the mandatory ORIGINAL PRIMARY watercolor technique/palette master. Reference 5 (approved house landscape) is mandatory integration style, not new subject matter.\nTASK: eliminate the very obvious vertical join at x=33% and the discontinuity around x=67% of reference 1. Repaint the middle connecting landscape so the pale coast and Italian hillside town on the left become one believable continuous landscape leading to the cocktail terrace on the right. No vertical boundaries, mist curtains, blur bands, cutaway collage, duplicated horizons, doubled church towers, floating architecture, or step changes of scale. Let the distant mountain slope and same coastal village evolve naturally into the garden, cypresses and terrace. The cream stone balustrade must connect naturally to the original Hero's foreground railing visible in reference 2; its continuation starts at about x=33%, y=77%, then leads in perspective toward the terrace. Keep the stone rail and columns crisp and proportional, no jump in top-rail height at the join. The sea occupies the lower-left and stays the same soft blue; terrace paving expands gradually to the right.\nPRESERVE INVARIANTS: Keep the first 25% of the target (quiet cream/sky-blue sky, coast, sea) and final 28% (right-side villa, green shutters, yellow/ivory striped scalloped parasols, drinks bar, tables, plants and cream/blue paving) almost exactly registered to the target. No recentering, no overall zoom, no resizing or relocating the right cocktail scene. Keep the large calm sky in the left third for separate live monogram and texts. Keep the left village church's original position about x=32%, y=43% and its lovely painterly details; blend it into a continuous hillside without the abrupt vertical sliced edge. Any work needed to blend overlaps must remain locally confined to the central connection. Do not add people, birds, signs, boards, texts, letters, monograms or UI. No foreground hanging branches: they are animated as separate layers. Keep ample lower-right paving empty for the existing overlay sign.\nSTYLE: traditional soft luminous watercolor, translucent pigment washes, visible paper grain inside the paint, loose brushwork with legible architectural/botanical detail. Diluted sky/pastel blue, butter yellow, warm ivory, desaturated olive/sage, restrained navy. Preserve the detailed scene rather than blurring it. Moderate contrast, no thick dark outlines, no oversaturated orange or purple, no oil, photo, vector/cartoon, glossy 3D or sticker look. Fill every outer edge fully with painted scene, no white frame or alpha edge fade. One coherent full-bleed painting.",
+      "Use case: precise-object-edit. Target reference 1 is the newly connected wide Lemoncello watercolor panorama. Make exactly ONE local correction to its STONE BALUSTRADE near the left edge of the terrace; preserve the rest of this image, all sky, coast, village, tower positions, cypresses, plants, parasols, villa, bar and tables, framing and aspect ratio EXACTLY unchanged.\nReference 2 shows the actual old Hero's RIGHT EDGE, including its foreground balustrade. That existing foreground will be overlaid, so your balustrade must CONTINUE it in perspective. Reference 3 is a screenshot of the current bad junction: the left foreground top rail sits about 80 screen pixels LOWER than the rail in the panorama; they are visibly disconnected at the join. Fix that geometry, do not blur or hide it with flowers. Do not bake the whole screenshot or the foreground plant/branch/UI into the output.\nPrecise geometry for target reference 1 (1650 x 953): its terrace balustrade should start at x=540,y=735 for the TOP of its horizontal rail, instead of the current x~540,y~625. At x=585 the rail top should be about y=720, at x=650 about y=684, then join the existing stone pillar near x=760,y=610. A gentle diagonal perspective line connects these coordinates, with matching baluster/stonework size, slight watercolor irregularity. Lower ONLY the first two or three leftmost balusters and their rail so their soles can reach y=930; the step/terrace stones beneath adapt naturally. Join smoothly to the existing railing farther right, not a stair step. Keep the large pale foreground rail in reference 2 a SEPARATE overlay, do not add another foreground railing across the left third of the panorama. Your painting remains open sea and town on the left, terrace on the right, but now the near balustrade heights connect correctly. No floating railing, no separate railing protruding toward camera or handrail turn.\nReference 4 is mandatory ORIGINAL PRIMARY watercolor style (bottle and lemons); reference 5 is approved Lemoncello integration style. Keep all the fine details and soft traditional translucent watercolor/paper texture, muted ivory, sky blue, butter yellow, olive/sage, navy accents. No vector, photoreal, oil, thick outlines or blur. No new objects, people, writing, UI, monogram or foreground hanging lemon branches. Same full-bleed wide composition. Output the whole corrected image, ideally 3072x1776, with reference 1 aspect ratio preserved."
+    ],
+    "references": [
+      [
+        "output/imagegen/hero-quote-background-edit-source.png",
+        "output/imagegen/hero-right-edge-before.png",
+        "output/imagegen/quote-left-edge-before.png",
+        "components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+        "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+      ],
+      [
+        "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/hero-quote-continuous-v1.png",
+        "output/imagegen/hero-right-edge-before.png",
+        "output/playwright/lemon-seam-connected.png",
+        "components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+        "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+      ]
+    ],
+    "integration": "Shared full-bleed scenery for Hero and promenade. Original balcony, animated branch, bird, live monogram/text and quote easel remain separate. Narrow overlap with existing quote-photo panorama. Custom Hero backgrounds retain the previous standalone composition.",
+    "checkpoint": {
+      "front": "60ebbe5",
+      "back": "19d0a35"
     }
   }
 }

@@ -7,12 +7,13 @@ import CountdownImageModule from '../modules/CountdownImageModule';
 import ParallaxImageDateModule from '../modules/ParallaxImageDateModule';
 import DressCodeModule from '../modules/DressCodeModule';
 import GiftEnvelopesModule from '../modules/GiftEnvelopesModule';
+import RecommendationsModule from '../modules/RecommendationsModule';
 import AdultsOnlyNoticeModule from '../modules/AdultsOnlyNoticeModule';
 import ClosingMessageModule from '../modules/ClosingMessageModule';
 import WelcomeMessageModule from '../modules/WelcomeMessageModule';
 import PhotoSliderModule from '../modules/PhotoSliderModule';
 import InstantPhotosModule from '../modules/InstantPhotosModule';
-import ImageSliderSepiaModule from '../modules/ImageSliderSepiaModule';
+import ImageSlider1Module from '../modules/ImageSlider1Module';
 import MusicPlayerModule from '../modules/MusicPlayerModule';
 import CountdownModule from '../modules/CountdownModule';
 import CoupleFamilyModule from '../modules/CoupleFamilyModule';
@@ -24,6 +25,7 @@ import HeroImage1TerracotaModule from '../modules/HeroImage1TerracotaModule';
 import HeroImage2ClassicModule from '../modules/HeroImage2ClassicModule';
 import HeroImage2TerracotaModule from '../modules/HeroImage2TerracotaModule';
 import { normalizeTemplateKey } from './templateKey';
+import { normalizeModuleType } from './moduleType';
 
 const COMMON_RESOLVERS = {
   envelop_intro: EnvelopIntroModule,
@@ -34,12 +36,13 @@ const COMMON_RESOLVERS = {
   parallax_image_date: ParallaxImageDateModule,
   dresscode: DressCodeModule,
   gift_envelopes: GiftEnvelopesModule,
+  recommendations: RecommendationsModule,
   adults_only_notice: AdultsOnlyNoticeModule,
   closing_message: ClosingMessageModule,
   welcome_message: WelcomeMessageModule,
   photo_slider: PhotoSliderModule,
   instant_photos: InstantPhotosModule,
-  image_slider_sepia: ImageSliderSepiaModule,
+  image_slider_1: ImageSlider1Module,
   music_player: MusicPlayerModule,
   countdown: CountdownModule,
   couple_family: CoupleFamilyModule,
@@ -62,7 +65,7 @@ const TEMPLATE_RESOLVER_OVERRIDES = {
 };
 
 export function resolveModuleDataByTemplate(module, payload, templateKey) {
-  const type = String(module?.type || '').trim();
+  const type = normalizeModuleType(module?.type);
   if (!type) return null;
 
   const normalizedKey = normalizeTemplateKey(templateKey);
@@ -79,6 +82,7 @@ export function buildResolvedModules(modules, payload, templateKey) {
     .sort((a, b) => Number(a?.order || 0) - Number(b?.order || 0))
     .map((module) => ({
       ...module,
+      type: normalizeModuleType(module.type),
       data: resolveModuleDataByTemplate(module, payload, templateKey),
     }))
     .filter((module) => module.data);

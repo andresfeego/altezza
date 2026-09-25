@@ -4,13 +4,14 @@ import CountdownImageView from '../module-views/CountdownImageView';
 import ParallaxImageDateView from '../module-views/ParallaxImageDateView';
 import DressCodeView from '../module-views/DressCodeView';
 import GiftEnvelopesView from '../module-views/GiftEnvelopesView';
+import RecommendationsView from '../module-views/RecommendationsView';
 import AdultsOnlyNoticeView from '../module-views/AdultsOnlyNoticeView';
 import ClosingMessageView from '../module-views/ClosingMessageView';
 import WelcomeMessageView from '../module-views/WelcomeMessageView';
 import MusicPlayerView from '../module-views/MusicPlayerView';
 import PhotoSliderView from '../module-views/PhotoSliderView';
 import InstantPhotosView from '../module-views/InstantPhotosView';
-import ImageSliderSepiaView from '../module-views/ImageSliderSepiaView';
+import ImageSlider1View from '../module-views/ImageSlider1View';
 import CountdownView from '../module-views/CountdownView';
 import CoupleFamilyView from '../module-views/CoupleFamilyView';
 import CoupleNamesView from '../module-views/CoupleNamesView';
@@ -25,13 +26,14 @@ export const COMMON_MODULE_VIEWS = {
   parallax_image_date: ParallaxImageDateView,
   dresscode: DressCodeView,
   gift_envelopes: GiftEnvelopesView,
+  recommendations: RecommendationsView,
   adults_only_notice: AdultsOnlyNoticeView,
   closing_message: ClosingMessageView,
   welcome_message: WelcomeMessageView,
   music_player: MusicPlayerView,
   photo_slider: PhotoSliderView,
   instant_photos: InstantPhotosView,
-  image_slider_sepia: ImageSliderSepiaView,
+  image_slider_1: ImageSlider1View,
   countdown: CountdownView,
   couple_family: CoupleFamilyView,
   couple_names: CoupleNamesView,

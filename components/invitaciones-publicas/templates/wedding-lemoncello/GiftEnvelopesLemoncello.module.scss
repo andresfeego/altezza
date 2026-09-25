@@ -1,0 +1,65 @@
+.gifts {
+  position: relative; isolation: isolate; height: 100%; overflow: hidden;
+  color: var(--lemoncello-paper); text-align: center;
+  font-family: var(--lemoncello-serif);
+}
+.content {
+  position: absolute; inset: 21% var(--ag-space-4) auto;
+  display: flex; flex-direction: column; align-items: center; gap: var(--ag-space-3);
+  z-index: 2;
+  text-shadow: 0 0 var(--ag-space-2) var(--lemoncello-navy);
+}
+.title {
+  --ag-heading-h2-size: clamp(var(--ag-font-size-32), 11cqw, var(--ag-font-size-48));
+  --ag-heading-h2-line: 1.15;
+  --ag-heading-h2-weight: 400;
+  margin: 0; color: inherit;
+  font: var(--ag-heading-h2-weight) var(--ag-heading-h2-size)/var(--ag-heading-h2-line) var(--lemoncello-script);
+}
+.envelope { display: block; width: min(30cqw, 17svh); height: auto; }
+.message {
+  margin: 0; max-width: 28ch; color: inherit;
+  font-family: var(--lemoncello-serif);
+  font-size: var(--ag-font-size-24); line-height: 1.3;
+  text-wrap: balance; white-space: pre-line;
+}
+.dancers {
+  position: absolute; z-index: 1; bottom: 4%; left: 50%;
+  height: 35%; aspect-ratio: 2 / 3; transform: translateX(-50%);
+  filter: drop-shadow(0 0 var(--ag-space-2) color-mix(in srgb, var(--lemoncello-sky) 55%, transparent));
+}
+.silhouette {
+  width: 100%; height: 100%; transform-origin: 50% 95%;
+  background: var(--lemoncello-midnight);
+  -webkit-mask: var(--couple-mask) center / contain no-repeat;
+  mask: var(--couple-mask) center / contain no-repeat;
+}
+.preload { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.lights { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.spotlight {
+  --beam-from: -18deg; --beam-to: 12deg;
+  position: absolute; bottom: -2%; left: 10%; width: 42%; height: 87%;
+  transform: translateX(-50%) rotate(var(--beam-from)); transform-origin: 50% 100%;
+  filter: blur(var(--ag-space-1)); opacity: .42;
+  span {
+    display: block; width: 100%; height: 100%;
+    clip-path: polygon(0 0, 100% 0, 51% 100%, 49% 100%);
+    background: linear-gradient(to top, color-mix(in srgb, var(--lemoncello-paper) 82%, transparent), color-mix(in srgb, var(--lemoncello-sky) 35%, transparent) 50%, transparent);
+  }
+  &:nth-child(2) { left: 35%; --beam-from: 21deg; --beam-to: -12deg; animation-delay: -3s; }
+  &:nth-child(3) { left: 65%; --beam-from: -22deg; --beam-to: 15deg; animation-delay: -6s; }
+  &:nth-child(4) { left: 90%; --beam-from: 16deg; --beam-to: -18deg; animation-delay: -9s; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .silhouette { animation: weddingDance 7s ease-in-out infinite; }
+  .spotlight { animation: skySweep 12s ease-in-out infinite alternate; }
+}
+@keyframes weddingDance { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
+@keyframes skySweep {
+  from { transform: translateX(-50%) rotate(var(--beam-from)); }
+  to { transform: translateX(-50%) rotate(var(--beam-to)); }
+}
+@media (max-height: 740px) {
+  .content { gap: var(--ag-space-2); inset-inline: var(--ag-space-3); }
+  .message { font-size: var(--ag-font-size-20); }
+}

@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-24",
+  "tool": "image_gen built-in",
+  "references": {
+    "styleMaster": "components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+    "approvedLandscape": "components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png",
+    "composition": "../backend-altezza/_local_storage/invitations/bodmys/dresscode/grupo-vestidos-acuarela-v1-web-v1.webp",
+    "fabric": "../backend-altezza/_local_storage/invitations/bodmys/dresscode/paleta-telas-referencia-v1-web-v1.webp"
+  },
+  "assets": [
+    {
+      "file": "public/images/invitaciones/bodlauser/dresscode-guests-v1.webp",
+      "original": "public/images/invitaciones/bodlauser/dresscode-guests-v1.png",
+      "prompt": "Use case: illustration-story. Create a new wide watercolor cutout for the Lemoncello Italian wedding invitation dress code. Input 1 is the mandatory watercolor technique and muted palette master. Input 2 is the approved Lemoncello illustration for exact style integration. Input 3 is a COMPOSITION and facial-detail reference only, not a bride to copy.\nExactly SIX elegant adult wedding guests, full body standing side by side, THREE WOMEN on the LEFT and THREE MEN on the RIGHT, with a small airy gap between the groups. No bride, no groom, no bouquets, no veils, no white dresses, no tuxedos, no bow ties. Calm relaxed elegant poses, slight turns toward one another. Faces only soft painted shadows, no recognizable detailed features.\nWomen wear flowing light fabric midi or long dresses in dusty blush, soft sage and muted peach; men wear light unstructured Italian linen or fine cotton tailored clothes in muted dusty lavender, soft seafoam GREEN (not sky blue), and rosy sand, with open collars and relaxed elegance. Six distinguishable coordinated pastel outfits. Do NOT use butter yellow or sky blue for clothing: those are reserved.\nHand-painted traditional watercolor with translucent washes, visible soft pigment and delicate folds, organic outlines, moderate contrast, natural body proportions. Match the approved invitation, avoid vector or cartoon outlines, photoreal faces, 3D and saturated colors. Wide composition about 2:1 with all six complete from head to shoes, similar standing height, a little outer padding. GENUINE transparent alpha background around and between all six figures, no ground scenery, no white rectangle, no checkerboard baked into art, no text/logos. Beautiful sophisticated delicate editorial fashion watercolor."
+    },
+    {
+      "file": "public/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
+      "original": "public/images/invitaciones/bodlauser/dresscode-fabrics-v1.png",
+      "prompt": "Use case: illustration-story. Create ONE fabric-swatch atlas for the Lemoncello invitation. Eight equally sized square panels in a precise 4 columns by 2 rows grid, no gutters, no borders, NO text, NO people. Every panel filled edge to edge with a different luxurious fine silk/chiffon fabric gently draping in broad diagonal folds, like the fabric swatches at the bottom of input 3. Input 3 defines ONLY folded-fabric composition and tactile fine fabric. Input 1 defines mandatory soft traditional watercolor technique and input 2 approved watercolor integration.\nColor arrangement EXACTLY: TOP ROW left to right: 1 muted sage green, 2 dusty blush pink, 3 pale peach/apricot, 4 delicate dusty lavender. BOTTOM ROW left to right: 5 seafoam green (distinctly green not blue), 6 rosy sand/light warm taupe, 7 butter yellow, 8 sky blue.\nColors 1-6 are suggested wedding guest clothing colors, 7-8 are reserved, keep each clearly distinguishable. Soft pastel Italian wedding atmosphere, gentle material highlights and deeper but restrained folds, broad soft pigment gradations, translucent watercolor washes with subtle paper texture within the rendering. Beautiful smooth flowing folds that remain recognizable when cropped into small circles. No hard outlined illustrations, no plastic or metallic material, no flat color discs, no dark oversaturated tones. Match the watercolor family of inputs 1 and 2. Canvas 2:1 landscape, exactly eight square equal-sized panels. No typography, numbering, labels, symbols or framing."
+    }
+  ],
+  "notes": "RGBA originals retained. WebP preserves original dimensions and alpha. Fabric atlas uses the existing percentage crop contract; no new dresscode data fields."
+}

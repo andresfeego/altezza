@@ -1,0 +1,11 @@
+{
+  "tool": "built-in ImageGen",
+  "referenced_image_paths": [
+    "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/output/imagegen/lemoncello-tree-edit-source.png",
+    "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/references/watercolor-style-master.jpg",
+    "/Volumes/02_SSD_1TB/Negocios/Altezza/Web/altezza/components/invitaciones-publicas/templates/wedding-lemoncello/assets/images/landscape-proportioned.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Image 1 is the EXACT EDIT TARGET, a 500x520 crop of a working watercolor invitation. Image 2 is the user's PRIMARY STYLE AND COLOR MASTER (watercolor bottle/lemons); Image 3 is the approved complete panorama and SECONDARY INTEGRATION reference. Return only the edited Image 1 crop with EXACT SAME framing, camera, aspect ratio and composition. Make ONE localized change: move the ENTIRE potted lemon tree (foliage, trunk and terracotta pot together) horizontally LEFT by about 50 of the 500 source pixels, WITHOUT resizing, squashing or changing its height. Its rightmost leaves must stop outside the stone doorway jamb, leaving the entire dark blue arched interior clear, no leaves or branches inside the arch. Restore only the newly uncovered patches of ivory stucco/stone behind the previous tree. Keep the exact arch shape, height, width, blue recess, steps, lemons on the steps, coast strip at left, wall texture and every other object in the same original positions. Do not add doors or anything else. Soft translucent traditional watercolor, paper/pigment texture, soft blue, butter yellow, ivory, muted olive. No photographic, digital/vector/3D look, no hard outlines, no additional saturation or sharpness. No text. This crop must register over the original image for animation; architectural positions must not change. Preserve full rectangular opaque crop; transparency will be handled later using the existing exact doorway coordinates.",
+  "generated": "/Volumes/01_SSD_1TB/USUARIO/.codex/generated_images/01a0bbe5-8f53-7152-b064-ae2ec11273d0/exec-a88a8bdc-d241-4880-a89b-b0c8f9dc7d94.png",
+  "postprocessing": "scripts/lemoncello-prepare-envelope-tree.cjs"
+}

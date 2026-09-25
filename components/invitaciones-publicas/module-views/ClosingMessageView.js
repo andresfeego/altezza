@@ -10,6 +10,7 @@ export default function ClosingMessageView({ data, styles }) {
         aria-hidden="true"
       /> : null}
       <div className={styles.closingMessageContent}>
+        {data.imageSrc ? <img className={styles.closingMessageImage} src={data.imageSrc} alt={data.imageAlt || ''} /> : null}
         <p className={styles.closingMessageText} style={{ whiteSpace: 'pre-line' }}>{data.message}</p>
       </div>
     </section>

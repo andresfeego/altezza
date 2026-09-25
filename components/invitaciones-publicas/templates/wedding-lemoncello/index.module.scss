@@ -1,8 +1,24 @@
+@font-face {
+  font-family: 'Lemoncello Khalifah Script';
+  src: url('./assets/fonts/KhalifahScript/Khalifah Script.otf') format('opentype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 .page {
   --lemoncello-sky: #bcdced;
   --lemoncello-navy: #183451;
+  --lemoncello-midnight: color-mix(in srgb, var(--lemoncello-navy) 45%, var(--ag-black, #000));
   --lemoncello-butter: #f3e6aa;
   --lemoncello-paper: #f6f3e4;
+  --lemoncello-white: #fff;
+  --lemoncello-quote-ink: var(--lemoncello-navy);
+  --lemoncello-serif: 'Lemoncello Cormorant', Georgia, serif;
+  --lemoncello-script: 'Lemoncello Khalifah Script', 'Lemoncello Cormorant', cursive;
+  --lemoncello-quote-serif: var(--lemoncello-serif);
+  --lemoncello-ink-halo: color-mix(in srgb, var(--lemoncello-navy) 45%, transparent);
+  --lemoncello-ink-halo-radius: calc(var(--ag-space-1) * .375);
   --lemoncello-width: 480px;
   --inv-bg-base: var(--lemoncello-paper);
   --inv-font-secondary: sans-serif;
@@ -13,6 +29,23 @@
 }
 
 .shell { position: relative; width: min(100%, var(--lemoncello-width)); margin: 0 auto; }
+
+.musicDock {
+  position: fixed; z-index: 20;
+  top: var(--ag-space-2);
+  right: max(var(--ag-space-2), calc((100vw - var(--lemoncello-width)) / 2 + var(--ag-space-2)));
+  audio { display: none; }
+}
+.musicToggleButton {
+  display: grid; place-items: center;
+  width: var(--ag-space-6); height: var(--ag-space-6); padding: 0;
+  border-radius: 50%; cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--lemoncello-butter) 80%, var(--lemoncello-navy));
+  background: var(--lemoncello-paper); color: var(--lemoncello-navy);
+  box-shadow: inset 0 0 var(--ag-space-1) var(--lemoncello-butter);
+  svg { width: var(--ag-font-size-20); height: var(--ag-font-size-20); }
+  &:focus-visible { outline: 2px solid var(--lemoncello-navy); outline-offset: var(--ag-space-1); }
+}
 
 .viewport {
   position: relative;
@@ -57,9 +90,27 @@
 .envelop_intro { background: var(--lemoncello-butter); }
 .hero_image_1 { display: block; padding: 0; background: transparent; overflow: visible; }
 .welcome_message { display: block; padding: 0; background: transparent; }
-.biblical_quote { background: var(--lemoncello-navy); color: var(--lemoncello-butter); }
+.image_slider_1 { display: block; padding: 0; background: transparent; overflow: hidden; }
+.biblical_quote { display: block; padding: 0; background: transparent; }
+.countdown, .save_the_date_calendar { display: block; padding: 0; background: transparent; }
+.event_details { display: block; padding: 0; background: transparent; }
 
 .moduleContent { width: 100%; outline: none; }
+.paperStack {
+  position: absolute; inset: 0; height: 100%; z-index: 4;
+  pointer-events: none; visibility: hidden; transform: translate(var(--paper-from-x), var(--paper-from));
+  &[data-visible='true'] { visibility: visible; }
+}
+.paperScrolling { animation: paperScroll var(--journey-duration) ease-in-out both; will-change: transform; }
+@keyframes paperScroll { from { transform: translate(var(--paper-from-x), var(--paper-from)); } to { transform: translate(var(--paper-to-x), var(--paper-to)); } }
+.dressOverlay {
+  position: absolute; left: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none;
+  &[data-visible='true'] { opacity: 1; }
+  &:not([inert]) { pointer-events: auto; }
+  [data-dresscode] { opacity: 0; transition: opacity 300ms ease-out; }
+  &[data-ready='true'] [data-dresscode] { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .dressOverlay [data-dresscode] { transition: none; } }
 .biblicalQuoteText, .biblicalQuoteReference { font: inherit; }
 .basicContent {
   display: grid; gap: var(--ag-space-2); text-align: center;
@@ -69,7 +120,7 @@
   img { max-width: 100%; height: auto; }
 }
 
-.canvas { position: relative; width: 100%; height: 100svh; transform: translate3d(var(--camera-from), 0, 0); }
+.canvas { position: relative; width: 100%; height: 100svh; transform: var(--camera-from); transform-origin: 0 0; }
 .scenery {
   position: absolute; inset: 0 auto 0 0; width: 300%; pointer-events: none;
   // Blend the approved balcony's transparent edge into the continuous promenade.
@@ -77,15 +128,119 @@
   mask-image: linear-gradient(to right, transparent 25%, black 35%);
   img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
+.connectedScenery {
+  // Hero and promenade share one painting; keep the foreground and live copy separate.
+  -webkit-mask-image: none;
+  mask-image: none;
+}
 .escorted { animation: cameraEscort var(--journey-duration) linear both; will-change: transform; }
+.photoScenery {
+  position: absolute; top: 0; height: 100svh; width: 120%; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 17%);
+  mask-image: linear-gradient(to right, transparent, black 17%);
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+}
+.quoteScenery {
+  position: absolute; top: 0; height: 100svh; width: 300%; pointer-events: none;
+  // One continuous painting covers quote, the full villa and the photo terrace.
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%);
+  mask-image: linear-gradient(to right, transparent, black 3%);
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+}
+.connectedQuoteScenery {
+  // The matching cocktail terrace overlaps the original villa/photo panorama.
+  -webkit-mask-image: linear-gradient(to right, transparent 6%, black 9%);
+  mask-image: linear-gradient(to right, transparent 6%, black 9%);
+}
+.quoteCanopy {
+  position: absolute; top: -1svh; width: min(94%, 52svh); z-index: 3; pointer-events: none;
+  img { display: block; width: 100%; height: auto; transform-origin: 68% 0; }
+}
+.gardenWorld {
+  position: absolute; transform-origin: 0 0;
+}
+.gardenPainting, .gardenWindPainting {
+  display: block; width: 100%; height: auto; max-width: none; pointer-events: none;
+  // The first portrait panel overlaps the preceding photo painting at its exact scale.
+  // Mask only the painting: masking the whole world flattens live sign text into
+  // a small texture that WebKit can retain when the camera zooms in.
+  -webkit-mask-image: linear-gradient(to right, transparent, black 24%);
+  mask-image: linear-gradient(to right, transparent, black 24%);
+}
+.dateOverlay {
+  position: absolute; inset: 0; z-index: 4;
+  visibility: hidden; pointer-events: none;
+  &[data-visible='true'] { visibility: visible; }
+  &:not([inert]) { pointer-events: auto; }
+}
+.gardenWindPainting { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.gardenNight {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  transition: opacity var(--sky-fade-duration) ease-in-out;
+  img { display: block; width: 100%; height: auto; }
+}
+.viewport[data-sky-night='true'] .gardenNight { opacity: 1; }
+.hotelPainting {
+  position: absolute; inset: 0;
+  // Keep the exact approved sky. Only replace scenery below the sky camera crop.
+  -webkit-mask-image: linear-gradient(to bottom, transparent 50.2%, black 51.75%);
+  mask-image: linear-gradient(to bottom, transparent 50.2%, black 51.75%);
+}
+.recommendationsOverlay {
+  position: absolute; inset: 0; z-index: 4; opacity: 0; pointer-events: none;
+  transition: opacity 300ms ease-out;
+  &[data-visible='true'] { opacity: 1; }
+  &:not([inert]) { pointer-events: auto; }
+}
+.giftOverlay {
+  position: absolute; inset: 0; z-index: 4; opacity: 0; pointer-events: none;
+  transition: opacity 300ms ease-out;
+  &[data-visible='true'] { opacity: 1; }
+  &:not([inert]) { pointer-events: auto; }
+  > .moduleContent, > .moduleContent > div, > .moduleContent > div > div { height: 100%; }
+  &[inert] * { animation-play-state: paused !important; }
+}
+.eventOverlay {
+  z-index: 4; pointer-events: none; opacity: 0;
+  transition: opacity 200ms ease-out;
+  &:not([inert]) { pointer-events: auto; }
+}
+.eventOverlay[data-visible='true'] {
+  opacity: 1;
+  transition: opacity 300ms ease-out;
+}
+.eventOverlay[data-reveal-with-landscape] { transition: none; }
+.birdGuideTrack { position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none; transform: translateX(-35%); }
+.birdGuideWindow { position: absolute; left: 0; top: 18svh; width: min(calc(var(--ag-space-9) * 1.1), 33cqw, 15.4svh); aspect-ratio: 1; overflow: hidden; }
+.birdGuideFrames { display: block; width: 800%; height: auto; max-width: none; }
+.birdGuideTravel {
+  opacity: 1; animation: birdGuideFlight var(--journey-duration) linear both;
+  .birdGuideFrames { animation: birdGuideWingbeat .56s steps(8, end) infinite; }
+}
+@keyframes birdGuideWingbeat { to { transform: translateX(-100%); } }
+@keyframes birdGuideFlight {
+  0% { transform: translate(-35%, 0); }
+  18% { transform: translate(22%, -2svh); }
+  52% { transform: translate(40%, 1svh); }
+  86% { transform: translate(57%, -1svh); }
+  100% { transform: translate(115%, -3svh); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .quoteCanopy img { animation: quoteCanopySway 4.5s ease-in-out infinite; }
+}
+@keyframes quoteCanopySway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2.5deg); }
+}
 .sliding { animation: cameraSlide var(--journey-duration) ease-in-out both; will-change: transform; }
+.photoJourney { animation: cameraSlide var(--journey-duration) cubic-bezier(.45, 0, .55, 1) both; will-change: transform; }
 @keyframes cameraEscort {
-  0%, 16% { transform: translate3d(var(--camera-from), 0, 0); }
-  86%, 100% { transform: translate3d(var(--camera-to), 0, 0); }
+  0%, 16% { transform: var(--camera-from); }
+  86%, 100% { transform: var(--camera-to); }
 }
 @keyframes cameraSlide {
-  from { transform: translate3d(var(--camera-from), 0, 0); }
-  to { transform: translate3d(var(--camera-to), 0, 0); }
+  from { transform: var(--camera-from); }
+  to { transform: var(--camera-to); }
 }
 .waiterTrack { position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none; transform: translateX(-75%); }
 .waiterWindow { position: absolute; bottom: 2svh; left: 0; height: 57svh; aspect-ratio: 2 / 3; overflow: hidden; }
@@ -102,14 +257,26 @@
   84% { transform: translateX(20%); }
   100% { transform: translateX(110%); }
 }
-.sceneNavigation { position: absolute; inset: auto 0 max(var(--ag-space-2), env(safe-area-inset-bottom)) 0; z-index: 6; pointer-events: none; }
+.sceneNavigation {
+  position: absolute; inset: auto 0 max(var(--ag-space-2), env(safe-area-inset-bottom)) 0;
+  z-index: 6; pointer-events: none; opacity: 1; transition: opacity 300ms ease-out;
+}
+// Keep a stable parent for both fades, including arrows first mounted on arrival.
+.viewport[data-scene-moving='true'] .sceneNavigation,
+.viewport[inert] .sceneNavigation { opacity: 0; }
 .sceneArrow {
-  position: absolute; bottom: 0; width: var(--ag-space-8); height: var(--ag-space-6);
+  position: absolute; bottom: 0; width: var(--ag-space-6); height: var(--ag-space-6);
   display: grid; place-items: center; padding: 0; border: 0; background: transparent;
   cursor: pointer; pointer-events: auto;
   img { display: block; width: 100%; height: auto; }
-  &:disabled { opacity: 0; pointer-events: none; }
-  &:focus-visible { outline: 2px solid var(--lemoncello-navy); outline-offset: var(--ag-space-1); }
+  &:disabled { pointer-events: none; }
+  border-radius: 50%;
+  &:focus-visible { outline: 2px solid var(--lemoncello-navy); outline-offset: var(--ag-space-1); box-shadow: 0 0 0 var(--ag-space-1) var(--lemoncello-paper); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gardenNight, .giftOverlay, .recommendationsOverlay { transition: none; }
+  .sceneNavigation, .eventOverlay, .eventOverlay[data-visible='true'] { transition: none; }
+  .gardenWindPainting { display: none; }
 }
 .nextArrow { right: var(--ag-space-2); }
 .previousArrow { left: var(--ag-space-2); img { transform: scaleX(-1); } }

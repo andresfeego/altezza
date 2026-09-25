@@ -1,0 +1,62 @@
+.details {
+  position: relative; isolation: isolate;
+  box-sizing: border-box;
+  height: 60svh;
+  padding: var(--ag-space-4) var(--ag-space-4) var(--ag-space-2);
+  display: flex; flex-direction: column; justify-content: safe center; gap: var(--ag-space-2);
+  overflow-y: auto; scrollbar-width: none;
+  color: var(--lemoncello-navy);
+  font-family: 'Lemoncello Cormorant', Georgia, serif;
+  text-align: center;
+  text-shadow: 0 0 var(--lemoncello-ink-halo-radius) var(--lemoncello-ink-halo);
+  &::-webkit-scrollbar { display: none; }
+  p, h2, h3 { margin: 0; color: inherit; }
+}
+.backgroundVideo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: -1; }
+.title {
+  --ag-heading-h2-size: var(--ag-font-size-24);
+  --ag-heading-h2-line: 1.15;
+  --ag-heading-h2-weight: 500;
+  font-size: var(--ag-heading-h2-size); line-height: var(--ag-heading-h2-line); font-weight: var(--ag-heading-h2-weight);
+}
+.date { display: block; font-size: var(--ag-font-size-16); line-height: 1.2; letter-spacing: .04em; }
+.details > .date { position: relative; top: calc(-1 * var(--ag-space-2)); }
+.events { display: flex; flex-direction: column; gap: var(--ag-space-3); }
+.event { display: flex; flex-direction: column; align-items: center; gap: var(--ag-space-1); }
+.name {
+  --ag-heading-h3-size: var(--ag-font-size-40);
+  --ag-heading-h3-line: 1;
+  --ag-heading-h3-weight: 400;
+  font: var(--ag-heading-h3-weight) var(--ag-heading-h3-size)/var(--ag-heading-h3-line) 'Lemoncello Khalifah Script', 'Lemoncello Allura', cursive;
+  font-synthesis: none;
+}
+.time { font-size: var(--ag-font-size-20); line-height: 1.1; font-variant-numeric: lining-nums; }
+.place { max-width: 100%; font-size: var(--ag-font-size-20); font-weight: 500; line-height: 1.1; text-wrap: balance; }
+.address, .message { font-size: var(--ag-font-size-16); line-height: 1.2; text-wrap: balance; }
+.message { font-style: italic; }
+.mapLink {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--ag-space-1);
+  min-height: var(--ag-space-5); color: inherit; font-size: var(--ag-font-size-16);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em;
+  svg { width: var(--ag-font-size-16); height: var(--ag-font-size-16); }
+  &:focus-visible { outline: 2px solid var(--lemoncello-navy); outline-offset: var(--ag-space-1); }
+}
+.details[data-single-event='true'] {
+  .date { font-size: var(--ag-font-size-20); }
+  .name { --ag-heading-h3-size: clamp(var(--ag-font-size-48), 14cqw, var(--ag-space-7)); }
+  .time, .place { font-size: var(--ag-font-size-24); }
+  .address, .message { font-size: var(--ag-font-size-20); }
+  .event { gap: var(--ag-space-2); }
+}
+@media (max-height: 740px) {
+  .details { padding-block: var(--ag-space-2); gap: var(--ag-space-1); }
+  .events { gap: var(--ag-space-2); }
+  .name { --ag-heading-h3-size: var(--ag-font-size-32); }
+  .place { font-size: var(--ag-font-size-16); }
+  .details[data-single-event='true'] {
+    .date, .address, .message { font-size: var(--ag-font-size-16); }
+    .name { --ag-heading-h3-size: var(--ag-font-size-48); }
+    .place { font-size: var(--ag-font-size-20); }
+    .event { gap: var(--ag-space-1); }
+  }
+}

@@ -63,6 +63,68 @@ volver hacia arriba sin nuevas entradas, revisar
 movimiento reducido y acceder a los enlaces por teclado. El contador debe seguir
 actualizándose y el mensaje final quedar visible al llegar al pie.
 
+El módulo de galería de varias fotos se llama `image_slider_1` (antes
+`image_slider_sepia`). Recibe `config.images` como array de URLs, `title` opcional,
+`intervalMs` e `imageAdjustments`. El nombre anterior sigue siendo compatible y
+se normaliza al nuevo. Classic, Oliva y Terracota mantienen la presentación
+automática; Lemoncello utiliza una pila de Polaroids que se pasan con gestos en
+cualquier dirección. Su aviso «Desliza» se descarta después de la primera interacción.
+La selección y orden de fotos se guardan en el config, sin aleatorizar cada visita.
+
+En Lemoncello, una pareja consecutiva `countdown` → `save_the_date_calendar`
+comparte una sola parada blanca con azulejos azules arriba y abajo, información
+centrada y rama de limones animada abajo a la derecha. Es composición visual
+de la plantilla: ambos módulos conservan sus propios datos, `enabled`, orden y
+fondos opcionales. Si no son consecutivos o uno está deshabilitado, se presentan
+individualmente. La fecha y el calendario usan la ceremonia del evento; el
+contador respeta su `target`. No se introduce un tipo de módulo exclusivo.
+
+Fotos ↔ fecha ↔ iglesia usan una transición de unos 3.66 s con sombrillas amarillas y
+marfil que entran desde los cuatro bordes girando, cubren la pantalla y salen
+girando, sin detenerse en el centro. Sus posiciones y tamaños son irregulares.
+El fondo cambia a los 1.83 s durante la cobertura completa. La velocidad de los
+tramos de entrada/salida se redujo un 30% y se eliminó la espera central.
+Sustituye el caballete y los zooms anteriores. La iglesia y jardín
+conservan el 40% inferior y el contenido el cielo superior, con los mismos datos,
+mensajes, direcciones y enlaces del contrato común. Ambas flechas aparecen y
+desaparecen con un fundido de 300 ms. El texto del cielo empieza su entrada de
+300 ms al terminar de salir las sombrillas. La navegación permanece bloqueada
+durante la transición y el foco pasa al contenido de destino al terminar.
+Movimiento reducido omite sombrillas y fundidos; las otras plantillas conservan
+su representación.
+
+Lemoncello presenta `event_details` en dos pasos visuales: ceremonia y recepción
+sobre el mismo cielo claro, con tipografía mayor, centrada y el halo del monograma.
+Cada paso respeta `showCeremony`/`showReception`, fechas, lugares, mensajes y
+enlaces; no se modifica la configuración compartida ni la presentación de otras
+plantillas. Al avanzar desde ceremonia se oculta su texto, una chispa sube desde
+la vegetación y se abre suavemente. La secuencia dura 4 s; solo al terminar aparece
+recepción, conservando el paisaje diurno y texto azul marino. Regresar muestra
+ceremonia en 2.2 s. Con movimiento reducido no hay chispa ni fundidos.
+
+La arquitectura de la capilla de Lemoncello usa como referencia el dibujo del
+Hero de Natalia y Andrés (`bodnatyand`), reinterpretado en la acuarela de la
+plantilla, con escalinata, cipreses y dos canastillas de limones. Ambos eventos
+comparten el fondo diurno centrado en la fachada. No cambia la configuración
+de Natalia y Andrés ni el contrato de `event_details`.
+Los cipreses se mecen muy suavemente, con la base fija y dos ritmos de viento.
+La animación continúa durante el cambio de texto y respeta movimiento reducido.
+
+El siguiente módulo de Lemoncello es `gift_envelopes`: al salir de recepción la
+cámara asciende hasta encuadrar solo el cielo mientras funde a noche, simultáneamente
+en 4.8 s. Título, icono y mensaje usan `title`, `imageSrc`/`imageAlt` y `leadText`
+del contrato existente. Abajo hay una silueta de novios bailando y cuatro haces
+suaves apuntando al cielo. El regreso restaura recepción diurna; movimiento reducido
+omite efectos. No cambia el renderer de otras plantillas.
+
+
+`recommendations` añade título, dos textos, imagen y enlace opcionales bajo un
+contrato común. Los textos admiten vínculos HTTP(S) explícitos y saltos de línea.
+Lemoncello desciende desde Lluvia de sobres hacia un hotel italiano nocturno en
+4.8 s, manteniendo el cielo, luna y estrellas; la información aparece al terminar.
+El regreso asciende al mismo cielo. Classic, Oliva y Terracota usan la vista
+compartida y conservan los mismos datos.
+
 `instant_photos` presenta dos fotos estáticas superpuestas en marcos Polaroid y un
 sello opcional. Comparte contrato y vista entre Classic, Terracota y Oliva:
 
@@ -221,3 +283,32 @@ se configura en Nombres de `bodmys`; los otros módulos y eventos siguen sin ell
 En contraste aumentado se omite la foto. Validar imagen, lectura y ausencia de
 desbordamiento en móvil/escritorio, y comprobar que sin configuración el DOM
 anterior se conserva. La ruta del recurso también debe permitirse en el túnel.
+
+### Lemoncello: vestuario tras hospedaje
+
+El módulo existente `dresscode` se presenta sobre la misma papelería blanca,
+azulejos azules y rama animada de fecha. La ilustración y las muestras de tela
+pertenecen al evento; no cambia su contrato ni la vista de las otras plantillas.
+El paso desde recomendaciones usa diez fuegos escalonados y un único resplandor
+blanco que cubre el cambio (5.6 s); el regreso usa un fundido de 1.2 s. Doble clic
+bloqueado, foco al destino y paso inmediato con movimiento reducido.
+
+### Lemoncello: asistencia tras vestuario
+
+El siguiente paso reutiliza `attendance_confirm` y el guardado común por invitado.
+Vestuario sube y asistencia entra desde abajo en 900 ms; volver invierte el mismo
+recorrido. El fondo es azul cielo, con adornos claros únicamente arriba/abajo.
+La región del formulario tiene scroll propio para listas largas, sin desplazar el
+documento, y conserva estados seleccionado, guardando, error y confirmación cerrada.
+Sin nuevos campos ni reglas de confirmación; movimiento reducido omite el viaje.
+
+### Cierre con imagen opcional y presentación Lemoncello
+
+`closing_message.config.imageSrc` y `imageAlt` añaden una imagen sobre el mensaje
+en las cuatro plantillas. `frameImage` y `showFrame` siguen controlando solamente
+el marco decorativo. En Lemoncello se usa el monograma existente de Laura y Sergio
+con máscara mantequilla sobre una costa nocturna y el mensaje «Te esperamos».
+Asistencia ↔ cierre es un desplazamiento horizontal simple de 900 ms.
+Controles circulares pequeños izquierda/derecha en todo el recorrido, también
+en el tramo vertical a asistencia. La Vespa tarda 6.8 s con aceleración/frenada
+sincronizadas en cámara, carrocería y ruedas; apertura sin cambios.

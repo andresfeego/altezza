@@ -1,0 +1,113 @@
+@font-face {
+  font-family: 'Lemoncello Cormorant';
+  src: url('./assets/fonts/Cormorant/Cormorant-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Lemoncello Cormorant';
+  src: url('./assets/fonts/Cormorant/Cormorant-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Lemoncello Allura';
+  src: url('../wedding-oliva/assets/fonts/Allura/Allura-Regular.ttf') format('truetype');
+  font-weight: 400; font-display: swap;
+}
+.scene {
+  --date-serif: 'Lemoncello Cormorant', Georgia, serif;
+  --date-script: 'Lemoncello Allura', cursive;
+  --date-band-height: clamp(var(--ag-space-6), 10svh, var(--ag-space-8));
+  position: relative;
+  container-type: inline-size;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--lemoncello-white);
+  color: var(--lemoncello-navy); font-family: var(--date-serif);
+}
+.scene[data-date-scene] {
+  --stationery-bottom: calc(var(--date-band-height) + var(--ag-space-6));
+}
+.tiles {
+  position: absolute; left: 0; display: block;
+  width: 100%; height: var(--date-band-height); object-fit: cover;
+  pointer-events: none;
+}
+.topTiles { top: 0; }
+.bottomTiles { bottom: 0; }
+.writing {
+  position: absolute;
+  inset: var(--stationery-top, calc(var(--date-band-height) + var(--ag-space-3))) var(--stationery-inline, var(--ag-space-5)) var(--stationery-bottom, calc(var(--date-band-height) + var(--ag-space-8)));
+  display: flex; flex-direction: column; justify-content: safe center;
+  gap: var(--ag-space-3); text-align: center; overflow-y: var(--stationery-overflow-y, auto); scrollbar-width: none;
+  > div { flex: 0 0 auto; }
+  &::-webkit-scrollbar { display: none; }
+  p, h2, h3 { margin: 0; color: inherit; }
+}
+.branch {
+  position: absolute; right: 0; bottom: var(--ag-space-1);
+  width: min(38cqw, 20svh); height: auto; pointer-events: none;
+  transform-origin: 100% 100%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .branch { animation: dateBranchSway 4.5s ease-in-out infinite; }
+}
+@keyframes dateBranchSway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2.5deg); }
+}
+@media (max-height: 700px) {
+  .scene { --date-band-height: clamp(var(--ag-space-4), 8svh, var(--ag-space-6)); }
+  .scene[data-date-scene] { --stationery-bottom: calc(var(--date-band-height) + var(--ag-space-4)); }
+  .writing {
+    inset: var(--stationery-top, calc(var(--date-band-height) + var(--ag-space-2))) var(--stationery-inline, var(--ag-space-3)) var(--stationery-bottom, calc(var(--date-band-height) + var(--ag-space-5)));
+    gap: var(--ag-space-2);
+  }
+  .branch { width: min(32cqw, 16svh); }
+}
+.countdownModule { display: flex; flex-direction: column; gap: var(--ag-space-1); }
+.countdownDate {
+  order: 0; display: grid; grid-template-columns: minmax(0, 1fr) .85fr minmax(0, 1fr);
+  align-items: center; column-gap: var(--ag-space-1); text-transform: uppercase;
+  font: 400 var(--ag-font-size-16)/1.15 var(--date-serif);
+}
+.countdownDateMonth { grid-column: 1 / -1; letter-spacing: .1em; }
+.countdownDateWeekday, .countdownDateYear {
+  padding-block: var(--ag-space-1); border-block: 1px solid color-mix(in srgb, var(--lemoncello-navy) 65%, transparent);
+  font-size: var(--ag-font-size-14); letter-spacing: .04em;
+}
+.countdownDateDay { padding-top: var(--ag-space-1); font: 400 clamp(var(--ag-space-7), 24cqw, var(--ag-space-8))/.85 var(--date-script); }
+@media (max-height: 700px) { .countdownDateDay { font-size: var(--ag-space-7); } }
+.moduleText { order: 1; font: italic 400 clamp(var(--ag-font-size-14), 4.5cqw, var(--ag-font-size-20))/1.2 var(--date-serif); text-wrap: balance; }
+.countdownModule .moduleTitle {
+  order: 2; --ag-heading-h2-size: var(--ag-font-size-16); --ag-heading-h2-line: 1.1; --ag-heading-h2-weight: 600;
+  font: var(--ag-heading-h2-weight) var(--ag-heading-h2-size)/var(--ag-heading-h2-line) var(--date-serif);
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.countdownGrid { order: 3; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.countdownItem {
+  position: relative; display: grid; justify-items: center;
+  strong { font: 400 clamp(var(--ag-font-size-24), 9cqw, var(--ag-font-size-40))/1.1 var(--date-serif); font-variant-numeric: lining-nums tabular-nums; }
+  span { font: 400 var(--ag-font-size-12)/1.2 var(--date-serif); }
+  &:not(:last-child)::after { content: ':'; position: absolute; right: 0; top: 0; transform: translateX(50%); font: 400 clamp(var(--ag-font-size-20), 7cqw, var(--ag-font-size-32))/1.1 var(--date-serif); }
+}
+.saveTheDateCalendarMessage { font: 600 var(--ag-font-size-16)/1.2 var(--date-serif); letter-spacing: .06em; text-transform: uppercase; }
+.saveTheDateCalendarSurface { width: 90%; margin-inline: auto; }
+.saveTheDateCalendarHeading { display: flex; justify-content: center; gap: var(--ag-space-1); margin-block: var(--ag-space-1); }
+.saveTheDateCalendarYear, .saveTheDateCalendarMonth {
+  --ag-heading-h3-size: var(--ag-font-size-14); --ag-heading-h3-line: 1.2; --ag-heading-h3-weight: 400;
+  font: var(--ag-heading-h3-weight) var(--ag-heading-h3-size)/var(--ag-heading-h3-line) var(--date-serif); letter-spacing: .04em;
+}
+.saveTheDateCalendarMonth { order: 0; }
+.saveTheDateCalendarYear { order: 1; }
+.saveTheDateCalendarWeekdays, .saveTheDateCalendarGrid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.saveTheDateCalendarWeekdays { margin-bottom: var(--ag-space-1); font: 400 var(--ag-font-size-12)/1.2 var(--date-serif); }
+.saveTheDateCalendarCell, .saveTheDateCalendarCellEmpty { position: relative; display: grid; place-items: center; height: var(--ag-space-4); min-width: 0; font: 400 var(--ag-font-size-16)/1 var(--date-serif); }
+.saveTheDateCalendarCellSelected { font-weight: 600; }
+.saveTheDateCalendarHeart {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  // Cormorant's visible numerals sit below their line-box centre.
+  transform: translateY(calc(var(--ag-space-1) / 2));
+  svg { width: var(--ag-space-4); height: var(--ag-space-4); stroke-width: 1; }
+}
+.saveTheDateCalendarCellNumber { position: relative; }
