@@ -1560,3 +1560,22 @@ Lemoncello — agua del cierre más visible (2026-09-24):
   cielo permanece idéntico. Movimiento reducido conserva la ilustración estática.
   Prueba manual: llegar al mensaje final y observar oleaje y reflejos durante unos
   segundos. Aprobación visual pendiente.
+
+Lemoncello — datos confirmados y cuatro fotos nuevas (2026-09-24):
+
+- Estado funcional: recepción a las 16:30 en Villa Germana Paipa, sin texto
+  provisional; ceremonia enlazada a la ubicación entregada por los novios.
+  Seed, preview y DB local alineados. Las fotos 023–026 del Storage se intercalan
+  con las siete anteriores; el slider conserva su orden previo y ahora recorre
+  once fotos. Los 26 originales JPEG permanecen íntegros; entrega WebP separada.
+- Estado UX/UI: label del sobre en Cormorant. El corazón rodea el día del evento,
+  con el número centrado ópticamente dentro, espacio entre filas y calendario
+  completo. Distribución revisada en WebKit a 375×667, 390×844 y 440×763; sin
+  scroll adicional en esas dimensiones. Centrado final del corazón revisado
+  visualmente en Chrome a 440×763.
+  Aprobación visual pendiente.
+- Validación: 62 pruebas frontend y 7 backend pasan. Recorrido completo del
+  slider, recepción y enlace de ceremonia comprobados en navegador. Actualizador
+  local de datos idempotente y con respaldo; conserva el lugar compartido por
+  otras bodas. Prueba manual: abrir, pasar las once fotos, comprobar el corazón
+  alrededor del 19 y avanzar a ceremonia/recepción para revisar mapa, lugar y hora.

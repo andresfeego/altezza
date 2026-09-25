@@ -54,7 +54,7 @@
   font-size: clamp(calc(var(--ag-text-caption-size) * .75), calc(var(--sign-width) * .1), var(--ag-text-caption-size));
   line-height: 1.45;
   overflow-wrap: anywhere;
-  span { text-wrap: balance; }
+  span { text-wrap: balance; font-family: var(--lemoncello-serif); font-weight: 500; }
   time { font: inherit; white-space: nowrap; }
 }
 .dog {
