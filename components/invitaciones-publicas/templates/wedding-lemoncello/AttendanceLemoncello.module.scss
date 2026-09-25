@@ -1,6 +1,5 @@
 .scene {
-  position: relative; height: 100svh; overflow: hidden; box-sizing: border-box;
-  padding: var(--ag-space-7) var(--ag-space-3) var(--ag-space-8);
+  position: relative; height: 100svh; overflow: clip;
   background: var(--lemoncello-sky); color: var(--lemoncello-navy);
   font-family: var(--lemoncello-serif);
   --rsvp-pale: color-mix(in srgb, var(--lemoncello-sky) 48%, var(--lemoncello-white));
@@ -13,10 +12,14 @@
 }
 .ribbonBottom { top: auto; bottom: 0; transform: rotate(180deg); }
 .scroll {
-  position: relative; height: 100%; overflow-x: hidden; overflow-y: auto;
-  overscroll-behavior-y: contain; touch-action: pan-y; scrollbar-width: none;
+  // Include the empty margins in the native gesture surface, not just the guest rows.
+  position: relative; height: 100%; box-sizing: border-box;
+  padding: var(--ag-space-7) var(--ag-space-3) var(--ag-space-8);
+  overflow-x: hidden; overflow-y: auto;
+  overscroll-behavior: none; touch-action: pan-y pinch-zoom; scrollbar-width: none;
+  scroll-padding-block: var(--ag-space-7) var(--ag-space-8);
   &::-webkit-scrollbar { display: none; }
-  &:focus-visible { outline: 2px solid var(--lemoncello-navy); outline-offset: var(--ag-space-1); }
+  &:focus-visible { outline: 2px solid var(--lemoncello-navy); outline-offset: -2px; }
 }
 .content { min-height: 100%; display: flex; flex-direction: column; justify-content: center; }
 .moduleCard, .moduleCardRsvp { width: 100%; box-sizing: border-box; }

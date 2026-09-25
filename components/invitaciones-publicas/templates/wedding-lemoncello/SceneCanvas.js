@@ -182,7 +182,10 @@ export default function SceneCanvas({ modules: sourceModules, views, viewStyles,
     const vertical = previous && isVerticalPair(previous.module, module);
     return [...parts, { module, index, x: previous ? previous.x + (vertical ? 0 : 1) : 0, y: previous ? previous.y + (vertical ? 1 : 0) : 0 }];
   }, []);
-  const paperPosition = (index, axis = 'y') => -100 * (paperModules.find(part => part.index === index)?.[axis] || 0);
+  // Keep the current paper scene at the viewport origin between journeys. Native
+  // scrolling should not remain inside the translated, multi-screen camera layer.
+  const paperOrigin = paperModules.find(part => part.index === active) || { x: 0, y: 0 };
+  const paperDestination = paperModules.find(part => part.index === journey?.to) || paperOrigin;
 
   const renderContents = module => [module, ...module.companions].map((part, partIndex) => {
     const View = views[part.type];
@@ -275,10 +278,10 @@ export default function SceneCanvas({ modules: sourceModules, views, viewStyles,
     {journey?.eventTransition === 'reception' ? <FireworkTransitionLemoncello /> : null}
     <div className={`${styles.paperStack} ${journey?.paperScroll ? styles.paperScrolling : ''}`} data-paper-stack
       data-visible={isPaperScene(modules[presented])}
-      style={{ '--paper-from': `${paperPosition(active)}%`, '--paper-to': `${paperPosition(journey?.to ?? active)}%`, '--paper-from-x': `${paperPosition(active, 'x')}%`, '--paper-to-x': `${paperPosition(journey?.to ?? active, 'x')}%` }}
+      style={{ '--paper-from': '0%', '--paper-to': `${(paperOrigin.y - paperDestination.y) * 100}%`, '--paper-from-x': '0%', '--paper-to-x': `${(paperOrigin.x - paperDestination.x) * 100}%` }}
       onAnimationEnd={event => { if (event.target === event.currentTarget && journeyRef.current?.paperScroll) finish(); }}>
     {paperModules.map(({ module, index, x, y }) => <section key={`paper-${module.order}-${index}`}
-      style={{ top: `${y * 100}%`, left: `${x * 100}%` }}
+      style={{ top: `${(y - paperOrigin.y) * 100}%`, left: `${(x - paperOrigin.x) * 100}%` }}
       className={styles.dressOverlay} data-module={module.type} data-visible={index === presented || Boolean(journey?.paperScroll)} data-ready={(index === active && !moving) || Boolean(journey?.paperScroll)}
       inert={index !== active || moving ? '' : undefined} aria-hidden={index !== active || moving || undefined}>
       <div ref={node => setPanel(node, index)} tabIndex={-1} className={styles.moduleContent}>
