@@ -1217,13 +1217,17 @@ test('Lemoncello horizontal journey locks repeated input, focuses arrival, suppo
     assert.equal(rsvp().hasAttribute('inert'), false);
     assert.equal(document.querySelectorAll('.sceneNavigation button').length, 2);
     const scroll = document.querySelector('[data-attendance-scroll]');
+    assert.equal(rsvp().style.top, '0%', 'the resting form sits at the viewport origin');
+    assert.equal(rsvp().style.left, '0%');
+    assert.equal(document.querySelector('[data-paper-stack]').classList.contains('paperScrolling'), false);
+    scroll.scrollTop = 120;
     await React.act(async () => scroll.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true })));
     assert.equal(viewport().dataset.sceneMoving, 'false', 'list keys never move the scene');
     const toClosing = () => document.querySelector('button[aria-label="Ver mensaje final"]');
     await React.act(async () => { click(toClosing()); click(toClosing()); });
     assert.equal(viewport().dataset.sceneTransition, 'horizontal-scroll');
-    assert.equal(document.querySelector('[data-paper-stack]').style.getPropertyValue('--paper-from'), '-100%');
-    assert.equal(document.querySelector('[data-paper-stack]').style.getPropertyValue('--paper-to'), '-100%');
+    assert.equal(document.querySelector('[data-paper-stack]').style.getPropertyValue('--paper-from'), '0%');
+    assert.equal(document.querySelector('[data-paper-stack]').style.getPropertyValue('--paper-to'), '0%');
     assert.equal(document.querySelector('[data-paper-stack]').style.getPropertyValue('--paper-to-x'), '-100%');
     assert.equal(timers.size, 1);
     await tick(1050);
@@ -1236,12 +1240,17 @@ test('Lemoncello horizontal journey locks repeated input, focuses arrival, suppo
     await React.act(async () => click(document.querySelector('button[aria-label="Volver a la escena anterior"]')));
     assert.equal(document.querySelector('[data-closing-water]'), null, 'leaving the scene releases the water renderer');
     assert.equal(viewport().dataset.sceneTransition, 'horizontal-scroll');
+    assert.equal(document.querySelector('[data-paper-stack]').style.getPropertyValue('--paper-to-x'), '100%');
     await tick(1050);
     assert.equal(viewport().dataset.sceneIndex, '9');
+    assert.equal(document.querySelector('[data-attendance-scroll]'), scroll, 'arrival never remounts the form');
+    assert.equal(scroll.scrollTop, 120, 'camera rebasing preserves the native list position');
+    assert.equal(rsvp().style.top, '0%');
+    assert.equal(rsvp().style.left, '0%');
 
     await React.act(async () => click(document.querySelector('button[aria-label="Volver a la escena anterior"]')));
     assert.equal(viewport().dataset.sceneTransition, 'vertical-scroll');
-    assert.equal(document.querySelector('[data-paper-stack]').style.getPropertyValue('--paper-to'), '0%');
+    assert.equal(document.querySelector('[data-paper-stack]').style.getPropertyValue('--paper-to'), '100%');
     await tick(1050);
     assert.equal(viewport().dataset.sceneIndex, '8');
 

@@ -1579,3 +1579,46 @@ Lemoncello — datos confirmados y cuatro fotos nuevas (2026-09-24):
   local de datos idempotente y con respaldo; conserva el lugar compartido por
   otras bodas. Prueba manual: abrir, pasar las once fotos, comprobar el corazón
   alrededor del 19 y avanzar a ceremonia/recepción para revisar mapa, lugar y hora.
+
+Lemoncello — scroll de confirmación en móvil (2026-09-24):
+
+- Estado funcional: toda la superficie de asistencia, incluidos los márgenes,
+  pertenece al mismo contenedor de scroll nativo. Se bloquean el encadenamiento
+  y el rebote al llegar a sus extremos. El marco de las escenas usa `overflow:
+  clip` para recortar sin convertirse en otro contenedor desplazable por el foco
+  o por el navegador. Se conserva el zoom de accesibilidad, el guardado compartido
+  y la posición de la lista al volver del cierre.
+- Validación: reproducido con cuatro invitados de prueba; antes, los gestos
+  laterales no desplazaban la lista y el marco admitía desplazamiento horizontal.
+  Después, gestos táctiles nativos en Chromium a 360×732, 390×844 y 440×763
+  desplazan únicamente la lista, incluso desde márgenes y decoraciones. WebKit
+  verificado con rueda en viewport móvil y con toques/teclado en emulación móvil;
+  sin desplazamiento del marco al seleccionar ni al avanzar/regresar. Guardados
+  simulados, sin modificar invitados reales. Pasan las 66 pruebas frontend.
+- Estado UX/UI: conservados colores, tipografía, espaciado inicial y flechas;
+  revisión visual local completada. Pendiente comprobar en el dispositivo de
+  producción del usuario después de desplegar. Prueba manual: con cuatro
+  invitados, deslizar desde filas y márgenes, insistir en ambos extremos,
+  confirmar al último invitado y avanzar/regresar; solo debe moverse la lista,
+  sin mostrar otras escenas ni perder la posición o la respuesta.
+
+Lemoncello — confirmación fuera de la cámara al reposar (2026-09-24):
+
+- Estado funcional: al terminar los viajes entre vestuario, asistencia y cierre,
+  la escena activa vuelve al origen del viewport y el contenedor deja de tener
+  `transform`. Solo se transforma durante los 900 ms de viaje. Se conserva el
+  mismo nodo del formulario y su posición de scroll; las escenas inactivas usan
+  también `visibility: hidden`. La capa visible acepta eventos directamente,
+  sin un ancestro con `pointer-events: none` sobre la lista activa.
+- Validación: tarjeta real de prueba `lausprueba` con cuatro invitados, sin
+  cambiar sus respuestas. Playwright/Chrome visible con emulación móvil:
+  18 gestos táctiles en 390×844, 440×763 y 375×667, centro y márgenes, cambios de
+  dirección, avance/regreso y capturas durante el arrastre. La posición de la
+  lista se conserva tras detener la inercia y navegar. WebKit en viewport móvil
+  comprobado con rueda. Pasan las 66 pruebas frontend, incluida la conservación
+  del nodo y el scroll al cambiar las coordenadas de la cámara.
+- Estado UX/UI: conserva composición y transiciones. No se reprodujo el
+  parpadeo reportado en estas capturas; pendiente contrastar con el dispositivo
+  y enlace exactos del usuario. Prueba manual: recargar, llegar a confirmación,
+  deslizar varias veces hacia arriba y abajo, ir al cierre y volver;
+  verificar lista estable, posición conservada y flechas operativas.
