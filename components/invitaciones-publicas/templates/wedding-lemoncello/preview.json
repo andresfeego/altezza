@@ -130,71 +130,10 @@
         "title": "Vestuario · Elegancia fresca",
         "attireLabel": "",
         "message": "Queremos que disfrutes de este día con libertad y comodidad.\n\nElige prendas frescas, ligeras y elegantes, con siluetas fluidas y tejidos que te permitan celebrar sin restricciones.\n\nNo es etiqueta. Es elegancia relajada.",
-        "imageSrc": "/images/invitaciones/bodlauser/dresscode-guests-v1.webp",
-        "imageAlt": "Tres mujeres a la izquierda y tres hombres a la derecha, con prendas ligeras y elegantes en tonos pastel, ilustrados en acuarela.",
-        "suggestedColorsTitle": "Tonos sugeridos",
-        "suggestedColors": [
-          {
-            "label": "Salvia",
-            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
-            "crop": {
-              "x": 3,
-              "y": 6,
-              "width": 19,
-              "height": 38
-            }
-          },
-          {
-            "label": "Rosa empolvado",
-            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
-            "crop": {
-              "x": 28,
-              "y": 6,
-              "width": 19,
-              "height": 38
-            }
-          },
-          {
-            "label": "Durazno",
-            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
-            "crop": {
-              "x": 53,
-              "y": 6,
-              "width": 19,
-              "height": 38
-            }
-          },
-          {
-            "label": "Lavanda suave",
-            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
-            "crop": {
-              "x": 78,
-              "y": 6,
-              "width": 19,
-              "height": 38
-            }
-          },
-          {
-            "label": "Verde agua",
-            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
-            "crop": {
-              "x": 3,
-              "y": 56,
-              "width": 19,
-              "height": 38
-            }
-          },
-          {
-            "label": "Arena rosada",
-            "imageSrc": "/images/invitaciones/bodlauser/dresscode-fabrics-v1.webp",
-            "crop": {
-              "x": 28,
-              "y": 56,
-              "width": 19,
-              "height": 38
-            }
-          }
-        ],
+        "imageSrc": "/images/invitaciones/bodlauser/dresscode-guests-formal-v2.webp",
+        "imageAlt": "Tres mujeres con vestidos rosa, salvia y durazno, y tres hombres con trajes de paño gris, gris oscuro y negro, ilustrados en acuarela.",
+        "suggestedColorsTitle": "",
+        "suggestedColors": [],
         "avoidedColorsTitle": "Reservados: amarillo mantequilla, azul cielo y blanco",
         "avoidedColors": [
           {
