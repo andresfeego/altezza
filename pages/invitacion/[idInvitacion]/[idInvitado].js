@@ -208,8 +208,7 @@ export default function InvitationPublicRoute({
         {pageUrl ? <meta property="og:url" content={pageUrl} /> : null}
         {absoluteImage ? <meta property="og:image" content={absoluteImage} /> : null}
         {absoluteImage ? <meta property="og:image:alt" content={imageAlt} /> : null}
-        {absoluteImage ? <meta property="og:image:width" content="1200" /> : null}
-        {absoluteImage ? <meta property="og:image:height" content="630" /> : null}
+        {/* Event covers can be square or portrait; let crawlers read their actual dimensions. */}
         {absoluteImage ? <meta property="og:image:type" content={ogImageType} /> : null}
         <meta name="twitter:card" content={absoluteImage ? 'summary_large_image' : 'summary'} />
         <meta name="twitter:title" content={seoTitle} />

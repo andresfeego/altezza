@@ -6,6 +6,10 @@ const preview = require('../components/invitaciones-publicas/templates/wedding-l
 const coverAssets = new Set((preview.modules.find(module => module.type === 'image_slider_1')?.config.images || [])
   .filter(src => /^\/scrAppaltezza\/invitations\/bodlauser\/image_slider_1\/\d{3}\.webp$/.test(src)));
 coverAssets.add('/scrAppaltezza/invitations/bodlauser/cover/laura-sergio-monogram.png');
+coverAssets.add('/scrAppaltezza/invitations/bodlauser/cover/laura-sergio-hero-share-v1.jpg');
+coverAssets.add('/scrAppaltezza/images/eventos/bodlauser/datos_evento/laura-sergio-hero-share-v1.jpg');
+coverAssets.add('/scrAppaltezza/invitations/bodlauser/cover/laura-sergio-hero-share-square-v2.jpg');
+coverAssets.add('/scrAppaltezza/images/eventos/bodlauser/datos_evento/laura-sergio-hero-share-square-v2.jpg');
 coverAssets.add('/scrAppaltezza/invitations/bodlauser/music/carla-morrison-eres-tu.mp3');
 const server = http.createServer((req, res) => {
   let url;
